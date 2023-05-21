@@ -8,11 +8,12 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
+use common\components\CommonApiController;
 
 /**
  * Site controller
  */
-class SiteController extends Controller
+class SiteController extends CommonApiController
 {
     /**
      * {@inheritdoc}

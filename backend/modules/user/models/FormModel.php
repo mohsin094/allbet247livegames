@@ -1,12 +1,10 @@
 <?php
 
-namespace common\models;
+namespace backend\modules\user\models;
 
 use Yii;
 use yii\base\Model;
 
-use \common\components\Tools;
-use \common\models\Users;
 /**
  * Login form
  */
@@ -14,13 +12,9 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
-    public $rememberMe = true;
+
     private $_user;
 
-    public function formName()
-    {
-        return '';
-    }
 
     /**
      * {@inheritdoc}
@@ -30,16 +24,12 @@ class LoginForm extends Model
         return [
             // username and password are both required
             [['username', 'password'], 'required'],
+            // rememberMe must be a boolean value
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }
 
-    public function beforeValidate()
-    {
-        $this->username = strtolower(trim($this->username));
-        return parent::beforeValidate();
-    }
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -52,7 +42,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, \Yii::t('app', 'Incorrect username or password.'));
             }
         }
     }
@@ -79,8 +69,7 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = Users::findByUsername($this->username);
-            
+            $this->_user = \common\models\User::findByUsername($this->username);
         }
 
         return $this->_user;

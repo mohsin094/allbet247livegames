@@ -1,0 +1,197 @@
+<?php
+
+namespace common\models;
+
+use Yii;
+use yii\web\IdentityInterface;
+use common\models\Sessions;
+use common\models\UserRoles;
+
+
+/**
+ * This is the model class for collection "users".
+ *
+ * @property \MongoDB\BSON\ObjectID|string $_id
+ * @property mixed $email
+ * @property mixed $password
+ * @property mixed $status
+ * @property mixed $cdate
+ * @property mixed $lang
+ */
+class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
+{
+    const SCENARIO_REGISTER = 'register';
+    const SCENARIO_LOGIN = 'login';
+
+    const STATUS_ACTIVE = 'active';
+    const STATUS_WAITING_CONFIRMATION = 'waiting_confirmation';
+
+    public $password_repeat;
+
+    public function formName()
+    {
+        return '';
+    }
+
+    public function beforeValidate()
+    {
+
+        if($this->isNewRecord) {
+            $this->cdate = (string) time();
+            $this->user_role_id = UserRoles::getRole(UserRoles::ROLE_USER)->_id;
+            $this->public_name = 'bg_'.rand(1,9).time();
+            $this->email = strtolower(trim($this->email));
+            $this->status = self::STATUS_WAITING_CONFIRMATION;
+        }
+        return parent::beforeValidate();
+    }
+
+    public function beforeSave($params)
+    {
+        if($this->isNewRecord) {
+            $this->password = $this->encryptPassword($this->password);
+        }
+
+        return parent::beforeSave($params);
+    }
+
+    public function publicAttributes()
+    {
+        return [
+            'id' => (string) $this->_id,
+            'email' => $this->email,
+            'avatar' => $this->avatar,
+            'role' => UserRoles::findOne(['_id' => $this->user_role_id])->name,
+            'status' => $this->status
+        ];
+    }
+
+    public function scenarios()
+    {
+        return array_merge(parent::scenarios(), [
+            self::SCENARIO_LOGIN => ['email', 'password'],
+            self::SCENARIO_REGISTER => ['email', 'password', 'password_repeat', 'avatar']
+        ]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function collectionName()
+    {
+        return [\Yii::$app->params['mongodbDbName'], 'users'];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributes()
+    {
+        return [
+            '_id',
+            'email',
+            'public_name',
+            'password',
+            'status',
+            'cdate',
+            'lang',
+            'user_role_id',
+            'avatar'
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function rules()
+    {
+        return [
+            [['email', 'password', 'cdate', 'user_role_id', 'public_name'], 'required'],
+            ['password_repeat', 'required', 'on' => self::SCENARIO_REGISTER],
+            [['email', 'password', 'lang', 'user_role_id'], 'string'],
+            [['email'], 'email'],
+            [['password_repeat'], 'compare', 'compareAttribute' => 'password', 'operator' => '=='],
+            // [['email', 'password', 'status', 'cdate', 'lang', 'user_role_id'], 'safe']
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            '_id' => Yii::t('app', 'ID'),
+            'email' => Yii::t('app', 'Email'),
+            'password' => Yii::t('app', 'Password'),
+            'status' => Yii::t('app', 'Status'),
+            'cdate' => Yii::t('app', 'Cdate'),
+            'lang' => Yii::t('app', 'Lang'),
+            'user_role_id' => Yii::t('app', 'Role')
+        ];
+    }
+
+    public static function findByUsername($username)
+    {
+        return self::findOne(['email' => $username]);
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public static function findIdentity($id)
+    {
+        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        if($model = Sessions::findOne(['token' => $token])) {
+
+            return self::findOne(['_id' => $model->user_id]);
+        }
+
+        return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId()
+    {
+        return $this->_id;
+    }
+
+    /**
+     * Validates password
+     *
+     * @param string $password password to validate
+     * @return bool if password provided is valid for current user
+     */
+    public function validatePassword($password)
+    {
+        return \Yii::$app->getSecurity()->validatePassword($password, $this->password);
+    }
+    /*
+     {@inheritdoc}
+     */
+    public function getAuthKey()
+    {
+        return $this->auth_key;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->auth_key === $authKey;
+    }
+
+    public static function encryptPassword($input)
+    {
+        return \Yii::$app->getSecurity()->generatePasswordHash($input);
+    }
+}
