@@ -6,7 +6,7 @@ use Yii;
 use yii\web\IdentityInterface;
 use common\models\Sessions;
 use common\models\UserRoles;
-
+use \common\components\Tools;
 
 /**
  * This is the model class for collection "users".
@@ -33,12 +33,25 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return '';
     }
 
+
+    public function afterSave($insert, $changedAttributes)
+    {  
+        if($insert) {
+            $auth = \Yii::$app->authManager;
+         
+            $role = $auth->getRole($this->role);
+            $auth->assign($role, $this->getId());
+        }
+
+        return parent::afterSave($insert, $changedAttributes);
+    }
+
     public function beforeValidate()
     {
 
         if($this->isNewRecord) {
             $this->cdate = (string) time();
-            $this->user_role_id = UserRoles::getRole(UserRoles::ROLE_USER)->_id;
+            $this->role = UserRoles::ROLE_USER;
             $this->public_name = 'bg_'.rand(1,9).time();
             $this->email = strtolower(trim($this->email));
             $this->status = self::STATUS_WAITING_CONFIRMATION;
@@ -61,7 +74,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'id' => (string) $this->_id,
             'email' => $this->email,
             'avatar' => $this->avatar,
-            'role' => UserRoles::findOne(['_id' => $this->user_role_id])->name,
+            'role' => \Yii::$app->user->getIdentity()->role,
             'status' => $this->status
         ];
     }
@@ -95,7 +108,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'status',
             'cdate',
             'lang',
-            'user_role_id',
+            'role',
             'avatar'
         ];
     }
@@ -106,9 +119,9 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'password', 'cdate', 'user_role_id', 'public_name'], 'required'],
+            [['email', 'password', 'cdate', 'role', 'public_name'], 'required'],
             ['password_repeat', 'required', 'on' => self::SCENARIO_REGISTER],
-            [['email', 'password', 'lang', 'user_role_id'], 'string'],
+            [['email', 'password', 'lang', 'role'], 'string'],
             [['email'], 'email'],
             [['password_repeat'], 'compare', 'compareAttribute' => 'password', 'operator' => '=='],
             // [['email', 'password', 'status', 'cdate', 'lang', 'user_role_id'], 'safe']
@@ -161,7 +174,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
      */
     public function getId()
     {
-        return $this->_id;
+        return (string) $this->_id;
     }
 
     /**

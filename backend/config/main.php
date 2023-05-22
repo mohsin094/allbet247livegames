@@ -15,6 +15,9 @@ return [
         'user' => [
             'class' => 'app\modules\user\Module',
         ],
+        'game' => [
+            'class' => 'backend\modules\game\Module',
+        ],
     ],
     'components' => [
         'request' => [

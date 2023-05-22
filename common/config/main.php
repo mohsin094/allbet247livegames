@@ -16,6 +16,9 @@ return [
             // 'cookieValidationKey' => 'VlKruFJOuMSMpq-u5urBVDZXhVtmR9cy',
             // 'enableCsrfValidation' => false,
         ],
+        'authManager' => [
+            'class' => 'yii\rbac\PhpManager',
+        ],
         'user' => [
             'class' => \backend\modules\user\components\User::class,
             'identityClass' => \common\models\Users::class,
