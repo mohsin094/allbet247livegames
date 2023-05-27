@@ -4,7 +4,7 @@ namespace common\models;
 use common\models\FinancialTransactions;
 class UsersRepo extends common\models\Users
 {
-	public function increaseBalance()
+	public function increaseBalance($amount, $source, $sourceId, $description)
 	{
 		try {
 			$this->balance += $amount;

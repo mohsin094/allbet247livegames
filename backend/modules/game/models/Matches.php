@@ -3,6 +3,10 @@
 namespace backend\modules\game\models;
 
 use Yii;
+use common\models\Users;
+use backend\modules\game\models\GameStakes;
+use backend\modules\game\models\GameTimeframes;
+use backend\modules\game\models\GameRounds;
 
 /**
  * This is the model class for collection "matches".
@@ -58,6 +62,10 @@ class Matches extends \yii\mongodb\ActiveRecord
     {
         return [
             [['type', 'home_id', 'away_id', 'round_id', 'stake_id', 'timeframe_id', 'status'], 'required'],
+            ['away_id', 'exist', 'targetClass' => Users::class, 'targetAttribute' => ['away_id' => '_id'] ],
+            ['round_id', 'exist', 'targetClass' => GameRounds::class, 'targetAttribute' => ['round_id' => '_id']],
+            ['stake_id', 'exist', 'targetClass' => GameStakes::class, 'targetAttribute' => ['stake_id' => '_id']],
+            ['timeframe_id', 'exist', 'targetClass' => GameTimeframes::class, 'targetAttribute' => ['timeframe_id' => '_id']],
             [['away_id', 'winner'], 'safe']
         ];
     }
@@ -90,10 +98,5 @@ class Matches extends \yii\mongodb\ActiveRecord
         if($this->isNewRecord) {
             $this->status = self::STATUS_WAITING;
         }
-    }
-
-    public function createNewMatch()
-    {
-        
     }
 }

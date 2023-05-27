@@ -20,7 +20,25 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
 {
     const TYPE_INCREASE = 'increase';
     const TYPE_DECREASE = 'decrease';
-    
+
+
+    public static function new($userId, $amount, $type, $source, $sourceId, $description) {
+        $model = new self;
+        $model->user_id = $userId;
+        $model->amount = (string) $amount;
+        $model->source = $source;
+        $model->source_id = $sourceId;
+        $model->type = $type;
+        $model->description = $description;
+        if($model->save()) {
+            return $model;
+        }else {
+            \Yii::error('save financial_transactions failed:'.$model->getErrorSummary(true));
+        }
+
+        return false;
+    }
+
     public function formName()
     {
         return '';

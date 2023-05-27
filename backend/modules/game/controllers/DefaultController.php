@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 use \backend\modules\game\models\GameRounds;
 use \backend\modules\game\models\GameTimeframes;
 use \backend\modules\game\models\GameStakes;
+use \backend\modules\game\models\MatchesRepo;
 /**
  * Default controller for the `game` module
  */
@@ -52,7 +53,7 @@ class DefaultController extends ApiController
 
     public function actionNew()
     {
-        $model = new Matches;
+        $model = new MatchesRepo;
         $model->home_id = \Yii::$app->user->id;
         $model->type = Matches::CASH_GAME;
 
