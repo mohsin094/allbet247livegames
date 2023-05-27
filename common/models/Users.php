@@ -17,6 +17,7 @@ use \common\components\Tools;
  * @property mixed $status
  * @property mixed $cdate
  * @property mixed $lang
+ * @property mixed $balance
  */
 class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
 {
@@ -55,6 +56,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             $this->public_name = 'bg_'.rand(1,9).time();
             $this->email = strtolower(trim($this->email));
             $this->status = self::STATUS_WAITING_CONFIRMATION;
+            $this->balance = '0';
         }
         return parent::beforeValidate();
     }
@@ -75,7 +77,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'email' => $this->email,
             'avatar' => $this->avatar,
             'role' => \Yii::$app->user->getIdentity()->role,
-            'status' => $this->status
+            'status' => $this->status,
+            'balance' => $this->balance
         ];
     }
 
@@ -109,7 +112,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'cdate',
             'lang',
             'role',
-            'avatar'
+            'avatar',
+            'balance',
         ];
     }
 
@@ -119,9 +123,9 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['email', 'password', 'cdate', 'role', 'public_name'], 'required'],
+            [['email', 'password', 'cdate', 'role', 'public_name', 'balance'], 'required'],
             ['password_repeat', 'required', 'on' => self::SCENARIO_REGISTER],
-            [['email', 'password', 'lang', 'role'], 'string'],
+            [['email', 'password', 'lang', 'role', 'balance'], 'string'],
             [['email'], 'email'],
             [['password_repeat'], 'compare', 'compareAttribute' => 'password', 'operator' => '=='],
             // [['email', 'password', 'status', 'cdate', 'lang', 'user_role_id'], 'safe']
@@ -140,7 +144,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'status' => Yii::t('app', 'Status'),
             'cdate' => Yii::t('app', 'Cdate'),
             'lang' => Yii::t('app', 'Lang'),
-            'user_role_id' => Yii::t('app', 'Role')
+            'user_role_id' => Yii::t('app', 'Role'),
+            'balance' => Yii::t('app', 'Balance');
         ];
     }
 

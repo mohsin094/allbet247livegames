@@ -17,7 +17,7 @@ class GameStakes extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return ['backgammon', 'game_stakes'];
+        return [\Yii::$app->params['mongodbDbName'], 'game_stakes'];
     }
 
     /**

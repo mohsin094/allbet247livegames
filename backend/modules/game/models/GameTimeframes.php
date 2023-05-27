@@ -21,7 +21,7 @@ class GameTimeframes extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return ['backgammon', 'game_timeframes'];
+        return [\Yii::$app->params['mongodbDbName'], 'game_timeframes'];
     }
 
     /**

@@ -25,6 +25,11 @@ class DefaultController extends ApiController
                         'roles' => ['?', '@'],
                         'allow' => true,
                     ],
+                    [
+                        'actions' => ['new'],
+                        'roles' => ['@'],
+                        'allow' => true
+                    ]
                 ],
             ]
         ]);
@@ -43,5 +48,16 @@ class DefaultController extends ApiController
         ];
 
         return $this->resp;
+    }
+
+    public function actionNew()
+    {
+        $model = new Matches;
+        $model->home_id = \Yii::$app->user->id;
+        $model->type = Matches::CASH_GAME;
+
+        if($model->load(\Yii::$app->request->bodyParams) && $model->createNewMatch()) {
+            $this->resp->result = true;
+        }
     }
 }

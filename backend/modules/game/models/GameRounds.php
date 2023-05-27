@@ -17,7 +17,7 @@ class GameRounds extends \yii\mongodb\ActiveRecord
      */
     public static function collectionName()
     {
-        return ['backgammon', 'game_rounds'];
+        return [\Yii::$app->params['mongodbDbName'], 'game_rounds'];
     }
 
     /**
