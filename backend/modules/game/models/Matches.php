@@ -29,6 +29,8 @@ class Matches extends \yii\mongodb\ActiveRecord
 
     const TYPE_CASH_GAME = 'cash_game';
     const TYPE_TOURNAMENT = 'tournament';
+
+
     /**
      * {@inheritdoc}
      */
@@ -61,7 +63,7 @@ class Matches extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'home_id', 'away_id', 'round_id', 'stake_id', 'timeframe_id', 'status'], 'required'],
+            [['type', 'home_id', 'round_id', 'stake_id', 'timeframe_id', 'status'], 'required'],
             ['away_id', 'exist', 'targetClass' => Users::class, 'targetAttribute' => ['away_id' => '_id'] ],
             ['round_id', 'exist', 'targetClass' => GameRounds::class, 'targetAttribute' => ['round_id' => '_id']],
             ['stake_id', 'exist', 'targetClass' => GameStakes::class, 'targetAttribute' => ['stake_id' => '_id']],
@@ -78,7 +80,7 @@ class Matches extends \yii\mongodb\ActiveRecord
         return [
             '_id' => Yii::t('app', 'ID'),
             'home_id' => Yii::t('app', 'Home ID'),
-            'away_id' => Yii::t('app', 'Guest ID'),
+            'away_id' => Yii::t('app', 'Away ID'),
             'round_id' => Yii::t('app', 'Round ID'),
             'stake_id' => Yii::t('app', 'Stake ID'),
             'timeframe_id' => Yii::t('app', 'Timeframe ID'),
@@ -98,5 +100,7 @@ class Matches extends \yii\mongodb\ActiveRecord
         if($this->isNewRecord) {
             $this->status = self::STATUS_WAITING;
         }
+
+        return parent::beforeValidate();
     }
 }

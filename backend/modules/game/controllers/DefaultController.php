@@ -10,6 +10,7 @@ use \backend\modules\game\models\GameRounds;
 use \backend\modules\game\models\GameTimeframes;
 use \backend\modules\game\models\GameStakes;
 use \backend\modules\game\models\MatchesRepo;
+use \backend\modules\game\models\Matches;
 /**
  * Default controller for the `game` module
  */
@@ -42,6 +43,7 @@ class DefaultController extends ApiController
         $stakes = GameStakes::find()->All();
         $timeframes = GameTimeframes::find()->All();
 
+        $this->resp->result = true;
         $this->resp->params = [
             'rounds' => $rounds,
             'stakes' => $stakes,
@@ -53,12 +55,17 @@ class DefaultController extends ApiController
 
     public function actionNew()
     {
+ 
         $model = new MatchesRepo;
         $model->home_id = \Yii::$app->user->id;
-        $model->type = Matches::CASH_GAME;
+        $model->type = Matches::TYPE_CASH_GAME;
 
         if($model->load(\Yii::$app->request->bodyParams) && $model->createNewMatch()) {
             $this->resp->result = true;
+        }else {
+            $this->error($model->getErrors());
         }
+
+        return $this->resp;
     }
 }

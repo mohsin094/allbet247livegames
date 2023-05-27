@@ -38,7 +38,7 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
 
         return false;
     }
-
+    
     public function formName()
     {
         return '';

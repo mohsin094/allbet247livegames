@@ -58,6 +58,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             $this->status = self::STATUS_WAITING_CONFIRMATION;
             $this->balance = '0';
         }
+        $this->balance = (string) $this->balance;
         return parent::beforeValidate();
     }
 
@@ -145,7 +146,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'cdate' => Yii::t('app', 'Cdate'),
             'lang' => Yii::t('app', 'Lang'),
             'user_role_id' => Yii::t('app', 'Role'),
-            'balance' => Yii::t('app', 'Balance');
+            'balance' => Yii::t('app', 'Balance')
         ];
     }
 
