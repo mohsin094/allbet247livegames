@@ -20,9 +20,9 @@ Timer.prototype.start = function() {
 	this.presentTime = setInterval(() => {
 		if(this.tickCounter < this.time) {
 			this.onTick();
-		}else if(this.tickCounter >= this.time && this.tickCounter < this.timeBank) {
+		}else if(this.tickCounter >= this.time && this.tickCounter < this.timeBank + this.time) {
 			this.onTimeBankTick();
-		}else if(this.tickCounter >= this.timeBank) {
+		}else if(this.tickCounter >= this.timeBank ) {
 			this.onTimeBankEnd();
 			this.onEnd();
 			this.clear();

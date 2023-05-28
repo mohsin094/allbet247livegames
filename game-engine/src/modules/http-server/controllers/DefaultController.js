@@ -11,8 +11,8 @@ function DefaultController() {
 	this.index = function()
 	{
 		const t = new Timer({
-			time: 60,
-			timeBank: 100
+			time: 10,
+			timeBank: 20
 		});
 		t.onTick = function() {
 			console.log('tick:'+t.tickCounter);
