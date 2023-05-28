@@ -1,5 +1,4 @@
 import {randomBytes} from 'crypto'
-import {default as SessionModel, FIELDS, schema} from '#models/SessionModel'
 import conf from '#components/ConfProvider'
 
 function Session(sessionId = undefined) {
@@ -8,7 +7,6 @@ function Session(sessionId = undefined) {
 }
 
 Session.prototype.isNew = false;
-Session.prototype.model = new SessionModel();
 
 Session.prototype.set = function(name, value) {
 

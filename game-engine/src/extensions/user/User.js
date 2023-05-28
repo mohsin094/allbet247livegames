@@ -1,7 +1,5 @@
 import {default as Role, ROLES, ROLES_GROUP} from '#extensions/permissions/Role'
 import ConfProvider from "#components/ConfProvider";
-import UserModel from "#models/UserModel";
-import RoomUserModel from "#models/RoomUserModel";
 
 function User() {
 	this.role = new Role();

@@ -1,5 +1,4 @@
 import Timer from "#backgammon/timer/Timer";
-import Dice from "#backgammon/dice/Dice";
 import {Player, PLAYER_COLOR} from "#backgammon/player/Player";
 
 function backgammon(params)
