@@ -1,0 +1,8 @@
+.cache
+.idea
+.env
+package-lock.json
+node_modules/
+src/configs/configs.json
+src/configs/configs.test.json
+src/configs/configs.local.json

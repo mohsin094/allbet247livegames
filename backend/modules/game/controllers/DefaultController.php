@@ -23,7 +23,7 @@ class DefaultController extends ApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['get-configs'],
+                        'actions' => ['get-configs', 'get-waiting'],
                         'roles' => ['?', '@'],
                         'allow' => true,
                     ],
@@ -35,6 +35,19 @@ class DefaultController extends ApiController
                 ],
             ]
         ]);
+    }
+
+    public function actionGetWaiting()
+    {
+        $this->resp->result = true;
+
+        $matches = Matches::find()
+            ->select(['_id', 'home_id', 'away_id', 'type', 'round_id', 'stake_id', 'timeframe_id','status'])
+            ->where(['type' => Matches::TYPE_CASH_GAME, 'status' => Matches::STATUS_WAITING])
+            ->all();
+
+        $this->resp->params = $matches;
+        return $this->resp;
     }
 
     public function actionGetConfigs()

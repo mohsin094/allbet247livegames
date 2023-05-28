@@ -1,0 +1,7 @@
+/**
+* @todo TODOS LIST
+**/
+1- session garbage collector with cron
+2- reload config file without restarting server
+3- config webserver to prevent nodejs attacks
+4- start server and listen on database rooms and namespaces automatically

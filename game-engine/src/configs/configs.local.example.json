@@ -1,0 +1,53 @@
+{
+  "params": {
+    "httpRequestSizeLimit": "10mb",
+    "cookiePrefix": "httpCookie_",
+    "sessionHttpHeader": "X-SESS-ID",
+    "host": "*",
+    "adminWebServiceToken": "0fb52d40-7277-41d6-9c74-ff3a160b6297"
+  },
+  "session": {
+    "ttl": 86400,
+    "autoStart": true
+  },
+  "server": {
+    "http": {
+      "port": 3002
+    },
+    "socket": {
+      "port": 3001,
+      "path": "/chat"
+    }
+  },
+  "db": {
+    "redis": {
+      "host": "localhost",
+      "username": "",
+      "password": "",
+      "port": 6379,
+      "sentinels": [
+        {
+          "host": "localhost",
+          "username": "",
+          "password": "",
+          "port": 26380
+        },
+        {
+          "host": "localhost",
+          "username": "",
+          "password": "",
+          "port": 26379
+        }
+      ]
+    },
+    "mongodb": {
+      "host": "localhost",
+      "user": "root",
+      "password": "",
+      "port": 6379
+    }
+  },
+  "fs": {
+
+  }
+}

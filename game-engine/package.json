@@ -1,0 +1,55 @@
+{
+  "name": "tamland-chat",
+  "version": "1.0.0",
+  "description": "Tamland Chat Core",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon app/src.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/E-T-on-ERT/tamland-chat.git"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Omid Abedi",
+    "email": "oabedi2011@gmail.com",
+    "url": "https://github.com/omidabedi"
+  },
+  "license": "none",
+  "bugs": {
+    "url": "https://github.com/E-T-on-ERT/tamland-chat/issues"
+  },
+  "homepage": "https://github.com/E-T-on-ERT/tamland-chat#readme",
+  "dependencies": {
+    "@socket.io/redis-adapter": "^8.0.0",
+    "ajv": "^8.11.2",
+    "content-type": "^1.0.4",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "ioredis": "^5.2.4",
+    "joi": "^17.7.0",
+    "lodash-es": "^4.17.21",
+    "mongodb": "^4.12.1",
+    "raw-body": "^2.5.1",
+    "socket.io": "^4.5.4"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
+  },
+  "imports": {
+    "#root/*": "./*.js",
+    "#/*": "./src/*.js",
+    "#components/*": "./src/components/*.js",
+    "#modules/*": "./src/modules/*.js",
+    "#extensions/*": "./src/extensions/*.js",
+    "#models/*": "./src/models/*.js",
+    "#backgammon/*": "./src/game/backgammon/*.js"
+  },
+  "nodemonConfig": {
+    "ignore": ["**/deploy/**", "**/test/**", "**/todo/**", "**/docs/**"]
+  }
+}
