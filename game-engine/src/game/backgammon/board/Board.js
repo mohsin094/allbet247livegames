@@ -11,4 +11,4 @@ Board.prototype.create = function() {
 	}
 }
 
-export default Board;
+export default Board
