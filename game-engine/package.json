@@ -47,7 +47,8 @@
     "#modules/*": "./src/modules/*.js",
     "#extensions/*": "./src/extensions/*.js",
     "#models/*": "./src/models/*.js",
-    "#backgammon/*": "./src/game/backgammon/*.js"
+    "#backgammon/*": "./src/game/backgammon/*.js",
+    "#utils/*": "./src/utils/*.js"
   },
   "nodemonConfig": {
     "ignore": ["**/deploy/**", "**/test/**", "**/todo/**", "**/docs/**"]
