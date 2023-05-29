@@ -1,21 +1,19 @@
 import Timer from "#backgammon/timer/Timer";
 import Board from "#backgammon/board/Board";
 
-import {Player, PLAYER_COLOR} from "#backgammon/player/Player";
+import Player, {PLAYER_COLOR} from "#backgammon/player/Player";
 
-function backgammon(params)
+function Backgammon()
 {
 
-	this.timer = new Timer(params.timer);
-	this.playerBlack = new Player();
 }
 
 
-backgammon.prototype.borad = undefined;
+Backgammon.prototype.borad = undefined;
 
 
-backgammon.prototype.playerWhite = undefined;
-backgammon.prototype.playerBlack = undefined;
+Backgammon.prototype.playerWhite = undefined;
+Backgammon.prototype.playerBlack = undefined;
 
 /**
  * @param params example:
@@ -27,21 +25,31 @@ backgammon.prototype.playerBlack = undefined;
  *	}
 */
 
-backgammon.prototype.create = function(params) {
+Backgammon.prototype.create = function(params) {
 	this.board = new Board();
 
-	this.playerBlack = new Player({
+
+	this.playerBlack = new Player()
+	this.playerBlack.create({
 		color: PLAYER_COLOR.BLACK,
 		timer: new Timer(params.timer),
-		borad: this.borad	
+		board: this.board	
 	});
+	this.playerBlack.setupCheckers();
 
-	this.playerWhite = new Player({
+	this.playerWhite = new Player();
+	this.playerWhite.create({
 		color: PLAYER_COLOR.WHITE,
 		timer: new Timer(params.timer),
-		borad: this.board
+		board: this.board
 	});
+	this.playerWhite.setupCheckers();
 
-	borad.create();
+	this.board.create();
+
+	console.log(this.playerWhite.checkers);
+	console.log(this.playerBlack.checkers);
 
 }
+
+export default Backgammon

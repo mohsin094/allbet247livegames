@@ -18,3 +18,5 @@ Dice.prototype.throwTwo = function() {
 Dice.prototype.throwDouble = function() {
 	return doubleDice[randBetween(0, 5)];
 }
+
+export default Dice

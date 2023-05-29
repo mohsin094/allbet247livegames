@@ -12,4 +12,4 @@ column.prototype.out = function() {
 
 }
 
-export column
+export default column

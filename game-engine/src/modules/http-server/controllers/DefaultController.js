@@ -1,4 +1,4 @@
-import Timer from "#backgammon/timer/Timer";
+import bg from "#backgammon/Backgammon";
 
 function DefaultController() {
 	
@@ -10,27 +10,14 @@ function DefaultController() {
 
 	this.index = function()
 	{
-		const t = new Timer({
-			time: 10,
-			timeBank: 20
+		const t = new bg();
+		
+		t.create({
+			timer: {
+				time: 10,
+				timeBank: 20
+			}
 		});
-		t.onTick = function() {
-			console.log('tick:'+t.tickCounter);
-		}
-
-		t.onTimeBankTick = function() {
-			console.log('time back tick'+ t.tickCounter);
-		}
-
-		t.onEnd = function() {
-			console.log('on time end'+ t.tickCounter);
-		}
-
-		t.onTimeBankEnd = function() {
-			console.log('on time bank end'+ t.tickCounter);
-		}
-
-		t.start();
 	}
 }
 
