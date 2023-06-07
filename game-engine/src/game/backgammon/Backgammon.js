@@ -30,7 +30,6 @@ Backgammon.prototype.turn = undefined;
 Backgammon.prototype.create = function(params) {
 	this.board = new Board();
 
-
 	this.playerBlack = new Player()
 	this.playerBlack.create({
 		color: PLAYER_COLOR.BLACK,
