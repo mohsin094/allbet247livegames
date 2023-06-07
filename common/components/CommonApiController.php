@@ -36,6 +36,8 @@ class CommonApiController extends CommonController
 		\Yii::$app->response->charset = 'UTF-8';
 		\Yii::$app->response->headers->set('Origin', \Yii::$app->params['clientOrigin']);
 		\Yii::$app->response->headers->set('Access-Control-Allow-Origin', \Yii::$app->params['clientOrigin']);
+		\Yii::$app->response->headers->set('Access-Control-Allow-Headers', '*');
+		\Yii::$app->response->headers->set('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
 
 		if((\Yii::$app->user->isGuest && $accessToken = \Yii::$app->request->getHeaders()->get('x-sid-token')) || (\Yii::$app->user->isGuest && $accessToken = \Yii::$app->request->get('x-sid-token'))) {
             \Yii::$app->user->loginByAccessToken($accessToken);
