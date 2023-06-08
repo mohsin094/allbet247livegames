@@ -7,6 +7,7 @@ function ColumnHolder() {
 
 ColumnHolder.prototype.columns = undefined;
 
+
 /**
  *
  * @params params (object) {

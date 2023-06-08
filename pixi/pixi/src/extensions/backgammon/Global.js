@@ -13,6 +13,8 @@ Global.prototype.init = function(app) {
 	this.boardY = 0;
 	this.boardCenterPadding = app.screen.width * (this.boardCenterSizePercent/100);
 	this.boardSidePadding = app.screen.width * (this.boardSideSizePercent/100);
+	this.checkerSize = app.screen.width * (this.checkerSizePercent/100);
+	this.checkerMargin = app.screen.width * (this.checkerMarginPercent/100);
 	if(app.screen.height > app.screen.width) {
 		this.boardWidth = app.screen.width;
 		this.boardHeight = app.screen.width / 1.44;
@@ -37,6 +39,7 @@ Global.prototype.boardY = undefined;
 Global.prototype.boardCenterPadding = undefined;
 Global.prototype.boardSidePadding = undefined;
 Global.prototype.checkerMargin = undefined;
+Global.prototype.checkerSize = undefined;
 
 
 export default Global
