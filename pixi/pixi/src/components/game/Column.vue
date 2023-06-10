@@ -1,8 +1,8 @@
 <template>
-	<ul class="column-holder" v-if="data">
+	<ul class="column-holder" :style="{top: (data.index < 12) ? data.y+'px' : 'initial',bottom: (data.index > 11 ) ? data.y+'px' : 'initial' , left: data.x+'px'}" v-if="data">
 		<li v-for="checker in data.container" :key="checker.index">
-			<img class="checker img-fluid" v-if="checker.color == playerColor.WHITE" src="@/assets/game/img/white-checker.png" />
-			<img class="checker img-fluid" v-if="checker.color == playerColor.BLACK" src="@/assets/game/img/black-checker.png" />
+			<img class="checker img-fluid" :style="{width: checker.width+'px'}" v-if="checker.color == playerColor.WHITE" src="@/assets/game/img/white-checker.png" />
+			<img class="checker img-fluid" :style="{width: checker.width+'px'}" v-if="checker.color == playerColor.BLACK" src="@/assets/game/img/black-checker.png" />
 		</li>
 	</ul>
 </template>
@@ -23,7 +23,7 @@
 
 		},
 		created() {
-			
+		
 		}
 	}
 </script>

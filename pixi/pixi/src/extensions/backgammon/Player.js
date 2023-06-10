@@ -26,9 +26,14 @@ Player.prototype.moveChecker = function(index, toPosition)
 {
 	// console.log(this.checkers)
 	const oldPosition = this.checkers[index].position;
-	this.board.position(this.checkers[index], toPosition, oldPosition);
-	this.checkers[index].position = toPosition;
-	CheckersUtil.fixPosition(this.board, this.checkers);
+	console.log(oldPosition)
+	console.log(toPosition)
+	if(oldPosition != toPosition) {
+
+		this.board.position(this.checkers[index], toPosition, oldPosition);
+	}
+	// this.checkers[index].position = toPosition;
+	// CheckersUtil.fixPosition(this.board, this.checkers);
 }
 
 Player.prototype.setupCheckers = function() {

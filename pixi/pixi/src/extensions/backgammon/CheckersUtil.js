@@ -1,29 +1,25 @@
 import {PLAYER_COLOR as COLOR} from "@/extensions/backgammon/Player";
 export default {
-	fixPosition(board, checkers) {
-		for(let i = 0; i < checkers.length; i++) {
-			board.position(checkers[i], checkers[i].position);
-		}
-	},
+
 	initPosition(board, color, checkers) {
 		
 		switch(color) {
 		case COLOR.WHITE:
 			for(let i = 0; i < 15; i++) {
 				if(i == 0 || i == 1) {
-					checkers[i].position = 1;
-					board.position(checkers[i], 1);
+					checkers[i].position = 0;
+					board.position(checkers[i], 0);
 				}else if(i < 7) {
 
-					checkers[i].position = 12;
-					board.position(checkers[i], 12);
+					checkers[i].position = 11;
+					board.position(checkers[i], 11);
 				}else if(i < 12) {
-					checkers[i].position = 17;
-					board.position(checkers[i], 17);
+					checkers[i].position = 16;
+					board.position(checkers[i], 16);
 				}else {
 
-					checkers[i].position = 20;
-					board.position(checkers[i], 20);
+					checkers[i].position = 19;
+					board.position(checkers[i], 19);
 				}
 			}
 			break;
@@ -31,20 +27,20 @@ export default {
 			for(let i = 0; i < 15; i++) {
 			
 				if(i == 0 || i == 1) {
-					checkers[i].position = 24;
-					board.position(checkers[i], 24);
+					checkers[i].position = 23;
+					board.position(checkers[i], 23);
 				}else if(i < 7) {
 
-					checkers[i].position = 13;
-					board.position(checkers[i], 13);
+					checkers[i].position = 12;
+					board.position(checkers[i], 12);
 				}else if(i < 10) {
 
-					checkers[i].position = 8;
-					board.position(checkers[i], 8);
+					checkers[i].position = 7;
+					board.position(checkers[i], 7);
 				}else {
 
-					checkers[i].position = 6;
-					board.position(checkers[i], 6);
+					checkers[i].position = 5;
+					board.position(checkers[i], 5);
 				}
 			}
 			break;

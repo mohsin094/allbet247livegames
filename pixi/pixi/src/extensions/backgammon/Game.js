@@ -32,7 +32,7 @@ Game.prototype.move = function() {
 Game.prototype.init = function() {
 
 	this.board = new Board(this.global);
-	this.board.create(this.app);
+	this.board.create();
 	
 	this.playerWhite = new Player(this.board, this.global);
 	this.playerBlack = new Player(this.board, this.global);

@@ -11,6 +11,9 @@ Global.prototype.gameHeight = undefined;
 Global.prototype.boardWidth = undefined;
 Global.prototype.boardHeight = undefined;
 Global.prototype.checkerSize = undefined;
+Global.prototype.boardSidePadding = undefined;
+Global.prototype.checkerMargin = undefined;
+Global.prototype.boardCenterPadding = undefined;
 
 Global.prototype.init = function() {
 	this.gameWidth = document.getElementById("game").offsetWidth;
@@ -23,8 +26,11 @@ Global.prototype.init = function() {
 		this.boardWidth = this.gameWidth;
 		this.boardHeight = this.gameWidth  * (this.boardRatio);
 	}
-
+	console.log(this.boardWidth)
 	this.checkerSize = this.boardWidth * (this.checkerSizePercent / 100);
+	this.checkerMargin = this.boardWidth * (this.checkerMarginPercent / 100);
+	this.boardSidePadding = this.boardWidth * (this.boardSideSizePercent / 100);
+	this.boardCenterPadding = this.boardWidth * (this.boardCenterSizePercent / 100);
 }
 
 
