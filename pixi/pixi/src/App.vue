@@ -4,63 +4,38 @@ import TheWelcome from './components/TheWelcome.vue'
 </script>
 
 <template>
-  <header>
-  </header>
 
-  <main>
-    <div id="pixi" v-once>
+    <game></game>
 
-    </div>
-  </main>
+
 </template>
 
 <script>
-  import Game from "@backgammon/Game";
+  import Game from "./components/game/Game.vue";
 
   export default {
+    components: {
+      Game
+    },
     data() {
       return {
         msg: 'click',
+        game: undefined
       }
     },
     methods: {
-      click() {
-        this.msg += '2';
-        console.log('clicked');
+      move() {
+        this.game.move();
       }
     },
     mounted() {
-        const g = new Game(this, undefined);
-        g.init();
+ 
     }
   }
 </script>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+  #app {
+    width: 100%;
   }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>

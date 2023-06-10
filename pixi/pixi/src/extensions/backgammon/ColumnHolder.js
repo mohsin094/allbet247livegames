@@ -20,7 +20,7 @@ ColumnHolder.prototype.columns = undefined;
 ColumnHolder.prototype.add = function(params) {
 	this.columns.push({
 		index: params.index,
-		container: new Container()
+		container: []
 	});	
 }
 

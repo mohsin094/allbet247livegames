@@ -6,6 +6,7 @@ function Player(app, board, globalValues)
 {
 	this.app = app;
 	this.global = globalValues;
+	this.board = board;
 }
 
 const COLOR = {
@@ -21,9 +22,18 @@ Player.prototype.checkers = undefined;
 Player.prototype.app = undefined;
 Player.prototype.global = undefined;
 
-Player.prototype.setupCheckers = function(board) {
+Player.prototype.moveChecker = function(index, toPosition)
+{
+	// console.log(this.checkers)
+	const oldPosition = this.checkers[index].position;
+	this.board.position(this.checkers[index], toPosition, oldPosition);
+	this.checkers[index].position = toPosition;
+	CheckersUtil.fixPosition(this.board, this.checkers);
+}
 
-	CheckersUtil.initPosition(board, this.color, this.checkers);
+Player.prototype.setupCheckers = function() {
+
+	CheckersUtil.initPosition(this.board, this.color, this.checkers);
 }
 
 Player.prototype.create = function(player) {
