@@ -34,8 +34,8 @@ Game.prototype.init = function() {
 	this.board = new Board(this.global);
 	this.board.create(this.app);
 	
-	this.playerWhite = new Player(this.app, this.board, this.global);
-	this.playerBlack = new Player(this.app, this.board, this.global);
+	this.playerWhite = new Player(this.board, this.global);
+	this.playerBlack = new Player(this.board, this.global);
 
 	this.playerBlack.create({
 		color: PLAYER_COLOR.BLACK,

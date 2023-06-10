@@ -2,9 +2,9 @@ import CheckersUtil from "@/extensions/backgammon/CheckersUtil";
 import Checker from "@/extensions/backgammon/Checker";
 
 
-function Player(app, board, globalValues)
+function Player(board, globalValues)
 {
-	this.app = app;
+
 	this.global = globalValues;
 	this.board = board;
 }
@@ -19,7 +19,7 @@ Player.prototype.color = undefined;
 // Player.prototype.dice = undefined;
 Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
-Player.prototype.app = undefined;
+
 Player.prototype.global = undefined;
 
 Player.prototype.moveChecker = function(index, toPosition)

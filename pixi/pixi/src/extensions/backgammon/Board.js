@@ -9,13 +9,18 @@ Board.prototype.global = undefined;
 Board.prototype.columnHolder = undefined;
 
 Board.prototype.position = function(checker, index, oldPosition) {
-	let container = this.columnHolder.get(index-1);
+	let container = this.columnHolder.get(index-1).container;
+
 		container.splice(index, 1);
 		container.push(checker);
 }
 
 Board.prototype.getColumns = function() {
 	return this.columnHolder;
+}
+
+Board.prototype.getColumnAt = function(index) {
+	return this.columnHolder.get(index)
 }
 
 Board.prototype.create = function(app) {
