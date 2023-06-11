@@ -1,5 +1,6 @@
 import ColumnHolder from "@/extensions/backgammon/ColumnHolder";
-import {remove} from "lodash-es"
+import {remove} from "lodash-es";
+import {PLAYER_COLOR} from "@/extensions/backgammon/Player.js";
 
 function Board(globalValues) {
 	this.global = globalValues;
@@ -9,9 +10,38 @@ Board.prototype.global = undefined;
 Board.prototype.columnHolder = undefined;
 Board.prototype.afterPosition = function(){}
 
-Board.prototype.position = function(checker, index, oldPosition) {
+Board.prototype.removeOffer = function() {
+	this.columnHolder.removeOffer();
+}
 
-	let container = this.columnHolder.get(index).container;
+Board.prototype.offerMove = function(checker, fromPosition, dice) {
+
+	switch(checker.color) {
+	case PLAYER_COLOR.WHITE:
+		
+		for(let i=0; i<this.columnHolder.columns.length; i++) {
+			
+					
+			if(fromPosition < this.columnHolder.columns[i].index) {
+			
+				
+				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.BLACK || this.columnHolder.columns[i].container.length > 1) {
+					if(fromPosition + dice.first == this.columnHolder.columns[i].index || fromPosition + dice.second == this.columnHolder.columns[i].index) {
+						this.columnHolder.columns[i].focus = true;
+					}
+				}
+			}
+		}
+		break;
+	case PLAYER_COLOR.BLACK:
+
+		break;
+	}
+}
+
+Board.prototype.position = function(checker, index, oldPosition) {
+	const column = this.columnHolder.get(index);
+	let container = column.container;
 	// if(checker.position != index) {
 		if(oldPosition) {
 			let oldContainer = this.columnHolder.get(oldPosition).container;
@@ -20,6 +50,7 @@ Board.prototype.position = function(checker, index, oldPosition) {
 
 		container.push(checker);
 		checker.position = index;
+		column.occupied = checker.color;
 	// }
 
 }

@@ -40,7 +40,7 @@ class CommonApiController extends CommonController
 		\Yii::$app->response->headers->set('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
 
 		if((\Yii::$app->user->isGuest && $accessToken = \Yii::$app->request->getHeaders()->get('x-sid-token')) || (\Yii::$app->user->isGuest && $accessToken = \Yii::$app->request->get('x-sid-token'))) {
-            \Yii::$app->user->loginByAccessToken($accessToken);
+            // \Yii::$app->user->loginByAccessToken($accessToken);
         }
 
 		return parent::beforeAction($action);

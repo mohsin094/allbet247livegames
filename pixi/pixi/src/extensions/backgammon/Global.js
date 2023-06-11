@@ -24,9 +24,9 @@ Global.prototype.init = function() {
 		this.boardWidth = this.gameHeight * (this.boardRatio);
 	}else {
 		this.boardWidth = this.gameWidth;
-		this.boardHeight = this.gameWidth  * (this.boardRatio);
+		this.boardHeight = this.gameWidth  / (this.boardRatio);
 	}
-	console.log(this.boardWidth)
+
 	this.checkerSize = this.boardWidth * (this.checkerSizePercent / 100);
 	this.checkerMargin = this.boardWidth * (this.checkerMarginPercent / 100);
 	this.boardSidePadding = this.boardWidth * (this.boardSideSizePercent / 100);

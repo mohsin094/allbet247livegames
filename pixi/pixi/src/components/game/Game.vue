@@ -5,8 +5,14 @@
 			<div id="game" class="col-12">
 				<div id="board">
 					<template v-if="game != undefined" >
+					<div v-if="showDice" class="dices">
+						<ul>
+							<li><img :src="'./../../assets/game/img/dice-'+game.dice.first+'.png'" /></li>
+							<li><img :src="'./../../assets/game/img/dice-'+game.dice.second+'.png'" /></li>
+						</ul>
+					</div>
 					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
-					<column :data="game.board.getColumnAt(0)" />
+					<column @touch="touch" :data="game.board.getColumnAt(0)" />
 					<column :data="game.board.getColumnAt(1)"/>
 					<column :data="game.board.getColumnAt(2)" />
 					<column :data="game.board.getColumnAt(3)" />
@@ -36,6 +42,7 @@
 
 		</div>
 		<button @click="move">Move</button>
+		<button @click="dice">Dice</button>
 	</div>
 </template>
 
@@ -51,35 +58,31 @@ export default {
 	data() {
 		return {
 			game: undefined,
+			showDice: false,
 		}
 	},
 	methods: {
 		move() {
 			this.game.move();
+		},
+		dice() {
+			this.game.dice.throw();
+			this.showDice = true;
+		},
+		touch(checkerIndex) {
+			
+			this.game.touchChecker(checkerIndex);
 		}
 	},
 	created() {
 	},
 	mounted() {
 		
-		this.game = new Game();
+		this.game = new Game(this);
 		this.game.init();
 		
-		this.$nextTick(() => {
-			document.getElementById("board").style.width = this.game.global.boardWidth+"px"
-			document.getElementById("board").style.height = this.game.global.boardHeight+"px"
-			document.getElementById("board-bg").style.width = this.game.global.boardWidth+"px"
 
-			// const checkers = document.getElementsByClassName("checker");
-			
-			// for(let i = 0; i < checkers.length; i++) {
-				
-			// 	checkers[i].style.width = this.game.global.checkerSize+"px"
-			// }
 
-		})
-
-		// document.getElementBy/Id("board").style.width = document.getElementById("board-bg").style.width
 	},
 }
 </script>
@@ -108,5 +111,23 @@ export default {
 	margin-left: auto;
 	margin-right: auto;
 	left: 0;
+}
+
+.dices {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 25%;
+}
+
+.dices ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.dices ul li {
+	display: inline;
+	margin-right: 5px;
 }
 </style>

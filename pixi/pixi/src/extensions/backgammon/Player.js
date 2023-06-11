@@ -22,12 +22,15 @@ Player.prototype.checkers = undefined;
 
 Player.prototype.global = undefined;
 
+Player.prototype.touchChecker = function(index) {
+	this.checkers[index].selected = !this.checkers[index].selected;
+}
+
 Player.prototype.moveChecker = function(index, toPosition)
 {
 	// console.log(this.checkers)
 	const oldPosition = this.checkers[index].position;
-	console.log(oldPosition)
-	console.log(toPosition)
+
 	if(oldPosition != toPosition) {
 
 		this.board.position(this.checkers[index], toPosition, oldPosition);

@@ -7,6 +7,11 @@ function ColumnHolder() {
 
 ColumnHolder.prototype.columns = undefined;
 
+ColumnHolder.prototype.removeOffer = function() {
+	for(let i = 0; i < this.columns.length; i++) {
+		this.columns[i].focus = false;
+	}
+}
 
 /**
  *
@@ -22,6 +27,8 @@ ColumnHolder.prototype.add = function(params) {
 		index: params.index,
 		x: params.x,
 		y: params.y,
+		occupied: undefined,
+		focus: false,
 		container: []
 	});	
 }
