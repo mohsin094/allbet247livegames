@@ -5,6 +5,8 @@ namespace common\components;
 use common\components\CommonController;
 use yii\web\Response;
 use common\models\Sessions;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 class CommonApiController extends CommonController
 {
@@ -26,6 +28,16 @@ class CommonApiController extends CommonController
         \Yii::$app->user->enableAutoLogin = false;
         \Yii::$app->user->enableSession = false;
 	}
+
+	public function behaviors()
+    {
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::class,
+                'denyCallback' => function() {}
+            ]
+        ]);
+    }
 	
 	public function beforeAction($action)
 	{
@@ -40,7 +52,7 @@ class CommonApiController extends CommonController
 		\Yii::$app->response->headers->set('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
 
 		if((\Yii::$app->user->isGuest && $accessToken = \Yii::$app->request->getHeaders()->get('x-sid-token')) || (\Yii::$app->user->isGuest && $accessToken = \Yii::$app->request->get('x-sid-token'))) {
-            // \Yii::$app->user->loginByAccessToken($accessToken);
+            \Yii::$app->user->loginByAccessToken($accessToken);
         }
 
 		return parent::beforeAction($action);

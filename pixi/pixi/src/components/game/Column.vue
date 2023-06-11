@@ -4,7 +4,7 @@
 			<img class="checker img-fluid" :style="{width: checker.width+'px'}" v-if="checker.color == playerColor.WHITE" src="@/assets/game/img/white-checker.png" />
 			<img class="checker img-fluid" :style="{width: checker.width+'px'}" v-if="checker.color == playerColor.BLACK" src="@/assets/game/img/black-checker.png" />
 			<img v-show="checker.selected" :style="{width: checker.width+'px'}" class="checker checker-selected img-fluid" src="@/assets/game/img/checker-selected.png" />
-			<img :style="'width:'+checker.width+'px'" v-show="data.focus" src="@/assets/game/img/column-selected.svg" class="column-selected" />
+			<img v-show="data.focus" :style="'width:'+checker.width+'px'" src="@/assets/game/img/column-selected.svg" class="column-selected" />
 		</li>
 	</ul>
 </template>

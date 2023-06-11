@@ -27,6 +27,7 @@ Board.prototype.offerMove = function(checker, fromPosition, dice) {
 				
 				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.BLACK || this.columnHolder.columns[i].container.length > 1) {
 					if(fromPosition + dice.first == this.columnHolder.columns[i].index || fromPosition + dice.second == this.columnHolder.columns[i].index) {
+						console.log(0);
 						this.columnHolder.columns[i].focus = true;
 					}
 				}
