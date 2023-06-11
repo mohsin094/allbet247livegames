@@ -7,5 +7,5 @@ return [
     'user.passwordResetTokenExpire' => 3600,
     'user.passwordMinLength' => 8,
     'mongodbDbName' => 'backgammon',
-    'clientOrigin' => 'localhost:5173'
+    'clientOrigin' => 'http://localhost:5173'
 ];
