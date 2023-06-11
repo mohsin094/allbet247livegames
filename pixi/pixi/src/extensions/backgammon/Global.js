@@ -4,6 +4,7 @@ function Global() {
 	this.checkerSizePercent = 6.44;
 	this.checkerMarginPercent = 0.26;
 	this.boardRatio = 1.44
+	this.boardTopPaddingSizePercent = 2.5;
 }
 
 Global.prototype.gameWidth = undefined;
@@ -14,6 +15,7 @@ Global.prototype.checkerSize = undefined;
 Global.prototype.boardSidePadding = undefined;
 Global.prototype.checkerMargin = undefined;
 Global.prototype.boardCenterPadding = undefined;
+Global.prototype.boardTopPaddingHeight = undefined;
 
 Global.prototype.init = function() {
 	this.gameWidth = document.getElementById("game").offsetWidth;
@@ -31,6 +33,7 @@ Global.prototype.init = function() {
 	this.checkerMargin = this.boardWidth * (this.checkerMarginPercent / 100);
 	this.boardSidePadding = this.boardWidth * (this.boardSideSizePercent / 100);
 	this.boardCenterPadding = this.boardWidth * (this.boardCenterSizePercent / 100);
+	this.boardTopPaddingHeight = this.boardHeight * (this.boardTopPaddingSizePercent / 100);
 }
 
 

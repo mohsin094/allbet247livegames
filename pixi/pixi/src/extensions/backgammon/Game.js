@@ -33,7 +33,7 @@ Game.prototype.touchChecker = function(index)
 
 Game.prototype.move = function()
 {
-	this.playerWhite.moveChecker(12, 8);
+	this.playerWhite.moveChecker(12, 17);
 	// this.playerBlack.moveChecker(13, 8);
 }
 
@@ -78,6 +78,8 @@ Game.prototype.init = function()
 			.style.height = this.global.boardHeight + "px"
 		document.getElementById("board-bg")
 			.style.width = this.global.boardWidth + "px"
+		document.getElementById("board-bg")
+			.style.height = this.global.boardHeight + "px"
 	});
 
 }

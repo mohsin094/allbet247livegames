@@ -14,12 +14,12 @@ export default {
 					checkers[i].position = 11;
 					board.position(checkers[i], 11);
 				}else if(i < 12) {
-					checkers[i].position = 16;
-					board.position(checkers[i], 16);
+					checkers[i].position = 18;
+					board.position(checkers[i], 18);
 				}else {
 
-					checkers[i].position = 19;
-					board.position(checkers[i], 19);
+					checkers[i].position = 16;
+					board.position(checkers[i], 16);
 				}
 			}
 			break;

@@ -12,30 +12,30 @@
 						</ul>
 					</div>
 					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
-					<column @touch="touch" :data="game.board.getColumnAt(0)" />
-					<column :data="game.board.getColumnAt(1)"/>
-					<column :data="game.board.getColumnAt(2)" />
-					<column :data="game.board.getColumnAt(3)" />
-					<column :data="game.board.getColumnAt(4)" />
-					<column :data="game.board.getColumnAt(5)" />
-					<column :data="game.board.getColumnAt(6)" />
-					<column :data="game.board.getColumnAt(7)" />
-					<column :data="game.board.getColumnAt(8)" />
-					<column :data="game.board.getColumnAt(9)" />
-					<column :data="game.board.getColumnAt(10)" />
-					<column :data="game.board.getColumnAt(11)" />
-					<column :data="game.board.getColumnAt(12)" />
-					<column :data="game.board.getColumnAt(13)" />
-					<column :data="game.board.getColumnAt(14)" />
-					<column :data="game.board.getColumnAt(15)" />
-					<column :data="game.board.getColumnAt(16)" />
-					<column :data="game.board.getColumnAt(17)" />
-					<column :data="game.board.getColumnAt(18)" />
-					<column :data="game.board.getColumnAt(19)" />
-					<column :data="game.board.getColumnAt(20)" />
-					<column :data="game.board.getColumnAt(21)" />
-					<column :data="game.board.getColumnAt(22)" />
-					<column :data="game.board.getColumnAt(23)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(1)"/>
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(3)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(4)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(5)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(6)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(7)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(8)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(9)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(10)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(11)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(12)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(13)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(14)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(15)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(16)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(17)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(18)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(19)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(20)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(21)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(22)" />
+					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
 					</template>
 				</div>
 			</div>
