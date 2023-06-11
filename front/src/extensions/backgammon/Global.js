@@ -20,7 +20,7 @@ Global.prototype.boardTopPaddingHeight = undefined;
 Global.prototype.init = function() {
 	this.gameWidth = document.getElementById("game").offsetWidth;
 	this.gameHeight = window.innerHeight - (window.innerHeight*(0.15));
-	console.log(window.innerHeight)
+
 
 	if(this.gameWidth >= this.gameHeight) {
 		this.boardHeight = this.gameHeight;

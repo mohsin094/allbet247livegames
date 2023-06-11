@@ -23,20 +23,26 @@ Game.prototype.board = undefined;
 Game.prototype.dice = undefined;
 Game.prototype.playerWhite = undefined;
 Game.prototype.playerBlack = undefined;
+Game.prototype.doubleActive = undefined;
+Game.prototype.activePlayer = undefined;
 
 Game.prototype.touchChecker = function(index)
 {
 	this.board.removeOffer();
-	this.playerWhite.toggleTouchChecker(index);
-	if(this.playerWhite.getChecker(index).selected) {
-		this.board.offerMove(this.playerWhite.checkers[index], this.playerWhite.checkers[index].position, this.dice);
+	this.activePlayer.toggleTouchChecker(index);
+	if(this.activePlayer.getChecker(index).selected) {
+		this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.dice);
 	}
 }
 
 Game.prototype.move = function()
 {
-	this.playerWhite.moveChecker(12, 24);
+	this.activePlayer.moveChecker(12, 0);
 	// this.playerBlack.moveChecker(13, 8);
+}
+
+Game.prototype.setActivePlayer = function() {
+	this.activePlayer = this.playerWhite;
 }
 
 /**
@@ -47,6 +53,8 @@ Game.prototype.move = function()
  **/
 Game.prototype.init = function()
 {
+
+	this.doubleActive = true;
 
 	this.dice = new Dice();
 

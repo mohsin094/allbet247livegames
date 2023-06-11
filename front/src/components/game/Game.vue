@@ -1,14 +1,18 @@
 <template>
 
 			<button @click="dice">Dice</button>
+			<button @click="move">Move</button>
 			<div id="game" class="col-12">
 				<div id="board">
 					<template v-if="game != undefined" >
 					<div v-if="showDice" class="dices">
 						<ul>
-							<li><img :src="'./../../assets/game/img/dice-'+game.dice.first+'.png'" /></li>
-							<li><img :src="'./../../assets/game/img/dice-'+game.dice.second+'.png'" /></li>
+							<li><img :style="{'max-width': game.global.checkerSize+'px'}" :src="'./../../assets/game/img/dice-'+game.dice.first+'.png'" /></li>
+							<li><img :style="{'max-width': game.global.checkerSize+'px'}" :src="'./../../assets/game/img/dice-'+game.dice.second+'.png'" /></li>
 						</ul>
+					</div>
+					<div v-if="doubleActive" id="double-dice">
+						<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
 					</div>
 					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
 					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
@@ -37,6 +41,7 @@
 					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
 					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
 					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
+
 					</template>
 				</div>
 			</div>
@@ -56,6 +61,7 @@ export default {
 		return {
 			game: undefined,
 			showDice: false,
+			doubleActive: false
 		}
 	},
 	methods: {
@@ -77,6 +83,7 @@ export default {
 		
 		this.game = new Game(this);
 		this.game.init();
+		this.doubleActive = this.game.doubleActive;
 		
 
 
@@ -110,10 +117,17 @@ export default {
 	left: 0;
 }
 
+#double-dice {
+	position: absolute;
+	z-index: 1;
+	top: 48%;
+	right: 2%;
+}
+
 .dices {
   position: absolute;
   z-index: 1;
-  top: 50%;
+  top: 48%;
   right: 25%;
 }
 
