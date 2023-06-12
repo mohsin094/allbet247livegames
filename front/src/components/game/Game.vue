@@ -2,6 +2,7 @@
 
 			<button @click="dice">Dice</button>
 			<button @click="move">Move</button>
+			
 			<div id="game" class="col-12">
 				<div id="board">
 					<template v-if="game != undefined" >

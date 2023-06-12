@@ -1,6 +1,6 @@
 import Timer from "#backgammon/timer/Timer";
 import Board from "#backgammon/board/Board";
-
+import {randomUUID} from "crypto";
 import Player, {PLAYER_COLOR} from "#backgammon/player/Player";
 
 function Backgammon()
@@ -16,6 +16,7 @@ Backgammon.prototype.borad = undefined;
 Backgammon.prototype.playerWhite = undefined;
 Backgammon.prototype.playerBlack = undefined;
 Backgammon.prototype.turn = undefined;
+Backgammon.prototype.id = undefined;
 
 /**
  * @param params example:
@@ -28,6 +29,7 @@ Backgammon.prototype.turn = undefined;
 */
 
 Backgammon.prototype.create = function(params) {
+	this.id = randomUUID();
 	this.board = new Board();
 
 	this.playerBlack = new Player()
@@ -90,8 +92,7 @@ Backgammon.prototype.throwTurnDice = function() {
 	const b = this.playerBlack.dice.throwOne();
 	const w =this.playerWhite.dice.throwOne();
 
-	console.log(b);
-	console.log(w);
+
 	let turn = undefined;
 	if(w > b) {
 		turn = this.playerWhite;

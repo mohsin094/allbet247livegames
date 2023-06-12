@@ -1,50 +1,56 @@
 import {randomBytes} from 'crypto'
-import conf from '#components/ConfProvider'
+import conf from '#components/ConfProvider';
+import mongo from "#components/Mongo";
+import sessionCol from "#models/Sessions";
+import {forEach} from "lodash-es";
 
 function Session(sessionId = undefined) {
 	this.id = sessionId;
-	this.ttl = conf.session.ttl;
 }
 
-Session.prototype.isNew = false;
+Session.prototype.begin = async function() {
+	const sessions = await mongo.db.collection(sessionCol.name).find({token: this.id}).toArray();
+	this.records = {};
+	forEach(sessions, (r) => this.records[r.session_key] = r);
+}
 
-Session.prototype.set = function(name, value) {
-
-	return this.model.update(this.id, name, value);
+Session.prototype.set = async function(name, value) {
+	if(this.has(name)) {
+		await mongo.db.collection(sessionCol.name).updateOne({token: this.id, session_key: name}, {$set: {session_value: value}});
+	}else {
+		const token = randomBytes(32).toString("hex");
+		await mongo.db.collection(sessionCol.name).insertOne({
+			token: (this.id != undefined) ? this.id : token,
+			session_key: name,
+			session_value: value,
+		});
+		this.id = (this.id != undefined) ? this.id : token;
+	}
+	await this.begin();
 }
 
 Session.prototype.get = function(name) {
 
-	return this.model.get(this.id, name);
+	return (this.records[name] != undefined) ? this.records[name].session_value : null;
 }
 
 Session.prototype.has = function(name) {
-	return this.model.has(this.id, name);
+	return (this.records[name] != undefined) ? true : false;
 }
 
-Session.prototype.exists =  async function() {
-	return (await this.model.getJson(this.id) != false) ? true : false;
+Session.prototype.del = async function(name) {
+	await mongo.db.collection(sessionCol.name).deleteOne({token: this.id, session_key: name});
+	await this.begin();
 }
 
-Session.prototype.destroy = function() {
-	return this.model.deleteJson(this.id);
+Session.prototype.destroy = async function() {
+	await mongo.db.collection(sessionCol.name).deleteMany({token: this.id});
+	this.begin();
 }
 
-Session.prototype.extend = async function() {
-	return this.model.expire(this.id, this.ttl);
-}
-
-Session.prototype.generate = function(customSessionId = undefined) {
-	let sessionId = (customSessionId !== undefined) ? customSessionId : randomBytes(32).toString('hex');
-	this.id = sessionId;
-	this.isNew = true;
-
-	const session = new SessionModel();
-	this.model = session;
-	return session.addJson(sessionId, Object.assign({}, schema), this.ttl);
-}
 
 Session.prototype.id = undefined;
-Session.prototype.ttl = undefined;
+Session.prototype.records = undefined;
+
 
 export default Session
