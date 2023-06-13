@@ -50,7 +50,6 @@ AccessControl.prototype.accessCheck = function() {
 			if(rule.hasOwnProperty('callback') && rule.hasOwnProperty('allow')) {
 				hasAccess = (rule.allow && rule.callback());
 			}else if(rule.hasOwnProperty('callback')) {
-
 				hasAccess = rule.callback();
 			}else if(rule.hasOwnProperty('allow')) {
 				hasAccess = rule.allow;

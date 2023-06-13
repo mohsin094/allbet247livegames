@@ -1,16 +1,14 @@
-import {default as Role, ROLES, ROLES_GROUP} from '#extensions/permissions/Role'
+import {default as Role, ROLES} from '#extensions/permissions/Role'
 import ConfProvider from "#components/ConfProvider";
+import session from "#components/Session";
+import mongo from "#components/Mongo";
+import {ObjectId} from "mongodb";
 
 function User() {
 	this.role = new Role();
 	this.guest = true;
 	this.id = undefined;
 	this.credentials = {}
-}
-
-
-User.prototype.isAdmin = function() {
-	return (ROLES_GROUP.ADMIN.indexOf(this.getRole()) > -1) ? true : false;
 }
 
 User.prototype.can = function(action) {
@@ -36,34 +34,21 @@ User.prototype.isGuest = function() {
 /*
 only use for system login
  */
-User.prototype.login = function(session, token) {
-	if(ConfProvider.getParam('adminWebServiceToken') == token) {
-		this.guest = false;
-		this.role.setRole(ROLES.SYSTEM);
-		session.set('role', ROLES.SYSTEM);
-		return true;
+User.prototype.login = async function(session, token) {
+	const sess = session;
+	
+	if(sess.has('user_id')) {
+		let user = await mongo.db.collection('users').findOne({_id:new ObjectId(sess.get('user_id'))});
+		
+		user = user;
+		if(user) {
+			this.credentials = user;
+			this.role.name = ROLES.MEMBER
+			return true;
+		}
 	}
-
 	return false;
 }
 
-User.prototype.loginToRoom = async function(session, token, userId, roomId) {
-	const model = new RoomUserModel();
-	model.attributes.room_id = roomId;
-
-	const user = await model.get(roomId, userId);
-
-	if(user && user.access_token === token) {
-		this.role.setRole(user.role);
-		this.credentials = user;
-		this.id = user.id;
-		this.guest = false;
-		session.set('role', user.role);
-		return true;
-	}
-
-
-	return false;
-}
 
 export default User

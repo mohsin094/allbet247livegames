@@ -53,6 +53,7 @@
 import Column from "./Column.vue";
 import Game from "@/extensions/backgammon/Game.js";
 import Global from "@/extensions/backgammon/Global";
+import {io} from "socket.io-client";
 
 export default {
 	components: {
@@ -62,7 +63,8 @@ export default {
 		return {
 			game: undefined,
 			showDice: false,
-			doubleActive: false
+			doubleActive: false,
+			io: undefined
 		}
 	},
 	methods: {
@@ -79,16 +81,28 @@ export default {
 		}
 	},
 	created() {
+		this.io = io("localhost:3002", {
+			path: "/game",
+			auth: {
+				token: this.$user.data.sessionId
+			}
+		});
+		this.io.on("connect", (socket) => {
+		  console.log('hii');
+
+		  this.io.emit('game/join', {id: 'asfsdfasfasdfadsf'});
+		});
+
 	},
 	mounted() {
 		
 		this.game = new Game(this);
 		this.game.init();
 		this.doubleActive = this.game.doubleActive;
-		
-
-
 	},
+	unmounted() {
+		this.io.close();
+	}
 }
 </script>
 <style scoped>

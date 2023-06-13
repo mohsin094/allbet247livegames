@@ -1,4 +1,3 @@
-import {NAMESPACEROOMS} from "#extensions/socket-com/Socket";
 import Pool from "#extensions/socket-com/Pool";
 
 function Broadcast(socket = undefined) {
@@ -8,14 +7,6 @@ function Broadcast(socket = undefined) {
 Broadcast.prototype.toAll = function(event, data) {
 
 	this.socket.server.of(this.socket.nsp.name).emit(event, data);
-}
-
-Broadcast.prototype.toAdminGroup = function(event, data) {
-	this.socket.server.of(this.socket.nsp.name).to(NAMESPACEROOMS.ADMIN).emit(event, data);
-}
-
-Broadcast.prototype.toNonAdminGroup = function(event, data) {
-	this.socket.server.of(this.socket.nsp.name).to(NAMESPACEROOMS.NON_ADMIN).emit(event, data);
 }
 
 Broadcast.prototype.toOne = function(params) {

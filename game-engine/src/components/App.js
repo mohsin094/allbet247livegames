@@ -43,9 +43,9 @@ export default {
 
 		this._httpServer.listen();
 
-		this.events = new Events(this, this._socketServer);
-		await this.events.init();
-		this.events.listen();
+		// this.events = new Events(this, this._socketServer);
+		// await this.events.init();
+		// this.events.listen();
 
 
 		this.destroy();

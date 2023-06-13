@@ -9,7 +9,9 @@ function Session(sessionId = undefined) {
 }
 
 Session.prototype.begin = async function() {
+
 	const sessions = await mongo.db.collection(sessionCol.name).find({token: this.id}).toArray();
+	
 	this.records = {};
 	forEach(sessions, (r) => this.records[r.session_key] = r);
 }
@@ -35,7 +37,7 @@ Session.prototype.get = function(name) {
 }
 
 Session.prototype.has = function(name) {
-	return (this.records[name] != undefined) ? true : false;
+	return (this.records != undefined && this.records[name] != undefined) ? true : false;
 }
 
 Session.prototype.del = async function(name) {

@@ -7,7 +7,6 @@ import conf from "#components/ConfProvider";
 import Session from "#components/Session";
 import User from "#extensions/user/User";
 import Log from "#components/Log";
-import {ROLES_GROUP} from "#extensions/permissions/Role";
 import Pool from "#extensions/socket-com/Pool";
 import Broadcast from "#extensions/socket-com/Broadcast";
 
@@ -41,23 +40,25 @@ Socket.prototype.init = async function(server, socket) {
 	this.socket = socket;
 	this.server = server;
 
-	this.broadcast = new Broadcast(socket);
+	// this.broadcast = new Broadcast(socket);
 
-	await this.initSession();
+	this.session = new Session(this.socket.handshake.auth[conf.getParam('sessionHttpHeader')]);
+	await this.session.begin();
+
+	if(!this.session) {
+		this.server.close();
+	}
+
 	if(await this.initUser() !== true) {
-		Log.error(`Wrong User Token For Class "${this.roomId}" UserId: "${this.socket.handshake.auth.userId}" Token: "${this.socket.handshake.auth[conf.getParam('sessionHttpHeader')]}"`)
+		Log.error(`Wrong User Session Token: "${this.socket.handshake.auth[conf.getParam('sessionHttpHeader')]}"`)
 			return;
 	}else {
-		this.socket.client.userId = this.socket.handshake.auth.userId;
-		if(this.user.isAdmin()) {
-			this.socket.join(nameSpaceRooms.ADMIN);
-		}else {
-			this.socket.join(nameSpaceRooms.NON_ADMIN);
-		}
-
+		this.socket.client.userId = this.session.get('user_id');
+		
 		Pool.add(this.socket);
 	}
 	this.appendToApp();
+	return true;
 }
 
 Socket.prototype.requestMaker = async function(eventName, args, callback = undefined) {
@@ -72,12 +73,14 @@ Socket.prototype.requestMaker = async function(eventName, args, callback = undef
 Socket.prototype.appendToApp = function() {
 	this.app.user = this.user;
 	this.app.session = this.session;
-	this.app.broadcast = this.broadcast;
+	// this.app.broadcast = this.broadcast;
 }
 
 Socket.prototype.initUser = async function() {
 	this.user = new User();
-	const r = await this.user.loginToRoom(this.session, this.session.id, this.socket.handshake.auth.userId, this.roomId);
+	
+
+	const r = await this.user.login(this.session, this.socket.handshake.auth[conf.getParam('sessionHttpHeader')]);
 	return (r) ? r : (new Response()).setStatus(Response.SOCKET_STATUS.UNAUTHORIZE).send();
 }
 
@@ -87,10 +90,7 @@ Socket.prototype.initSession = async function() {
 		let sessionId = this.socket.handshake.auth[conf.getParam('sessionHttpHeader')] ? this.socket.handshake.auth[conf.getParam('sessionHttpHeader')] : undefined;
 		if(sessionId == undefined) {
 			Log.error(`Session Not Found For Class "${this.roomId}" UserId: "${this.socket.handshake.auth.userId}" Token: "${this.socket.handshake.auth[conf.getParam('sessionHttpHeader')]}"`)
-
-		}else {
-			this.session = new Session();
-			await this.session.generate(sessionId);
+			resolve(false);
 		}
 		resolve(true);
 	})
@@ -112,7 +112,6 @@ Socket.prototype.initController = async function(eventName, args, callback = und
 		methodName += (c == 0) ? toLower(cname) : upperFirst(cname);
 		c++;
 	}) : '';
-
 
 	this.method = methodName != '' ? methodName : 'index';
 	this.controller = controllerName != '' ? controllerName+'Controller' : 'DefaultController';
@@ -150,27 +149,4 @@ Socket.prototype.initController = async function(eventName, args, callback = und
 	}
 
 }
-
-const socketEvents = {
-};
-
-const socketEmitEvents = {
-	MESSAGE: 'message',
-	MESSAGE_TO_VERIFY: 'message_to_verify',
-	MESSAGE_TO_DELETE: 'message_to_delete',
-	MESSAGE_TO_PIN: 'message_to_pin',
-	MESSAGE_TO_UNPIN: 'message_to_unpin',
-	TEST: 'test',
-	TEST_START: 'test_start',
-	TEST_END: 'test_end'
-
-};
-
-const nameSpaceRooms = {
-	ADMIN: 'admin',
-	NON_ADMIN: 'non-admin'
-};
-
 export default Socket
-export {socketEmitEvents as EMITEVENTS}
-export {nameSpaceRooms as NAMESPACEROOMS}

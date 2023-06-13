@@ -9,21 +9,7 @@ const roles = {
 	SYSTEM: 'system',
 }
 
-const rolesGroup = {
-	ADMIN: [
-		roles.ADMIN,
-		roles.CLASS_ADMIN
-	],
-	NON_ADMIN: [
-		roles.MEMBER,
-		roles.STUDENT,
-		roles.TEACHER,
-		roles.ASSISTANT_CHAT,
-		roles.COURSE_ASSISTANT,
-		roles.CONSULTANT,
-		roles.CHAT_ADMIN
-	]
-}
+
 
 const perms = {
 	VIEW_INDEX: 'view_index'
@@ -54,4 +40,3 @@ export default Role
 export const ROLES = roles
 export const PERMS = perms
 export const ACCESS = access
-export const ROLES_GROUP = rolesGroup

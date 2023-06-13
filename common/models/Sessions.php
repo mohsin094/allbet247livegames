@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use \common\components\Tools;
 
 /**
  * This is the model class for collection "sessions".
@@ -30,7 +31,7 @@ class Sessions extends \yii\mongodb\ActiveRecord
     public function set($key, $value)
     {
         if(!empty($this->_records)) {
-            if($this->getSession($key) !== null) {
+            if($this->get($key) !== null) {
                 $this->_records[$key]->session_value = $value;
                 $this->_records[$key]->save();
                 return true;
@@ -50,6 +51,7 @@ class Sessions extends \yii\mongodb\ActiveRecord
             $model->session_value = $value;
             $model->save();
             $this->begin($this->token);
+        
             return true;
         }
 

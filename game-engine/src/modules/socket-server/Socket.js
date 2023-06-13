@@ -3,7 +3,7 @@ import {SERVER} from '#components/ConfProvider'
 import { createAdapter } from "@socket.io/redis-adapter"
 import Router from "#extensions/socket-router/Router";
 import Broadcast from "#extensions/socket-com/Broadcast";
-
+import conf from '#components/ConfProvider'
 export default {
 	server: '',
 	app: '',
@@ -11,6 +11,10 @@ export default {
 	init: async function(app, httpServer) {
 		this.app = app;
 		this.server = new Server(httpServer, {
+			cors: {
+				'Origin': conf.getParam('host'),
+				'Access-Control-Allow-Origin': conf.getParam('host'),
+			},
 			path: this.app.conf.getServer(SERVER.SOCKET).path
 		});
 
@@ -24,8 +28,8 @@ export default {
 		}
 
 
-		this.app.broadcast = new Broadcast(this.server);
-		Router.init(this.app, this.server);
+		// this.app.broadcast = new Broadcast(this.server);
+		Router.init(this.server);
 
 		this.server.on('connection', () => this.app.log.info('Socket Server Started'))
 		this.server.on('connect', () => this.app.log.info('Socket Server Connected'))
