@@ -25,6 +25,34 @@ Game.prototype.playerWhite = undefined;
 Game.prototype.playerBlack = undefined;
 Game.prototype.doubleActive = undefined;
 Game.prototype.activePlayer = undefined;
+Game.prototype.isFreeze = undefined;
+Game.prototype.id = undefined;
+
+Game.prototype.socketInit = function(socket) {
+	this.socket = socket;
+
+ // make game
+	this.socket.on('make-game', (params) => {
+		this.id = params.id;
+		this.playerWhite.id = params.playerWhite.id;
+		this.playerBlack.id = params.playerBlack.id;
+		this.activePlayer = (params.activePlayer == PLAYER_COLOR.BLACK) ? this.playerBlack : this.playerWhite;
+	});
+
+ // throw dice
+
+	this.socket.on('throw-dice', (params) => {
+		this.dice.throw(params.first, params.second);
+	});
+
+	this.socket.on('freeze', () => {
+		this.isFreeze = true;
+	});
+
+	this.socket.on('unfreeze', () => {
+		this.isFreeze = false;
+	});
+}
 
 Game.prototype.touchChecker = function(index)
 {
@@ -55,6 +83,7 @@ Game.prototype.init = function()
 {
 
 	this.doubleActive = true;
+	this.isFreeze = false;
 
 	this.dice = new Dice();
 

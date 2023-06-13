@@ -2,7 +2,7 @@
 
 			<button @click="dice">Dice</button>
 			<button @click="move">Move</button>
-			
+			<p>System Message: {{systemMessage}}</p>
 			<div id="game" class="col-12">
 				<div id="board">
 					<template v-if="game != undefined" >
@@ -64,7 +64,8 @@ export default {
 			game: undefined,
 			showDice: false,
 			doubleActive: false,
-			io: undefined
+			io: undefined,
+			systemMessage: '',
 		}
 	},
 	methods: {
@@ -81,24 +82,31 @@ export default {
 		}
 	},
 	created() {
+		console.log('hiii')
 		this.io = io("localhost:3002", {
 			path: "/game",
 			auth: {
 				token: this.$user.data.sessionId
 			}
 		});
-		this.io.on("connect", (socket) => {
-		  console.log('hii');
+		this.io.on("connect", () => {
+			console.log('socket connected')
+		  this.io.emit('game/join', {id: '64724c2d5494ccdfdc06efc2'});
 
-		  this.io.emit('game/join', {id: 'asfsdfasfasdfadsf'});
+		  this.io.on('system-message', (msg) => {
+		  	this.systemMessage = msg;
+		  });
+			
+			this.game = new Game(this);
+			this.game.init();
+			this.doubleActive = this.game.doubleActive;
+
+		  this.game.socketInit(this.io);
 		});
 
 	},
 	mounted() {
-		
-		this.game = new Game(this);
-		this.game.init();
-		this.doubleActive = this.game.doubleActive;
+
 	},
 	unmounted() {
 		this.io.close();

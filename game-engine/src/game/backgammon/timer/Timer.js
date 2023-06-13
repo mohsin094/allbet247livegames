@@ -10,8 +10,8 @@ Timer.prototype.presentTimeBank = undefined;
 
 Timer.prototype.onTick = undefined;
 Timer.prototype.onTimeBankTick = undefined;
-Timer.prototype.onEnd = undefined;
-Timer.prototype.onTimeBankEnd = undefined;
+Timer.prototype.onEnd = () => {};
+Timer.prototype.onTimeBankEnd = () => {};
 
 Timer.prototype.tickCounter = undefined;
 Timer.prototype.roundTickCouner = undefined;

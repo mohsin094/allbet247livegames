@@ -18,6 +18,7 @@ Player.prototype.color = undefined;
 Player.prototype.dice = undefined;
 Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
+Player.prototype.socket = undefined;
 
 Player.prototype.setupCheckers = function() {
 
@@ -34,7 +35,7 @@ Player.prototype.create = function(player) {
 	this.dice = new Dice();
 	this.board = player.board;
 
-	this.id = randomUUID();
+	this.id = player.id;
 	this.checkers = [];
 	for(let i=0; i<15; i++) {
 		let c = new Checker();

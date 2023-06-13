@@ -21,6 +21,7 @@ Backgammon.prototype.id = undefined;
 /**
  * @param params example:
  *	{
+ * 		id: '',
  *		timer: {
  *			time: 60, secs
  *			timeBank: 100, secs
@@ -29,27 +30,29 @@ Backgammon.prototype.id = undefined;
 */
 
 Backgammon.prototype.create = function(params) {
-	this.id = randomUUID();
+	this.id = params.id;
 	this.board = new Board();
 
 	this.playerBlack = new Player()
 	this.playerBlack.create({
 		color: PLAYER_COLOR.BLACK,
 		timer: (new Timer()).create(params.timer),
-		board: this.board	
+		board: this.board
 	});
 	this.playerBlack.setupCheckers();
 	this.playerWhite = new Player();
 	this.playerWhite.create({
 		color: PLAYER_COLOR.WHITE,
 		timer: (new Timer()).create(params.timer),
-		board: this.board
+		board: this.board,
+		id: params.playerWhite.id
 	});
 	this.playerWhite.setupCheckers();
 
 	this.board.create();
 
-	this.start123();
+
+
 
 }
 
@@ -58,14 +61,18 @@ Backgammon.prototype.start123 = function() {
 		time: 3,
 	});
 
-	timer.onTick = function() {
-		console.log(timer.roundTickCouner)
+	timer.onTick = () => {
+	
+		// this.playerBlack.socket.emit('system-message', timer.roundTickCouner);
+		this.playerWhite.socket.emit('system-message', timer.roundTickCouner);
 	}
 
-	timer.onEnd = function() {
+	timer.onEnd = () => {
 		this.turn = this.throwTurnDice();
 		this.playing();
 	}
+
+	timer.start();
 }
 
 Backgammon.prototype.playing = function() {
