@@ -15,7 +15,7 @@ app.config.globalProperties.isDark = useDark({
   selector: "body",
   attribute: "data-bs-theme",
   valueDark: "dark",
-  valueLight: "light",
+  valueLight: "dark",
 });
 
 app

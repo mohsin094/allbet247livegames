@@ -43,7 +43,7 @@ $brown:#AD914E;
 		
 	}
     background:$dark;
-   	body,p,h1,h2,h3,h4,h5,h6,a{
+   	body,p,h1,h2,h3,h4,h5,h6,a,label{
    		color:#fff;
    	}
    	ul > li > a{
@@ -100,6 +100,9 @@ $brown:#AD914E;
 	}
 	.text-golden-light{
 		color:$golden-light;
+	}
+	.text-golden-dark{
+		color:$golden-dark !important;
 	}
 	.box form .form-control{
 		background: linear-gradient(87.95deg, rgba(23, 26, 30, 0.84) 3.46%, rgba(23, 26, 30, 0.38) 96.54%);
@@ -323,8 +326,51 @@ $brown:#AD914E;
 	.bordered-avatar{
 		border:2px solid $golden-dark;
 	}
+	.notif-wrapper{
+		background:$gray;
+	}
+	.notif-list li a{
+		color:#fff !important;
+	}
+	.accordion-button{
+		border:none;
+	}
+	.accordion-item,.accordion-button{
+		background:$gray;
+		color:#fff;
+	}
+	.accordion-button:not(.collapsed){
+		color:$golden-light;
+	}
+	.accordion-item{
+		border:1px solid $deep-gray !important;
+	}
+	.accordion-body{
+		background:$dark;
+	}
 }
 // theme dark end
+.accordion-button:focus{
+	outline: 0
+}
+.notif-wrapper{
+	width:250px;
+	padding-top:10px;
+	border-radius:10px;
+	top:50px;
+	left:0;
+	z-index: 999;
+}
+.notif-list li a i{
+	margin-right:5px
+}
+.input-wrapper label{
+	left:0;
+	top:-30px;
+}
+.simple-page{
+	border-radius:10px;
+}
 .bordered-avatar{
 	border-radius:50px
 }

@@ -12,9 +12,9 @@
 
 	      <!-- Brand -->
 	     <div class="col-md-3 col-xl-2 px-sm-2 px-0 brand">
-	        <a class="navbar-brand" href="#">
+	        <router-link to="/" class="navbar-brand">
 	          <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="">
-	        </a>
+	        </router-link>
 	     </div>
 	      <!-- Search form -->
 	      <form class="form-inline search-form">
@@ -31,10 +31,42 @@
 	      <!-- Right links -->
 	      <ul  v-if="$user.data.isGuest" class="navbar-nav ms-auto d-flex flex-row navbar-header">
 	      	<li class="nav-item">
-	          <div class="header-box">
+	         <div class="header-box" @click="openNotifies()">
 	            <i class="material-symbols-rounded">
 	              notifications
 	            </i>
+	            <div class="notif-wrapper position-absolute d-none">
+		           <ul class="notif-list">
+		           	<li>
+		           		<router-link to="/">
+		           			<i class="material-symbols-rounded float-start text-golden-dark">
+				              notifications
+				            </i>
+			            Test Notification 1
+		           		</router-link>
+			            <hr class="hr-text" style="margin:0" />
+		           	</li>
+		           	<li>
+		           		<router-link to="/">
+		           			<i class="material-symbols-rounded float-start text-golden-dark">
+				              notifications
+				            </i>
+			            Test Notification 2
+		           		</router-link>
+			            <hr class="hr-text" style="margin:0" />
+		           	</li>
+		           	<li>
+		           		<router-link to="/">
+		           			<i class="material-symbols-rounded float-start text-golden-dark">
+				              notifications
+				            </i>
+			            Test Notification 3
+		           		</router-link>
+			            <hr class="hr-text" style="margin:0" />
+		           	</li>
+		           </ul>
+
+	            </div>
 	          </div>
 	        </li>
 	        <li class="nav-item">
@@ -55,10 +87,42 @@
 	      </ul>
 	      <ul v-if="!$user.data.isGuest" class="navbar-nav ms-auto d-flex flex-row navbar-header">
 	        <li class="nav-item">
-	          <div class="header-box">
+	          <div class="header-box" @click="openNotifies()">
 	            <i class="material-symbols-rounded">
 	              notifications
 	            </i>
+	            <div id="notif-wrapper" class="notif-wrapper position-absolute d-none">
+		           <ul class="notif-list">
+		           	<li>
+		           		<router-link to="/notifications">
+		           			<i class="material-symbols-rounded float-start text-golden-dark">
+				              notifications
+				            </i>
+			            Test Notification 1
+		           		</router-link>
+			            <hr class="hr-text" style="margin:0" />
+		           	</li>
+		           	<li>
+		           		<router-link to="/notifications">
+		           			<i class="material-symbols-rounded float-start text-golden-dark">
+				              notifications
+				            </i>
+			            Test Notification 2
+		           		</router-link>
+			            <hr class="hr-text" style="margin:0" />
+		           	</li>
+		           	<li>
+		           		<router-link to="/notifications">
+		           			<i class="material-symbols-rounded float-start text-golden-dark">
+				              notifications
+				            </i>
+			            Test Notification 3
+		           		</router-link>
+			            <hr class="hr-text" style="margin:0" />
+		           	</li>
+		           </ul>
+
+	            </div>
 	          </div>
 	        </li>
 	        <li class="nav-item">
@@ -138,6 +202,15 @@
       },
       goToCashier:function(){
       	this.$router.push({path:'/cashier'})
+      },
+      openNotifies:function(){
+      	var element = document.getElementById("notif-wrapper")
+      	if(element.classList.contains('d-none')){
+      		element.classList.remove("d-none");
+      	}else{
+      		element.classList.add("d-none");
+      	}
+      	
       }
     }
   }

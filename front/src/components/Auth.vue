@@ -213,7 +213,7 @@
             
           </div>
           <div class="modal-footer">
-            <button id="select" class="btn btn-default btn-golden" disabled="disabled" data-bs-target="#signup" data-bs-toggle="modal" data-bs-dismiss="modal">
+            <button v-if="$user.data.isGuest" id="select" class="btn btn-default btn-golden" disabled="disabled" data-bs-target="#signup" data-bs-toggle="modal" data-bs-dismiss="modal">
               Select
             </button>
         </div>
@@ -289,7 +289,6 @@
       selectAvatar(n){
         this.$user.data.avatar = n.toString();
         this.avatar = n.toString();
-        console.log(this.$user.data.avatar)
         document.getElementById(n).classList.add("bordered-avatar");
         document.getElementById("select").disabled = false; 
       },

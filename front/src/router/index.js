@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('../views/TermsView.vue')
     },
     {
+      path: '/notifications',
+      name: 'notifications',
+      component: () => import('../views/NotificationsView.vue')
+    },
+    {
       path: '/settings',
       name: 'settings',
       component: () => import('../views/SettingsView.vue')

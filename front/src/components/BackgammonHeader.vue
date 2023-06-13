@@ -7,9 +7,9 @@
 	    <div class="container-fluid">
 	      <!-- Brand -->
 	     <div class="col-md-3 col-xl-2 px-sm-2 px-0 brand">
-	        <a class="navbar-brand" href="#">
+	        <router-link to="/" class="navbar-brand">
 	          <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="">
-	        </a>
+	        </router-link>
 	     </div>
 	     <div class="col-md-6" id="bheader-mob-links" v-if="this.$isMobile">
 	     	<ul class="navbar-nav  flex-row b-header-links bheader-mob-links">

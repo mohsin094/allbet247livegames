@@ -8,7 +8,7 @@
                     <li class="nav-item">
                          <router-link to="/">
                         <span class="material-symbols-rounded menu-icon">home</span>
-                          <span class="ms-1  menu-link">Home page</span>
+                          <span class="ms-1  menu-link">Lobby</span>
                       </router-link>
                     </li>
                     
