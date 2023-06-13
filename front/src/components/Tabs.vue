@@ -39,7 +39,7 @@
 	                <img src="@/assets/icons/gift.svg" width="20px" />
 	              </div>
 	            </div>
-	              <a href="#" class="tab-link">
+	              <a href="#" class="tab-link" id="bonuses">
 	                Bonuses
 	              </a>
 	               <span class="diamond-badge position-absolute top-0 start-100 translate-middle badge rounded-pill">
@@ -482,6 +482,7 @@
     <NewGame />
 </template>
 <script>
+	import { Tab } from 'bootstrap'
 	import WaitingList from '@/components/_modals/WaitingList.vue';
 	import NewGame from '@/components/_modals/NewGame.vue';
 	export default {

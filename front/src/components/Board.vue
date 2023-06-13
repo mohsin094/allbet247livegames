@@ -1,6 +1,5 @@
 <template>
 	<div class="row">
-		{{this.$user.data.email}}
 	</div>
 </template>
 <script>

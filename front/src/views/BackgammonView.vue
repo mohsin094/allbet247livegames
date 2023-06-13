@@ -1,16 +1,14 @@
 <template>
     <BoardHeader/>
-    <game />
+    <Board/>
 </template>
 <script>
 	import BoardHeader from '@/components/BoardHeader.vue';
 	import Board from '@/components/Board.vue';
-	import Game from "@/components/game/Game.vue";
 	export default{
 		components: {
         BoardHeader,
-        Board,
-        Game
+        Board
       },
 		beforeRouteEnter(to,from,next){
 		    next(vm => {

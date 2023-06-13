@@ -16,10 +16,7 @@
 	     		<li>
 	     			<a href="#">Lobby</a>
 	     		</li>
-	     		<li>
-	     			<a href="#">My Games</a>
-	     		</li>
-	     		<li>
+	     		<!-- <li>
 	     			<a href="#">Tournoments</a>
 	     		</li>
 	     		<li>
@@ -27,26 +24,23 @@
 	     		</li>
 	     		<li>
 	     			<a href="#">Bonuses</a>
-	     		</li>
+	     		</li> -->
 	     	</ul>
 	     </div>
 	     <div v-if="!this.$isMobile" class="container d-flex align-items-center justify-content-center" id="b-header-links">
 	     	<ul class="navbar-nav d-flex flex-row b-header-links">
 	     		<li>
-	     			<a href="#"><span class="material-symbols-sharp">settings</span>Lobby</a>
+	     			<router-link to="/"><span class="material-symbols-sharp">home</span>Lobby</router-link>
+	     		</li>
+	     		<!-- <li>
+	     			<a href="#"><span class="material-symbols-sharp">emoji_events</span>Tournoments</a>
 	     		</li>
 	     		<li>
-	     			<a href="#"><span class="material-symbols-sharp">settings</span>My Games</a>
+	     			<a href="#"><span class="material-symbols-sharp">stadia_controller</span>Other Games</a>
 	     		</li>
 	     		<li>
-	     			<a href="#"><span class="material-symbols-sharp">settings</span>Tournoments</a>
-	     		</li>
-	     		<li>
-	     			<a href="#"><span class="material-symbols-sharp">settings</span>Other Games</a>
-	     		</li>
-	     		<li>
-	     			<a href="#"><span class="material-symbols-sharp">settings</span>Bonuses</a>
-	     		</li>
+	     			<a href="#"><span class="material-symbols-sharp">redeem</span>Bonuses</a>
+	     		</li> -->
 	     	</ul>
 	     </div>
 	     <div class="col-md-3 float-end">

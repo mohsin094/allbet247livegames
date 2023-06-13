@@ -67,7 +67,7 @@
 	          </div>
 	        </li>
 	        <li class="nav-item">
-	          <div class="header-box">
+	          <div class="header-box" @click="goToCashier()">
 	            <i class="material-symbols-rounded">
 	              currency_bitcoin
 	            </i>
@@ -81,7 +81,7 @@
 	         <div class="header-box">
 	            <div class="dropdown">
 	              <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-	                <img src="@/assets/profiles/profile.png"/>
+	                <img :src="'/assets/images/avatars/'+$user.data.avatar+'.png'" class="avatar"/>
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
 	              	
@@ -102,7 +102,7 @@
 	        <li class="nav-item d-none d-sm-inline">
 	          <div class="header-box">
 	            <div class="profile-wrapper text-center position-absolute">
-	              <img src="@/assets/profiles/profile.png"/>
+	              <img class="avatar" :src="'/assets/images/avatars/'+$user.data.avatar+'.png'"/>
 	            </div>
 	           
 	            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -135,6 +135,9 @@
       	this.$user.doLogout()
         this.$storage.removeItem("data")
         console.log(this.$user.data.isGuest)
+      },
+      goToCashier:function(){
+      	this.$router.push({path:'/cashier'})
       }
     }
   }

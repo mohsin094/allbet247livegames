@@ -25,10 +25,10 @@
                   <p>Help & support</p>
                   <ul class="nav nav-pills flex-column mb-0 align-items-center align-items-sm-start" id="sidebar-footer-menu">
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle">
+                        <router-link to="/terms" class="nav-link align-middle">
                           <span class="material-symbols-outlined sidebar-footer-icon">workspace_premium</span>
-                          <span class="ms-1  ">Terms & policy</span>
-                        </a>
+                          <span class="ms-1">Terms & policy</span>
+                        </router-link>
                     </li>
                     <li class="nav-item">
                         <a href="#" class="nav-link align-middle">
@@ -37,10 +37,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link align-middle">
+                        <router-link to="/settings" class="nav-link align-middle">
                           <span class="material-symbols-outlined sidebar-footer-icon">settings</span>
                           <span class="ms-1">Settings</span>
-                        </a>
+                        </router-link>
                     </li>
                   </ul>
                   <div class="ms-2 mb-5 box">

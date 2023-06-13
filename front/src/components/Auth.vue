@@ -144,7 +144,13 @@
                   </span>
               </div>
             </FormKit>
-            
+            <div class="input-wrapper file-input text-center">
+              <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#avatars" style="width:100%;height:100%">
+                <img v-if="avatar == ''" src="@/assets/icons/image-icon.png" style="width:40px"/>
+                <img v-else :src="'/assets/images/avatars/'+avatar+'.png'" style="width:40px"/>
+              </a>
+              <!-- <img v-if="avatar != null" /> -->
+            </div>
              <FormKit
                 type="checkbox"
                 label="I accept every danger in this game"
@@ -187,17 +193,45 @@
       </div>
     </div>
   </div>
+  
+  <!-- avatars -->
+  <div class="modal fade" id="avatars" tabindex="-1" aria-labelledby="avatarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-title">
+              <h3>Choose your avatar</h3>
+            </div>
+            <div class="row">
+              <div class="col-md-2 mb-3" v-for="n in 45">
+                <img :class="{'bordered-avatar' : $user.data.avatar == n}" :src="'/assets/images/avatars/'+n+'.png'" :id="n" style="width:64px" @click="selectAvatar(n)"/>
+              </div>
+            </div>
+            
+          </div>
+          <div class="modal-footer">
+            <button id="select" class="btn btn-default btn-golden" disabled="disabled" data-bs-target="#signup" data-bs-toggle="modal" data-bs-dismiss="modal">
+              Select
+            </button>
+        </div>
+      </div>
+  </div>
+</div>
 </template>
 <script>
   import { Modal } from 'bootstrap';
   export default{
+   
     data(){
       return {
         username:"",
         email:"",
         password:"",
         confirmPass:"",
-        avatar:"",
+        avatar:'',
         errors:[]
       }
     },
@@ -242,7 +276,7 @@
           email: this.email,
           password: this.password,
           password_repeat:this.confirmPass,
-          avatar:'2'
+          avatar:this.$user.data.avatar
         }).then((response) =>{
           response = response.data
           if(response.result){
@@ -251,7 +285,20 @@
             modal.hide()
           }
         })
-      }
+      },
+      selectAvatar(n){
+        this.$user.data.avatar = n.toString();
+        this.avatar = n.toString();
+        console.log(this.$user.data.avatar)
+        document.getElementById(n).classList.add("bordered-avatar");
+        document.getElementById("select").disabled = false; 
+      },
+      // openAvatars:function(){
+      //   var modalEl = document.getElementById('login');
+      //   var modal = Modal.getInstance(modalEl)
+      //   console.log(modal)
+      //   // modal.show()
+      // }
     }
   }
 </script>

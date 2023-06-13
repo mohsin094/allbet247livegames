@@ -314,8 +314,34 @@ $brown:#AD914E;
 	.select-input-icon span{
 		color:$gray;
 	}
+	.btn-active{
+		border:1px solid $golden-light;
+	}
+	.file-input{
+		border:1px dashed $deep-gray;
+	}
+	.bordered-avatar{
+		border:2px solid $golden-dark;
+	}
 }
 // theme dark end
+.bordered-avatar{
+	border-radius:50px
+}
+.avatar{
+	width: 50px
+}
+.file-input{
+	padding:10px;
+	border-radius:5px;
+	height:55px;
+}
+.file-input:hover{
+	cursor: pointer;
+}
+.header-box:hover{
+	cursor:pointer;
+}
 .select-input-icon{
 	top:45px;
 }
@@ -421,6 +447,9 @@ ol,ul{
 	float: right
 }
 .header-right li:last-child{
+	margin-left:15px;
+}
+.header-right li{
 	margin-left:15px;
 }
 #chat-box{
