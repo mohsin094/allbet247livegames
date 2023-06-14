@@ -63,7 +63,7 @@ Game.prototype.touchChecker = function(checker)
 		this.board.removeOffer();
 		this.activePlayer.toggleTouchChecker(index);
 		if(this.activePlayer.getChecker(checker.index).selected) {
-			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.dice);
+			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.dice, this.activePlayer);
 		}
 	}
 }

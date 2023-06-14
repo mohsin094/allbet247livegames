@@ -28,6 +28,27 @@ Player.prototype.getChecker = function(index) {
 	return this.checkers[index];
 }
 
+Player.prototype.isAllCheckersHome = function() {
+	switch(this.color) {
+	case COLOR.BLACK:
+		for(let i=0; i<this.checkers.length; i++) {
+			if(this.checkers[i].position < 18) {
+				return false;
+			}
+		}
+		break;
+	case COLOR.WHITE:
+		for(let i=0; i<this.checkers.length; i++) {
+			if(this.checkers[i].position > 6) {
+				return false;
+			}
+		}
+		break;
+	}
+
+	return true;
+}
+
 Player.prototype.removeCheckerSelection = function() {
 
 	for(let i=0; i<this.checkers.length; i++) {

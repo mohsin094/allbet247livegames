@@ -14,7 +14,7 @@ Board.prototype.removeOffer = function() {
 	this.columnHolder.removeOffer();
 }
 
-Board.prototype.offerMove = function(checker, fromPosition, dice) {
+Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 
 	switch(checker.color) {
 	case PLAYER_COLOR.WHITE:
@@ -26,8 +26,14 @@ Board.prototype.offerMove = function(checker, fromPosition, dice) {
 			
 				
 				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.BLACK || this.columnHolder.columns[i].container.length == 1) {
-					if(fromPosition + dice.first == this.columnHolder.columns[i].index || fromPosition + dice.second == this.columnHolder.columns[i].index) {
-						this.columnHolder.columns[i].focus = true;
+					const sumFirst = fromPosition + dice.first;
+					const sumSecond = fromPosition + dice.second;
+					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
+						if((sumSecond > 23 || sumFirst > 23) && player.isAllCheckersHome) {
+							this.columnHolder.columns[i].focus = true;
+						}else if(sumSecond < 24 || sumFirst < 24) {
+							this.columnHolder.columns[i].focus = true;
+						}
 					}
 				}
 			}
@@ -41,8 +47,14 @@ Board.prototype.offerMove = function(checker, fromPosition, dice) {
 			
 				
 				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.WHITE || this.columnHolder.columns[i].container.length == 1) {
-					if(fromPosition - dice.first == this.columnHolder.columns[i].index || fromPosition - dice.second == this.columnHolder.columns[i].index) {
-						this.columnHolder.columns[i].focus = true;
+					const sumFirst = fromPosition - dice.first;
+					const sumSecond = fromPosition - dice.second;
+					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
+						if((sumSecond < 1 || sumFirst < 1) && player.isAllCheckersHome) {
+							this.columnHolder.columns[i].focus = true;
+						}else if(sumSecond > 0 || sumFirst > 0) {
+							this.columnHolder.columns[i].focus = true;
+						}
 					}
 				}
 			}
