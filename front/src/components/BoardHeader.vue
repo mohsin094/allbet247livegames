@@ -15,7 +15,7 @@
 				<i class="material-symbols-outlined text-golden-gradient float-start mr-1">
 				timelapse
 				</i>
-				<span class="float-start"> 03:24</span>
+				<span class="float-start"> {{time}}</span>
 			</div>
 			<div class="col-md-3 col-xl-3">
 				<ul class="list-group-horizontal card-star text-center">
@@ -48,3 +48,9 @@
 		</div>
 	</div>
 </template>
+
+<script>
+	export default {
+		props: ['time']
+	}
+</script>

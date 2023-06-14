@@ -21,15 +21,38 @@ function GameController() {
 			allow: true
 		}
 	];
+
+	this.move = function() {
+		const gameId = this.request.data.id;
+		const userId = this.app.user.id;
+		const game = GameHolder.get(gameId);
+		if(gameId && game) {
+			if(game.activePlayer.id == userId) {
+				game.move(this.request.data.move);
+			}
+		}
+	}
+
+	this.throwDice = function() {
+		const gameId = this.request.data.id;
+		const userId = this.app.user.id;
+		const game = GameHolder.get(gameId);
+		if(gameId && game) {
+			if(game.activePlayer.id == userId) {
+				game.throwDoubleDice();
+			}
+		}
+	}
+
 	this.join = async function() {
 
 		const gameId = this.request.data.id;
+
 		if(gameId) {
 			const match = await mongo.db.collection(MatchesModel.name).findOne({_id: new ObjectId(gameId)});
 		
-
 			if(match != null && GameHolder.get(gameId)) {
-				console.log(this)
+				
 				GameHolder.get(match._id).playerBlack.id = this.app.user.id;
 				GameHolder.get(match._id).playerBlack.socket = this.request.socket;
 
@@ -48,9 +71,10 @@ function GameController() {
 				})
 				GameHolder.set(match._id, game);
 			
-				
-				GameHolder.get(match._id).playerWhite.socket = this.request.socket;
-				GameHolder.get(match._id).start123();
+				if(match.home_id == this.app.user.id) {
+					GameHolder.get(match._id).playerWhite.socket = this.request.socket;
+				}
+				// GameHolder.get(match._id).start123();
 
 			}
 		}

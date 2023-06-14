@@ -3,6 +3,14 @@ import Board from "#backgammon/board/Board";
 import {randomUUID} from "crypto";
 import Player, {PLAYER_COLOR} from "#backgammon/player/Player";
 
+const EMIT = {
+	SYSTEM_CLOCK: 'system-clock',
+	SYSTEM_MESSAGE: 'system-message',
+	PLAYER_PREFER: 'player-prefer',
+	TURN_DICE: 'turn-dice',
+	THROW_DICE: 'throw-dice'
+}
+
 function Backgammon()
 {
 
@@ -15,8 +23,9 @@ Backgammon.prototype.borad = undefined;
 
 Backgammon.prototype.playerWhite = undefined;
 Backgammon.prototype.playerBlack = undefined;
-Backgammon.prototype.turn = undefined;
+
 Backgammon.prototype.id = undefined;
+Backgammon.prototype.activePlayer = undefined;
 
 /**
  * @param params example:
@@ -50,11 +59,38 @@ Backgammon.prototype.create = function(params) {
 	this.playerWhite.setupCheckers();
 
 	this.board.create();
-
-
-
-
 }
+
+
+
+
+Backgammon.prototype.turn = function() {
+	this.activePlayer.socket.emit(EMIT.PLAYER_PREFER, {
+		id: this.activePlayer.id,
+		freeze: false
+	});
+	this.activePlayer.timer.onTick = () => {
+		this.activePlayer.socket.emit(EMIT.SYSTEM_CLOCK, this.activePlayer.timer.roundTickCouner);
+	};
+}
+
+Backgammon.prototype.move = function(move) {
+	this.activePlayer.move(move.checkerId, move.toPosition);
+}
+
+Backgammon.prototype.throwDoubleDice = function() {
+	const dice = this.activePlayer.dice.throwTwo();
+	this.playerBlack.socket.emit(EMIT.THROW_DICE, dice);
+	this.playerWhite.socket.emit(EMIT.THROW_DICE, dice);
+
+	this.activePlayer.emit(EMIT.PLAYER_PREFER, {
+		id: this.activePlayer.id,
+		freeze: true,
+		allowMove: true
+	});
+}
+
+
 
 Backgammon.prototype.start123 = function() {
 	const timer = (new Timer()).create({
@@ -62,43 +98,31 @@ Backgammon.prototype.start123 = function() {
 	});
 
 	timer.onTick = () => {
-	
-		// this.playerBlack.socket.emit('system-message', timer.roundTickCouner);
-		this.playerWhite.socket.emit('system-message', timer.roundTickCouner);
+		this.playerBlack.socket.emit(EMIT.SYSTEM_CLOCK, timer.roundTickCouner);
+		this.playerWhite.socket.emit(EMIT.SYSTEM_CLOCK, timer.roundTickCouner);
 	}
 
 	timer.onEnd = () => {
-		this.turn = this.throwTurnDice();
-		this.playing();
+		this.activePlayer = this.throwTurnDice();
+		this.turn();
 	}
 
 	timer.start();
 }
 
-Backgammon.prototype.playing = function() {
-	this.turn.timer.onTick = function() {
-		console.log(this.turn.timer.roundTickCouner);
-	}
-
-	this.turn.timer.onEnd = function() {
-
-	}
-
-	this.turn.timer.onTimeBankEnd = function() {
-
-	}
-
-	this.turn.timer.start();
-}
-
-Backgammon.prototype.throwDoubleDice = function() {
-	const dice = this.turn.dice.throwTwo();
-}
 
 Backgammon.prototype.throwTurnDice = function() {
 	const b = this.playerBlack.dice.throwOne();
 	const w =this.playerWhite.dice.throwOne();
 
+
+	this.playerBlack.socket.emit(EMIT.TURN_DICE, {
+		'black': b
+	});
+
+	this.playerWhite.socket.emit(EMIT.TURN_DICE, {
+		'white': w
+	});
 
 	let turn = undefined;
 	if(w > b) {
@@ -111,5 +135,6 @@ Backgammon.prototype.throwTurnDice = function() {
 
 	return turn;
 }
+
 
 export default Backgammon

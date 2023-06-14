@@ -18,6 +18,7 @@ app.config.globalProperties.isDark = useDark({
   valueLight: "dark",
 });
 
+
 app
 .use(router)
 .use(plugin, defaultConfig)

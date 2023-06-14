@@ -23,7 +23,7 @@ class DefaultController extends ApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['get-configs', 'get-waiting'],
+                        'actions' => ['get-configs', 'get-waiting', 'get-match'],
                         'roles' => ['?', '@'],
                         'allow' => true,
                     ],
@@ -35,6 +35,19 @@ class DefaultController extends ApiController
                 ],
             ]
         ]);
+    }
+
+    public function actionGetMatch($id)
+    {
+        $this->resp->result = true;
+        $match = Matches::find()->where(['_id' => $id])->one();
+
+        $this->resp->params = [
+            'home_id' => $match->home_id,
+            'id' => (string)$match->_id,
+        ];
+
+        return $this->resp;
     }
 
     public function actionGetWaiting()

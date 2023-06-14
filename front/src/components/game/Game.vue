@@ -1,5 +1,5 @@
 <template>
-
+			<board-header :time="timer"/>
 			<button @click="dice">Dice</button>
 			<button @click="move">Move</button>
 			<p>System Message: {{systemMessage}}</p>
@@ -54,11 +54,14 @@ import Column from "./Column.vue";
 import Game from "@/extensions/backgammon/Game.js";
 import Global from "@/extensions/backgammon/Global";
 import {io} from "socket.io-client";
+import BoardHeader from '@/components/BoardHeader.vue';
 
 export default {
 	components: {
-		Column
+		Column,
+		BoardHeader
 	},
+	// props: ['match'],
 	data() {
 		return {
 			game: undefined,
@@ -66,43 +69,67 @@ export default {
 			doubleActive: false,
 			io: undefined,
 			systemMessage: '',
+			timer: 0,
 		}
 	},
 	methods: {
+		throwDice() {
+			 this.io.emit('game/throwDice', {id: this.game.activePlayer.id, gameId: this.game.id});
+		},
 		move() {
-			this.game.move();
+			// this.io.emit('game/throwDice', {id: this.game.activePlayer.id, gameId: this.game.id});
 		},
 		dice() {
 			this.game.dice.throw();
 			this.showDice = true;
 		},
 		touch(checkerIndex) {
-			
-			this.game.touchChecker(checkerIndex);
+			if(this.game.activePlayer.allowMove) {
+				this.game.touchChecker(checkerIndex);
+			}
 		}
 	},
 	created() {
-		console.log('hiii')
-		this.io = io("localhost:3002", {
-			path: "/game",
-			auth: {
-				token: this.$user.data.sessionId
-			}
-		});
-		this.io.on("connect", () => {
-			console.log('socket connected')
-		  this.io.emit('game/join', {id: '64724c2d5494ccdfdc06efc2'});
-
-		  this.io.on('system-message', (msg) => {
-		  	this.systemMessage = msg;
-		  });
+		this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/get-match", {params: {
+			id: '64724c2d5494ccdfdc06efc2'
+		}}).then((data) => {
+			data = data.data.params;
+			this.match = data;
+			this.io = io("localhost:3002", {
+				path: "/game",
+				auth: {
+					token: this.$user.data.sessionId
+				}
+			});
+			this.io.on("connect", () => {
+				console.log('socket connected')
 			
-			this.game = new Game(this);
-			this.game.init();
-			this.doubleActive = this.game.doubleActive;
+			  this.io.emit('game/join', {id: this.match.id});
 
-		  this.game.socketInit(this.io);
-		});
+			  this.io.on('system-message', (msg) => {
+			  	this.systemMessage = msg;
+			  });
+
+			  	this.io.on('system-clock', (clock) => {
+						this.timer = clock;
+					});
+				
+				this.game = new Game(this);
+				this.game.init();
+				console.log(this.$user.data.id)
+				console.log(this.match.home_id)
+				if(this.match.home_id == this.$user.data.id) {
+					this.game.activePlayer = this.game.playerWhite;
+				}else {
+					this.game.activePlayer = this.game.playerBlack;
+				}
+
+			  this.game.socketInit(this.io);
+				this.doubleActive = this.game.doubleActive;
+
+			});
+		})
+
 
 	},
 	mounted() {

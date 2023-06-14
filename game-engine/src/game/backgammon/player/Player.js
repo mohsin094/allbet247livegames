@@ -20,6 +20,10 @@ Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
 Player.prototype.socket = undefined;
 
+Player.prototype.move = function(checkerId, toPosition) {
+	
+}
+
 Player.prototype.setupCheckers = function() {
 
 	CheckersUtil.initPosition(this.board, this.color, this.checkers);

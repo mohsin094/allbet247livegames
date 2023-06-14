@@ -147,7 +147,7 @@
             <div class="input-wrapper file-input text-center">
               <a href="#" class="d-block" data-bs-toggle="modal" data-bs-target="#avatars" style="width:100%;height:100%">
                 <img v-if="avatar == ''" src="@/assets/icons/image-icon.png" style="width:40px"/>
-                <img v-else :src="'/assets/images/avatars/'+avatar+'.png'" style="width:40px"/>
+                <img v-else :src="baseUrl+'/assets/images/avatars/'+avatar+'.png'" style="width:40px"/>
               </a>
               <!-- <img v-if="avatar != null" /> -->
             </div>
@@ -207,7 +207,7 @@
             </div>
             <div class="row">
               <div class="col-md-2 mb-3" v-for="n in 45">
-                <img :class="{'bordered-avatar' : $user.data.avatar == n}" :src="'/assets/images/avatars/'+n+'.png'" :id="n" style="width:64px" @click="selectAvatar(n)"/>
+                <img :class="{'bordered-avatar' : $user.data.avatar == n}" :src="baseUrl+'/assets/images/avatars/'+n+'.png'" :id="n" style="width:64px" @click="selectAvatar(n)"/>
               </div>
             </div>
             
@@ -232,14 +232,15 @@
         password:"",
         confirmPass:"",
         avatar:'',
-        errors:[]
+        errors:[],
+        baseUrl: import.meta.env.VITE_BASE_URL
       }
     },
     methods:{
       doLogin:function(){
         let instance = this
-        let url = import.meta.env.VITE_BASE_URL+'/user/auth/login'
-        let isloginUrl = import.meta.env.VITE_BASE_URL+'/user/auth/is-login'
+        let url = import.meta.env.VITE_BACKEND_BASE_URL+'/user/auth/login'
+        let isloginUrl = import.meta.env.VITE_BACKEND_BASE_URL+'/user/auth/is-login'
         this.$axios.post(url,{
           username: instance.username,
           password: instance.password
@@ -271,7 +272,7 @@
         })
       },
       register:function(){
-        let url = import.meta.env.VITE_BASE_URL+'/user/auth/register'
+        let url = import.meta.env.VITE_BACKEND_BASE_URL+'/user/auth/register'
         this.$axios.post(url,{
           email: this.email,
           password: this.password,

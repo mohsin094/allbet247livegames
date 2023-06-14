@@ -45,12 +45,15 @@ Game.prototype.socketInit = function(socket) {
 		this.dice.throw(params.first, params.second);
 	});
 
-	this.socket.on('freeze', () => {
-		this.isFreeze = true;
+
+
+	this.socket.on('player-prefer', (player) => {
+		this.activePlayer.freeze = (player.freeze != undefined) ? player.freeze : this.activePlayer.freeze;
+		this.activePlayer.allowMove = (player.allowMove != undefined) ? player.allowMove : this.activePlayer.allowMove;
 	});
 
-	this.socket.on('unfreeze', () => {
-		this.isFreeze = false;
+	this.socket.on('turn-dice', (dice) => {
+		this.dice.throwOne(dice);
 	});
 }
 

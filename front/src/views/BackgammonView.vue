@@ -1,13 +1,13 @@
 <template>
-    <BoardHeader/>
+    
     <Board/>
 </template>
 <script>
-	import BoardHeader from '@/components/BoardHeader.vue';
+	
 	import Board from '@/components/Board.vue';
 	export default{
 		components: {
-        BoardHeader,
+
         Board
       },
 		beforeRouteEnter(to,from,next){
