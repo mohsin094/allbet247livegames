@@ -12,11 +12,13 @@ import MatchesModel from "#models/Matches";
 import GameHolder from "#backgammon/GameHolder";
 import Game from "#backgammon/Backgammon";
 import {ObjectId} from "mongodb";
+import {EMIT} from "#backgammon/Backgammon";
+import {PLAYER_COLOR} from "#backgammon/player/Player";
 
 function GameController() {
 	this.accessRules = [
 		{
-			methods: ['join'],
+			methods: ['join', 'join', 'throwdice'],
 			roles: [ROLES.MEMBER],
 			allow: true
 		}
@@ -33,10 +35,11 @@ function GameController() {
 		}
 	}
 
-	this.throwDice = function() {
-		const gameId = this.request.data.id;
+	this.throwdice = function() {
+		const gameId = this.request.data.gameId;
 		const userId = this.app.user.id;
 		const game = GameHolder.get(gameId);
+
 		if(gameId && game) {
 			if(game.activePlayer.id == userId) {
 				game.throwDoubleDice();
@@ -52,9 +55,18 @@ function GameController() {
 			const match = await mongo.db.collection(MatchesModel.name).findOne({_id: new ObjectId(gameId)});
 		
 			if(match != null && GameHolder.get(gameId)) {
-				
-				GameHolder.get(match._id).playerBlack.id = this.app.user.id;
-				GameHolder.get(match._id).playerBlack.socket = this.request.socket;
+				const game = GameHolder.get(match._id);
+				game.playerBlack.id = this.app.user.id;
+				game.playerBlack.socket = this.request.socket;
+
+				game.playerBlack.socket.emit(EMIT.MAKE_GAME, {
+					color: PLAYER_COLOR.BLACK,
+					id: game.playerBlack.id
+				});
+				game.playerWhite.socket.emit(EMIT.MAKE_GAME, {
+					color: PLAYER_COLOR.WHITE,
+					id: game.playerWhite.id
+				});
 
 				GameHolder.get(match._id).start123();
 			}else {

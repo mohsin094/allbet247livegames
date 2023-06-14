@@ -28,6 +28,7 @@ Dice.prototype.throwOne = function(first) {
 	this.interval = setInterval(() => {
 		this.first = randIntBetween(1, 7);
 		if(i == 6) {
+			console.log(first)
 			this.first = first;
 			clearInterval(this.interval);
 		}

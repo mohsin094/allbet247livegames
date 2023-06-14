@@ -42,7 +42,7 @@ User.prototype.login = async function(session, token) {
 		
 		user = user;
 		if(user) {
-			this.id = user._id;
+			this.id = user._id.toString();
 			this.credentials = user;
 			this.role.name = ROLES.MEMBER
 			return true;

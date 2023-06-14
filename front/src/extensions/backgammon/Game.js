@@ -33,10 +33,9 @@ Game.prototype.socketInit = function(socket) {
 
  // make game
 	this.socket.on('make-game', (params) => {
-		this.id = params.id;
-		this.playerWhite.id = params.playerWhite.id;
-		this.playerBlack.id = params.playerBlack.id;
-		this.activePlayer = (params.activePlayer == PLAYER_COLOR.BLACK) ? this.playerBlack : this.playerWhite;
+		console.log(params)
+		this.activePlayer = (params.playerColor == PLAYER_COLOR.BLACK) ? this.playerBlack : this.playerWhite;
+		this.activePlayer.id = params.id;
 	});
 
  // throw dice
@@ -52,9 +51,7 @@ Game.prototype.socketInit = function(socket) {
 		this.activePlayer.allowMove = (player.allowMove != undefined) ? player.allowMove : this.activePlayer.allowMove;
 	});
 
-	this.socket.on('turn-dice', (dice) => {
-		this.dice.throwOne(dice);
-	});
+
 }
 
 Game.prototype.touchChecker = function(index)

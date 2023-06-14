@@ -8,7 +8,9 @@ const EMIT = {
 	SYSTEM_MESSAGE: 'system-message',
 	PLAYER_PREFER: 'player-prefer',
 	TURN_DICE: 'turn-dice',
-	THROW_DICE: 'throw-dice'
+	THROW_DICE: 'throw-dice',
+	BOARD_TEXT: 'board-text',
+	MAKE_GAME: 'make-game'
 }
 
 function Backgammon()
@@ -72,6 +74,8 @@ Backgammon.prototype.turn = function() {
 	this.activePlayer.timer.onTick = () => {
 		this.activePlayer.socket.emit(EMIT.SYSTEM_CLOCK, this.activePlayer.timer.roundTickCouner);
 	};
+
+	this.activePlayer.timer.start();
 }
 
 Backgammon.prototype.move = function(move) {
@@ -94,16 +98,19 @@ Backgammon.prototype.throwDoubleDice = function() {
 
 Backgammon.prototype.start123 = function() {
 	const timer = (new Timer()).create({
-		time: 3,
+		time: 4,
 	});
 
 	timer.onTick = () => {
-		this.playerBlack.socket.emit(EMIT.SYSTEM_CLOCK, timer.roundTickCouner);
-		this.playerWhite.socket.emit(EMIT.SYSTEM_CLOCK, timer.roundTickCouner);
+		this.playerBlack.socket.emit(EMIT.BOARD_TEXT, timer.roundTickCouner);
+		this.playerWhite.socket.emit(EMIT.BOARD_TEXT, timer.roundTickCouner);
 	}
 
 	timer.onEnd = () => {
 		this.activePlayer = this.throwTurnDice();
+		this.playerWhite.socket.emit(EMIT.BOARD_TEXT, undefined);
+		this.playerBlack.socket.emit(EMIT.BOARD_TEXT, undefined);
+
 		this.turn();
 	}
 
@@ -117,11 +124,11 @@ Backgammon.prototype.throwTurnDice = function() {
 
 
 	this.playerBlack.socket.emit(EMIT.TURN_DICE, {
-		'black': b
+		black: b[0]
 	});
 
 	this.playerWhite.socket.emit(EMIT.TURN_DICE, {
-		'white': w
+		white: w[0]
 	});
 
 	let turn = undefined;
@@ -138,3 +145,5 @@ Backgammon.prototype.throwTurnDice = function() {
 
 
 export default Backgammon
+
+export {EMIT}

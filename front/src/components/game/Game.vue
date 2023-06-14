@@ -1,6 +1,6 @@
 <template>
 			<board-header :time="timer"/>
-			<button @click="dice">Dice</button>
+			<button @click="throwDice">Dice</button>
 			<button @click="move">Move</button>
 			<p>System Message: {{systemMessage}}</p>
 			<div id="game" class="col-12">
@@ -8,8 +8,8 @@
 					<template v-if="game != undefined" >
 					<div v-if="showDice" class="dices">
 						<ul>
-							<li><img :style="{'max-width': game.global.checkerSize+'px'}" :src="'./../../assets/game/img/dice-'+game.dice.first+'.png'" /></li>
-							<li><img :style="{'max-width': game.global.checkerSize+'px'}" :src="'./../../assets/game/img/dice-'+game.dice.second+'.png'" /></li>
+							<li><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-'+game.dice.first+'.png'" /></li>
+							<li><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-'+game.dice.second+'.png'" /></li>
 						</ul>
 					</div>
 					<div v-if="doubleActive" id="double-dice">
@@ -44,6 +44,9 @@
 					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
 
 					</template>
+					<div v-show="boardText != undefined" id="board-text">
+						{{boardText}}
+					</div>
 				</div>
 			</div>
 
@@ -55,6 +58,7 @@ import Game from "@/extensions/backgammon/Game.js";
 import Global from "@/extensions/backgammon/Global";
 import {io} from "socket.io-client";
 import BoardHeader from '@/components/BoardHeader.vue';
+import {PLAYER_COLOR} from "@/extensions/backgammon/Player.js";
 
 export default {
 	components: {
@@ -70,10 +74,14 @@ export default {
 			io: undefined,
 			systemMessage: '',
 			timer: 0,
+			baseUrl: import.meta.env.VITE_BASE_URL,
+			boardText: undefined,
 		}
 	},
 	methods: {
 		throwDice() {
+			console.log(this.game.id)
+			console.log(this.game.activePlayer.id)
 			 this.io.emit('game/throwDice', {id: this.game.activePlayer.id, gameId: this.game.id});
 		},
 		move() {
@@ -110,14 +118,31 @@ export default {
 			  	this.systemMessage = msg;
 			  });
 
-			  	this.io.on('system-clock', (clock) => {
-						this.timer = clock;
-					});
+		  	this.io.on('system-clock', (clock) => {
+					this.timer = clock;
+				});
+
+				this.io.on('board-text', (text) => {
+					this.boardText = text;
+				});
+
+				this.io.on('turn-dice', (dice) => {
+				
+					if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK) {
+						this.game.dice.throwOne(dice.black);
+						this.showDice = true;
+					}
+
+					if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE) {
+						this.game.dice.throwOne(dice.white);
+						this.showDice = true;
+					}
+				});
 				
 				this.game = new Game(this);
+				this.game.id = this.match.id;
 				this.game.init();
-				console.log(this.$user.data.id)
-				console.log(this.match.home_id)
+
 				if(this.match.home_id == this.$user.data.id) {
 					this.game.activePlayer = this.game.playerWhite;
 				}else {
@@ -172,6 +197,18 @@ export default {
 	z-index: 1;
 	top: 48%;
 	right: 2%;
+}
+
+#board-text {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	text-align: center;
+	font-size: 2em;
+	color: #fff;
+	background: #000000cf;
+	font-weight: bold;
+	padding-top: 25%;
 }
 
 .dices {
