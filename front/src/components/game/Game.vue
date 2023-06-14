@@ -80,8 +80,6 @@ export default {
 	},
 	methods: {
 		throwDice() {
-			console.log(this.game.id)
-			console.log(this.game.activePlayer.id)
 			 this.io.emit('game/throwDice', {id: this.game.activePlayer.id, gameId: this.game.id});
 		},
 		move() {
@@ -91,9 +89,9 @@ export default {
 			this.game.dice.throw();
 			this.showDice = true;
 		},
-		touch(checkerIndex) {
+		touch(checker) {
 			if(this.game.activePlayer.allowMove) {
-				this.game.touchChecker(checkerIndex);
+				this.game.touchChecker(checker);
 			}
 		}
 	},

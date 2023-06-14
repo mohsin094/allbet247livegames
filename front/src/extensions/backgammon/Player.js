@@ -28,6 +28,14 @@ Player.prototype.getChecker = function(index) {
 	return this.checkers[index];
 }
 
+Player.prototype.removeCheckerSelection = function() {
+
+	for(let i=0; i<this.checkers.length; i++) {
+		this.checkers[i].selected = false;
+	}
+
+}
+
 Player.prototype.toggleTouchChecker = function(index) {
 	this.checkers[index].selected = !this.checkers[index].selected;
 }

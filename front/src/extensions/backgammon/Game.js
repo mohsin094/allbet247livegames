@@ -41,7 +41,8 @@ Game.prototype.socketInit = function(socket) {
  // throw dice
 
 	this.socket.on('throw-dice', (params) => {
-		this.dice.throw(params.first, params.second);
+		console.log(params)
+		this.dice.throw(params[0], params[1]);
 	});
 
 
@@ -54,12 +55,16 @@ Game.prototype.socketInit = function(socket) {
 
 }
 
-Game.prototype.touchChecker = function(index)
+Game.prototype.touchChecker = function(checker)
 {
-	this.board.removeOffer();
-	this.activePlayer.toggleTouchChecker(index);
-	if(this.activePlayer.getChecker(index).selected) {
-		this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.dice);
+	const index = checker.index;
+	this.activePlayer.removeCheckerSelection();
+	if(this.activePlayer.color == checker.color) {
+		this.board.removeOffer();
+		this.activePlayer.toggleTouchChecker(index);
+		if(this.activePlayer.getChecker(checker.index).selected) {
+			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.dice);
+		}
 	}
 }
 

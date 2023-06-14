@@ -72,7 +72,7 @@
 		methods:{
 			getConfigs:function(){
 				let instance = this
-				let url = import.meta.env.VITE_BASE_URL+'/game/default/get-configs'
+				let url = import.meta.env.VITE_BACKEND_BASE_URL+'/game/default/get-configs'
 				this.$axios.get(url).then((response) => {
 					response = response.data
 					if(response.result){
@@ -91,7 +91,7 @@
 			},
 			addGame:function(){
 				let instance = this
-				let url = import.meta.env.VITE_BASE_URL+'/game/default/new'
+				let url = import.meta.env.VITE_BACKEND_BASE_URL+'/game/default/new'
 				this.$axios.post(url,{
 					round_id:this.round,
 					stake_id:this.stake,

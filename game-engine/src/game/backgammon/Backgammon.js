@@ -87,7 +87,7 @@ Backgammon.prototype.throwDoubleDice = function() {
 	this.playerBlack.socket.emit(EMIT.THROW_DICE, dice);
 	this.playerWhite.socket.emit(EMIT.THROW_DICE, dice);
 
-	this.activePlayer.emit(EMIT.PLAYER_PREFER, {
+	this.activePlayer.socket.emit(EMIT.PLAYER_PREFER, {
 		id: this.activePlayer.id,
 		freeze: true,
 		allowMove: true
