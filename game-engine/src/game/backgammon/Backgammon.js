@@ -73,7 +73,9 @@ Backgammon.prototype.create = function(params) {
 		playerWhite: {
 			checkers: this.playerWhite.checkers
 		},
-		stage: {},
+		stage: {
+			id: 0
+		},
 	};
 
 
@@ -83,13 +85,13 @@ Backgammon.prototype.setStatePlayer = function(params) {
 	let keys = [];
 	switch(this.activePlayer.color) {
 	case PLAYER_COLOR.BLACK:
-		keys = Object.keys(this.state.playerBlack);
+		keys = Object.keys(params);
 		for(let i = 0; i < keys.length; i++) {
 			this.state.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
 		}
 		break;
 	case PLAYER_COLOR.WHITE:
-		keys = Object.keys(this.state.playerWhite);
+		keys = Object.keys(params);
 		for(let i = 0; i < keys.length; i++) {
 			this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
 		}
@@ -112,7 +114,7 @@ Backgammon.prototype.setStateBothPlayer = function(params) {
 
 Backgammon.prototype.turn = function() {
 	this.state.stage.id = 2;
-	this.state.setStatePlayer({
+	this.setStatePlayer({
 		allowDice: true,
 	});
 	
@@ -131,8 +133,11 @@ Backgammon.prototype.move = function(move) {
 
 Backgammon.prototype.throwDoubleDice = function() {
 	const dice = this.activePlayer.dice.throwTwo();
-	this.playerBlack.socket.emit(EMIT.THROW_DICE, dice);
-	this.playerWhite.socket.emit(EMIT.THROW_DICE, dice);
+
+	
+	this.setStatePlayer({game: {
+		dice: dice
+	}});
 
 	this.activePlayer.socket.emit(EMIT.PLAYER_PREFER, {
 		id: this.activePlayer.id,
@@ -185,7 +190,7 @@ Backgammon.prototype.start123 = function() {
 
 Backgammon.prototype.throwTurnDice = function() {
 	const b = this.playerBlack.dice.throwOne();
-	const w =this.playerWhite.dice.throwOne();
+	const w = this.playerWhite.dice.throwOne();
 
 
 	this.playerBlack.socket.emit(EMIT.TURN_DICE, {
@@ -196,10 +201,11 @@ Backgammon.prototype.throwTurnDice = function() {
 		white: w[0]
 	});
 
+
 	let turn = undefined;
-	if(w > b) {
+	if(w[0] > b[0]) {
 		turn = this.playerWhite;
-	}else if(w < b) {
+	}else if(w[0] < b[0]) {
 		turn = this.playerBlack;
 	}else {
 		return this.throwTurnDice();

@@ -3,8 +3,8 @@ export default {
 
 		const stateKeys = Object.keys(state);
 
-		for(let index=0; stateKeys.length; index++) {
-			switch(state[stateKeys[index]]) {
+		for(let index=0; index < stateKeys.length; index++) {
+			switch(stateKeys[index]) {
 			case 'stage':
 				game.stage.id = state[stateKeys[index]].id;
 				break;
@@ -15,12 +15,17 @@ export default {
 				game.timer =  (state.game.timer != undefined) ? state.game.timer : undefined;
 				break;
 			case 'playerBlack':
-				game.playerBlack.checkers = (game.playerBlack.checkers != undefined) ? game.playerBlack.checkers: undefined;
+				game.playerBlack.checkers = (state.playerBlack.checkers != undefined) ? state.playerBlack.checkers: undefined;
+				game.playerBlack.allowDice = (state.playerBlack.allowDice != undefined && state.playerBlack.allowDice === true) ? true : false;
+				
 				break;
 			case 'playerWhite':
-				game.playerWhite.checkers = (game.playerWhite.checkers != undefined) ? game.playerWhite.checkers: undefined;
+				game.playerWhite.checkers = (state.playerWhite.checkers != undefined) ? state.playerWhite.checkers: undefined;
+				game.playerWhite.allowDice = (state.playerWhite.allowDice != undefined && state.playerWhite.allowDice === true) ? true : false;
+		
 				break;
 			}
 		}
+
 	}
 }

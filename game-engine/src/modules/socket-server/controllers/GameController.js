@@ -39,9 +39,9 @@ function GameController() {
 		const gameId = this.request.data.gameId;
 		const userId = this.app.user.id;
 		const game = GameHolder.get(gameId);
-
+		
 		if(gameId && game) {
-			if(game.activePlayer.id == userId) {
+			if(game.activePlayer != undefined && game.activePlayer.id == userId) {
 				game.throwDoubleDice();
 			}
 		}
@@ -86,9 +86,13 @@ function GameController() {
 						id: game.playerBlack.id
 					});
 				}
-
+	
 				if(typeof game.playerBlack.socket == 'object' && typeof game.playerWhite.socket == 'object') {
-					GameHolder.get(match._id).start123();
+				
+					if(game.state.stage.id == 0) {
+				
+						game.start123();
+					}
 				}
 			
 			}

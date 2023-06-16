@@ -8,15 +8,19 @@ Timer.prototype.timeBank = undefined;
 Timer.prototype.presentTime = undefined;
 Timer.prototype.presentTimeBank = undefined;
 
-Timer.prototype.onTick = () => {};
-Timer.prototype.onTimeBankTick = () => {};
-Timer.prototype.onEnd = () => {};
-Timer.prototype.onTimeBankEnd = () => {};
+Timer.prototype.onTick = undefined;
+Timer.prototype.onTimeBankTick = undefined;
+Timer.prototype.onEnd = undefined;
+Timer.prototype.onTimeBankEnd = undefined;
 
 Timer.prototype.tickCounter = undefined;
 Timer.prototype.roundTickCouner = undefined;
 
 Timer.prototype.create = function(timer) {
+	this.onTick = () => {};
+	this.onTimeBankTick = () => {};
+	this.onEnd = () => {};
+	this.onTimeBankEnd = () => {};
 	this.tickCounter = 0;
 	this.roundTickCouner = 0;
 	this.time = (timer.time == undefined) ? 60 : timer.time;

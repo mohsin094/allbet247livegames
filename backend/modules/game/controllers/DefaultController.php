@@ -58,7 +58,9 @@ class DefaultController extends ApiController
         $match = Matches::find()->where(['_id' => $matchId, 'status' => Matches::STATUS_WAITING])->one();
         if($match && $match->home_id != \Yii::$app->user->id) {
             $match->away_id = \Yii::$app->user->id;
-            $match->status = Matches::STATUS_PLAYING;
+            if($match->home_id != null) {
+                $match->status = Matches::STATUS_PLAYING;
+            }
             if($match->save()) {
                 $this->resp->result = true;
             }

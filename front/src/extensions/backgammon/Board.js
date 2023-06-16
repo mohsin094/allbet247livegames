@@ -26,8 +26,8 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 			
 				
 				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.BLACK || this.columnHolder.columns[i].container.length == 1) {
-					const sumFirst = fromPosition + dice.first;
-					const sumSecond = fromPosition + dice.second;
+					const sumFirst = fromPosition + dice.first+1;
+					const sumSecond = fromPosition + dice.second+1;
 					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
 						
 						if((sumSecond > 23 || sumFirst > 23) && player.isAllCheckersHome()) {
@@ -48,8 +48,8 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 			
 				
 				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.WHITE || this.columnHolder.columns[i].container.length == 1) {
-					const sumFirst = fromPosition - dice.first;
-					const sumSecond = fromPosition - dice.second;
+					const sumFirst = fromPosition - dice.first+1;
+					const sumSecond = fromPosition - dice.second+1;
 					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
 						if((sumSecond < 1 || sumFirst < 1) && player.isAllCheckersHome()) {
 							this.columnHolder.columns[i].focus = true;

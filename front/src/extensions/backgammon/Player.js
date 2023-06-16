@@ -24,6 +24,15 @@ Player.prototype.freeze = undefined;
 
 Player.prototype.global = undefined;
 
+Player.prototype.getActiveChecker = function() {
+	for(let i=0; i< this.checkers.length; i++) {
+		if(this.checkers[i].selected) {
+			return this.checkers[i];
+		}
+	}
+	return undefined;
+}
+
 Player.prototype.getChecker = function(index) {
 	return this.checkers[index];
 }
@@ -63,14 +72,13 @@ Player.prototype.toggleTouchChecker = function(index) {
 
 Player.prototype.moveChecker = function(index, toPosition)
 {
-	// console.log(this.checkers)
 	const oldPosition = this.checkers[index].position;
 
 	if(oldPosition != toPosition) {
 
 		this.board.position(this.checkers[index], toPosition, oldPosition);
 	}
-	// this.checkers[index].position = toPosition;
+	this.checkers[index].position = toPosition;
 	// CheckersUtil.fixPosition(this.board, this.checkers);
 }
 

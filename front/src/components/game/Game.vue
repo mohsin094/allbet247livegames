@@ -1,7 +1,6 @@
 <template>
 			<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
-			<button @click="throwDice">Dice</button>
-			<button @click="move">Move</button>
+			<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)" @click="throwDice">Dice</button>
 			<p>System Message: {{systemMessage}}</p>
 			<div id="game" class="col-12">
 				<div id="board">
@@ -16,32 +15,32 @@
 						<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
 					</div>
 					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(1)"/>
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(3)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(4)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(5)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(6)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(7)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(8)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(9)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(10)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(11)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(12)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(13)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(14)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(15)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(16)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(17)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(18)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(19)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(20)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(21)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(22)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
-					<column @touch="touch" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)"/>
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(3)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(4)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(5)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(6)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(7)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(8)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(9)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(10)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(11)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(12)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(13)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(14)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(15)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(16)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(17)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(18)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(19)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(20)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(21)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(22)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
 
 					</template>
 					<div v-show="boardText != undefined" id="board-text">
@@ -100,12 +99,17 @@ export default {
 		throwDice() {
 			 this.io.emit('game/throwDice', {id: this.game.activePlayer.id, gameId: this.game.id});
 		},
-		move() {
-			// this.io.emit('game/throwDice', {id: this.game.activePlayer.id, gameId: this.game.id});
-		},
+
 		dice() {
-			this.game.dice.throw();
-			this.showDice = true;
+			if(this.game.activePlayer.allowDice) {
+				this.game.dice.throw();
+				this.showDice = true;
+			}
+		},
+		touchCol(col) {
+			if(this.game.activePlayer.allowMove && this.showDice) {
+				this.game.touchCol(col);
+			}
 		},
 		touch(checker) {
 			if(this.game.activePlayer.allowMove) {
@@ -133,7 +137,13 @@ export default {
 					console.log('socket connected')
 
 					this.io.on('game-state', (params) => {
+						console.log(params)
 						this.game.stateManager(params);
+						if(this.blackPlayerInfo != undefined && this.whitePlayerInfo != undefined) {
+							
+							this.blackPlayerInfo.timer = (params.playerBlack.timer != undefined) ? params.playerBlack.timer : undefined;
+							this.whitePlayerInfo.timer = (params.playerWhite.timer != undefined) ? params.playerWhite.timer : undefined;
+						}
 					});
 
 					this.io.on('player-join',(param) => {

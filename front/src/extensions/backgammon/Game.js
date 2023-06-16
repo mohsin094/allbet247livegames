@@ -71,6 +71,21 @@ Game.prototype.stateManager = function(params)
 	State.manage(this, params);
 }
 
+Game.prototype.touchCol = function(col)
+{
+	const checker = this.activePlayer.getActiveChecker();
+	if(checker != undefined) {
+
+		const sumFirst = this.dice.first + checker.position;
+		const sumSecond = this.dice.second + checker.position; 
+		if(sumFirst == col.id) {
+			this.move(checker.position, sumFirst);
+		}else if(sumSecond == col.id)  {
+			this.move(checker.position, sumSecond);
+		}
+	}
+}
+
 Game.prototype.touchChecker = function(checker)
 {
 	const index = checker.index;

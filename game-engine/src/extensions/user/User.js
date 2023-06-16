@@ -46,6 +46,8 @@ User.prototype.login = async function(session, token) {
 			this.credentials = user;
 			this.role.name = ROLES.MEMBER
 			return true;
+		}else {
+			this.role.name = ROLES.GUEST
 		}
 	}
 	return false;

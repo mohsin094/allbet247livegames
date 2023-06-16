@@ -10,13 +10,13 @@ Dice.prototype.interval = undefined;
 Dice.prototype.throw = function(first, second) {
 	let i = 0;
 	
-	this.interval = setInterval(() => {
+	const interval = setInterval(() => {
 		this.first = randIntBetween(1, 7);
 		this.second = randIntBetween(1, 7);
 		if(i == 6) {
 			this.first = first;
 			this.second = second;
-			clearInterval(this.interval);
+			clearInterval(interval);
 		}
 		i++;
 	},70);
@@ -24,13 +24,13 @@ Dice.prototype.throw = function(first, second) {
 
 Dice.prototype.throwOne = function(first) {
 	let i = 0;
-	
-	this.interval = setInterval(() => {
+	console.log('hh'+first)
+	const interval = setInterval(() => {
 		this.first = randIntBetween(1, 7);
 		if(i == 6) {
-			console.log(first)
 			this.first = first;
-			clearInterval(this.interval);
+			console.log(first)
+			clearInterval(interval);
 		}
 		i++;
 	},70);
