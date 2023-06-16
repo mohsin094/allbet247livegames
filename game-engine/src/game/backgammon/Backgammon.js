@@ -10,7 +10,9 @@ const EMIT = {
 	TURN_DICE: 'turn-dice',
 	THROW_DICE: 'throw-dice',
 	BOARD_TEXT: 'board-text',
-	MAKE_GAME: 'make-game'
+	MAKE_GAME: 'make-game',
+	GAME_STATE: 'game-state',
+	PLAYER_JOIN: 'player-join'
 }
 
 function Backgammon()
@@ -28,6 +30,8 @@ Backgammon.prototype.playerBlack = undefined;
 
 Backgammon.prototype.id = undefined;
 Backgammon.prototype.activePlayer = undefined;
+Backgammon.prototype.state = undefined;
+Backgammon.prototype.stateInterval = undefined;
 
 /**
  * @param params example:
@@ -41,6 +45,12 @@ Backgammon.prototype.activePlayer = undefined;
 */
 
 Backgammon.prototype.create = function(params) {
+	this.state = {
+		board: {},
+		playerBlack: {},
+		playerWhite: {},
+		stage: {},
+	};
 	this.id = params.id;
 	this.board = new Board();
 
@@ -55,18 +65,30 @@ Backgammon.prototype.create = function(params) {
 	this.playerWhite.create({
 		color: PLAYER_COLOR.WHITE,
 		timer: (new Timer()).create(params.timer),
-		board: this.board,
-		id: params.playerWhite.id
+		board: this.board
 	});
 	this.playerWhite.setupCheckers();
 
 	this.board.create();
+
+
+}
+
+Backgammon.prototype.setStatePlayer = function(params) {
+	switch this.activePlayer.color {
+	case PLAYER_COLOR.BLACK:
+		
+		break;
+	case PLAYER_COLOR.WHITE:
+
+		break;
+	}
 }
 
 
-
-
 Backgammon.prototype.turn = function() {
+	this.state.stage.id = 2;
+	this.state.
 	this.activePlayer.socket.emit(EMIT.PLAYER_PREFER, {
 		id: this.activePlayer.id,
 		freeze: false
@@ -97,19 +119,34 @@ Backgammon.prototype.throwDoubleDice = function() {
 
 
 Backgammon.prototype.start123 = function() {
+
+	this.state.stage.id: 1;
+
+	this.playerWhite.socket.emit(EMIT.PLAYER_JOIN, {
+		id: this.playerBlack.id
+	});
+	
+	this.stateInterval = setInterval(() => {
+		if(typeof this.playerWhite.socket == 'object') {
+			this.playerWhite.socket.emit(EMIT.GAME_STATE, this.state);
+		}
+		if(typeof this.playerBlack.socket == 'object') {
+			this.playerBlack.socket.emit(EMIT.GAME_STATE, this.state);
+		}
+	}, 1000);
+
+
 	const timer = (new Timer()).create({
 		time: 4,
 	});
 
 	timer.onTick = () => {
-		this.playerBlack.socket.emit(EMIT.BOARD_TEXT, timer.roundTickCouner);
-		this.playerWhite.socket.emit(EMIT.BOARD_TEXT, timer.roundTickCouner);
+		this.state.timer = timer.roundTickCouner;
 	}
 
 	timer.onEnd = () => {
 		this.activePlayer = this.throwTurnDice();
-		this.playerWhite.socket.emit(EMIT.BOARD_TEXT, undefined);
-		this.playerBlack.socket.emit(EMIT.BOARD_TEXT, undefined);
+		this.state.timer = undefined;
 
 		this.turn();
 	}

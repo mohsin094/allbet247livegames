@@ -104,37 +104,37 @@
 	      		<!-- waiting list start -->
 			  <div class="tab-pane fade show active" id="pills-waiting-list" role="tabpanel">
 			  	<div class="row mb-5">
-				  	<div class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
+				  	<div v-for="wait in waiting" class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
 			  			<div class="frame small-frame border-purple">
 				  			<div class="position-relative card">
 				  				<div class="row gx-6 small-card-header">
 				  					<div class="col">
 					  					<div class="border-golden card-profile">
 						  					<div class="position-relative profile-bg bg-purple">
-						  						<img src="@/assets/profiles/gazal.svg" class="position-absolute"/>
+						  						<img style="width: 50px;" :src="frontUrl+'/assets/images/avatars/'+ wait.home.avatar +'.png'" class="position-absolute"/>
 						  					</div>
-						  					<span class="position-absolute card-profile-name-left card-profile-name small-card-profile-name">Maya</span>
+						  					<span class="position-absolute card-profile-name-left card-profile-name small-card-profile-name">{{wait.home.public_name}}</span>
 						  				</div>
 				  					</div>
-				  					<div class="col text-end position-relative">
-				  						<span class="text-golden-gradient position-absolute card-header-level">LVL.22</span>
+				  					<div v-if="wait.home.lvl != undefined" class="col text-end position-relative">
+				  						<span class="text-golden-gradient position-absolute card-header-level">LVL.{{wait.home.lvl}}</span>
 				  					</div>
 				  				</div>
 				  				<div class="row mt-3">
 				  					<div class="col-4 text-start">
-										<small>Stake:<span class="text-golden-gradient">1000</span></small>
+										<small>Stake:<span class="text-golden-gradient">{{wait.stake}}</span></small>
 									</div>
 								    <div class="col-4 text-center">
-								    	<small>Prize:<span class="text-golden-gradient">1400</span></small>
+								    	<!-- <small>Time:<span class="text-golden-gradient">{{wait.timeframe}}</span></small> -->
 								    </div>
 								    <div class="col-4 text-end">
-								    	<small>Rounds:<span class="text-golden-gradient">3</span></small>
+								    	<small>Rounds:<span class="text-golden-gradient">{{wait.round}}</span></small>
 								    </div>
 				  				</div>
 				  				<div class="row mt-3 justify-content-center">
 				  					<div class="col-6 text-center">
 				  						<div class="position-relative golden-gradient-border btn-bg">
-				  							<a href="#" class="btn-outline text-golden-gradient" data-bs-toggle="modal" data-bs-target="#wList">
+				  							<a @click="joinMatch(wait.id)" href="#" class="btn-outline text-golden-gradient" data-bs-toggle="modal" data-bs-target="#wList">
 				  								<span>Join</span>
 				  							</a>
 				  						</div>
@@ -478,7 +478,7 @@
 			</div>
     	</div>
     </div>
-    <WaitingList />
+    <WaitingList :match="joinMatchModal" />
     <NewGame />
 </template>
 <script>
@@ -493,12 +493,43 @@
 		data() {
 		    return {
 		      title: "Waiting list",
+		      waiting: [],
+		      joinMatchModal: undefined,
+		      baseUrl: import.meta.env.VITE_BACKEND_BASE_URL,
+		      frontUrl: import.meta.env.VITE_BASE_URL,
+		      waitingInterval: undefined,
 		    }
 		},
 		methods: {
 		    setTitle(title) {
 		      this.title = title
 		    },
+		    joinMatch(id) {
+		    	this.joinMatchModal = this.waiting[id];
+		    },
+		    fetchWaiting() {
+		    	this.waitingInterval = setInterval(() => {
+			    	this.$axios.get(this.baseUrl+"/game/default/get-waiting").then((res) => {
+			    		res = res.data.params;
+			    		this.waiting = res;
+			    	});
+		    	},	2000);
+		    }
+		},
+		created() {
+			this.fetchWaiting();
+		},
+		unmounted() {
+			clearInterval(this.waitingInterval);
 		}
 	};
 </script>
+
+<style scoped>
+	.profile-bg img {
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+	}
+</style>

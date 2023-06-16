@@ -33,15 +33,24 @@ Game.prototype.socketInit = function(socket) {
 
  // make game
 	this.socket.on('make-game', (params) => {
-		console.log(params)
+		
 		this.activePlayer = (params.playerColor == PLAYER_COLOR.BLACK) ? this.playerBlack : this.playerWhite;
 		this.activePlayer.id = params.id;
+		
+		switch(this.activePlayer.color) {
+		case PLAYER_COLOR.BLACK:
+			document.getElementById("board").style.transform = 'rotate(180deg)';
+			break;
+		case PLAYER_COLOR.WHITE:
+
+			break;
+		}
 	});
 
  // throw dice
 
 	this.socket.on('throw-dice', (params) => {
-		console.log(params)
+	
 		this.dice.throw(params[0], params[1]);
 	});
 
@@ -116,6 +125,7 @@ Game.prototype.init = function()
 
 	this.vue.$nextTick(() =>
 	{
+
 		
 		document.getElementById("board")
 			.style.width = this.global.boardWidth + "px"

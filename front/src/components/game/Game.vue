@@ -1,5 +1,5 @@
 <template>
-			<board-header :time="timer"/>
+			<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
 			<button @click="throwDice">Dice</button>
 			<button @click="move">Move</button>
 			<p>System Message: {{systemMessage}}</p>
@@ -8,8 +8,8 @@
 					<template v-if="game != undefined" >
 					<div v-if="showDice" class="dices">
 						<ul>
-							<li><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-'+game.dice.first+'.png'" /></li>
-							<li><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-'+game.dice.second+'.png'" /></li>
+							<li v-if="game.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-'+game.dice.first+'.png'" /></li>
+							<li v-if="game.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-'+game.dice.second+'.png'" /></li>
 						</ul>
 					</div>
 					<div v-if="doubleActive" id="double-dice">
@@ -76,9 +76,27 @@ export default {
 			timer: 0,
 			baseUrl: import.meta.env.VITE_BASE_URL,
 			boardText: undefined,
+			match: undefined,
+			whitePlayerInfo: undefined,
+			blackPlayerInfo: undefined
 		}
 	},
 	methods: {
+		getPlayerInfo() {
+			this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/player-public-info", {params: {
+				playerId: this.match.home_id
+			}}).then((res) => {
+				this.whitePlayerInfo = res.data.params
+			});
+
+			if(this.match.away_id != undefined) {
+				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/player-public-info", {params: {
+					playerId: this.match.away_id
+				}}).then((res) => {
+					this.blackPlayerInfo = res.data.params
+				});
+			}
+		},
 		throwDice() {
 			 this.io.emit('game/throwDice', {id: this.game.activePlayer.id, gameId: this.game.id});
 		},
@@ -97,60 +115,69 @@ export default {
 	},
 	created() {
 		this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/get-match", {params: {
-			id: '64724c2d5494ccdfdc06efc2'
+			id: this.$route.params.matchId
 		}}).then((data) => {
-			data = data.data.params;
-			this.match = data;
-			this.io = io("localhost:3002", {
-				path: "/game",
-				auth: {
-					token: this.$user.data.sessionId
-				}
-			});
-			this.io.on("connect", () => {
-				console.log('socket connected')
-			
-			  this.io.emit('game/join', {id: this.match.id});
+			data = data.data;
+			if(data.result) {
 
-			  this.io.on('system-message', (msg) => {
-			  	this.systemMessage = msg;
-			  });
+				this.match = data.params;
 
-		  	this.io.on('system-clock', (clock) => {
-					this.timer = clock;
-				});
-
-				this.io.on('board-text', (text) => {
-					this.boardText = text;
-				});
-
-				this.io.on('turn-dice', (dice) => {
-				
-					if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK) {
-						this.game.dice.throwOne(dice.black);
-						this.showDice = true;
-					}
-
-					if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE) {
-						this.game.dice.throwOne(dice.white);
-						this.showDice = true;
+				this.getPlayerInfo();
+				this.io = io("localhost:3002", {
+					path: "/game",
+					auth: {
+						token: this.$user.data.sessionId
 					}
 				});
-				
-				this.game = new Game(this);
-				this.game.id = this.match.id;
-				this.game.init();
+				this.io.on("connect", () => {
+					console.log('socket connected')
+					this.io.on('player-join',(param) => {
+						this.match.away_id = param.id;
+						this.getPlayerInfo();
+					});
 
-				if(this.match.home_id == this.$user.data.id) {
-					this.game.activePlayer = this.game.playerWhite;
-				}else {
-					this.game.activePlayer = this.game.playerBlack;
-				}
+				  this.io.emit('game/join', {id: this.match.id});
 
-			  this.game.socketInit(this.io);
-				this.doubleActive = this.game.doubleActive;
+				  this.io.on('system-message', (msg) => {
+				  	this.systemMessage = msg;
+				  });
 
-			});
+			  	this.io.on('system-clock', (clock) => {
+						this.timer = clock;
+					});
+
+					this.io.on('board-text', (text) => {
+						this.boardText = text;
+					});
+
+					this.io.on('turn-dice', (dice) => {
+					
+						if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK) {
+							this.game.dice.throwOne(dice.black);
+							this.showDice = true;
+						}
+
+						if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE) {
+							this.game.dice.throwOne(dice.white);
+							this.showDice = true;
+						}
+					});
+					
+					this.game = new Game(this);
+					this.game.id = this.match.id;
+					this.game.init();
+
+					if(this.match.home_id == this.$user.data.id) {
+						this.game.activePlayer = this.game.playerWhite;
+					}else {
+						this.game.activePlayer = this.game.playerBlack;
+					}
+
+				  this.game.socketInit(this.io);
+					this.doubleActive = this.game.doubleActive;
+
+				});
+			}
 		})
 
 
@@ -159,7 +186,8 @@ export default {
 
 	},
 	unmounted() {
-		this.io.close();
+		if(this.io != undefined)
+			this.io.close();
 	}
 }
 </script>

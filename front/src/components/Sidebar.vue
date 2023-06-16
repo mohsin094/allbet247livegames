@@ -11,14 +11,7 @@
                           <span class="ms-1  menu-link">Lobby</span>
                       </router-link>
                     </li>
-                    
-                    <li>
-                      <router-link to="/backgammon">
-                        <span class="material-symbols-rounded menu-icon">casino</span>
-                          <span class="ms-1  menu-link">Backgammon</span>
-                      </router-link>
-                     
-                    </li>
+
                   
                 </ul>
                 <div class="sidebar-footer">

@@ -79,7 +79,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'avatar' => $this->avatar,
             'role' => \Yii::$app->user->getIdentity()->role,
             'status' => $this->status,
-            'balance' => $this->balance
+            'balance' => $this->balance,
+            'lvl' => $this->lvl
         ];
     }
 
@@ -115,6 +116,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'role',
             'avatar',
             'balance',
+            'lvl'
         ];
     }
 
@@ -126,7 +128,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return [
             [['email', 'password', 'cdate', 'role', 'public_name', 'balance'], 'required'],
             ['password_repeat', 'required', 'on' => self::SCENARIO_REGISTER],
-            [['email', 'password', 'lang', 'role', 'balance'], 'string'],
+            [['email', 'password', 'lang', 'role', 'balance', 'lvl'], 'string'],
             [['email'], 'email'],
             [['password_repeat'], 'compare', 'compareAttribute' => 'password', 'operator' => '=='],
             // [['email', 'password', 'status', 'cdate', 'lang', 'user_role_id'], 'safe']
@@ -146,7 +148,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'cdate' => Yii::t('app', 'Cdate'),
             'lang' => Yii::t('app', 'Lang'),
             'user_role_id' => Yii::t('app', 'Role'),
-            'balance' => Yii::t('app', 'Balance')
+            'balance' => Yii::t('app', 'Balance'),
+            'lvl' => Yii::t('app', 'Level')
         ];
     }
 

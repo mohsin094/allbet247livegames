@@ -53,41 +53,44 @@ function GameController() {
 
 		if(gameId) {
 			const match = await mongo.db.collection(MatchesModel.name).findOne({_id: new ObjectId(gameId)});
-		
-			if(match != null && GameHolder.get(gameId)) {
-				const game = GameHolder.get(match._id);
-				game.playerBlack.id = this.app.user.id;
-				game.playerBlack.socket = this.request.socket;
-
-				game.playerBlack.socket.emit(EMIT.MAKE_GAME, {
-					color: PLAYER_COLOR.BLACK,
-					id: game.playerBlack.id
-				});
-				game.playerWhite.socket.emit(EMIT.MAKE_GAME, {
-					color: PLAYER_COLOR.WHITE,
-					id: game.playerWhite.id
-				});
-
-				GameHolder.get(match._id).start123();
-			}else {
-				const game = new Game();
-				game.create({
-					id: match._id,
-					playerWhite: {
-						id: match.home_id
-					},
-					timer: {
-						time: 60,
-						timeBank: 100
-					},
-				})
-				GameHolder.set(match._id, game);
 			
-				if(match.home_id == this.app.user.id) {
-					GameHolder.get(match._id).playerWhite.socket = this.request.socket;
-				}
-				// GameHolder.get(match._id).start123();
+			if(match) {
 
+				let game = GameHolder.get(gameId);
+
+				if(game == false) {
+					game = new Game();
+					game.create({
+						id: match._id,
+						timer: {
+							time: 60,
+							timeBank: 100
+						},
+					})
+					GameHolder.set(match._id, game);
+				}
+
+				if(this.app.user.id == match.home_id) {
+					game.playerWhite.id = this.app.user.id;
+					game.playerWhite.socket = this.request.socket;
+					game.playerWhite.socket.emit(EMIT.MAKE_GAME, {
+						playerColor: PLAYER_COLOR.WHITE,
+						id: game.playerWhite.id
+					});
+				}else if(this.app.user.id == match.away_id) {
+
+					game.playerBlack.id = this.app.user.id;
+					game.playerBlack.socket = this.request.socket;
+					game.playerBlack.socket.emit(EMIT.MAKE_GAME, {
+						playerColor: PLAYER_COLOR.BLACK,
+						id: game.playerBlack.id
+					});
+				}
+
+				if(typeof game.playerBlack.socket == 'object' && typeof game.playerWhite.socket == 'object') {
+					GameHolder.get(match._id).start123();
+				}
+			
 			}
 		}
 	}
