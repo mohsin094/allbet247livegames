@@ -6,6 +6,7 @@ import Player,
 	PLAYER_COLOR
 }
 from "@/extensions/backgammon/Player";
+import State from "@/extensions/backgammon/State";
 
 function Game(vue, socket)
 {
@@ -27,6 +28,7 @@ Game.prototype.doubleActive = undefined;
 Game.prototype.activePlayer = undefined;
 Game.prototype.isFreeze = undefined;
 Game.prototype.id = undefined;
+Game.prototype.stage = undefined;
 
 Game.prototype.socketInit = function(socket) {
 	this.socket = socket;
@@ -64,6 +66,11 @@ Game.prototype.socketInit = function(socket) {
 
 }
 
+Game.prototype.stateManager = function(params)
+{
+	State.manage(this, params);
+}
+
 Game.prototype.touchChecker = function(checker)
 {
 	const index = checker.index;
@@ -96,6 +103,7 @@ Game.prototype.setActivePlayer = function() {
 Game.prototype.init = function()
 {
 
+	this.stage = {};
 	this.doubleActive = true;
 	this.isFreeze = false;
 

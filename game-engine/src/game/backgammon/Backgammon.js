@@ -45,12 +45,6 @@ Backgammon.prototype.stateInterval = undefined;
 */
 
 Backgammon.prototype.create = function(params) {
-	this.state = {
-		board: {},
-		playerBlack: {},
-		playerWhite: {},
-		stage: {},
-	};
 	this.id = params.id;
 	this.board = new Board();
 
@@ -70,31 +64,62 @@ Backgammon.prototype.create = function(params) {
 	this.playerWhite.setupCheckers();
 
 	this.board.create();
+	this.state = {
+		game: {},
+		board: {},
+		playerBlack: {
+			checkers: this.playerBlack.checkers
+		},
+		playerWhite: {
+			checkers: this.playerWhite.checkers
+		},
+		stage: {},
+	};
 
 
 }
 
 Backgammon.prototype.setStatePlayer = function(params) {
-	switch this.activePlayer.color {
+	let keys = [];
+	switch(this.activePlayer.color) {
 	case PLAYER_COLOR.BLACK:
-		
+		keys = Object.keys(this.state.playerBlack);
+		for(let i = 0; i < keys.length; i++) {
+			this.state.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+		}
 		break;
 	case PLAYER_COLOR.WHITE:
-
+		keys = Object.keys(this.state.playerWhite);
+		for(let i = 0; i < keys.length; i++) {
+			this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+		}
 		break;
+	}
+}
+
+Backgammon.prototype.setStateBothPlayer = function(params) {
+	let keys = Object.keys(this.state.playerWhite);
+	for(let i = 0; i < keys.length; i++) {
+		this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+	}
+
+	keys = Object.keys(this.state.playerBlack);
+	for(let i = 0; i < keys.length; i++) {
+		this.state.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
 	}
 }
 
 
 Backgammon.prototype.turn = function() {
 	this.state.stage.id = 2;
-	this.state.
-	this.activePlayer.socket.emit(EMIT.PLAYER_PREFER, {
-		id: this.activePlayer.id,
-		freeze: false
+	this.state.setStatePlayer({
+		allowDice: true,
 	});
+	
 	this.activePlayer.timer.onTick = () => {
-		this.activePlayer.socket.emit(EMIT.SYSTEM_CLOCK, this.activePlayer.timer.roundTickCouner);
+		this.setStatePlayer({
+			timer: this.activePlayer.timer.roundTickCouner
+		});
 	};
 
 	this.activePlayer.timer.start();
@@ -120,7 +145,10 @@ Backgammon.prototype.throwDoubleDice = function() {
 
 Backgammon.prototype.start123 = function() {
 
-	this.state.stage.id: 1;
+	this.state.stage.id = 1;
+
+	this.state.playerWhite.id = this.playerWhite.id;
+	this.state.playerBlack.id = this.playerBlack.id;
 
 	this.playerWhite.socket.emit(EMIT.PLAYER_JOIN, {
 		id: this.playerBlack.id
@@ -141,12 +169,12 @@ Backgammon.prototype.start123 = function() {
 	});
 
 	timer.onTick = () => {
-		this.state.timer = timer.roundTickCouner;
+		this.state.game.timer = timer.roundTickCouner;
 	}
 
 	timer.onEnd = () => {
 		this.activePlayer = this.throwTurnDice();
-		this.state.timer = undefined;
+		this.state.game.timer = undefined;
 
 		this.turn();
 	}

@@ -131,6 +131,11 @@ export default {
 				});
 				this.io.on("connect", () => {
 					console.log('socket connected')
+
+					this.io.on('game-state', (params) => {
+						this.game.stateManager(params);
+					});
+
 					this.io.on('player-join',(param) => {
 						this.match.away_id = param.id;
 						this.getPlayerInfo();
