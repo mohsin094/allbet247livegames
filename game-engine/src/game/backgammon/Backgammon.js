@@ -70,12 +70,8 @@ Backgammon.prototype.create = function(params) {
 	this.state = {
 		game: {},
 		board: {},
-		playerBlack: {
-			checkers: this.playerBlack.checkers
-		},
-		playerWhite: {
-			checkers: this.playerWhite.checkers
-		},
+		playerBlack: {},
+		playerWhite: {},
 		stage: {
 			id: 0
 		},
@@ -147,13 +143,31 @@ Backgammon.prototype.throwDoubleDice = function() {
 		this.updatePlayer(this.activePlayer.color, {
 			dice: dice,
 			allowMove: true,
-			allowDice: false
+			allowDice: false,
+			showDice: true,
 		});
 		this.setStateActivePlayer({
 			dice: dice,
 			allowMove: true,
-			allowDice: false
+			allowDice: false,
+			showDice: true,
 		});
+
+		this.setStatePlayer(this.activePlayer.color, {
+			
+				dice: dice,
+				allowMove: true,
+				allowDice: false,
+				showDice: true,
+			
+		});
+
+		this.nextTick(() => {
+			this.setStateActivePlayer({
+				dice: undefined
+			});
+		})
+
 	}
 
 }
@@ -188,6 +202,24 @@ Backgammon.prototype.start123 = function() {
 			this._nextTick = [];
 		}
 	}, 1000);
+
+	this.setStatePlayer(PLAYER_COLOR.WHITE, {
+		checkers: this.playerWhite.checkers
+	});
+
+	this.setStatePlayer(PLAYER_COLOR.BLACK, {
+		checkers: this.playerBlack.checkers
+	});
+
+	this.nextTick(() => {
+		this.setStatePlayer(PLAYER_COLOR.WHITE, {
+			checkers: undefined
+		});
+
+		this.setStatePlayer(PLAYER_COLOR.BLACK, {
+			checkers: undefined
+		});
+	});
 
 
 	const timer = (new Timer()).create({
