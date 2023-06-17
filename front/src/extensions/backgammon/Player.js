@@ -20,6 +20,7 @@ Player.prototype.color = undefined;
 Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
 Player.prototype.allowMove = undefined;
+Player.prototype.allowDice = undefined;
 Player.prototype.freeze = undefined;
 
 Player.prototype.global = undefined;
@@ -90,6 +91,7 @@ Player.prototype.setupCheckers = function() {
 Player.prototype.create = function(player) {
 	
 	this.allowMove = false;
+	this.allowDice = false;
 	this.freeze = true;
 	this.color = player.color;
 	// this.dice = new Dice();

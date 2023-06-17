@@ -139,10 +139,13 @@ export default {
 					this.io.on('game-state', (params) => {
 						console.log(params)
 						this.game.stateManager(params);
+
+						this.boardText = (this.game.timer != undefined) ? this.game.timer : undefined;
+
 						if(this.blackPlayerInfo != undefined && this.whitePlayerInfo != undefined) {
 							
-							this.blackPlayerInfo.timer = (params.playerBlack.timer != undefined) ? params.playerBlack.timer : undefined;
-							this.whitePlayerInfo.timer = (params.playerWhite.timer != undefined) ? params.playerWhite.timer : undefined;
+							this.blackPlayerInfo.time = (params.playerBlack.time != undefined) ? params.playerBlack.time : undefined;
+							this.whitePlayerInfo.time = (params.playerWhite.time != undefined) ? params.playerWhite.time : undefined;
 						}
 					});
 

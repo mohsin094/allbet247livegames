@@ -29,6 +29,7 @@ Game.prototype.activePlayer = undefined;
 Game.prototype.isFreeze = undefined;
 Game.prototype.id = undefined;
 Game.prototype.stage = undefined;
+Game.prototype.timer = undefined;
 
 Game.prototype.socketInit = function(socket) {
 	this.socket = socket;

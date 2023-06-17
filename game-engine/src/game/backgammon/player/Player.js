@@ -14,6 +14,7 @@ const COLOR = {
 
 Player.prototype.id = undefined;
 Player.prototype.timer = undefined;
+Player.prototype.time = undefined;
 Player.prototype.color = undefined;
 Player.prototype.dice = undefined;
 Player.prototype.board = undefined;
@@ -39,7 +40,7 @@ Player.prototype.create = function(player) {
 	this.dice = new Dice();
 	this.board = player.board;
 
-	this.id = player.id;
+
 	this.checkers = [];
 	for(let i=0; i<15; i++) {
 		let c = new Checker();

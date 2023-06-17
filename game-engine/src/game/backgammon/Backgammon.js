@@ -32,6 +32,7 @@ Backgammon.prototype.id = undefined;
 Backgammon.prototype.activePlayer = undefined;
 Backgammon.prototype.state = undefined;
 Backgammon.prototype.stateInterval = undefined;
+Backgammon.prototype.dice = undefined;
 
 /**
  * @param params example:
@@ -83,6 +84,7 @@ Backgammon.prototype.create = function(params) {
 
 Backgammon.prototype.setStatePlayer = function(params) {
 	let keys = [];
+
 	switch(this.activePlayer.color) {
 	case PLAYER_COLOR.BLACK:
 		keys = Object.keys(params);
@@ -92,6 +94,7 @@ Backgammon.prototype.setStatePlayer = function(params) {
 		break;
 	case PLAYER_COLOR.WHITE:
 		keys = Object.keys(params);
+
 		for(let i = 0; i < keys.length; i++) {
 			this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
 		}
@@ -100,31 +103,47 @@ Backgammon.prototype.setStatePlayer = function(params) {
 }
 
 Backgammon.prototype.setStateBothPlayer = function(params) {
-	let keys = Object.keys(this.state.playerWhite);
+
+	let keys = Object.keys(params);
 	for(let i = 0; i < keys.length; i++) {
+	
 		this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
 	}
 
-	keys = Object.keys(this.state.playerBlack);
+	keys = Object.keys(params);
 	for(let i = 0; i < keys.length; i++) {
+
 		this.state.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
 	}
+
 }
 
 
 Backgammon.prototype.turn = function() {
 	this.state.stage.id = 2;
+
+	this.playerWhite.allowDice = false;
+	this.playerBlack.allowDice = false;
+	this.setStateBothPlayer({
+		allowDice: false,
+		allowMove: false,
+	});
+	
+	this.activePlayer.allowDice = true;
 	this.setStatePlayer({
-		allowDice: true,
+		allowDice: true
 	});
 	
 	this.activePlayer.timer.onTick = () => {
+		
+		this.activePlayer.time = this.activePlayer.timer.roundTickCouner;
 		this.setStatePlayer({
-			timer: this.activePlayer.timer.roundTickCouner
+			time: this.activePlayer.timer.roundTickCouner
 		});
 	};
 
 	this.activePlayer.timer.start();
+
 }
 
 Backgammon.prototype.move = function(move) {
@@ -132,18 +151,23 @@ Backgammon.prototype.move = function(move) {
 }
 
 Backgammon.prototype.throwDoubleDice = function() {
-	const dice = this.activePlayer.dice.throwTwo();
+	console.log(this.state.stage.id)
+	if(this.state.stage.id === 2) {
+		this.state.stage.id = 3;
+		const dice = this.activePlayer.dice.throwTwo();
+		this.dice = dice;
+		this.state.game.dice = dice;
+		
+		this.activePlayer.dice = dice;
+		this.activePlayer.allowMove = true;
+		this.activePlayer.allowDice = false;
+		this.setStatePlayer({game: {
+			dice: dice,
+			allowMove: true,
+			allowDice: false
+		}});
+	}
 
-	
-	this.setStatePlayer({game: {
-		dice: dice
-	}});
-
-	this.activePlayer.socket.emit(EMIT.PLAYER_PREFER, {
-		id: this.activePlayer.id,
-		freeze: true,
-		allowMove: true
-	});
 }
 
 
@@ -154,6 +178,7 @@ Backgammon.prototype.start123 = function() {
 
 	this.state.playerWhite.id = this.playerWhite.id;
 	this.state.playerBlack.id = this.playerBlack.id;
+
 
 	this.playerWhite.socket.emit(EMIT.PLAYER_JOIN, {
 		id: this.playerBlack.id
@@ -180,8 +205,8 @@ Backgammon.prototype.start123 = function() {
 	timer.onEnd = () => {
 		this.activePlayer = this.throwTurnDice();
 		this.state.game.timer = undefined;
-
 		this.turn();
+		
 	}
 
 	timer.start();
@@ -208,9 +233,8 @@ Backgammon.prototype.throwTurnDice = function() {
 	}else if(w[0] < b[0]) {
 		turn = this.playerBlack;
 	}else {
-		return this.throwTurnDice();
+		turn = this.throwTurnDice();
 	}
-
 	return turn;
 }
 

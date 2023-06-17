@@ -39,9 +39,10 @@ function GameController() {
 		const gameId = this.request.data.gameId;
 		const userId = this.app.user.id;
 		const game = GameHolder.get(gameId);
-		
+
 		if(gameId && game) {
-			if(game.activePlayer != undefined && game.activePlayer.id == userId) {
+			if(game.activePlayer != undefined && game.activePlayer.id == userId && game.activePlayer.allowDice == true) {
+				
 				game.throwDoubleDice();
 			}
 		}
@@ -61,7 +62,7 @@ function GameController() {
 				if(game == false) {
 					game = new Game();
 					game.create({
-						id: match._id,
+						id: match._id.toString(),
 						timer: {
 							time: 60,
 							timeBank: 100
@@ -72,6 +73,7 @@ function GameController() {
 
 				if(this.app.user.id == match.home_id) {
 					game.playerWhite.id = this.app.user.id;
+					
 					game.playerWhite.socket = this.request.socket;
 					game.playerWhite.socket.emit(EMIT.MAKE_GAME, {
 						playerColor: PLAYER_COLOR.WHITE,
@@ -80,6 +82,7 @@ function GameController() {
 				}else if(this.app.user.id == match.away_id) {
 
 					game.playerBlack.id = this.app.user.id;
+					
 					game.playerBlack.socket = this.request.socket;
 					game.playerBlack.socket.emit(EMIT.MAKE_GAME, {
 						playerColor: PLAYER_COLOR.BLACK,
@@ -90,7 +93,7 @@ function GameController() {
 				if(typeof game.playerBlack.socket == 'object' && typeof game.playerWhite.socket == 'object') {
 				
 					if(game.state.stage.id == 0) {
-				
+					
 						game.start123();
 					}
 				}

@@ -15,7 +15,7 @@
 					<i class="material-symbols-outlined text-golden-gradient float-start mr-1">
 						timelapse
 					</i>
-					<span class="float-start"> {{playerWhite.timer}}</span>
+					<span class="float-start"> {{playerWhite.time}}</span>
 				</div>
 				<div class="col-md-3 col-xl-3">
 					<ul class="list-group-horizontal card-star text-center">
@@ -40,7 +40,7 @@
 					<i class="material-symbols-outlined text-golden-gradient float-start mr-1">
 						timelapse
 					</i>
-					<span class="float-start"> {{playerBlack.timer}}</span>
+					<span class="float-start"> {{playerBlack.time}}</span>
 				</div>
 				<div v-if="playerBlack != undefined" class="col-md-2 col-xl-2" dir="rtl">
 					<div class="border-golden card-profile card-profile-right">
