@@ -5,12 +5,23 @@
 			<div id="game" class="col-12">
 				<div id="board">
 					<template v-if="game != undefined" >
-					<div v-if="showDice" class="dices">
+
+					<!-- dice black -->
+					<div v-if="showDice && game.playerBlack.allowDice && game.playerBlack.dice" class="dices dice-black">
 						<ul>
-							<li v-if="game.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-'+game.dice.first+'.png'" /></li>
-							<li v-if="game.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-'+game.dice.second+'.png'" /></li>
+							<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
+							<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
 						</ul>
 					</div>
+
+					<!-- dice white -->
+					<div v-if="showDice && game.playerWhite.allowDice && game.playerWhite.dice" class="dices dice-white">
+						<ul>
+							<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
+							<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
+						</ul>
+					</div>
+
 					<div v-if="doubleActive" id="double-dice">
 						<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
 					</div>

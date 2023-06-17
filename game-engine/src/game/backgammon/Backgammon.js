@@ -82,61 +82,33 @@ Backgammon.prototype.create = function(params) {
 
 }
 
-Backgammon.prototype.setStatePlayer = function(params) {
-	let keys = [];
 
-	switch(this.activePlayer.color) {
-	case PLAYER_COLOR.BLACK:
-		keys = Object.keys(params);
-		for(let i = 0; i < keys.length; i++) {
-			this.state.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
-		}
-		break;
-	case PLAYER_COLOR.WHITE:
-		keys = Object.keys(params);
-
-		for(let i = 0; i < keys.length; i++) {
-			this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
-		}
-		break;
-	}
-}
-
-Backgammon.prototype.setStateBothPlayer = function(params) {
-
-	let keys = Object.keys(params);
-	for(let i = 0; i < keys.length; i++) {
-	
-		this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
-	}
-
-	keys = Object.keys(params);
-	for(let i = 0; i < keys.length; i++) {
-
-		this.state.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
-	}
-
-}
 
 
 Backgammon.prototype.turn = function() {
 	this.state.stage.id = 2;
 
-	this.playerWhite.allowDice = false;
-	this.playerBlack.allowDice = false;
+	this.updateBothPlayer({
+		allowDice: false,
+		allowMove: false,
+	});
 	this.setStateBothPlayer({
 		allowDice: false,
 		allowMove: false,
 	});
 	
-	this.activePlayer.allowDice = true;
+	this.updatePlayer(this.activePlayer.color, {
+		allowDice: true
+	});
 	this.setStatePlayer({
 		allowDice: true
 	});
 	
 	this.activePlayer.timer.onTick = () => {
 		
-		this.activePlayer.time = this.activePlayer.timer.roundTickCouner;
+		this.updatePlayer(this.activePlayer.color, {
+			time: this.activePlayer.timer.roundTickCouner
+		});
 		this.setStatePlayer({
 			time: this.activePlayer.timer.roundTickCouner
 		});
@@ -155,17 +127,19 @@ Backgammon.prototype.throwDoubleDice = function() {
 	if(this.state.stage.id === 2) {
 		this.state.stage.id = 3;
 		const dice = this.activePlayer.dice.throwTwo();
-		this.dice = dice;
+
 		this.state.game.dice = dice;
 		
-		this.activePlayer.dice = dice;
-		this.activePlayer.allowMove = true;
-		this.activePlayer.allowDice = false;
-		this.setStatePlayer({game: {
+		this.updatePlayer(this.activePlayer.color, {
 			dice: dice,
 			allowMove: true,
 			allowDice: false
-		}});
+		});
+		this.setStatePlayer({
+			dice: dice,
+			allowMove: true,
+			allowDice: false
+		});
 	}
 
 }
@@ -199,6 +173,7 @@ Backgammon.prototype.start123 = function() {
 	});
 
 	timer.onTick = () => {
+		this.timer = timer.roundTickCouner;
 		this.state.game.timer = timer.roundTickCouner;
 	}
 
@@ -236,6 +211,77 @@ Backgammon.prototype.throwTurnDice = function() {
 		turn = this.throwTurnDice();
 	}
 	return turn;
+}
+
+Backgammon.prototype.setStatePlayer = function(params) {
+	let keys = [];
+
+	switch(this.activePlayer.color) {
+	case PLAYER_COLOR.BLACK:
+		keys = Object.keys(params);
+		for(let i = 0; i < keys.length; i++) {
+			this.state.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+		}
+		break;
+	case PLAYER_COLOR.WHITE:
+		keys = Object.keys(params);
+
+		for(let i = 0; i < keys.length; i++) {
+			this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+		}
+		break;
+	}
+}
+
+Backgammon.prototype.setStateBothPlayer = function(params) {
+
+	let keys = Object.keys(params);
+	for(let i = 0; i < keys.length; i++) {
+	
+		this.state.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+	}
+
+	keys = Object.keys(params);
+	for(let i = 0; i < keys.length; i++) {
+
+		this.state.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+	}
+
+}
+
+Backgammon.prototype.updateBothPlayer = function(params)
+{
+	let keys = Object.keys(params);
+	for(let i = 0; i < keys.length; i++) {
+	
+		this.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+	}
+
+	keys = Object.keys(params);
+	for(let i = 0; i < keys.length; i++) {
+
+		this.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+	}
+}
+
+Backgammon.prototype.updatePlayer = function(color, params) {
+	let keys = [];
+
+	switch(color) {
+	case PLAYER_COLOR.BLACK:
+		keys = Object.keys(params);
+		for(let i = 0; i < keys.length; i++) {
+			this.playerBlack[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+		}
+		break;
+	case PLAYER_COLOR.WHITE:
+		keys = Object.keys(params);
+
+		for(let i = 0; i < keys.length; i++) {
+			this.playerWhite[keys[i]] = (params[keys[i]] != undefined) ? params[keys[i]] : undefined;
+		}
+		break;
+	}
 }
 
 

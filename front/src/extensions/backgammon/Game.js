@@ -21,7 +21,7 @@ Game.prototype.vue = undefined;
 Game.prototype.socket = undefined;
 Game.prototype.global = undefined;
 Game.prototype.board = undefined;
-Game.prototype.dice = undefined;
+
 Game.prototype.playerWhite = undefined;
 Game.prototype.playerBlack = undefined;
 Game.prototype.doubleActive = undefined;
@@ -50,12 +50,7 @@ Game.prototype.socketInit = function(socket) {
 		}
 	});
 
- // throw dice
 
-	this.socket.on('throw-dice', (params) => {
-	
-		this.dice.throw(params[0], params[1]);
-	});
 
 
 
@@ -77,8 +72,8 @@ Game.prototype.touchCol = function(col)
 	const checker = this.activePlayer.getActiveChecker();
 	if(checker != undefined) {
 
-		const sumFirst = this.dice.first + checker.position;
-		const sumSecond = this.dice.second + checker.position; 
+		const sumFirst = this.activePlayer.dice.first + checker.position;
+		const sumSecond = this.activePlayer.dice.second + checker.position; 
 		if(sumFirst == col.id) {
 			this.move(checker.position, sumFirst);
 		}else if(sumSecond == col.id)  {
@@ -95,7 +90,7 @@ Game.prototype.touchChecker = function(checker)
 		this.board.removeOffer();
 		this.activePlayer.toggleTouchChecker(index);
 		if(this.activePlayer.getChecker(checker.index).selected) {
-			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.dice, this.activePlayer);
+			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer.dice, this.activePlayer);
 		}
 	}
 }
@@ -123,7 +118,7 @@ Game.prototype.init = function()
 	this.doubleActive = true;
 	this.isFreeze = false;
 
-	this.dice = new Dice();
+
 
 	this.board = new Board(this.global);
 	this.board.create();

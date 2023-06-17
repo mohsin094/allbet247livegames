@@ -16,7 +16,7 @@ const COLOR = {
 
 Player.prototype.id = undefined;
 Player.prototype.color = undefined;
-// Player.prototype.dice = undefined;
+Player.prototype.dice = undefined;
 Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
 Player.prototype.allowMove = undefined;
@@ -94,7 +94,7 @@ Player.prototype.create = function(player) {
 	this.allowDice = false;
 	this.freeze = true;
 	this.color = player.color;
-	// this.dice = new Dice();
+	this.dice = new Dice();
 	this.id = player.id;
 
 	this.checkers = [];
