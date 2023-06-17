@@ -18,12 +18,14 @@ const COLOR = {
 Player.prototype.id = undefined;
 Player.prototype.color = undefined;
 Player.prototype.dice = undefined;
+Player.prototype.showDice = undefined;
 
 Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
 Player.prototype.allowMove = undefined;
 Player.prototype.allowDice = undefined;
 Player.prototype.freeze = undefined;
+Player.prototype.text = undefined;
 
 Player.prototype.global = undefined;
 
@@ -97,7 +99,9 @@ Player.prototype.create = function(player) {
 	this.freeze = true;
 	this.color = player.color;
 	this.dice = new Dice();
+	this.showDice = false;
 	this.id = player.id;
+	this.text = undefined;
 
 	this.checkers = [];
 	for(let i=0; i<15; i++) {

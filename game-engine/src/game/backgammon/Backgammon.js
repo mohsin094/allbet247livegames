@@ -32,6 +32,7 @@ Backgammon.prototype.id = undefined;
 Backgammon.prototype.activePlayer = undefined;
 Backgammon.prototype.state = undefined;
 Backgammon.prototype.stateInterval = undefined;
+Backgammon.prototype._nextTick = undefined;
 Backgammon.prototype.dice = undefined;
 
 /**
@@ -48,6 +49,7 @@ Backgammon.prototype.dice = undefined;
 Backgammon.prototype.create = function(params) {
 	this.id = params.id;
 	this.board = new Board();
+	this._nextTick = [];
 
 	this.playerBlack = new Player()
 	this.playerBlack.create({
@@ -87,6 +89,18 @@ Backgammon.prototype.create = function(params) {
 
 Backgammon.prototype.turn = function() {
 	this.state.stage.id = 2;
+
+	this.setStateActivePlayer({
+		text: this.activePlayer.color+' Turn'
+	});
+	this.nextTick(() => {
+		setTimeout(() => {
+			this.setStateActivePlayer({
+				text: undefined
+			});
+		},2000);
+		
+	});
 
 	this.updateBothPlayer({
 		allowDice: false,
@@ -165,6 +179,14 @@ Backgammon.prototype.start123 = function() {
 		if(typeof this.playerBlack.socket == 'object') {
 			this.playerBlack.socket.emit(EMIT.GAME_STATE, this.state);
 		}
+
+
+		if(this._nextTick.length > 0) {
+			this._nextTick.forEach((item) => {
+				item();
+			})
+			this._nextTick = [];
+		}
 	}, 1000);
 
 
@@ -207,6 +229,34 @@ Backgammon.prototype.throwTurnDice = function() {
 	this.setStatePlayer(this.playerWhite.color, {
 		dice: w
 	});
+	this.setStateBothPlayer({
+		showDice: true
+	});
+
+	this.nextTick(() => {
+		setTimeout(() => {
+			this.setStateBothPlayer({
+				showDice: false
+			});
+			
+		}, 5000);
+	});
+
+	this.nextTick(() => {
+		this.updatePlayer(this.playerBlack.color, {
+			dice: undefined
+		});
+		this.setStatePlayer(this.playerBlack.color, {
+			dice: undefined
+		});
+
+		this.updatePlayer(this.playerWhite.color, {
+			dice: undefined
+		});
+		this.setStatePlayer(this.playerWhite.color, {
+			dice: undefined
+		});
+	});
 
 
 	let turn = undefined;
@@ -242,7 +292,7 @@ Backgammon.prototype.setStateActivePlayer = function(params) {
 
 Backgammon.prototype.setStatePlayer = function(color, params) {
 	let keys = [];
-
+	
 	switch(color) {
 	case PLAYER_COLOR.BLACK:
 		keys = Object.keys(params);
@@ -309,6 +359,11 @@ Backgammon.prototype.updatePlayer = function(color, params) {
 		}
 		break;
 	}
+}
+
+Backgammon.prototype.nextTick = function(func)
+{
+	this._nextTick.push(func);
 }
 
 

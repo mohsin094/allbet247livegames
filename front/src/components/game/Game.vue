@@ -7,10 +7,7 @@
 					<template v-if="game != undefined" >
 
 					<!-- dice black -->
-										{{game.playerBlack.allowDice}}
-					{{game.playerBlack.dice}}
-					{{game.playerBlack.dice.first}}
-					<div v-if="game.playerBlack.dice" class="dices dice-black">
+					<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
 						<ul>
 							<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
 							<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
@@ -18,10 +15,7 @@
 					</div>
 
 					<!-- dice white -->
-					{{game.playerWhite.allowDice}}
-					{{game.playerWhite.dice}}
-					{{game.playerWhite.dice.first}}
-					<div v-if="game.playerWhite.dice" class="dices dice-white">
+					<div v-if="game.playerWhite.dice && game.playerWhite.showDice" class="dices dice-white">
 						<ul>
 							<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
 							<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
@@ -60,8 +54,12 @@
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
 
 					</template>
-					<div v-show="boardText != undefined" id="board-text">
+					<div v-show="boardText != undefined" class="board-text">
 						{{boardText}}
+					</div>
+					<div v-if="game != undefined" v-show="game.playerWhite.text != undefined || game.playerBlack.text != undefined" class="board-text">
+						{{(game.playerWhite.text != undefined) ? game.playerWhite.text : ''}}
+						{{(game.playerBlack.text != undefined) ? game.playerBlack.text : ''}}
 					</div>
 				</div>
 			</div>
@@ -163,6 +161,9 @@ export default {
 							
 							this.blackPlayerInfo.time = (params.playerBlack.time != undefined) ? params.playerBlack.time : undefined;
 							this.whitePlayerInfo.time = (params.playerWhite.time != undefined) ? params.playerWhite.time : undefined;
+
+							// this.blackPlayerInfo.text = (params.playerBlack.text != undefined) ? params.playerBlack.text : undefined;
+							// this.whitePlayerInfo.text = (params.playerWhite.text != undefined) ? params.playerWhite.text : undefined;
 						}
 					});
 
@@ -260,7 +261,7 @@ export default {
 	right: 2%;
 }
 
-#board-text {
+.board-text {
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -276,7 +277,15 @@ export default {
   position: absolute;
   z-index: 1;
   top: 48%;
-  right: 25%;
+
+}
+
+.dice-black {
+	left: 25%;
+}
+
+.dice-white {
+	  right: 25%;
 }
 
 .dices ul {

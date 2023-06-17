@@ -17,10 +17,12 @@ Player.prototype.timer = undefined;
 Player.prototype.time = undefined;
 Player.prototype.color = undefined;
 Player.prototype.dice = undefined;
+Player.prototype.showDice = undefined;
 Player.prototype.diceManager = undefined;
 Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
 Player.prototype.socket = undefined;
+Player.prototype.text = undefined;
 
 Player.prototype.move = function(checkerId, toPosition) {
 	
@@ -41,6 +43,8 @@ Player.prototype.create = function(player) {
 	this.diceManager = new Dice();
 	this.board = player.board;
 	this.dice = undefined;
+	this.showDice = undefined;
+	this.text = undefined;
 
 
 	this.checkers = [];
