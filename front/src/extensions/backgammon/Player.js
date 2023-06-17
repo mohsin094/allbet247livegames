@@ -1,5 +1,6 @@
 import CheckersUtil from "@/extensions/backgammon/CheckersUtil";
 import Checker from "@/extensions/backgammon/Checker";
+import Dice from "@/extensions/backgammon/Dice";
 
 
 function Player(board, globalValues)
@@ -17,6 +18,7 @@ const COLOR = {
 Player.prototype.id = undefined;
 Player.prototype.color = undefined;
 Player.prototype.dice = undefined;
+
 Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
 Player.prototype.allowMove = undefined;

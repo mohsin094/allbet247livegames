@@ -24,6 +24,8 @@ export default {
 					}else if(state.playerBlack.dice[0] != undefined) {
 						game.playerBlack.dice.throwOne(state.playerBlack.dice[0]);
 					}
+						console.log(state.playerBlack.dice)
+
 				}
 				break;
 			case 'playerWhite':
@@ -36,6 +38,8 @@ export default {
 					}else if(state.playerWhite.dice[0] != undefined) {
 						game.playerWhite.dice.throwOne(state.playerWhite.dice[0]);
 					}
+						console.log(state.playerWhite.dice)
+					
 				}
 				break;
 			}

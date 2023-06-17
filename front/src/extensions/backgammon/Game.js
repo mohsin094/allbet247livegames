@@ -58,8 +58,6 @@ Game.prototype.socketInit = function(socket) {
 		this.activePlayer.freeze = (player.freeze != undefined) ? player.freeze : this.activePlayer.freeze;
 		this.activePlayer.allowMove = (player.allowMove != undefined) ? player.allowMove : this.activePlayer.allowMove;
 	});
-
-
 }
 
 Game.prototype.stateManager = function(params)

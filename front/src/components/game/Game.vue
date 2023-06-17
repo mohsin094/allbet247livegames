@@ -7,7 +7,10 @@
 					<template v-if="game != undefined" >
 
 					<!-- dice black -->
-					<div v-if="showDice && game.playerBlack.allowDice && game.playerBlack.dice" class="dices dice-black">
+										{{game.playerBlack.allowDice}}
+					{{game.playerBlack.dice}}
+					{{game.playerBlack.dice.first}}
+					<div v-if="game.playerBlack.dice" class="dices dice-black">
 						<ul>
 							<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
 							<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
@@ -15,7 +18,10 @@
 					</div>
 
 					<!-- dice white -->
-					<div v-if="showDice && game.playerWhite.allowDice && game.playerWhite.dice" class="dices dice-white">
+					{{game.playerWhite.allowDice}}
+					{{game.playerWhite.dice}}
+					{{game.playerWhite.dice.first}}
+					<div v-if="game.playerWhite.dice" class="dices dice-white">
 						<ul>
 							<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
 							<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
@@ -148,7 +154,7 @@ export default {
 					console.log('socket connected')
 
 					this.io.on('game-state', (params) => {
-						console.log(params)
+						
 						this.game.stateManager(params);
 
 						this.boardText = (this.game.timer != undefined) ? this.game.timer : undefined;

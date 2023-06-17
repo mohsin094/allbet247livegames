@@ -17,6 +17,7 @@ Player.prototype.timer = undefined;
 Player.prototype.time = undefined;
 Player.prototype.color = undefined;
 Player.prototype.dice = undefined;
+Player.prototype.diceManager = undefined;
 Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
 Player.prototype.socket = undefined;
@@ -37,8 +38,9 @@ Player.prototype.startTimer = function() {
 Player.prototype.create = function(player) {
 	this.timer = player.timer;
 	this.color = player.color;
-	this.dice = new Dice();
+	this.diceManager = new Dice();
 	this.board = player.board;
+	this.dice = undefined;
 
 
 	this.checkers = [];

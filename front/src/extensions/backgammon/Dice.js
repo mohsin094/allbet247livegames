@@ -29,7 +29,7 @@ Dice.prototype.throwOne = function(first) {
 		this.first = randIntBetween(1, 7);
 		if(i == 6) {
 			this.first = first;
-			console.log(first)
+		
 			clearInterval(interval);
 		}
 		i++;
