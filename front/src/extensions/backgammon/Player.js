@@ -89,7 +89,7 @@ Player.prototype.moveChecker = function(index, toPosition)
 
 Player.prototype.setupCheckers = function() {
 
-	CheckersUtil.initPosition(this.board, this.color, this.checkers);
+	// CheckersUtil.initPosition(this.board, this.color, this.checkers);
 }
 
 Player.prototype.create = function(player) {

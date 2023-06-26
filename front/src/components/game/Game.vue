@@ -122,7 +122,8 @@ export default {
 			}
 		},
 		touchCol(col) {
-			if(this.game.activePlayer.allowMove && this.showDice) {
+			console.log(col)
+			if(this.game.activePlayer.allowMove) {
 				this.game.touchCol(col);
 			}
 		},
@@ -148,32 +149,49 @@ export default {
 						token: this.$user.data.sessionId
 					}
 				});
+				
+				this.game = new Game(this);
+				this.game.id = this.match.id;
+				this.game.init();
+
+				if(this.match.home_id == this.$user.data.id) {
+					this.game.activePlayer = this.game.playerWhite;
+				}else {
+					this.game.activePlayer = this.game.playerBlack;
+				}
+
+			  this.game.socketInit(this.io);
+				this.doubleActive = this.game.doubleActive;
+
 				this.io.on("connect", () => {
 					console.log('socket connected')
 
 					this.io.on('game-state', (params) => {
-						
-						this.game.stateManager(params);
+						if(this.game != undefined) {
 
-						this.boardText = (this.game.timer != undefined) ? this.game.timer : undefined;
+							this.game.stateManager(params);
 
-						if(this.blackPlayerInfo != undefined && this.whitePlayerInfo != undefined) {
-							
-							this.blackPlayerInfo.time = (params.playerBlack.time != undefined) ? params.playerBlack.time : undefined;
-							this.whitePlayerInfo.time = (params.playerWhite.time != undefined) ? params.playerWhite.time : undefined;
+							this.boardText = (this.game.timer != undefined) ? this.game.timer : undefined;
 
-							// this.blackPlayerInfo.text = (params.playerBlack.text != undefined) ? params.playerBlack.text : undefined;
-							// this.whitePlayerInfo.text = (params.playerWhite.text != undefined) ? params.playerWhite.text : undefined;
+							if(this.blackPlayerInfo != undefined && this.whitePlayerInfo != undefined) {
+								
+								this.blackPlayerInfo.time = (params.playerBlack.time != undefined) ? params.playerBlack.time : undefined;
+								this.whitePlayerInfo.time = (params.playerWhite.time != undefined) ? params.playerWhite.time : undefined;
+
+								// this.blackPlayerInfo.text = (params.playerBlack.text != undefined) ? params.playerBlack.text : undefined;
+								// this.whitePlayerInfo.text = (params.playerWhite.text != undefined) ? params.playerWhite.text : undefined;
+							}
 						}
+						
 					});
 
 					this.io.on('player-join',(param) => {
-						this.match.away_id = param.id;
-						this.getPlayerInfo();
+						if(this.game != undefined) {
+							
+							this.match.away_id = param.id;
+							this.getPlayerInfo();
+						}
 					});
-
-				  this.io.emit('game/join', {id: this.match.id});
-
 				  this.io.on('system-message', (msg) => {
 				  	this.systemMessage = msg;
 				  });
@@ -187,31 +205,24 @@ export default {
 					});
 
 					this.io.on('turn-dice', (dice) => {
-					
-						if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK) {
-							this.game.dice.throwOne(dice.black);
-							this.showDice = true;
-						}
+						if(this.game != undefined) {
+							
+							if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK) {
+								this.game.dice.throwOne(dice.black);
+								this.showDice = true;
+							}
 
-						if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE) {
-							this.game.dice.throwOne(dice.white);
-							this.showDice = true;
+							if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE) {
+								this.game.dice.throwOne(dice.white);
+								this.showDice = true;
+							}
 						}
 					});
 					
-					this.game = new Game(this);
-					this.game.id = this.match.id;
-					this.game.init();
-
-					if(this.match.home_id == this.$user.data.id) {
-						this.game.activePlayer = this.game.playerWhite;
-					}else {
-						this.game.activePlayer = this.game.playerBlack;
+					
+					if(this.game != undefined) {	
+						this.io.emit('game/join', {id: this.match.id});
 					}
-
-				  this.game.socketInit(this.io);
-					this.doubleActive = this.game.doubleActive;
-
 				});
 			}
 		})

@@ -52,8 +52,6 @@ Game.prototype.socketInit = function(socket) {
 
 
 
-
-
 	this.socket.on('player-prefer', (player) => {
 		this.activePlayer.freeze = (player.freeze != undefined) ? player.freeze : this.activePlayer.freeze;
 		this.activePlayer.allowMove = (player.allowMove != undefined) ? player.allowMove : this.activePlayer.allowMove;
@@ -68,10 +66,14 @@ Game.prototype.stateManager = function(params)
 Game.prototype.touchCol = function(col)
 {
 	const checker = this.activePlayer.getActiveChecker();
+	
 	if(checker != undefined) {
-
-		const sumFirst = this.activePlayer.dice.first + checker.position;
-		const sumSecond = this.activePlayer.dice.second + checker.position; 
+		
+		const sumFirst = (checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.first + checker.position : checker.position - this.activePlayer.dice.first;
+		const sumSecond =(checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.second + checker.position : checker.position - this.activePlayer.dice.second; 
+		console.log(sumFirst)
+		console.log(sumSecond)
+		console.log(col.id)
 		if(sumFirst == col.id) {
 			this.move(checker.position, sumFirst);
 		}else if(sumSecond == col.id)  {
@@ -93,10 +95,10 @@ Game.prototype.touchChecker = function(checker)
 	}
 }
 
-Game.prototype.move = function()
+Game.prototype.move = function(from, to)
 {
-	this.activePlayer.moveChecker(12, 0);
-	// this.playerBlack.moveChecker(13, 8);
+	console.log('move')
+	this.activePlayer.moveChecker(from, to);
 }
 
 Game.prototype.setActivePlayer = function() {
@@ -128,16 +130,16 @@ Game.prototype.init = function()
 	{
 		color: PLAYER_COLOR.BLACK,
 		id: 0, // get from socket
-	}, this.board.getColumns());
+	});
 
 	this.playerWhite.create(
 	{
 		color: PLAYER_COLOR.WHITE,
 		id: 1, // get from socket
-	}, this.board.getColumns());
+	});
 
-	this.playerBlack.setupCheckers();
-	this.playerWhite.setupCheckers();
+	// this.playerBlack.setupCheckers();
+	// this.playerWhite.setupCheckers();
 
 
 	this.vue.$nextTick(() =>

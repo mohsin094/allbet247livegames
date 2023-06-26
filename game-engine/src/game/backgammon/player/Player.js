@@ -51,6 +51,14 @@ Player.prototype.create = function(player) {
 	for(let i=0; i<15; i++) {
 		let c = new Checker();
 		c.create(this.color);
+		switch(this.color) {
+		case COLOR.WHITE:
+			// c.position = i+1;
+			break;
+		case COLOR.BLACK:
+			// c.position = i+1;
+			break;
+		}
 		this.checkers.push(c);
 	}
 

@@ -92,12 +92,39 @@ function GameController() {
 	
 				if(typeof game.playerBlack.socket == 'object' && typeof game.playerWhite.socket == 'object') {
 				
-					if(game.state.stage.id == 0) {
+					if(game.stage == 0) {
 					
 						game.start123();
 					}
 				}
-			
+				
+				if(game.stage > 1) {
+					
+					game.setStatePlayer(PLAYER_COLOR.BLACK, {
+						checkers: game.playerBlack.checkers
+					});
+
+					game.nextTick(() => {
+						game.setStatePlayer(PLAYER_COLOR.BLACK, {
+							checkers: undefined
+						});
+					});
+				}
+
+				if(game.stage > 1){
+					
+					game.setStatePlayer(PLAYER_COLOR.WHITE, {
+						checkers: game.playerWhite.checkers
+					});
+
+				
+
+					game.nextTick(() => {
+						game.setStatePlayer(PLAYER_COLOR.WHITE, {
+							checkers: undefined
+						});
+					});
+				}
 			}
 		}
 	}

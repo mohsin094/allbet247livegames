@@ -10,6 +10,11 @@ Board.prototype.global = undefined;
 Board.prototype.columnHolder = undefined;
 Board.prototype.afterPosition = function(){}
 
+Board.prototype.removeChecker = function(index, color) {
+	this.columnHolder.removeChecker(index, color);
+}
+
+
 Board.prototype.removeOffer = function() {
 	this.columnHolder.removeOffer();
 }
@@ -26,8 +31,8 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 			
 				
 				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.BLACK || this.columnHolder.columns[i].container.length == 1) {
-					const sumFirst = fromPosition + dice.first+1;
-					const sumSecond = fromPosition + dice.second+1;
+					const sumFirst = fromPosition + dice.first;
+					const sumSecond = fromPosition + dice.second;
 					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
 						
 						if((sumSecond > 23 || sumFirst > 23) && player.isAllCheckersHome()) {
@@ -48,8 +53,8 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 			
 				
 				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.WHITE || this.columnHolder.columns[i].container.length == 1) {
-					const sumFirst = fromPosition - dice.first+1;
-					const sumSecond = fromPosition - dice.second+1;
+					const sumFirst = fromPosition - dice.first;
+					const sumSecond = fromPosition - dice.second;
 					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
 						if((sumSecond < 1 || sumFirst < 1) && player.isAllCheckersHome()) {
 							this.columnHolder.columns[i].focus = true;
@@ -65,6 +70,7 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 }
 
 Board.prototype.position = function(checker, index, oldPosition) {
+
 	const column = this.columnHolder.get(index);
 	let container = column.container;
 	// if(checker.position != index) {
@@ -75,7 +81,6 @@ Board.prototype.position = function(checker, index, oldPosition) {
 
 		container.push(checker);
 		checker.position = index;
-		column.occupied = checker.color;
 	// }
 
 }
@@ -95,6 +100,7 @@ Board.prototype.create = function() {
 		this.columnHolder.add({
 			index: i
 		});
+		
 		if(i == 25) {
 			this.columnHolder.get(i).x = (this.global.boardWidth - this.global.boardSidePadding);
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;

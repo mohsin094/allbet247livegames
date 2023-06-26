@@ -1,6 +1,16 @@
 import {PLAYER_COLOR as COLOR} from "@/extensions/backgammon/Player";
 export default {
 
+	setPosition(board, checkers, color) {
+		for(let i=0; i<checkers.length; i++) {
+			board.removeChecker(checkers[i].index, color);
+			board.position(checkers[i], checkers[i].position);
+		}
+		const board1 = board;
+		board = Object.assign({});
+		board = board1;
+	},
+
 	initPosition(board, color, checkers) {
 		
 		switch(color) {

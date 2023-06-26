@@ -34,6 +34,7 @@ Backgammon.prototype.state = undefined;
 Backgammon.prototype.stateInterval = undefined;
 Backgammon.prototype._nextTick = undefined;
 Backgammon.prototype.dice = undefined;
+Backgammon.prototype.stage = undefined;
 
 /**
  * @param params example:
@@ -51,6 +52,10 @@ Backgammon.prototype.create = function(params) {
 	this.board = new Board();
 	this._nextTick = [];
 
+	//setub board
+	this.board.create();
+	
+	// setup black
 	this.playerBlack = new Player()
 	this.playerBlack.create({
 		color: PLAYER_COLOR.BLACK,
@@ -58,6 +63,8 @@ Backgammon.prototype.create = function(params) {
 		board: this.board
 	});
 	this.playerBlack.setupCheckers();
+
+	//setup white
 	this.playerWhite = new Player();
 	this.playerWhite.create({
 		color: PLAYER_COLOR.WHITE,
@@ -66,7 +73,8 @@ Backgammon.prototype.create = function(params) {
 	});
 	this.playerWhite.setupCheckers();
 
-	this.board.create();
+
+	//setup state
 	this.state = {
 		game: {},
 		board: {},
@@ -77,14 +85,14 @@ Backgammon.prototype.create = function(params) {
 		},
 	};
 
-
+	this.setStage(0);
 }
 
 
 
 
 Backgammon.prototype.turn = function() {
-	this.state.stage.id = 2;
+	this.setStage(2);
 
 	this.setStateActivePlayer({
 		text: this.activePlayer.color+' Turn'
@@ -133,9 +141,9 @@ Backgammon.prototype.move = function(move) {
 }
 
 Backgammon.prototype.throwDoubleDice = function() {
-	console.log(this.state.stage.id)
-	if(this.state.stage.id === 2) {
-		this.state.stage.id = 3;
+	
+	if(this.stage === 2) {
+		this.setStage(3);
 		const dice = this.activePlayer.diceManager.throwTwo();
 
 		this.state.game.dice = dice;
@@ -176,7 +184,7 @@ Backgammon.prototype.throwDoubleDice = function() {
 
 Backgammon.prototype.start123 = function() {
 
-	this.state.stage.id = 1;
+	this.setStage(1);
 
 	this.state.playerWhite.id = this.playerWhite.id;
 	this.state.playerBlack.id = this.playerBlack.id;
@@ -343,7 +351,7 @@ Backgammon.prototype.setStatePlayer = function(color, params) {
 }
 
 Backgammon.prototype.setStateBothPlayer = function(params) {
-
+	
 	let keys = Object.keys(params);
 	for(let i = 0; i < keys.length; i++) {
 	
@@ -391,6 +399,12 @@ Backgammon.prototype.updatePlayer = function(color, params) {
 		}
 		break;
 	}
+}
+
+Backgammon.prototype.setStage = function(stage)
+{
+	this.stage = stage;
+	this.state.stage.id = this.stage;
 }
 
 Backgammon.prototype.nextTick = function(func)

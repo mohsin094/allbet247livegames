@@ -5,8 +5,10 @@ export default {
 		switch(color) {
 		case COLOR.WHITE:
 			for(let i = 0; i < 15; i++) {
+				checkers[i].index = i;
 				if(i == 0 || i == 1) {
 					checkers[i].position = 1;
+				
 					board.position(checkers[i], 1);
 				}else if(i < 7) {
 					checkers[i].position = 12;
@@ -25,10 +27,11 @@ export default {
 			break;
 		case COLOR.BLACK:
 			for(let i = 0; i < 15; i++) {
+				checkers[i].index = i;
 			
 				if(i == 0 || i == 1) {
-					checkers[i].position = 24;
-					board.position(checkers[i], 24);
+					checkers[i].position = 23;
+					board.position(checkers[i], 23);
 				}else if(i < 7) {
 					checkers[i].position = 13;
 
@@ -38,9 +41,9 @@ export default {
 
 					board.position(checkers[i], 8);
 				}else {
-					checkers[i].position = 6;
+					checkers[i].position = 5;
 
-					board.position(checkers[i], 6);
+					board.position(checkers[i], 5);
 				}
 			}
 			break;

@@ -36,7 +36,7 @@
 		              	</span>
 						<FormKit v-if="data != undefined"
 						  v-model="timeframe"
-						  placeholder="Select timeframe"
+						  placeholder="Select Speed"
 						  type="select"
 						  label="Timeframes"
 						  :options="timeframes"

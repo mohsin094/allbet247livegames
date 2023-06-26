@@ -7,7 +7,7 @@ function Dice() {
 Dice.prototype.first = undefined;
 Dice.prototype.second = undefined;
 Dice.prototype.interval = undefined;
-Dice.prototype.throw = function(first, second) {
+Dice.prototype.throwTwo = function(first, second) {
 	let i = 0;
 	
 	const interval = setInterval(() => {
