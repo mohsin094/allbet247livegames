@@ -12,24 +12,38 @@ ColumnHolder.prototype.removeOffer = function() {
 	}
 }
 
+ColumnHolder.prototype.isOccupied = function(columnIndex, color) {
+	const column = this.get(columnIndex);
+	let c = 0;
+	for(let i = 0; i < column.length; i++) {
+		if(column[i].color == color) {
+			c++;
+			if(c > 1) {
+				return true;
+				break;
+			}
+		}
+	}
+
+	return false;
+}
+
 ColumnHolder.prototype.removeChecker = function(index, color) {
 
 	for(let i=0; i<this.columns.length; i++) {
 		let id = findIndex(this.columns[i].container, (o) => {
-			if(o != undefined) {
-				return (o.index == index);	
-			}else
-				false
+			// if(o != undefined) {
+				return (o.index == index && o.color == color);
+			// }else
+			// 	false
 		});
 		
 
 		
-		if(id !== -1 && this.columns[i].container.length > 0 && this.columns[i].container[id].color != undefined && this.columns[i].container[id].color == color) {
-			// console.log(this.columns[i].container)
-			console.log(delete this.columns[i].container[id]);
-			// handler.deleteProperty(this.columns[i].container[i], id)
-			// console.log(this.columns[i].container)
-			
+		if(id !== -1 && this.columns[i].container.length > 0) {
+			console.log(this.columns[i].container)
+			this.columns[i].container.splice(id, 1);
+			console.log(this.columns[i].container)
 			break;
 		}
 	}

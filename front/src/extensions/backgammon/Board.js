@@ -30,7 +30,7 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 			if(fromPosition < this.columnHolder.columns[i].index) {
 			
 				
-				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.BLACK || this.columnHolder.columns[i].container.length == 1) {
+				if(this.columnHolder.isOccupied(i, PLAYER_COLOR.WHITE) || this.columnHolder.columns[i].container.length == 1) {
 					const sumFirst = fromPosition + dice.first;
 					const sumSecond = fromPosition + dice.second;
 					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
@@ -52,7 +52,7 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 			if(fromPosition > this.columnHolder.columns[i].index) {
 			
 				
-				if(this.columnHolder.columns[i].occupied != PLAYER_COLOR.WHITE || this.columnHolder.columns[i].container.length == 1) {
+				if(this.columnHolder.isOccupied(i, PLAYER_COLOR.BLACK) || this.columnHolder.columns[i].container.length == 1) {
 					const sumFirst = fromPosition - dice.first;
 					const sumSecond = fromPosition - dice.second;
 					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {

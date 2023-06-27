@@ -2,7 +2,7 @@ import CheckersUtil from "@/extensions/backgammon/CheckersUtil.js";
 import {PLAYER_COLOR} from "@/extensions/backgammon/Player";
 export default {
 	manage: function(game, state) {
-	
+		
 		const stateKeys = Object.keys(state);
 
 		for(let index=0; index < stateKeys.length; index++) {
