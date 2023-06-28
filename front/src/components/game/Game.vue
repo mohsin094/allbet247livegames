@@ -128,6 +128,7 @@ export default {
 			}
 		},
 		touch(checker) {
+			
 			if(this.game.activePlayer.allowMove) {
 				this.game.touchChecker(checker);
 			}

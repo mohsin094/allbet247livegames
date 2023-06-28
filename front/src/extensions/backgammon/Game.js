@@ -1,6 +1,8 @@
 import Global from "@/extensions/backgammon/Global";
 import Board from "@/extensions/backgammon/Board";
 import Dice from "@/extensions/backgammon/Dice";
+
+
 import Player,
 {
 	PLAYER_COLOR
@@ -71,9 +73,7 @@ Game.prototype.touchCol = function(col)
 		
 		const sumFirst = (checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.first + checker.position : checker.position - this.activePlayer.dice.first;
 		const sumSecond =(checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.second + checker.position : checker.position - this.activePlayer.dice.second; 
-		console.log(sumFirst)
-		console.log(sumSecond)
-		console.log(col.id)
+		
 		if(sumFirst == col.id) {
 			this.move(checker.position, sumFirst);
 		}else if(sumSecond == col.id)  {
@@ -84,13 +84,17 @@ Game.prototype.touchCol = function(col)
 
 Game.prototype.touchChecker = function(checker)
 {
-	const index = checker.index;
+	
 	this.activePlayer.removeCheckerSelection();
 	if(this.activePlayer.color == checker.color) {
+		
+		const index = this.activePlayer.getChecker(checker.index);
 		this.board.removeOffer();
-		this.activePlayer.toggleTouchChecker(index);
-		if(this.activePlayer.getChecker(checker.index).selected) {
-			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer.dice, this.activePlayer);
+		this.activePlayer.toggleTouchChecker(checker.index);
+	
+		if(this.activePlayer.checkers[index].selected) {
+			console.log('h5');
+			this.board.offerMove(checker, checker.position, this.activePlayer.dice, this.activePlayer);
 		}
 	}
 }
@@ -121,6 +125,7 @@ Game.prototype.init = function()
 
 
 	this.board = new Board(this.global);
+
 	this.board.create();
 
 	this.playerWhite = new Player(this.board, this.global);

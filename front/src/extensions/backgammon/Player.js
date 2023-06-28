@@ -1,7 +1,7 @@
 import CheckersUtil from "@/extensions/backgammon/CheckersUtil";
 import Checker from "@/extensions/backgammon/Checker";
 import Dice from "@/extensions/backgammon/Dice";
-
+import {find, findIndex} from "lodash";
 
 function Player(board, globalValues)
 {
@@ -39,7 +39,7 @@ Player.prototype.getActiveChecker = function() {
 }
 
 Player.prototype.getChecker = function(index) {
-	return this.checkers[index];
+	return findIndex(this.checkers, (e) => (e.index == index));
 }
 
 Player.prototype.isAllCheckersHome = function() {
@@ -64,7 +64,6 @@ Player.prototype.isAllCheckersHome = function() {
 }
 
 Player.prototype.removeCheckerSelection = function() {
-
 	for(let i=0; i<this.checkers.length; i++) {
 		this.checkers[i].selected = false;
 	}
@@ -72,7 +71,10 @@ Player.prototype.removeCheckerSelection = function() {
 }
 
 Player.prototype.toggleTouchChecker = function(index) {
-	this.checkers[index].selected = !this.checkers[index].selected;
+	const checker = this.getChecker(index);
+	this.checkers[checker].selected = !this.checkers[checker].selected;
+	// console.log(this.checkers)
+	console.log(this.board)
 }
 
 Player.prototype.moveChecker = function(index, toPosition)

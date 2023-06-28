@@ -1,8 +1,9 @@
 import {PLAYER_COLOR} from "@/extensions/backgammon/Player";
-import global from "@/extensions/backgammon/Global";
 
-function Checker() {
-	this.global = global;
+
+function Checker(globals) {
+	
+	this.global = globals;
 }
 
 Checker.prototype.color = undefined;
@@ -17,6 +18,7 @@ Checker.prototype.create = function(color, position, index) {
 	this.index = index;
 	this.width = this.global.checkerSize;
 	this.selected = false;
+	
 	switch(this.color) {
 		case PLAYER_COLOR.WHITE:
 			

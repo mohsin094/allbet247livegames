@@ -71,15 +71,13 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 
 Board.prototype.position = function(checker, index, oldPosition) {
 
-	const column = this.columnHolder.get(index);
-	let container = column.container;
+
 	// if(checker.position != index) {
 		if(oldPosition) {
-			let oldContainer = this.columnHolder.get(oldPosition).container;
-			remove(oldContainer, (o) => o.index == checker.index);
+			remove(this.columnHolder.get(oldPosition).container, (o) => o.index == checker.index);
 		}
 
-		container.push(checker);
+		this.columnHolder.get(index).container.push(checker);
 		checker.position = index;
 	// }
 
@@ -102,55 +100,55 @@ Board.prototype.create = function() {
 		});
 		
 		if(i == 25) {
-			this.columnHolder.get(i).x = (this.global.boardWidth - this.global.boardSidePadding);
+			this.columnHolder.get(i).x = (this.global.boardWidth - this.global.boardSidePadding) + this.global.checkerMargin;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}
 		else if(i == 24) {
-			this.columnHolder.get(i).x = (this.global.boardWidth - this.global.boardSidePadding - this.global.checkerSize - this.global.checkerMargin);
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((1) * this.global.checkerSize) - ((1) * this.global.checkerMargin));
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 23) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((2) * this.global.checkerSize) - ((1) * this.global.checkerMargin));
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((2) * this.global.checkerSize) - ((2) * this.global.checkerMargin));
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 22) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((3) * this.global.checkerSize) - ((2) * this.global.checkerMargin));
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((3) * this.global.checkerSize) - ((3) * this.global.checkerMargin));
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 21) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((4) * this.global.checkerSize) - ((3) * this.global.checkerMargin));
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((4) * this.global.checkerSize) - ((4) * this.global.checkerMargin));
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 20) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((5) * this.global.checkerSize) - ((4) * this.global.checkerMargin));
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((5) * this.global.checkerSize) - ((5) * this.global.checkerMargin));
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 19) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((6) * this.global.checkerSize) - ((5) * this.global.checkerMargin));
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((6) * this.global.checkerSize) - ((6) * this.global.checkerMargin));
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 18) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((7) * this.global.checkerSize) - ((6) * this.global.checkerMargin))- this.global.boardCenterPadding;
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((7) * this.global.checkerSize) - ((7) * this.global.checkerMargin))- this.global.boardCenterPadding;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 17) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((8) * this.global.checkerSize) - ((7) * this.global.checkerMargin))- this.global.boardCenterPadding;
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((8) * this.global.checkerSize) - ((8) * this.global.checkerMargin))- this.global.boardCenterPadding;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 16) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((9) * this.global.checkerSize) - ((8) * this.global.checkerMargin))- this.global.boardCenterPadding;
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((9) * this.global.checkerSize) - ((9) * this.global.checkerMargin))- this.global.boardCenterPadding;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 15) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((10) * this.global.checkerSize) - ((9) * this.global.checkerMargin))- this.global.boardCenterPadding;
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((10) * this.global.checkerSize) - ((10) * this.global.checkerMargin))- this.global.boardCenterPadding;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 14) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((11) * this.global.checkerSize) - ((10) * this.global.checkerMargin))- this.global.boardCenterPadding;
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((11) * this.global.checkerSize) - ((11) * this.global.checkerMargin))- this.global.boardCenterPadding;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}else if(i == 13) {
-			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((12) * this.global.checkerSize) - ((11) * this.global.checkerMargin))- this.global.boardCenterPadding;;
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((12) * this.global.checkerSize) - ((12) * this.global.checkerMargin))- this.global.boardCenterPadding;;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}
 	}
 
-	for(let i=0; i < 14; i++) {
+	for(let i=0; i < 13; i++) {
 
 		this.columnHolder.add({
 			index: i
 		});
 		if(i == 0) {
-			this.columnHolder.get(i).x = (this.global.boardWidth - this.global.boardSidePadding);
+			this.columnHolder.get(i).x = (this.global.boardWidth - this.global.boardSidePadding) + this.global.checkerMargin;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}
 		else if(i == 1) {

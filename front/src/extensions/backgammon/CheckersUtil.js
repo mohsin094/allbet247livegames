@@ -2,12 +2,10 @@ import {PLAYER_COLOR as COLOR} from "@/extensions/backgammon/Player";
 import Checker from "@/extensions/backgammon/Checker";
 export default {
 
-	setPosition(board, checkers, color) {
+	setPosition(game, board, checkers, color) {
 		for(let i=0; i<checkers.length; i++) {
 			board.removeChecker(checkers[i].index, color);
-			const checker = new Checker;
-			checker.create(checkers[i].color,checkers[i].position,checkers[i].index);
-			board.position(checker, checker.position);
+			board.position(checkers[i], checkers[i].position);
 		}
 		// const board1 = board;
 		// board = Object.assign({});

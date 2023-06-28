@@ -18,6 +18,7 @@ import
 	PLAYER_COLOR
 }
 from "@/extensions/backgammon/Player.js";
+
 export default
 {
 	props:
@@ -34,6 +35,7 @@ export default
 	data()
 	{
 		return {
+			column: this.data,
 			playerColor: PLAYER_COLOR
 		}
 	}

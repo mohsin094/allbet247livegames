@@ -13,10 +13,12 @@ ColumnHolder.prototype.removeOffer = function() {
 }
 
 ColumnHolder.prototype.isOccupied = function(columnIndex, color) {
+	
 	const column = this.get(columnIndex);
+	
 	let c = 0;
-	for(let i = 0; i < column.length; i++) {
-		if(column[i].color == color) {
+	for(let i = 0; i < column.container.length; i++) {
+		if(column.container[i].color == color) {
 			c++;
 			if(c > 1) {
 				return true;
@@ -41,9 +43,9 @@ ColumnHolder.prototype.removeChecker = function(index, color) {
 
 		
 		if(id !== -1 && this.columns[i].container.length > 0) {
-			console.log(this.columns[i].container)
+		
 			this.columns[i].container.splice(id, 1);
-			console.log(this.columns[i].container)
+		
 			break;
 		}
 	}
