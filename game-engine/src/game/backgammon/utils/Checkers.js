@@ -19,9 +19,9 @@ export default {
 
 					board.position(checkers[i], 17);
 				}else {
-					checkers[i].position = 20;
+					checkers[i].position = 19;
 
-					board.position(checkers[i], 20);
+					board.position(checkers[i], 19);
 				}
 			}
 			break;
@@ -41,9 +41,9 @@ export default {
 
 					board.position(checkers[i], 8);
 				}else {
-					checkers[i].position = 5;
+					checkers[i].position = 6;
 
-					board.position(checkers[i], 5);
+					board.position(checkers[i], 6);
 				}
 			}
 			break;

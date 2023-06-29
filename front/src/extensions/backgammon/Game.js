@@ -90,11 +90,11 @@ Game.prototype.touchChecker = function(checker)
 		
 		const index = this.activePlayer.getChecker(checker.index);
 		this.board.removeOffer();
-		this.activePlayer.toggleTouchChecker(checker.index);
-	
+		this.activePlayer.toggleTouchChecker(index);
+		
 		if(this.activePlayer.checkers[index].selected) {
-			console.log('h5');
-			this.board.offerMove(checker, checker.position, this.activePlayer.dice, this.activePlayer);
+			
+			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer.dice, this.activePlayer);
 		}
 	}
 }

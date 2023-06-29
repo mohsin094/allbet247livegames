@@ -42,9 +42,14 @@ export default {
 				}
 
 				if(state.playerBlack.dice != undefined) {
-					if(state.playerBlack.dice[0] !== undefined && state.playerBlack.dice[1] != undefined) {
+					if(state.playerBlack.dice[0] !== undefined 
+						&& state.playerBlack.dice[1] != undefined
+						&& (state.playerBlack.dice[0] != game.playerBlack.dice.first || state.playerBlack.dice[1] != game.playerBlack.dice.second)
+						) {
 						game.playerBlack.dice.throwTwo(state.playerBlack.dice[0], state.playerBlack.dice[1]);
-					}else if(state.playerBlack.dice[0] != undefined) {
+					}else if(state.playerBlack.dice[0] != undefined
+						&& state.playerBlack.dice[1] == undefined
+						&& state.playerBlack.dice[0] != game.playerBlack.dice.first) {
 						game.playerBlack.dice.throwOne(state.playerBlack.dice[0]);
 					}
 				}
@@ -72,14 +77,16 @@ export default {
 				}
 
 				if(state.playerWhite.dice != undefined) {
-					if(state.playerWhite.dice[0] !== undefined && state.playerWhite.dice[1] != undefined) {
+					if(state.playerWhite.dice[0] !== undefined 
+						&& state.playerWhite.dice[1] != undefined
+						&& (state.playerWhite.dice[0] != game.playerWhite.dice.first || state.playerWhite.dice[1] != game.playerWhite.dice.second)
+						) {
 						game.playerWhite.dice.throwTwo(state.playerWhite.dice[0], state.playerWhite.dice[1]);
-					}else if(state.playerWhite.dice[0] != undefined) {
-						
+					}else if(state.playerWhite.dice[0] !== undefined
+						&& state.playerWhite.dice[1] == undefined
+						&& state.playerWhite.dice[0] != game.playerWhite.dice.first) {
 						game.playerWhite.dice.throwOne(state.playerWhite.dice[0]);
 					}
-						
-					
 				}
 				break;
 			}

@@ -170,11 +170,11 @@ Backgammon.prototype.throwDoubleDice = function() {
 			
 		});
 
-		this.nextTick(() => {
-			this.setStateActivePlayer({
-				dice: undefined
-			});
-		})
+		// this.nextTick(() => {
+		// 	this.setStateActivePlayer({
+		// 		dice: undefined
+		// 	});
+		// })
 
 	}
 

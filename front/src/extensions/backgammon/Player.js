@@ -73,8 +73,6 @@ Player.prototype.removeCheckerSelection = function() {
 Player.prototype.toggleTouchChecker = function(index) {
 	const checker = this.getChecker(index);
 	this.checkers[checker].selected = !this.checkers[checker].selected;
-	// console.log(this.checkers)
-	console.log(this.board)
 }
 
 Player.prototype.moveChecker = function(index, toPosition)
