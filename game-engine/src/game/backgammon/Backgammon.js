@@ -15,6 +15,14 @@ const EMIT = {
 	PLAYER_JOIN: 'player-join'
 }
 
+const STAGE = {
+	INIT: 0,
+	START: 1,
+	TURN: 2,
+	THROW_DOUBLE_DICE: 3,
+	MOVE_DICES: 4
+}
+
 function Backgammon()
 {
 
@@ -81,18 +89,18 @@ Backgammon.prototype.create = function(params) {
 		playerBlack: {},
 		playerWhite: {},
 		stage: {
-			id: 0
+			id: STAGE.INIT
 		},
 	};
 
-	this.setStage(0);
+	this.setStage(STAGE.INIT);
 }
 
 
 
 
 Backgammon.prototype.turn = function() {
-	this.setStage(2);
+	this.setStage(STAGE.TURN);
 
 	this.setStateActivePlayer({
 		text: this.activePlayer.color+' Turn'
@@ -142,8 +150,8 @@ Backgammon.prototype.move = function(move) {
 
 Backgammon.prototype.throwDoubleDice = function() {
 	
-	if(this.stage === 2) {
-		this.setStage(3);
+	if(this.stage === STAGE.TURN) {
+		this.setStage(STAGE.THROW_DOUBLE_DICE);
 		const dice = this.activePlayer.diceManager.throwTwo();
 
 		this.state.game.dice = dice;
@@ -184,7 +192,7 @@ Backgammon.prototype.throwDoubleDice = function() {
 
 Backgammon.prototype.start123 = function() {
 
-	this.setStage(1);
+	this.setStage(STAGE.START);
 
 	this.state.playerWhite.id = this.playerWhite.id;
 	this.state.playerBlack.id = this.playerBlack.id;

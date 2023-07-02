@@ -9,16 +9,18 @@
 					<!-- dice black -->
 					<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
 						<ul>
-							<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
-							<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
+							<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_first_dice) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
+
+							<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_second_dice) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
 						</ul>
 					</div>
 
 					<!-- dice white -->
 					<div v-if="game.playerWhite.dice && game.playerWhite.showDice" class="dices dice-white">
 						<ul>
-							<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
-							<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
+							<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_first_dice) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
+
+							<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_second_dice) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
 						</ul>
 					</div>
 
@@ -68,7 +70,7 @@
 
 <script>
 import Column from "./Column.vue";
-import Game from "@/extensions/backgammon/Game.js";
+import Game, {STAGE} from "@/extensions/backgammon/Game.js";
 import Global from "@/extensions/backgammon/Global";
 import {io} from "socket.io-client";
 import BoardHeader from '@/components/BoardHeader.vue';
@@ -83,6 +85,15 @@ export default {
 	data() {
 		return {
 			game: undefined,
+			stage: {
+				init: STAGE.INIT,
+				start: STAGE.START,
+				turn: STAGE.TURN,
+				throw_double_dice: STAGE.THROW_DOUBLE_DICE,
+				move_first_dice: STAGE.MOVE_FIRST_DICE,
+				move_second_dice: STAGE.MOVE_SECOND_DICE,
+				move_dices: STAGE.MOVE_DICES,
+			},
 			showDice: false,
 			doubleActive: false,
 			io: undefined,

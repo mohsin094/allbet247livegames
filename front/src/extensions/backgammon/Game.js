@@ -10,6 +10,16 @@ import Player,
 from "@/extensions/backgammon/Player";
 import State from "@/extensions/backgammon/State";
 
+const STAGE = {
+	INIT: 0,
+	START: 1,
+	TURN: 2,
+	THROW_DOUBLE_DICE: 3,
+	MOVE_FIRST_DICE: 3.1,
+	MOVE_SECOND_DICE: 3.2,
+	MOVE_DICES: 4
+}
+
 function Game(vue, socket)
 {
 	this.vue = vue;
@@ -75,8 +85,19 @@ Game.prototype.touchCol = function(col)
 		const sumSecond =(checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.second + checker.position : checker.position - this.activePlayer.dice.second; 
 		
 		if(sumFirst == col.id) {
+			if(this.stage.id == STAGE.THROW_DOUBLE_DICE) {
+				this.stage.id = STAGE.MOVE_FIRST_DICE;
+			}else if(this.stage.id == STAGE.THROW_SECOND_DICE) {
+				this.stage.id = STAGE.MOVE_DICES;
+			}
 			this.move(checker, sumFirst);
 		}else if(sumSecond == col.id)  {
+			if(this.stage.id == STAGE.THROW_DOUBLE_DICE) {
+				this.stage.id = STAGE.MOVE_SECOND_DICE;
+			}else if(this.stage.id == STAGE.THROW_FIRST_DICE) {
+				this.stage.id = STAGE.MOVE_DICES;
+			}
+			
 			this.move(checker, sumSecond);
 		}
 	}
@@ -95,7 +116,7 @@ Game.prototype.touchChecker = function(checker)
 		
 		if(this.activePlayer.checkers[index].selected) {
 			
-			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer.dice, this.activePlayer);
+			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer.dice, this.activePlayer, this.stage);
 		}
 	}
 }
@@ -170,3 +191,4 @@ Game.prototype.init = function()
 
 
 export default Game
+export {STAGE}

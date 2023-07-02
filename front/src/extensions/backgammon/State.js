@@ -1,6 +1,7 @@
 import CheckersUtil from "@/extensions/backgammon/CheckersUtil.js";
 import {PLAYER_COLOR} from "@/extensions/backgammon/Player";
 import Checker from "@/extensions/backgammon/Checker";
+import {STAGE} from "@/extensions/backgammon/Game";
 export default {
 	manage: function(game, state) {
 		
@@ -9,7 +10,10 @@ export default {
 			let checkers = undefined;
 			switch(stateKeys[index]) {
 			case 'stage':
-				game.stage.id = state[stateKeys[index]].id;
+
+				if(game.stage.id !== STAGE.MOVE_FIRST_DICE || game.stage.id !== STAGE.MOVE_SECOND_DICE) {
+					game.stage.id = state[stateKeys[index]].id;
+				}
 				break;
 			case 'board':
 

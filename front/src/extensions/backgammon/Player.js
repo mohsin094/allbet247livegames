@@ -80,10 +80,6 @@ Player.prototype.moveChecker = function(checker, toPosition)
 	const oldPosition = checker.position;
 
 	if(oldPosition != toPosition) {
-		console.log(checker.index)
-		console.log(checker.position)
-		console.log(oldPosition)
-		console.log(toPosition)
 		this.board.position(checker, toPosition, oldPosition);
 	}
 	this.checkers[this.getChecker(checker.index)].position = toPosition;

@@ -1,6 +1,7 @@
 import ColumnHolder from "@/extensions/backgammon/ColumnHolder";
 import {remove} from "lodash-es";
-import {PLAYER_COLOR} from "@/extensions/backgammon/Player.js";
+import {PLAYER_COLOR} from "@/extensions/backgammon/Player";
+import {STAGE} from "@/extensions/backgammon/Game"
 
 function Board(globalValues) {
 	this.global = globalValues;
@@ -19,7 +20,7 @@ Board.prototype.removeOffer = function() {
 	this.columnHolder.removeOffer();
 }
 
-Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
+Board.prototype.offerMove = function(checker, fromPosition, dice, player, stage) {
 	switch(checker.color) {
 	case PLAYER_COLOR.WHITE:
 		
@@ -32,13 +33,15 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
 				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.WHITE) || this.columnHolder.columns[i].container.length < 2) {
 					const sumFirst = fromPosition + dice.first;
 					const sumSecond = fromPosition + dice.second;
-					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
+					if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) && sumFirst == this.columnHolder.columns[i].index) {
 						
-							this.columnHolder.columns[i].focus = true;
+						this.columnHolder.columns[i].focus = true;
 						// if((sumSecond > 23 || sumFirst > 23) && player.isAllCheckersHome()) {
 						// 	this.columnHolder.columns[i].focus = true;
 						// }else if(sumSecond < 24 || sumFirst < 24) {
 						// }
+					}else if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_FIRST_DICE) && sumSecond == this.columnHolder.columns[i].index) {
+						this.columnHolder.columns[i].focus = true;
 					}
 				}
 			}
