@@ -68,16 +68,16 @@ Game.prototype.stateManager = function(params)
 Game.prototype.touchCol = function(col)
 {
 	const checker = this.activePlayer.getActiveChecker();
-	
+
 	if(checker != undefined) {
 		
 		const sumFirst = (checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.first + checker.position : checker.position - this.activePlayer.dice.first;
 		const sumSecond =(checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.second + checker.position : checker.position - this.activePlayer.dice.second; 
 		
 		if(sumFirst == col.id) {
-			this.move(checker.position, sumFirst);
+			this.move(checker, sumFirst);
 		}else if(sumSecond == col.id)  {
-			this.move(checker.position, sumSecond);
+			this.move(checker, sumSecond);
 		}
 	}
 }
@@ -89,6 +89,7 @@ Game.prototype.touchChecker = function(checker)
 	if(this.activePlayer.color == checker.color) {
 		
 		const index = this.activePlayer.getChecker(checker.index);
+
 		this.board.removeOffer();
 		this.activePlayer.toggleTouchChecker(index);
 		
@@ -99,10 +100,9 @@ Game.prototype.touchChecker = function(checker)
 	}
 }
 
-Game.prototype.move = function(from, to)
+Game.prototype.move = function(checker, to)
 {
-	console.log('move')
-	this.activePlayer.moveChecker(from, to);
+	this.activePlayer.moveChecker(checker, to);
 }
 
 Game.prototype.setActivePlayer = function() {

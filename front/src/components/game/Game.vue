@@ -122,13 +122,12 @@ export default {
 			}
 		},
 		touchCol(col) {
-			console.log(col)
+			
 			if(this.game.activePlayer.allowMove) {
 				this.game.touchCol(col);
 			}
 		},
 		touch(checker) {
-			
 			if(this.game.activePlayer.allowMove) {
 				this.game.touchChecker(checker);
 			}
@@ -144,7 +143,7 @@ export default {
 				this.match = data.params;
 
 				this.getPlayerInfo();
-				this.io = io("localhost:3002", {
+				this.io = io(import.meta.env.VITE_BACKEND_SOCKET_URL, {
 					path: "/game",
 					auth: {
 						token: this.$user.data.sessionId

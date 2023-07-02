@@ -75,15 +75,18 @@ Player.prototype.toggleTouchChecker = function(index) {
 	this.checkers[checker].selected = !this.checkers[checker].selected;
 }
 
-Player.prototype.moveChecker = function(index, toPosition)
+Player.prototype.moveChecker = function(checker, toPosition)
 {
-	const oldPosition = this.checkers[index].position;
+	const oldPosition = checker.position;
 
 	if(oldPosition != toPosition) {
-
-		this.board.position(this.checkers[index], toPosition, oldPosition);
+		console.log(checker.index)
+		console.log(checker.position)
+		console.log(oldPosition)
+		console.log(toPosition)
+		this.board.position(checker, toPosition, oldPosition);
 	}
-	this.checkers[index].position = toPosition;
+	this.checkers[this.getChecker(checker.index)].position = toPosition;
 	// CheckersUtil.fixPosition(this.board, this.checkers);
 }
 

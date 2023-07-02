@@ -20,7 +20,6 @@ Board.prototype.removeOffer = function() {
 }
 
 Board.prototype.offerMove = function(checker, fromPosition, dice, player) {
-	console.log('h1');
 	switch(checker.color) {
 	case PLAYER_COLOR.WHITE:
 		

@@ -1,9 +1,10 @@
 import express from 'express'
-import {SERVER} from '#components/ConfProvider'
 import {createServer} from 'http'
+import {createServer as createHttpsServer} from 'https'
 import Router from '#extensions/router/Router'
 import Middlewares from '#extensions/router/middlewares/Middlewares'
-import cookieParse from 'cookie-parser'
+import cookieParse from 'cookie-parser';
+import ConfProvider, {SERVER} from "#components/ConfProvider";
 
 export default {
 	app: '',
@@ -19,7 +20,15 @@ export default {
 		}
 
 		Router.invokeRoutes(this.express);
-		this.server = createServer(this.express);
+		const serverConfig = ConfProvider.getServer(SERVER.HTTP);
+		if(serverConfig.https.active) {
+			this.server = createHttpsServer({
+				key: serverConfig.https.key,
+				cert: serverConfig.https.cert
+			},this.express);
+		}else {
+			this.server = createServer(this.express);
+		}
 		return this;
 	},
 	listen: function() {
