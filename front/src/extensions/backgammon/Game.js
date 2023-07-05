@@ -79,35 +79,30 @@ Game.prototype.touchCol = function(col)
 {
 	const checker = this.activePlayer.getActiveChecker();
 
-	if(checker != undefined) {
+	const opositeColor = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? PLAYER_COLOR.BLACK : PLAYER_COLOR.WHITE;
+	if(checker != undefined && this.board.columnHolder.isOccupied(col.id, opositeColor) == false) {
 		
 		const sumFirst = (checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.first + checker.position : checker.position - this.activePlayer.dice.first;
 		const sumSecond =(checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.second + checker.position : checker.position - this.activePlayer.dice.second; 
 		
 		if(sumFirst == col.id) {
-			if(this.stage.id == STAGE.THROW_DOUBLE_DICE) {
-				this.stage.id = STAGE.MOVE_FIRST_DICE;
-			}else if(this.stage.id == STAGE.THROW_SECOND_DICE) {
-				this.stage.id = STAGE.MOVE_DICES;
-			}
 			this.move(checker, sumFirst);
 		}else if(sumSecond == col.id)  {
-			if(this.stage.id == STAGE.THROW_DOUBLE_DICE) {
-				this.stage.id = STAGE.MOVE_SECOND_DICE;
-			}else if(this.stage.id == STAGE.THROW_FIRST_DICE) {
-				this.stage.id = STAGE.MOVE_DICES;
-			}
-			
 			this.move(checker, sumSecond);
 		}
 	}
+}
+
+Game.prototype.checkMovement = function()
+{
+
 }
 
 Game.prototype.touchChecker = function(checker)
 {
 	
 	this.activePlayer.removeCheckerSelection();
-	if(this.activePlayer.color == checker.color) {
+	if(this.activePlayer.color == checker.color && this.stage.id !== STAGE.MOVE_DICES) {
 		
 		const index = this.activePlayer.getChecker(checker.index);
 

@@ -10,8 +10,7 @@ export default {
 			let checkers = undefined;
 			switch(stateKeys[index]) {
 			case 'stage':
-
-				if(game.stage.id !== STAGE.MOVE_FIRST_DICE || game.stage.id !== STAGE.MOVE_SECOND_DICE) {
+				if(game.stage.id !== STAGE.MOVE_FIRST_DICE && game.stage.id !== STAGE.MOVE_SECOND_DICE) {
 					game.stage.id = state[stateKeys[index]].id;
 				}
 				break;

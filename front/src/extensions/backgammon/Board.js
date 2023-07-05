@@ -27,10 +27,8 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player, stage)
 		for(let i=0; i<this.columnHolder.columns.length; i++) {
 			
 					
-			if(fromPosition < this.columnHolder.columns[i].index) {
-			
-				
-				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.WHITE) || this.columnHolder.columns[i].container.length < 2) {
+			if(fromPosition < this.columnHolder.columns[i].index) {				
+				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.BLACK) == false) {
 					const sumFirst = fromPosition + dice.first;
 					const sumSecond = fromPosition + dice.second;
 					if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) && sumFirst == this.columnHolder.columns[i].index) {
@@ -54,7 +52,7 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player, stage)
 					
 			if(fromPosition > this.columnHolder.columns[i].index) {
 
-				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.BLACK) || this.columnHolder.columns[i].container.length < 2) {
+				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.WHITE) == false) {
 
 
 					const sumFirst = fromPosition - dice.first;

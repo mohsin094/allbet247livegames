@@ -1,6 +1,8 @@
 <template>
 			<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
+			<p v-if="game && game.stage">Stage:{{(game.stage != undefined) ? game.stage : ''}}</p>
 			<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)" @click="throwDice">Dice</button>
+			<button v-if="game && game.stage" v-show="(game.stage != undefined && game.stage.id == stage.move_dices)" @click="submitMove">Submit</button>
 			<p>System Message: {{systemMessage}}</p>
 			<div id="game" class="col-12">
 				<div id="board">
