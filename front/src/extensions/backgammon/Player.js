@@ -2,6 +2,7 @@ import CheckersUtil from "@/extensions/backgammon/CheckersUtil";
 import Checker from "@/extensions/backgammon/Checker";
 import Dice from "@/extensions/backgammon/Dice";
 import {find, findIndex} from "lodash";
+import Move from "@/extensions/backgammon/Move";
 
 function Player(board, globalValues)
 {
@@ -26,8 +27,29 @@ Player.prototype.allowMove = undefined;
 Player.prototype.allowDice = undefined;
 Player.prototype.freeze = undefined;
 Player.prototype.text = undefined;
+Player.prototype.moves = undefined;
 
 Player.prototype.global = undefined;
+
+Player.prototype.setupMovements = function() {
+
+	const keys = Object.keys(this.dice);
+	if(this.dice.first == this.dice.second) {
+		for(let c=0; c<4; c++) {
+			const move = new Move(this, this.dice.first);
+			move.init();
+			this.moves.push(move);
+		}
+	}else {
+		let move = new Move(this, this.dice.first);
+		move.init();
+		this.moves.push(move);
+
+		move = new Move(this, this.dice.second);
+		move.init();
+		this.moves.push(move);
+	}
+}
 
 Player.prototype.getActiveChecker = function() {
 	for(let i=0; i< this.checkers.length; i++) {

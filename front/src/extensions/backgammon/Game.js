@@ -43,6 +43,7 @@ Game.prototype.id = undefined;
 Game.prototype.stage = undefined;
 Game.prototype.timer = undefined;
 
+
 Game.prototype.socketInit = function(socket) {
 	this.socket = socket;
 

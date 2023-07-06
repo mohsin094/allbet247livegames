@@ -39,8 +39,6 @@ export default {
 				}
 
 				if(state.playerBlack.checkers != undefined) {
-				
-					
 					CheckersUtil.setPosition(game, game.board, game.playerBlack.checkers, PLAYER_COLOR.BLACK);
 				}
 
@@ -50,10 +48,12 @@ export default {
 						&& (state.playerBlack.dice[0] != game.playerBlack.dice.first || state.playerBlack.dice[1] != game.playerBlack.dice.second)
 						) {
 						game.playerBlack.dice.throwTwo(state.playerBlack.dice[0], state.playerBlack.dice[1]);
+						game.playerBlack.setupMovements();
 					}else if(state.playerBlack.dice[0] != undefined
 						&& state.playerBlack.dice[1] == undefined
 						&& state.playerBlack.dice[0] != game.playerBlack.dice.first) {
 						game.playerBlack.dice.throwOne(state.playerBlack.dice[0]);
+					
 					}
 				}
 				break;
@@ -74,8 +74,6 @@ export default {
 				}
 
 				if(state.playerWhite.checkers != undefined) {
-				
-					
 					CheckersUtil.setPosition(game, game.board, game.playerWhite.checkers, PLAYER_COLOR.WHITE);
 				}
 
@@ -85,10 +83,12 @@ export default {
 						&& (state.playerWhite.dice[0] != game.playerWhite.dice.first || state.playerWhite.dice[1] != game.playerWhite.dice.second)
 						) {
 						game.playerWhite.dice.throwTwo(state.playerWhite.dice[0], state.playerWhite.dice[1]);
+						game.playerWhite.setupMovements();
 					}else if(state.playerWhite.dice[0] !== undefined
 						&& state.playerWhite.dice[1] == undefined
 						&& state.playerWhite.dice[0] != game.playerWhite.dice.first) {
 						game.playerWhite.dice.throwOne(state.playerWhite.dice[0]);
+
 					}
 				}
 				break;
