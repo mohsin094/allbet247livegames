@@ -48,7 +48,7 @@ export default {
 						&& (state.playerBlack.dice[0] != game.playerBlack.dice.first || state.playerBlack.dice[1] != game.playerBlack.dice.second)
 						) {
 						game.playerBlack.dice.throwTwo(state.playerBlack.dice[0], state.playerBlack.dice[1]);
-						game.playerBlack.setupMovements();
+						game.playerBlack.setupMovements(game.board.columnHolder);
 					}else if(state.playerBlack.dice[0] != undefined
 						&& state.playerBlack.dice[1] == undefined
 						&& state.playerBlack.dice[0] != game.playerBlack.dice.first) {
@@ -83,7 +83,7 @@ export default {
 						&& (state.playerWhite.dice[0] != game.playerWhite.dice.first || state.playerWhite.dice[1] != game.playerWhite.dice.second)
 						) {
 						game.playerWhite.dice.throwTwo(state.playerWhite.dice[0], state.playerWhite.dice[1]);
-						game.playerWhite.setupMovements();
+						game.playerWhite.setupMovements(game.board.columnHolder);
 					}else if(state.playerWhite.dice[0] !== undefined
 						&& state.playerWhite.dice[1] == undefined
 						&& state.playerWhite.dice[0] != game.playerWhite.dice.first) {

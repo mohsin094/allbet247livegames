@@ -31,24 +31,24 @@ Player.prototype.moves = undefined;
 
 Player.prototype.global = undefined;
 
-Player.prototype.setupMovements = function() {
-
-	const keys = Object.keys(this.dice);
-	if(this.dice.first == this.dice.second) {
+Player.prototype.setupMovements = function(columnHolder) {
+	if(this.dice.privateFirst == this.dice.privateSecond) {
 		for(let c=0; c<4; c++) {
-			const move = new Move(this, this.dice.first);
+			const move = new Move(columnHolder, this, this.dice.privateFirst);
 			move.init();
 			this.moves.push(move);
 		}
 	}else {
-		let move = new Move(this, this.dice.first);
+		let move = new Move(columnHolder, this, this.dice.privateFirst);
 		move.init();
 		this.moves.push(move);
 
-		move = new Move(this, this.dice.second);
+		move = new Move(columnHolder, this, this.dice.privateSecond);
 		move.init();
 		this.moves.push(move);
 	}
+
+	console.log(this.moves);
 }
 
 Player.prototype.getActiveChecker = function() {
@@ -58,6 +58,22 @@ Player.prototype.getActiveChecker = function() {
 		}
 	}
 	return undefined;
+}
+
+Player.prototype.isHome = function() {
+	for(let i=0; i<this.checkers.length; i++) {
+		if(this.color == COLOR.WHITE) {
+			if(this.checkers[i].position < 19) {
+				return false;
+			}
+		}else if(this.color == COLOR.BLACK) {
+			if(this.checkers[i].position > 6) {
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 Player.prototype.getChecker = function(index) {
@@ -123,6 +139,7 @@ Player.prototype.create = function(player) {
 	this.showDice = false;
 	this.id = player.id;
 	this.text = undefined;
+	this.moves = [];
 
 	this.checkers = [];
 	for(let i=0; i<15; i++) {
