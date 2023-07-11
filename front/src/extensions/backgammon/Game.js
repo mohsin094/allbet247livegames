@@ -79,17 +79,37 @@ Game.prototype.stateManager = function(params)
 Game.prototype.touchCol = function(col)
 {
 	const checker = this.activePlayer.getActiveChecker();
-
 	const opositeColor = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? PLAYER_COLOR.BLACK : PLAYER_COLOR.WHITE;
-	if(checker != undefined && this.board.columnHolder.isOccupied(col.id, opositeColor) == false) {
+	
+
+	if(checker != undefined 
+		&& checker.position != col.index
+		&& this.board.columnHolder.isOccupied(col.id, opositeColor) == false) {
 		
-		const sumFirst = (checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.first + checker.position : checker.position - this.activePlayer.dice.first;
-		const sumSecond =(checker.color == PLAYER_COLOR.WHITE) ? this.activePlayer.dice.second + checker.position : checker.position - this.activePlayer.dice.second; 
+		const diceFirst = this.activePlayer.getMove(this.activePlayer.dice.first);
+		const diceSecond = this.activePlayer.getMove(this.activePlayer.dice.second); 
 		
-		if(sumFirst == col.id) {
-			this.move(checker, sumFirst);
-		}else if(sumSecond == col.id)  {
-			this.move(checker, sumSecond);
+		let move = undefined;
+		move = diceFirst;
+		let originCol = move.getOriginColumn(checker.position);
+		if(diceFirst != undefined
+			&& diceFirst.isPossible
+			&& originCol != undefined
+			&& originCol.length > 0
+			&& originCol[0] == col.id) {
+			this.move(checker, originCol[0]);
+			move.setMoved();
+			
+		}else if(diceSecond != undefined && diceSecond.isPossible) {
+			move = diceSecond;
+		
+			originCol = move.getOriginColumn(checker.position);
+
+			if(originCol != undefined && originCol.length > 0 && originCol[0] == col.id) {
+				this.move(checker, originCol[0]);
+				move.setMoved();
+			}
+			
 		}
 	}
 }

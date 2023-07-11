@@ -281,30 +281,30 @@ Backgammon.prototype.throwTurnDice = function() {
 		showDice: true
 	});
 
-	this.nextTick(() => {
-		setTimeout(() => {
-			this.setStateBothPlayer({
-				showDice: false
-			});
+	// this.nextTick(() => {
+	// 	setTimeout(() => {
+	// 		this.setStateBothPlayer({
+	// 			showDice: false
+	// 		});
 			
-		}, 5000);
-	});
+	// 	}, 5000);
+	// });
 
-	this.nextTick(() => {
-		this.updatePlayer(this.playerBlack.color, {
-			dice: undefined
-		});
-		this.setStatePlayer(this.playerBlack.color, {
-			dice: undefined
-		});
+	// this.nextTick(() => {
+	// 	this.updatePlayer(this.playerBlack.color, {
+	// 		dice: undefined
+	// 	});
+	// 	this.setStatePlayer(this.playerBlack.color, {
+	// 		dice: undefined
+	// 	});
 
-		this.updatePlayer(this.playerWhite.color, {
-			dice: undefined
-		});
-		this.setStatePlayer(this.playerWhite.color, {
-			dice: undefined
-		});
-	});
+	// 	this.updatePlayer(this.playerWhite.color, {
+	// 		dice: undefined
+	// 	});
+	// 	this.setStatePlayer(this.playerWhite.color, {
+	// 		dice: undefined
+	// 	});
+	// });
 
 
 	let turn = undefined;

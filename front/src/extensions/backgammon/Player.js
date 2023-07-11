@@ -31,6 +31,11 @@ Player.prototype.moves = undefined;
 
 Player.prototype.global = undefined;
 
+Player.prototype.getMove = function(diceNum)
+{
+	return find(this.moves, (o) => (o.dice == diceNum));
+}
+
 Player.prototype.setupMovements = function(columnHolder) {
 	if(this.dice.privateFirst == this.dice.privateSecond) {
 		for(let c=0; c<4; c++) {
@@ -47,8 +52,6 @@ Player.prototype.setupMovements = function(columnHolder) {
 		move.init();
 		this.moves.push(move);
 	}
-
-	console.log(this.moves);
 }
 
 Player.prototype.getActiveChecker = function() {

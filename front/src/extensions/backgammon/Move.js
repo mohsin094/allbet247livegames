@@ -9,9 +9,29 @@ function Move(columnHolder, player, dice) {
 Move.prototype.isPossible = undefined;
 Move.prototype.columnHolder = undefined;
 Move.prototype.originColumns = undefined;
+Move.prototype.moved = undefined;
 
 Move.prototype.dice = undefined;
 Move.prototype.player = undefined;
+
+Move.prototype.setMoved = function()
+{
+	this.Move = true;
+	this.isPossible = false;
+}
+
+Move.prototype.getOriginColumn = function(origColIndex) {
+
+	if(this.originColumns[origColIndex] != undefined) {
+		return this.originColumns[origColIndex];
+	}
+
+	return undefined;
+}
+
+Move.prototype.setNotPossible = function() {
+	this.isPossible = false;
+}
 
 Move.prototype.calculateDestinations = function() {
 	const diffColor = (this.player.color == PLAYER_COLOR.WHITE) ? PLAYER_COLOR.WHITE : PLAYER_COLOR.BLACK;
@@ -27,14 +47,14 @@ Move.prototype.calculateDestinations = function() {
 			if(colDest != undefined) {
 				if(colDest.index > 24 && this.player.isHome()) {
 					this.originColumns[keys[i]].push(24);
-				
+					this.isPossible = true;
 				}
 				else if(colDest.index == 24 && this.player.isHome()) {
 					this.originColumns[keys[i]].push(colDest.index);
-					
+					this.isPossible = true;
 				}else if(colDest.index < 24 && this.columnHolder.isOccupied(colDest.index, PLAYER_COLOR.BLACK) == false) {
 					this.originColumns[keys[i]].push(colDest.index);
-				
+					this.isPossible = true;
 				}
 
 			}
@@ -46,14 +66,14 @@ Move.prototype.calculateDestinations = function() {
 
 				if(colDest.index < 0 && this.player.isHome()) {
 					this.originColumns[keys[i]].push(0);
-				
+					this.isPossible = true;
 				}
 				else if(colDest.index == 0 && this.player.isHome()) {
 					this.originColumns[keys[i]].push(colDest.index);
-				
+					this.isPossible = true;
 				}else if(colDest.index > 0 && this.columnHolder.isOccupied(colDest.index, PLAYER_COLOR.WHITE) == false) {
 					this.originColumns[keys[i]].push(colDest.index);
-					
+					this.isPossible = true;
 				}
 			}
 		}
@@ -78,6 +98,7 @@ Move.prototype.setupOrigins = function() {
 Move.prototype.init = function() {
 	// setup originColumns
 	this.isPossible = false;
+	this.moved = false;
 	this.setupOrigins();
 	this.calculateDestinations();
 }
