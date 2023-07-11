@@ -91,23 +91,29 @@ Game.prototype.touchCol = function(col)
 		
 		let move = undefined;
 		move = diceFirst;
-		let originCol = move.getOriginColumn(checker.position);
+		let originCol = (move != undefined) ? move.getOriginColumn(checker.position) : undefined;
 		if(diceFirst != undefined
 			&& diceFirst.isPossible
 			&& originCol != undefined
 			&& originCol.length > 0
-			&& originCol[0] == col.id) {
+			&& originCol[0] == col.id
+			&& move.isPossible
+			&& move.moved == false) {
 			this.move(checker, originCol[0]);
-			move.setMoved();
+			this.activePlayer.delMove(move.id);
 			
 		}else if(diceSecond != undefined && diceSecond.isPossible) {
 			move = diceSecond;
 		
-			originCol = move.getOriginColumn(checker.position);
+			originCol = (move != undefined) ? move.getOriginColumn(checker.position) : undefined;
 
-			if(originCol != undefined && originCol.length > 0 && originCol[0] == col.id) {
+			if(originCol != undefined
+				&& originCol.length > 0
+				&& originCol[0] == col.id
+				&& move.isPossible
+				&& move.moved == false) {
 				this.move(checker, originCol[0]);
-				move.setMoved();
+				this.activePlayer.delMove(move.id);
 			}
 			
 		}

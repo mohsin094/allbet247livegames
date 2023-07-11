@@ -10,15 +10,10 @@ Move.prototype.isPossible = undefined;
 Move.prototype.columnHolder = undefined;
 Move.prototype.originColumns = undefined;
 Move.prototype.moved = undefined;
-
+Move.prototype.id = undefined;
 Move.prototype.dice = undefined;
 Move.prototype.player = undefined;
 
-Move.prototype.setMoved = function()
-{
-	this.Move = true;
-	this.isPossible = false;
-}
 
 Move.prototype.getOriginColumn = function(origColIndex) {
 
@@ -58,7 +53,7 @@ Move.prototype.calculateDestinations = function() {
 				}
 
 			}
-		}else if(this.PLAYER_COLOR.BLACK) {
+		}else if(PLAYER_COLOR.BLACK) {
 
 			colDest = this.columnHolder.get(col.index - this.dice);
 
@@ -95,12 +90,18 @@ Move.prototype.setupOrigins = function() {
 	this.originColumns = final;
 }
 
-Move.prototype.init = function() {
+Move.prototype.init = function(moved) {
 	// setup originColumns
 	this.isPossible = false;
 	this.moved = false;
-	this.setupOrigins();
-	this.calculateDestinations();
+	this.id = Math.random();
+
+	if(moved) {
+		this.moved = true;
+	}else {
+		this.setupOrigins();
+		this.calculateDestinations();
+	}
 }
 
 export default Move

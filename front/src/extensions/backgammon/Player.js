@@ -31,12 +31,31 @@ Player.prototype.moves = undefined;
 
 Player.prototype.global = undefined;
 
+
+
+Player.prototype.delMove = function(moveId)
+{
+	const moveIndex = findIndex(this.moves, (o) => (o.id == moveId));
+	if(moveIndex != undefined) {
+		const moveKeys = Object.keys(this.moves);
+		for(let i=0; i<moveKeys.length; i++) {
+			if(this.moves[i].id == moveId || this.moves[i].moved) {
+				this.moves[i].init(true);
+			}else {
+				this.moves[i].init();
+			}
+		}
+	}
+	
+}
+
 Player.prototype.getMove = function(diceNum)
 {
 	return find(this.moves, (o) => (o.dice == diceNum));
 }
 
 Player.prototype.setupMovements = function(columnHolder) {
+	this.moves = [];
 	if(this.dice.privateFirst == this.dice.privateSecond) {
 		for(let c=0; c<4; c++) {
 			const move = new Move(columnHolder, this, this.dice.privateFirst);
