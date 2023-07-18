@@ -30,7 +30,7 @@ function GameController() {
 		const game = GameHolder.get(gameId);
 		if(gameId && game) {
 			if(game.activePlayer.id == userId) {
-				game.move(this.request.data.move);
+				game.move(this.request.data);
 			}
 		}
 	}

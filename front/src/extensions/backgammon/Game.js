@@ -102,7 +102,7 @@ Game.prototype.touchCol = function(col)
 
 			this.move(checker, originCol[0]);
 			this.activePlayer.delMove(move.id);
-			this.vue.move(checker.id, originCol[0]);
+			this.vue.move(checker.index, originCol[0]);
 			
 		}else if(diceSecond != undefined && diceSecond.isPossible) {
 			move = diceSecond;
@@ -117,7 +117,7 @@ Game.prototype.touchCol = function(col)
 
 				this.move(checker, originCol[0]);
 				this.activePlayer.delMove(move.id);
-				this.vue.move(checker.id, originCol[0]);
+				this.vue.move(checker.index, originCol[0]);
 			}
 			
 		}

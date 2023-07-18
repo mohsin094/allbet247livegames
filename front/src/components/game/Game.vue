@@ -110,7 +110,7 @@ export default {
 	},
 	methods: {
 		move(checkerId, toPositionId) {
-			this.io.emit('game/move', {checkerId: checkerId, toPosition: toPositionId});
+			this.io.emit('game/move', {checkerId: checkerId, toPosition: toPositionId, id: this.game.id});
 		},
 		getPlayerInfo() {
 			this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/player-public-info", {params: {

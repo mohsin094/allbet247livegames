@@ -144,8 +144,51 @@ Backgammon.prototype.turn = function() {
 
 }
 
-Backgammon.prototype.move = function(move) {
-	this.activePlayer.move(move.checkerId, move.toPosition);
+Backgammon.prototype.move = function(userMove) {
+	const diceFirst = this.activePlayer.getMove(this.activePlayer.dice[0]);
+	const diceSecond = this.activePlayer.getMove(this.activePlayer.dice[1]); 
+	const checker = this.activePlayer.getChecker(userMove.checkerId);
+
+
+
+	if(checker != undefined) {
+
+		let move = undefined;
+		move = diceFirst;
+		let originCol = (move != undefined) ? move.getOriginColumn(checker.position) : undefined;
+		if(diceFirst != undefined
+			&& diceFirst.isPossible
+			&& originCol != undefined
+			&& originCol.length > 0
+			&& originCol[0] == userMove.toPosition
+			&& move.isPossible
+			&& move.moved == false) {
+
+			this.activePlayer.move(checker.index, originCol[0]);
+			this.activePlayer.delMove(move.id);
+			
+		}else if(diceSecond != undefined && diceSecond.isPossible) {
+			move = diceSecond;
+		
+			originCol = (move != undefined) ? move.getOriginColumn(checker.position) : undefined;
+
+			if(originCol != undefined
+				&& originCol.length > 0
+				&& originCol[0] == userMove.toPosition
+				&& move.isPossible
+				&& move.moved == false) {
+
+				this.activePlayer.move(checker.index, originCol[0]);
+				this.activePlayer.delMove(move.id);
+			}
+			
+		}
+
+		if(this.activePlayer.hasMove() == false) {
+			this.setStage(STAGE.MOVE_DICES);
+		}
+	}
+	
 }
 
 Backgammon.prototype.throwDoubleDice = function() {
@@ -179,8 +222,6 @@ Backgammon.prototype.throwDoubleDice = function() {
 		});
 
 		this.activePlayer.setupMovements(this.board.column);
-
-		console.log(this.activePlayer.moves);
 
 		// this.nextTick(() => {
 		// 	this.setStateActivePlayer({
