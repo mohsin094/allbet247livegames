@@ -2,6 +2,8 @@ import Dice from "#backgammon/dice/Dice";
 import CheckersUtil from "#backgammon/utils/Checkers";
 import Checker from "#backgammon/player/Checker";
 import {randomUUID} from "crypto";
+import {find} from "lodash-es";
+import Move from "#backgammon/player/Move";
 
 function Player()
 {
@@ -23,9 +25,51 @@ Player.prototype.board = undefined;
 Player.prototype.checkers = undefined;
 Player.prototype.socket = undefined;
 Player.prototype.text = undefined;
+Player.prototype.moves = undefined;
+
+Player.prototype.isHome = function() {
+	for(let i=0; i<this.checkers.length; i++) {
+		if(this.color == COLOR.WHITE) {
+			if(this.checkers[i].position < 19) {
+				return false;
+			}
+		}else if(this.color == COLOR.BLACK) {
+			if(this.checkers[i].position > 6) {
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
 
 Player.prototype.move = function(checkerId, toPosition) {
+	const checker = this.getChecker(checkerId);
+	checker.position = toPosition;
+}
+
+Player.prototype.getChecker = function(index) {
+	return find(this.checkers, (e) => (e.index == index));
+}
+
+Player.prototype.setupMovements = function(columnHolder) {
+	this.moves = [];
 	
+	if(this.dice[0] == this.dice[1]) {
+		for(let c=0; c<4; c++) {
+			const move = new Move(columnHolder, this, this.dice[0]);
+			move.init();
+			this.moves.push(move);
+		}
+	}else {
+		let move = new Move(columnHolder, this, this.dice[0]);
+		move.init();
+		this.moves.push(move);
+
+		move = new Move(columnHolder, this, this.dice[1]);
+		move.init();
+		this.moves.push(move);
+	}
 }
 
 Player.prototype.setupCheckers = function() {
@@ -45,6 +89,7 @@ Player.prototype.create = function(player) {
 	this.dice = undefined;
 	this.showDice = undefined;
 	this.text = undefined;
+	this.moves = [];
 
 
 	this.checkers = [];

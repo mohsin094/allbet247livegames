@@ -6,6 +6,24 @@ function column() {
 
 column.prototype.columns = undefined;
 
+column.prototype.isOccupied = function(columnIndex, color) {
+	
+	const column = this.get(columnIndex);
+	
+	let c = 0;
+	for(let i = 0; i < column.container.length; i++) {
+		if(column.container[i].color == color) {
+			c++;
+			if(c > 1) {
+				return true;
+				break;
+			}
+		}
+	}
+
+	return false;
+}
+
 /**
  *
  * @params params (object) {

@@ -18,7 +18,7 @@ import {PLAYER_COLOR} from "#backgammon/player/Player";
 function GameController() {
 	this.accessRules = [
 		{
-			methods: ['join', 'join', 'throwdice'],
+			methods: ['join', 'move', 'throwdice'],
 			roles: [ROLES.MEMBER],
 			allow: true
 		}

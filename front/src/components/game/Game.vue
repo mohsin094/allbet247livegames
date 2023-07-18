@@ -11,18 +11,18 @@
 					<!-- dice black -->
 					<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
 						<ul>
-							<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_first_dice) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
+							<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
 
-							<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_second_dice) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
+							<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
 						</ul>
 					</div>
 
 					<!-- dice white -->
 					<div v-if="game.playerWhite.dice && game.playerWhite.showDice" class="dices dice-white">
 						<ul>
-							<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_first_dice) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
+							<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
 
-							<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_second_dice) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
+							<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
 						</ul>
 					</div>
 
@@ -109,6 +109,9 @@ export default {
 		}
 	},
 	methods: {
+		move(checkerId, toPositionId) {
+			this.io.emit('game/move', {checkerId: checkerId, toPosition: toPositionId});
+		},
 		getPlayerInfo() {
 			this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/player-public-info", {params: {
 				playerId: this.match.home_id

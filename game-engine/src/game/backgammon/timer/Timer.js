@@ -21,8 +21,8 @@ Timer.prototype.create = function(timer) {
 	this.onTimeBankTick = () => {};
 	this.onEnd = () => {};
 	this.onTimeBankEnd = () => {};
-	this.tickCounter = 0;
-	this.roundTickCouner = 0;
+	this.tickCounter = timer.time;
+	this.roundTickCouner = timer.time;
 	this.time = (timer.time == undefined) ? 60 : timer.time;
 	this.timeBank = (timer.timeBank == undefined) ? 0 : timer.timeBank;
 	return this;
@@ -30,20 +30,21 @@ Timer.prototype.create = function(timer) {
 
 
 Timer.prototype.start = function() {
-	this.roundTickCouner = 0;
+	
 	this.presentTime = setInterval(() => {
-		if(this.tickCounter < this.time) {
+		if(this.tickCounter >= 0) {
 			this.onTick();
-			this.roundTickCouner++;
-		}else if(this.tickCounter >= this.time && this.tickCounter < this.timeBank + this.time) {
+			this.roundTickCouner--;
+		}else if(this.tickCounter <= this.time && this.tickCounter > this.timeBank + this.time) {
+			this.tickCounter = this.timeBank;
 			this.onTimeBankTick();
-		}else if(this.tickCounter >= this.timeBank ) {
+		}else if(this.tickCounter <= this.timeBank ) {
 			this.onTimeBankEnd();
 			this.onEnd();
 			this.clear();
 		}
 
-		this.tickCounter++;
+		this.tickCounter--;
 	}, 1000);
 }
 

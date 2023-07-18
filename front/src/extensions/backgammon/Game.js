@@ -99,8 +99,10 @@ Game.prototype.touchCol = function(col)
 			&& originCol[0] == col.id
 			&& move.isPossible
 			&& move.moved == false) {
+
 			this.move(checker, originCol[0]);
 			this.activePlayer.delMove(move.id);
+			this.vue.move(checker.id, originCol[0]);
 			
 		}else if(diceSecond != undefined && diceSecond.isPossible) {
 			move = diceSecond;
@@ -112,11 +114,17 @@ Game.prototype.touchCol = function(col)
 				&& originCol[0] == col.id
 				&& move.isPossible
 				&& move.moved == false) {
+
 				this.move(checker, originCol[0]);
 				this.activePlayer.delMove(move.id);
+				this.vue.move(checker.id, originCol[0]);
 			}
 			
 		}
+
+		if(this.activePlayer.hasMove() == false) {
+			this.stage.id = STAGE.MOVE_DICES;
+		} 
 	}
 }
 

@@ -32,6 +32,9 @@ Player.prototype.moves = undefined;
 Player.prototype.global = undefined;
 
 
+Player.prototype.hasMove = function() {
+	return (findIndex(this.moves, o => o.moved == false) > -1) ? true : false;
+}
 
 Player.prototype.delMove = function(moveId)
 {

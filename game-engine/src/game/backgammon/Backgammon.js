@@ -178,6 +178,10 @@ Backgammon.prototype.throwDoubleDice = function() {
 			
 		});
 
+		this.activePlayer.setupMovements(this.board.column);
+
+		console.log(this.activePlayer.moves);
+
 		// this.nextTick(() => {
 		// 	this.setStateActivePlayer({
 		// 		dice: undefined
