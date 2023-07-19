@@ -102,17 +102,7 @@ Backgammon.prototype.create = function(params) {
 Backgammon.prototype.turn = function() {
 	this.setStage(STAGE.TURN);
 
-	this.setStateActivePlayer({
-		text: this.activePlayer.color+' Turn'
-	});
-	this.nextTick(() => {
-		setTimeout(() => {
-			this.setStateActivePlayer({
-				text: undefined
-			});
-		},2000);
-		
-	});
+	
 
 	this.updateBothPlayer({
 		allowDice: false,
@@ -186,9 +176,22 @@ Backgammon.prototype.move = function(userMove) {
 
 		if(this.activePlayer.hasMove() == false) {
 			this.setStage(STAGE.MOVE_DICES);
+			if(!this.isWinner()) {
+				this.nextTurn();
+			}
 		}
 	}
 	
+}
+
+Backgammon.prototype.nextTurn = function() {
+	this.activePlayer = (this.activePlayer.color == PLAYER_COLOR.BLACK) ? this.playerWhite : this.playerBlack;
+	this.state.game.timer = undefined;
+	this.turn();
+}
+
+Backgammon.prototype.isWinner = function() {
+	return false;
 }
 
 Backgammon.prototype.throwDoubleDice = function() {
@@ -284,7 +287,7 @@ Backgammon.prototype.start123 = function() {
 
 
 	const timer = (new Timer()).create({
-		time: 4,
+		time: 3,
 	});
 
 	timer.onTick = () => {
@@ -295,6 +298,17 @@ Backgammon.prototype.start123 = function() {
 	timer.onEnd = () => {
 		this.activePlayer = this.throwTurnDice();
 		this.state.game.timer = undefined;
+		this.setStateActivePlayer({
+			text: this.activePlayer.color+' Turn'
+		});
+		this.nextTick(() => {
+			setTimeout(() => {
+				this.setStateActivePlayer({
+					text: undefined
+				});
+			},2000);
+			
+		});
 		this.turn();
 		
 	}
