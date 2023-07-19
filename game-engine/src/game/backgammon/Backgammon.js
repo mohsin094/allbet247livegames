@@ -20,7 +20,8 @@ const STAGE = {
 	START: 1,
 	TURN: 2,
 	THROW_DOUBLE_DICE: 3,
-	MOVE_DICES: 4
+	MOVE_DICES: 4,
+	END: 5
 }
 
 function Backgammon()
@@ -43,6 +44,7 @@ Backgammon.prototype.stateInterval = undefined;
 Backgammon.prototype._nextTick = undefined;
 Backgammon.prototype.dice = undefined;
 Backgammon.prototype.stage = undefined;
+Backgammon.prototype.initParams = undefined;
 
 /**
  * @param params example:
@@ -56,6 +58,7 @@ Backgammon.prototype.stage = undefined;
 */
 
 Backgammon.prototype.create = function(params) {
+	this.initParams = params;
 	this.id = params.id;
 	this.board = new Board();
 	this._nextTick = [];
@@ -102,7 +105,35 @@ Backgammon.prototype.create = function(params) {
 Backgammon.prototype.turn = function() {
 	this.setStage(STAGE.TURN);
 
-	
+	this.updatePlayer(this.playerBlack.color, {
+		dice: undefined
+	});
+	this.setStatePlayer(this.playerBlack.color, {
+		dice: undefined
+	});
+
+	this.updatePlayer(this.playerWhite.color, {
+		dice: undefined
+	});
+	this.setStatePlayer(this.playerWhite.color, {
+		dice: undefined
+	});
+
+	this.setStateBothPlayer({
+		showDice: false
+	});
+
+	this.setStateActivePlayer({
+		text: this.activePlayer.color+' Turn'
+	});
+	this.nextTick(() => {
+		setTimeout(() => {
+			this.setStateActivePlayer({
+				text: undefined
+			});
+		},2000);
+		
+	});
 
 	this.updateBothPlayer({
 		allowDice: false,
@@ -178,6 +209,8 @@ Backgammon.prototype.move = function(userMove) {
 			this.setStage(STAGE.MOVE_DICES);
 			if(!this.isWinner()) {
 				this.nextTurn();
+			}else {
+				this.setState(STAGE.END);
 			}
 		}
 	}
@@ -185,12 +218,27 @@ Backgammon.prototype.move = function(userMove) {
 }
 
 Backgammon.prototype.nextTurn = function() {
+
+
 	this.activePlayer = (this.activePlayer.color == PLAYER_COLOR.BLACK) ? this.playerWhite : this.playerBlack;
 	this.state.game.timer = undefined;
+	this.activePlayer.timer = (new Timer()).create(this.initParams.timer);
 	this.turn();
 }
 
 Backgammon.prototype.isWinner = function() {
+	switch(this.activePlayer.color) {
+	case PLAYER_COLOR.BLACK:
+		if(this.activePlayer.isEndOfCheckers() && !this.playerWhite.isEndOfCheckers()) {
+			return true;
+		}
+		break;
+	case PLAYER_COLOR.WHITE:
+		if(this.activePlayer.isEndOfCheckers() && !this.playerBlack.isEndOfCheckers()) {
+			return true;
+		}
+		break;
+	}
 	return false;
 }
 
@@ -298,17 +346,7 @@ Backgammon.prototype.start123 = function() {
 	timer.onEnd = () => {
 		this.activePlayer = this.throwTurnDice();
 		this.state.game.timer = undefined;
-		this.setStateActivePlayer({
-			text: this.activePlayer.color+' Turn'
-		});
-		this.nextTick(() => {
-			setTimeout(() => {
-				this.setStateActivePlayer({
-					text: undefined
-				});
-			},2000);
-			
-		});
+		
 		this.turn();
 		
 	}

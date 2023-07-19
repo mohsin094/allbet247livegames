@@ -54,7 +54,7 @@ Player.prototype.delMove = function(moveId)
 
 Player.prototype.getMove = function(diceNum)
 {
-	return find(this.moves, (o) => (o.dice == diceNum));
+	return find(this.moves, (o) => (o.dice == diceNum && o.moved == false));
 }
 
 Player.prototype.setupMovements = function(columnHolder) {

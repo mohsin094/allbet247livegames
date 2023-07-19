@@ -49,7 +49,23 @@ Player.prototype.delMove = function(moveId)
 
 Player.prototype.getMove = function(diceNum)
 {
-	return find(this.moves, (o) => (o.dice == diceNum));
+	return find(this.moves, (o) => (o.dice == diceNum && o.moved == false));
+}
+
+Player.prototype.isEndOfCheckers = function() {
+	for(let i=0; i<this.checkers.length; i++) {
+		if(this.color == COLOR.WHITE) {
+			if(this.checkers[i].position != 25) {
+				return false;
+			}
+		}else if(this.color == COLOR.BLACK) {
+			if(this.checkers[i].position != 0) {
+				return false;
+			}
+		}
+	}
+
+	return true;
 }
 
 Player.prototype.isHome = function() {
