@@ -34,6 +34,7 @@ Player.prototype.getMovesDice = function() {
 			final.push(this.moves[i].dice);
 		}
 	}
+
 	return final;
 }
 
@@ -43,6 +44,7 @@ Player.prototype.hasMove = function() {
 
 Player.prototype.delMove = function(moveId)
 {
+
 	const moveIndex = findIndex(this.moves, (o) => (o.id == moveId));
 	if(moveIndex != undefined) {
 		const moveKeys = Object.keys(this.moves);

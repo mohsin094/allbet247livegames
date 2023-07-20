@@ -53,12 +53,16 @@ Player.prototype.delMove = function(moveId)
 }
 
 Player.prototype.appendMoves = function(moves) {
-	let final = [];
-	for(let i=0; i<moves.length; i++) {
-		for(let c; c<this.moves.length; c++) {
-			if(this.moves[c].dice == moves[i]) {
-				final.push(this.moves[c]);
-			}
+	let moveIndex = undefined;
+	for(let i=0; i<this.moves.length; i++) {
+
+		moveIndex = moves.indexOf(this.moves[i].dice)
+		if(moveIndex > -1
+			&& this.moves[i].dice == moves[moveIndex]
+			&& this.moves[i].moved == false) {
+
+		}else {
+			this.moves[i].moved = true;
 		}
 	}
 }

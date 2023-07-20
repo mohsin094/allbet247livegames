@@ -204,7 +204,7 @@ Backgammon.prototype.move = function(userMove) {
 			}
 			
 		}
-		console.log(this.activePlayer.moves)
+
 		if(this.activePlayer.hasMove() == false) {
 			this.setStage(STAGE.MOVE_DICES);
 			if(!this.isWinner()) {
