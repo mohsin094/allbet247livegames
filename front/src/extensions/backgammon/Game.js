@@ -17,7 +17,8 @@ const STAGE = {
 	THROW_DOUBLE_DICE: 3,
 	MOVE_FIRST_DICE: 3.1,
 	MOVE_SECOND_DICE: 3.2,
-	MOVE_DICES: 4
+	MOVE_DICES: 4,
+	END: 5
 }
 
 function Game(vue, socket)
@@ -146,7 +147,7 @@ Game.prototype.touchChecker = function(checker)
 		
 		if(this.activePlayer.checkers[index].selected) {
 			
-			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer.dice, this.activePlayer, this.stage);
+			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer, this.stage);
 		}
 	}
 }

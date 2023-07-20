@@ -52,6 +52,17 @@ Player.prototype.delMove = function(moveId)
 	
 }
 
+Player.prototype.appendMoves = function(moves) {
+	let final = [];
+	for(let i=0; i<moves.length; i++) {
+		for(let c; c<this.moves.length; c++) {
+			if(this.moves[c].dice == moves[i]) {
+				final.push(this.moves[c]);
+			}
+		}
+	}
+}
+
 Player.prototype.getMove = function(diceNum)
 {
 	return find(this.moves, (o) => (o.dice == diceNum && o.moved == false));

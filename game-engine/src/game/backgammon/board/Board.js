@@ -8,7 +8,7 @@ function Board() {
 Board.prototype.column = undefined;
 Board.prototype.create = function() {
 	this.column = new Column;
-	for(let i=0; i<26; i++) {
+	for(let i=0; i<28; i++) {
 		this.column.add({
 			index: i
 		});

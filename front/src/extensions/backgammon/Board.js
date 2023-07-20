@@ -20,7 +20,7 @@ Board.prototype.removeOffer = function() {
 	this.columnHolder.removeOffer();
 }
 
-Board.prototype.offerMove = function(checker, fromPosition, dice, player, stage) {
+Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 	switch(checker.color) {
 	case PLAYER_COLOR.WHITE:
 		
@@ -29,16 +29,26 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player, stage)
 					
 			if(fromPosition < this.columnHolder.columns[i].index) {				
 				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.BLACK) == false) {
-					const sumFirst = fromPosition + dice.first;
-					const sumSecond = fromPosition + dice.second;
-					if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) && sumFirst == this.columnHolder.columns[i].index) {
+					const sumFirst = fromPosition + player.dice.first;
+					const sumSecond = fromPosition + player.dice.second;
+
+					const diceFirst = player.getMove(player.dice.first);
+					const diceSecond = player.getMove(player.dice.second); 
+		
+					if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) 
+						&& sumFirst == this.columnHolder.columns[i].index
+						&& diceFirst != undefined
+						&& diceFirst.moved == false) {
 						
 						this.columnHolder.columns[i].focus = true;
 						// if((sumSecond > 23 || sumFirst > 23) && player.isAllCheckersHome()) {
 						// 	this.columnHolder.columns[i].focus = true;
 						// }else if(sumSecond < 24 || sumFirst < 24) {
 						// }
-					}else if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_FIRST_DICE) && sumSecond == this.columnHolder.columns[i].index) {
+					}else if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_FIRST_DICE) 
+						&& sumSecond == this.columnHolder.columns[i].index
+						&& diceSecond != undefined
+						&& diceSecond.moved == false) {
 						this.columnHolder.columns[i].focus = true;
 					}
 				}
@@ -55,10 +65,19 @@ Board.prototype.offerMove = function(checker, fromPosition, dice, player, stage)
 				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.WHITE) == false) {
 
 
-					const sumFirst = fromPosition - dice.first;
-					const sumSecond = fromPosition - dice.second;
-
-					if(sumFirst == this.columnHolder.columns[i].index || sumSecond == this.columnHolder.columns[i].index) {
+					const sumFirst = fromPosition - player.dice.first;
+					const sumSecond = fromPosition - player.dice.second;
+		
+					const diceFirst = player.getMove(player.dice.first);
+					const diceSecond = player.getMove(player.dice.second); 
+		
+					if((sumFirst == this.columnHolder.columns[i].index
+						&& diceFirst != undefined
+						&& diceFirst.moved == false)
+						|| (sumSecond == this.columnHolder.columns[i].index
+						&& diceSecond != undefined
+						&& diceSecond.moved == false)
+						) {
 							this.columnHolder.columns[i].focus = true;
 						
 						// if((sumSecond < 1 || sumFirst < 1) && player.isAllCheckersHome()) {

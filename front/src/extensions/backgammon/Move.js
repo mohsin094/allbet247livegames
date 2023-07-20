@@ -47,7 +47,7 @@ Move.prototype.calculateDestinations = function() {
 				else if(colDest.index == 24 && this.player.isHome()) {
 					this.originColumns[keys[i]].push(colDest.index);
 					this.isPossible = true;
-				}else if(colDest.index < 24 && this.columnHolder.isOccupied(colDest.index, PLAYER_COLOR.BLACK) == false) {
+				}else if(colDest.index < 24 && this.columnHolder.isOccupied(colDest.index, diffColor) == false) {
 					this.originColumns[keys[i]].push(colDest.index);
 					this.isPossible = true;
 				}

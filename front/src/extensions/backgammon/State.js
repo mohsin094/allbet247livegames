@@ -8,6 +8,7 @@ export default {
 		const stateKeys = Object.keys(state);
 		for(let index=0; index < stateKeys.length; index++) {
 			let checkers = undefined;
+			let moves = undefined;
 			switch(stateKeys[index]) {
 			case 'stage':
 				if(game.stage.id !== STAGE.MOVE_FIRST_DICE && game.stage.id !== STAGE.MOVE_SECOND_DICE) {
@@ -27,7 +28,11 @@ export default {
 				game.playerBlack.allowDice = (state.playerBlack.allowDice != undefined && state.playerBlack.allowDice === true) ? true : false;
 				game.playerBlack.showDice = (state.playerBlack.showDice != undefined && state.playerBlack.showDice === true) ? true : false;
 				game.playerBlack.allowMove = (state.playerBlack.allowMove != undefined && state.playerBlack.allowMove === true) ? true : false;
+				moves = (state.playerBlack.moves != undefined) ? state.playerBlack.moves : [];
 
+				if(moves.length > 0) {
+					game.playerBlack.appendMoves(moves);
+				}
 				
 				if(state.playerBlack.checkers != undefined) {
 					game.playerBlack.checkers = [];
@@ -63,6 +68,12 @@ export default {
 				game.playerWhite.allowDice = (state.playerWhite.allowDice != undefined && state.playerWhite.allowDice === true) ? true : false;
 				game.playerWhite.showDice = (state.playerWhite.showDice != undefined && state.playerWhite.showDice === true) ? true : false;
 				game.playerWhite.allowMove = (state.playerWhite.allowMove != undefined && state.playerWhite.allowMove === true) ? true : false;
+				
+				moves = (state.playerWhite.moves != undefined) ? state.playerWhite.moves : [];
+
+				if(moves.length > 0) {
+					game.playerWhite.appendMoves(moves);
+				}
 
 				if(state.playerWhite.checkers != undefined) {
 					game.playerWhite.checkers = [];

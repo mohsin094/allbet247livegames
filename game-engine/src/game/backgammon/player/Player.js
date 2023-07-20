@@ -27,6 +27,16 @@ Player.prototype.socket = undefined;
 Player.prototype.text = undefined;
 Player.prototype.moves = undefined;
 
+Player.prototype.getMovesDice = function() {
+	let final = [];
+	for(let i=0; i<this.moves.length; i++) {
+		if(this.moves[i].moved == false) {
+			final.push(this.moves[i].dice);
+		}
+	}
+	return final;
+}
+
 Player.prototype.hasMove = function() {
 	return (findIndex(this.moves, o => o.moved == false) > -1) ? true : false;
 }
