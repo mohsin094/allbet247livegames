@@ -31,6 +31,16 @@ Player.prototype.moves = undefined;
 
 Player.prototype.global = undefined;
 
+Player.prototype.hasSingleChecker = function(colId) {
+	let i = 0;
+	for(let c=0; c<this.checkers.length; c++) {
+		if(this.checkers[c].position == colId) {
+			i++;
+		}
+	}
+
+	return (i == 1) ? this.getCheckerInCol(colId) : false;
+}
 
 Player.prototype.hasMove = function() {
 	return (findIndex(this.moves, o => o.moved == false) > -1) ? true : false;
@@ -103,11 +113,11 @@ Player.prototype.getActiveChecker = function() {
 Player.prototype.isHome = function() {
 	for(let i=0; i<this.checkers.length; i++) {
 		if(this.color == COLOR.WHITE) {
-			if(this.checkers[i].position < 19) {
+			if(this.checkers[i].position < 19 || this.checkers[i].position > 25) {
 				return false;
 			}
 		}else if(this.color == COLOR.BLACK) {
-			if(this.checkers[i].position > 6) {
+			if(this.checkers[i].position > 6  || this.checkers[i].position > 25) {
 				return false;
 			}
 		}
@@ -120,22 +130,21 @@ Player.prototype.getChecker = function(index) {
 	return findIndex(this.checkers, (e) => (e.index == index));
 }
 
+Player.prototype.getCheckerInCol = function(index) {
+	return find(this.checkers, (e) => (e.position == index));
+}
+
 Player.prototype.isAllCheckersHome = function() {
-	switch(this.color) {
-	case COLOR.BLACK:
-		for(let i=0; i<this.checkers.length; i++) {
-			if(this.checkers[i].position < 18) {
+	for(let i=0; i<this.checkers.length; i++) {
+		if(this.color == COLOR.WHITE) {
+			if(this.checkers[i].position < 19 || this.checkers[i].position > 25) {
+				return false;
+			}
+		}else if(this.color == COLOR.BLACK) {
+			if(this.checkers[i].position > 6  || this.checkers[i].position > 25) {
 				return false;
 			}
 		}
-		break;
-	case COLOR.WHITE:
-		for(let i=0; i<this.checkers.length; i++) {
-			if(this.checkers[i].position > 6) {
-				return false;
-			}
-		}
-		break;
 	}
 
 	return true;

@@ -16,8 +16,7 @@ Move.prototype.player = undefined;
 
 
 Move.prototype.getOriginColumn = function(origColIndex) {
-
-	if(this.originColumns[origColIndex] != undefined) {
+	if(this.originColumns[origColIndex] !== undefined) {
 		return this.originColumns[origColIndex];
 	}
 
@@ -29,7 +28,7 @@ Move.prototype.setNotPossible = function() {
 }
 
 Move.prototype.calculateDestinations = function() {
-	const diffColor = (this.player.color == PLAYER_COLOR.WHITE) ? PLAYER_COLOR.WHITE : PLAYER_COLOR.BLACK;
+	const diffColor = (this.player.color == PLAYER_COLOR.WHITE) ? PLAYER_COLOR.BLACK : PLAYER_COLOR.WHITE;
 	const keys = Object.keys(this.originColumns);
 	for(let i=0; i< keys.length; i++) {
 		const col = this.columnHolder.get(keys[i]);
@@ -38,13 +37,12 @@ Move.prototype.calculateDestinations = function() {
 		if(this.player.color == PLAYER_COLOR.WHITE) {
 
 			colDest = this.columnHolder.get(col.index + this.dice);
-
 			if(colDest != undefined) {
 				if(colDest.index > 24 && this.player.isHome()) {
-					this.originColumns[keys[i]].push(24);
+					this.originColumns[keys[i]].push(25);
 					this.isPossible = true;
 				}
-				else if(colDest.index == 24 && this.player.isHome()) {
+				else if(colDest.index == 24) {
 					this.originColumns[keys[i]].push(colDest.index);
 					this.isPossible = true;
 				}else if(colDest.index < 24 && this.columnHolder.isOccupied(colDest.index, diffColor) == false) {
@@ -66,7 +64,7 @@ Move.prototype.calculateDestinations = function() {
 				else if(colDest.index == 0 && this.player.isHome()) {
 					this.originColumns[keys[i]].push(colDest.index);
 					this.isPossible = true;
-				}else if(colDest.index > 0 && this.columnHolder.isOccupied(colDest.index, PLAYER_COLOR.WHITE) == false) {
+				}else if(colDest.index > 0 && this.columnHolder.isOccupied(colDest.index, diffColor) == false) {
 					this.originColumns[keys[i]].push(colDest.index);
 					this.isPossible = true;
 				}

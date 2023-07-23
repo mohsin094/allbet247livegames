@@ -117,12 +117,15 @@ Board.prototype.getColumnAt = function(index) {
 Board.prototype.create = function() {
 
 	this.columnHolder = new ColumnHolder;
-	for(let i=25; i > 12; i--) {
+	for(let i=26; i > 12; i--) {
 		this.columnHolder.add({
 			index: i
 		});
-		
-		if(i == 25) {
+		if(i == 26) {
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((7) * this.global.checkerSize));
+			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
+		}
+		else if(i == 25) {
 			this.columnHolder.get(i).x = (this.global.boardWidth - this.global.boardSidePadding) + this.global.checkerMargin;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}
@@ -165,12 +168,16 @@ Board.prototype.create = function() {
 		}
 	}
 
-	for(let i=0; i < 13; i++) {
+	for(let i=-1; i < 13; i++) {
 
 		this.columnHolder.add({
 			index: i
 		});
-		if(i == 0) {
+		if(i == -1) {
+			this.columnHolder.get(i).x = ((this.global.boardWidth) - this.global.boardSidePadding - ((7) * this.global.checkerSize));
+			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
+		}
+		else if(i == 0) {
 			this.columnHolder.get(i).x = (this.global.boardWidth - this.global.boardSidePadding) + this.global.checkerMargin;
 			this.columnHolder.get(i).y= this.global.boardTopPaddingHeight;
 		}

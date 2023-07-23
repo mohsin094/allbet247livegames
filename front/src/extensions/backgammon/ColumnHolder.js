@@ -42,10 +42,7 @@ ColumnHolder.prototype.removeChecker = function(index, color) {
 		
 
 		if(id !== -1 && this.columns[i].container.length > 0) {
-			const ret = this.columns[i].container[id];
 			this.columns[i].container.splice(id, 1);
-			console.log(ret)
-			return ret;			
 			break;
 		}
 	}

@@ -29,6 +29,7 @@
 						<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
 					</div>
 					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(-1)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)"/>
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
@@ -55,6 +56,8 @@
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
+					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(26)" />
+					
 
 					</template>
 					<div v-show="boardText != undefined" class="board-text">
