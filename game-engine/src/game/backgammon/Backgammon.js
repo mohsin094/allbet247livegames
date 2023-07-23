@@ -205,6 +205,30 @@ Backgammon.prototype.move = function(userMove) {
 			
 		}
 
+		// if(this.activePlayer.color == PLAYER_COLOR.BLACK) {
+
+		// 	this.setStatePlayer(PLAYER_COLOR.WHITE, {
+		// 		checkers: this.playerBlack.checkers
+		// 	});
+
+		// 	this.nextTick(() => {
+		// 		this.setStatePlayer(PLAYER_COLOR.WHITE, {
+		// 			checkers: undefined
+		// 		});
+		// 	});
+		// }else {
+
+		// 	this.setStatePlayer(PLAYER_COLOR.BLACK, {
+		// 		checkers: this.playerBlack.checkers
+		// 	});
+
+		// 	this.nextTick(() => {
+		// 		this.setStatePlayer(PLAYER_COLOR.BLACK, {
+		// 			checkers: undefined
+		// 		});
+		// 	});
+		// }
+
 		if(this.activePlayer.hasMove() == false) {
 			this.setStage(STAGE.MOVE_DICES);
 			if(!this.isWinner()) {
@@ -316,6 +340,14 @@ Backgammon.prototype.start123 = function() {
 			this.playerBlack.socket.emit(EMIT.GAME_STATE, this.state);
 		}
 
+		this.setStatePlayer(PLAYER_COLOR.WHITE, {
+			checkers: this.playerWhite.checkers
+		});
+
+		this.setStatePlayer(PLAYER_COLOR.BLACK, {
+			checkers: this.playerBlack.checkers
+		});
+
 
 		if(this._nextTick.length > 0) {
 			this._nextTick.forEach((item) => {
@@ -325,25 +357,19 @@ Backgammon.prototype.start123 = function() {
 		}
 	}, 1000);
 
-	this.setStatePlayer(PLAYER_COLOR.WHITE, {
-		checkers: this.playerWhite.checkers
-	});
-
-	this.setStatePlayer(PLAYER_COLOR.BLACK, {
-		checkers: this.playerBlack.checkers
-	});
 
 
 
-	this.nextTick(() => {
-		this.setStatePlayer(PLAYER_COLOR.WHITE, {
-			checkers: undefined
-		});
 
-		this.setStatePlayer(PLAYER_COLOR.BLACK, {
-			checkers: undefined
-		});
-	});
+	// this.nextTick(() => {
+	// 	this.setStatePlayer(PLAYER_COLOR.WHITE, {
+	// 		checkers: undefined
+	// 	});
+
+	// 	this.setStatePlayer(PLAYER_COLOR.BLACK, {
+	// 		checkers: undefined
+	// 	});
+	// });
 
 
 	const timer = (new Timer()).create({

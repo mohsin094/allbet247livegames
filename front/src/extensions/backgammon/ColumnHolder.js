@@ -31,8 +31,8 @@ ColumnHolder.prototype.isOccupied = function(columnIndex, color) {
 }
 
 ColumnHolder.prototype.removeChecker = function(index, color) {
-
 	for(let i=0; i<this.columns.length; i++) {
+	
 		let id = findIndex(this.columns[i].container, (o) => {
 			// if(o != undefined) {
 				return (o.index == index && o.color == color);
@@ -41,11 +41,11 @@ ColumnHolder.prototype.removeChecker = function(index, color) {
 		});
 		
 
-		
 		if(id !== -1 && this.columns[i].container.length > 0) {
-		
+			const ret = this.columns[i].container[id];
 			this.columns[i].container.splice(id, 1);
-		
+			console.log(ret)
+			return ret;			
 			break;
 		}
 	}

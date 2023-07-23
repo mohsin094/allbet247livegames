@@ -22,7 +22,6 @@ export default {
 				game.timer =  (state.game.timer != undefined) ? state.game.timer : undefined;
 				break;
 			case 'playerBlack':
-				
 				game.playerBlack.text = (state.playerBlack.text != undefined) ? state.playerBlack.text : undefined;
 				checkers = (state.playerBlack.checkers != undefined) ? state.playerBlack.checkers : game.playerBlack.checkers;
 				game.playerBlack.allowDice = (state.playerBlack.allowDice != undefined && state.playerBlack.allowDice === true) ? true : false;
@@ -35,15 +34,20 @@ export default {
 				}
 				
 				if(state.playerBlack.checkers != undefined) {
+					const oldCheckers = game.playerBlack.checkers;
 					game.playerBlack.checkers = [];
 					for(let i=0; i<checkers.length; i++) {
 						const checker = new Checker(game.global);
 						checker.create(checkers[i].color,checkers[i].position,checkers[i].index);
+						if(checker.index == oldCheckers[i].index) {
+							checker.selected = oldCheckers[i].selected;
+						}
 						game.playerBlack.checkers.push(checker);
 					}
 				}
 
 				if(state.playerBlack.checkers != undefined) {
+
 					CheckersUtil.setPosition(game, game.board, game.playerBlack.checkers, PLAYER_COLOR.BLACK);
 				}
 
@@ -76,10 +80,14 @@ export default {
 				}
 
 				if(state.playerWhite.checkers != undefined) {
+					const oldCheckers = game.playerWhite.checkers;
 					game.playerWhite.checkers = [];
 					for(let i=0; i<checkers.length; i++) {
 						const checker = new Checker(game.global);
 						checker.create(checkers[i].color,checkers[i].position,checkers[i].index);
+						if(checker.index == oldCheckers[i].index) {
+							checker.selected = oldCheckers[i].selected;
+						}
 						game.playerWhite.checkers.push(checker);
 					}
 				}
