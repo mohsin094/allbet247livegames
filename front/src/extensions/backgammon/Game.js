@@ -124,7 +124,7 @@ Game.prototype.touchCol = function(col)
 				&& originCol[0] == col.id
 				&& move.isPossible
 				&& move.moved == false) {
-				const opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
+				opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 				
 				if(opositeSingleChecker != false) {
 					this.move(opositeSingleChecker, out);

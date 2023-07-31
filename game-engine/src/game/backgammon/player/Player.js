@@ -27,6 +27,22 @@ Player.prototype.socket = undefined;
 Player.prototype.text = undefined;
 Player.prototype.moves = undefined;
 
+
+Player.prototype.hasSingleChecker = function(colId) {
+	let i = 0;
+	for(let c=0; c<this.checkers.length; c++) {
+		if(this.checkers[c].position == colId) {
+			i++;
+		}
+	}
+
+	return (i == 1) ? this.getCheckerInCol(colId) : false;
+}
+
+Player.prototype.getCheckerInCol = function(index) {
+	return find(this.checkers, (e) => (e.position == index));
+}
+
 Player.prototype.getMovesDice = function() {
 	let final = [];
 	for(let i=0; i<this.moves.length; i++) {
