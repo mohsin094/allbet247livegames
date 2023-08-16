@@ -34,11 +34,17 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 
 					const diceFirst = player.getMove(player.dice.first);
 					const diceSecond = player.getMove(player.dice.second); 
+					const originColFirst = (diceFirst != undefined) ? diceFirst.getOriginColumn(fromPosition) : undefined;
+					const originColSecond = (diceSecond != undefined) ? diceSecond.getOriginColumn(fromPosition) : undefined;
+					
 		
 					if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) 
 						&& sumFirst == this.columnHolder.columns[i].index
 						&& diceFirst != undefined
-						&& diceFirst.moved == false) {
+						&& diceFirst.moved == false
+						&& originColFirst != undefined
+						&& originColFirst.length > 0
+						&& originColFirst[0] == this.columnHolder.columns[i].index) {
 						
 						this.columnHolder.columns[i].focus = true;
 						// if((sumSecond > 23 || sumFirst > 23) && player.isAllCheckersHome()) {
@@ -48,7 +54,10 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 					}else if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_FIRST_DICE) 
 						&& sumSecond == this.columnHolder.columns[i].index
 						&& diceSecond != undefined
-						&& diceSecond.moved == false) {
+						&& diceSecond.moved == false
+						&& originColSecond != undefined
+						&& originColSecond.length > 0
+						&& originColSecond[0] == this.columnHolder.columns[i].index) {
 						this.columnHolder.columns[i].focus = true;
 					}
 				}
@@ -69,14 +78,24 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 					const sumSecond = fromPosition - player.dice.second;
 		
 					const diceFirst = player.getMove(player.dice.first);
-					const diceSecond = player.getMove(player.dice.second); 
-		
+					const diceSecond = player.getMove(player.dice.second);
+					const originColFirst = (diceFirst != undefined) ? diceFirst.getOriginColumn(fromPosition) : undefined;
+					const originColSecond = (diceSecond != undefined) ? diceSecond.getOriginColumn(fromPosition) : undefined;
+					
+
 					if((sumFirst == this.columnHolder.columns[i].index
 						&& diceFirst != undefined
-						&& diceFirst.moved == false)
-						|| (sumSecond == this.columnHolder.columns[i].index
+						&& diceFirst.moved == false
+						&& originColFirst != undefined
+						&& originColFirst.length > 0
+						&& originColFirst[0] == this.columnHolder.columns[i].index)
+						|| 
+						(sumSecond == this.columnHolder.columns[i].index
 						&& diceSecond != undefined
-						&& diceSecond.moved == false)
+						&& diceSecond.moved == false
+						&& originColSecond != undefined
+						&& originColSecond.length > 0
+						&& originColSecond[0] == this.columnHolder.columns[i].index)
 						) {
 							this.columnHolder.columns[i].focus = true;
 						
