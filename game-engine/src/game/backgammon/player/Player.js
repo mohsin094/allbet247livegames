@@ -28,6 +28,26 @@ Player.prototype.text = undefined;
 Player.prototype.moves = undefined;
 
 
+Player.prototype.getOutCheckers = function() {
+	let result = [];
+	for(let i=0; i<this.checkers.length; i++) {
+		switch(this.color) {
+		case COLOR.WHITE:
+			if(this.checkers[i].position == 26) {
+				result.push(this.checkers[i]);				
+			}
+			break;
+		case COLOR.BLACK:
+			if(this.checkers[i].position == -1) {
+				result.push(this.checkers[i]);
+			}
+			break;
+		}
+	}
+
+	return result;
+}
+
 Player.prototype.hasSingleChecker = function(colId) {
 	let i = 0;
 	for(let c=0; c<this.checkers.length; c++) {
@@ -55,7 +75,8 @@ Player.prototype.getMovesDice = function() {
 }
 
 Player.prototype.hasMove = function() {
-	return (findIndex(this.moves, o => o.moved == false) > -1) ? true : false;
+	
+	return (findIndex(this.moves, o => (o.moved == false && o.isPossible == true)) > -1) ? true : false;
 }
 
 Player.prototype.delMove = function(moveId)

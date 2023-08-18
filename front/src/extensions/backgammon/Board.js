@@ -25,19 +25,28 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 	case PLAYER_COLOR.WHITE:
 		
 		for(let i=0; i<this.columnHolder.columns.length; i++) {
-			
-					
-			if(fromPosition < this.columnHolder.columns[i].index) {				
+
+			if(fromPosition < this.columnHolder.columns[i].index || fromPosition == 26) {				
 				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.BLACK) == false) {
-					const sumFirst = fromPosition + player.dice.first;
-					const sumSecond = fromPosition + player.dice.second;
+					
+					let sumFirst = undefined;
+					let sumSecond = undefined;
+					if(fromPosition == 26) {
+						sumFirst = player.dice.first;
+						sumSecond = player.dice.second;
+
+					}else {
+
+						sumFirst = fromPosition + player.dice.first;
+						sumSecond = fromPosition + player.dice.second;
+					}
 
 					const diceFirst = player.getMove(player.dice.first);
 					const diceSecond = player.getMove(player.dice.second); 
 					const originColFirst = (diceFirst != undefined) ? diceFirst.getOriginColumn(fromPosition) : undefined;
 					const originColSecond = (diceSecond != undefined) ? diceSecond.getOriginColumn(fromPosition) : undefined;
-					
-		
+				
+
 					if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) 
 						&& sumFirst == this.columnHolder.columns[i].index
 						&& diceFirst != undefined
@@ -69,13 +78,21 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 		for(let i=0; i<this.columnHolder.columns.length; i++) {
 			
 					
-			if(fromPosition > this.columnHolder.columns[i].index) {
+			if(fromPosition > this.columnHolder.columns[i].index || fromPosition == -1) {
 
 				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.WHITE) == false) {
 
+					let sumFirst = undefined;
+					let sumSecond = undefined;
+					if(fromPosition == -1) {
+						sumFirst = fromPosition - player.dice.first + 1;
+						sumSecond = fromPosition - player.dice.second + 1;
 
-					const sumFirst = fromPosition - player.dice.first;
-					const sumSecond = fromPosition - player.dice.second;
+					}else {
+						sumFirst = fromPosition - player.dice.first;
+						sumSecond = fromPosition - player.dice.second;
+					}
+
 		
 					const diceFirst = player.getMove(player.dice.first);
 					const diceSecond = player.getMove(player.dice.second);
