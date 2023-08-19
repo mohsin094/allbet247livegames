@@ -135,6 +135,10 @@ Player.prototype.isHome = function() {
 
 Player.prototype.move = function(checkerId, toPosition) {
 	const checker = this.getChecker(checkerId);
+	const oldPosition = checker.position;
+	if(oldPosition != toPosition) {
+		this.board.position(checker, toPosition, oldPosition);
+	}
 	checker.position = toPosition;
 }
 

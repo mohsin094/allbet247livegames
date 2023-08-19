@@ -85,8 +85,8 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 					let sumFirst = undefined;
 					let sumSecond = undefined;
 					if(fromPosition == -1) {
-						sumFirst = fromPosition - player.dice.first + 1;
-						sumSecond = fromPosition - player.dice.second + 1;
+						sumFirst = 25 - player.dice.first;
+						sumSecond = 25 - player.dice.second;
 
 					}else {
 						sumFirst = fromPosition - player.dice.first;

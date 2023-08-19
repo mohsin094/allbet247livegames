@@ -45,6 +45,7 @@ Move.prototype.calculateDestinations = function() {
 				colDest = this.columnHolder.get(col.index + this.dice);
 				colDestNumb = col.index + this.dice;
 			}
+			
 			if(col.index == 26 && this.columnHolder.isOccupied(colDest.index, diffColor) == false) {
 				this.originColumns[keys[i]].push(colDest.index);
 				this.isPossible = true;
@@ -65,7 +66,8 @@ Move.prototype.calculateDestinations = function() {
 				colDest = this.columnHolder.get(col.index - this.dice);
 				colDestNumb = col.index - this.dice;
 			}
-			console.log(colDestNumb)
+			
+			
 			if(col.index == -1 && this.columnHolder.isOccupied(colDest.index, diffColor) == false) {
 				this.originColumns[keys[i]].push(colDest.index);
 				this.isPossible = true;

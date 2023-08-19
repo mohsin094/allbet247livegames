@@ -170,7 +170,7 @@ Backgammon.prototype.move = function(userMove) {
 	const diceSecond = this.activePlayer.getMove(this.activePlayer.dice[1]); 
 	const checker = this.activePlayer.getChecker(userMove.checkerId);
 	const opositePlayer = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? this.playerBlack : this.playerWhite;
-	const out = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? -1 : 26;
+	const opositeOut = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? -1 : 26;
 	let opositeSingleChecker = undefined;
 
 
@@ -191,7 +191,7 @@ Backgammon.prototype.move = function(userMove) {
 			opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 			
 			if(opositeSingleChecker != false) {
-				opositePlayer.move(opositeSingleChecker.index, out);				
+				opositePlayer.move(opositeSingleChecker.index, opositeOut);				
 			}
 
 			this.activePlayer.move(checker.index, originCol[0]);
@@ -210,7 +210,7 @@ Backgammon.prototype.move = function(userMove) {
 
 				opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 				if(opositeSingleChecker != false) {
-					opositePlayer.move(opositeSingleChecker.index, out);				
+					opositePlayer.move(opositeSingleChecker.index, opositeOut);				
 				}
 
 				this.activePlayer.move(checker.index, originCol[0]);
@@ -218,7 +218,6 @@ Backgammon.prototype.move = function(userMove) {
 			}
 			
 		}
-		console.log(this.activePlayer.moves);
 		// if(this.activePlayer.color == PLAYER_COLOR.BLACK) {
 
 		// 	this.setStatePlayer(PLAYER_COLOR.WHITE, {
@@ -255,8 +254,10 @@ Backgammon.prototype.move = function(userMove) {
 			}
 		}
 	}
+
 	
 }
+
 
 Backgammon.prototype.nextTurn = function() {
 

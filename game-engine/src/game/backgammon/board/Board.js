@@ -1,5 +1,5 @@
 import Column from "#backgammon/board/Column";
-
+import {remove} from "lodash-es";
 function Board() {
 
 }

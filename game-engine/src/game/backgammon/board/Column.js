@@ -24,6 +24,24 @@ column.prototype.isOccupied = function(columnIndex, color) {
 	return false;
 }
 
+column.prototype.removeChecker = function(index, color) {
+	for(let i=0; i<this.columns.length; i++) {
+	
+		let id = findIndex(this.columns[i].container, (o) => {
+			// if(o != undefined) {
+				return (o.index == index && o.color == color);
+			// }else
+			// 	false
+		});
+		
+
+		if(id !== -1 && this.columns[i].container.length > 0) {
+			this.columns[i].container.splice(id, 1);
+			break;
+		}
+	}
+}
+
 /**
  *
  * @params params (object) {

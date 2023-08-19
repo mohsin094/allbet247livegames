@@ -91,7 +91,7 @@ Game.prototype.touchCol = function(col)
 		const diceFirst = this.activePlayer.getMove(this.activePlayer.dice.first);
 		const diceSecond = this.activePlayer.getMove(this.activePlayer.dice.second); 
 		
-		const out = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? -1 : 26;
+		const opositeOut = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? -1 : 26;
 		let move = undefined;
 		let opositeSingleChecker = undefined;
 		move = diceFirst;
@@ -107,8 +107,8 @@ Game.prototype.touchCol = function(col)
 			opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 			
 			if(opositeSingleChecker != false) {
-				this.move(opositeSingleChecker, out);
-				this.vue.move(opositeSingleChecker.index, out);					
+				this.move(opositeSingleChecker, opositeOut);
+				this.vue.move(opositeSingleChecker.index, opositeOut);					
 			}
 			this.move(checker, originCol[0]);
 			this.activePlayer.delMove(move.id);
@@ -127,8 +127,8 @@ Game.prototype.touchCol = function(col)
 				opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 				
 				if(opositeSingleChecker != false) {
-					this.move(opositeSingleChecker, out);
-					this.vue.move(opositeSingleChecker.index, out);					
+					this.move(opositeSingleChecker, opositeOut);
+					this.vue.move(opositeSingleChecker.index, opositeOut);					
 				}
 				this.move(checker, originCol[0]);
 				this.activePlayer.delMove(move.id);
