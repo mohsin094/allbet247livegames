@@ -113,6 +113,7 @@ Game.prototype.touchCol = function(col)
 			this.move(checker, originCol[0]);
 			this.activePlayer.delMove(move.id);
 			this.vue.move(checker.index, originCol[0]);
+			this.board.removeOffer();
 			
 		}else if(diceSecond != undefined && diceSecond.isPossible) {
 			move = diceSecond;
@@ -133,6 +134,7 @@ Game.prototype.touchCol = function(col)
 				this.move(checker, originCol[0]);
 				this.activePlayer.delMove(move.id);
 				this.vue.move(checker.index, originCol[0]);
+				this.board.removeOffer();
 			}
 			
 		}
@@ -141,6 +143,7 @@ Game.prototype.touchCol = function(col)
 			this.stage.id = STAGE.MOVE_DICES;
 		} 
 	}
+
 }
 
 Game.prototype.checkMovement = function()

@@ -1,6 +1,5 @@
 <template>
 			<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
-			<p v-if="game && game.stage">Stage:{{(game.stage != undefined) ? game.stage : ''}}</p>
 			<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)" @click="throwDice">Dice</button>
 			<p>System Message: {{systemMessage}}</p>
 			<div id="game" class="col-12">
@@ -30,7 +29,7 @@
 					</div>
 					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(-1)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
+					<column @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)"/>
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(3)" />
@@ -55,7 +54,7 @@
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(22)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
+					<column @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
 					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(26)" />
 					
 

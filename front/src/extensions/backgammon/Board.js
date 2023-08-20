@@ -21,55 +21,32 @@ Board.prototype.removeOffer = function() {
 }
 
 Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
+	const diceFirst = player.getMove(player.dice.first);
+	const diceSecond = player.getMove(player.dice.second); 
+	const originColFirst = (diceFirst != undefined) ? diceFirst.getOriginColumn(fromPosition) : undefined;
+	const originColSecond = (diceSecond != undefined) ? diceSecond.getOriginColumn(fromPosition) : undefined;
 	switch(checker.color) {
 	case PLAYER_COLOR.WHITE:
 		
 		for(let i=0; i<this.columnHolder.columns.length; i++) {
+			if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) 
+				&& diceFirst != undefined
+				&& diceFirst.moved == false
+				&& diceFirst.isPossible
+				&& originColFirst != undefined
+				&& originColFirst.length > 0
+				&& originColFirst[0] == this.columnHolder.columns[i].index) {
 
-			if(fromPosition < this.columnHolder.columns[i].index || fromPosition == 26) {				
-				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.BLACK) == false) {
-					
-					let sumFirst = undefined;
-					let sumSecond = undefined;
-					if(fromPosition == 26) {
-						sumFirst = player.dice.first;
-						sumSecond = player.dice.second;
+				this.columnHolder.columns[i].focus = true;
 
-					}else {
-
-						sumFirst = fromPosition + player.dice.first;
-						sumSecond = fromPosition + player.dice.second;
-					}
-
-					const diceFirst = player.getMove(player.dice.first);
-					const diceSecond = player.getMove(player.dice.second); 
-					const originColFirst = (diceFirst != undefined) ? diceFirst.getOriginColumn(fromPosition) : undefined;
-					const originColSecond = (diceSecond != undefined) ? diceSecond.getOriginColumn(fromPosition) : undefined;
-				
-
-					if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) 
-						&& sumFirst == this.columnHolder.columns[i].index
-						&& diceFirst != undefined
-						&& diceFirst.moved == false
-						&& originColFirst != undefined
-						&& originColFirst.length > 0
-						&& originColFirst[0] == this.columnHolder.columns[i].index) {
-						
-						this.columnHolder.columns[i].focus = true;
-						// if((sumSecond > 23 || sumFirst > 23) && player.isAllCheckersHome()) {
-						// 	this.columnHolder.columns[i].focus = true;
-						// }else if(sumSecond < 24 || sumFirst < 24) {
-						// }
-					}else if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_FIRST_DICE) 
-						&& sumSecond == this.columnHolder.columns[i].index
-						&& diceSecond != undefined
-						&& diceSecond.moved == false
-						&& originColSecond != undefined
-						&& originColSecond.length > 0
-						&& originColSecond[0] == this.columnHolder.columns[i].index) {
-						this.columnHolder.columns[i].focus = true;
-					}
-				}
+			}else if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_FIRST_DICE) 
+				&& diceSecond != undefined
+				&& diceSecond.isPossible
+				&& diceSecond.moved == false
+				&& originColSecond != undefined
+				&& originColSecond.length > 0
+				&& originColSecond[0] == this.columnHolder.columns[i].index) {
+				this.columnHolder.columns[i].focus = true;
 			}
 		}
 		break;
@@ -77,51 +54,22 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 
 		for(let i=0; i<this.columnHolder.columns.length; i++) {
 			
-					
-			if(fromPosition > this.columnHolder.columns[i].index || fromPosition == -1) {
+			if((diceFirst != undefined
+				&& diceFirst.moved == false
+				&& diceFirst.isPossible
+				&& originColFirst != undefined
+				&& originColFirst.length > 0
+				&& originColFirst[0] == this.columnHolder.columns[i].index)
+				|| 
+				(diceSecond != undefined
+				&& diceSecond.moved == false
+				&& diceSecond.isPossible
+				&& originColSecond != undefined
+				&& originColSecond.length > 0
+				&& originColSecond[0] == this.columnHolder.columns[i].index)
+				) {
 
-				if(this.columnHolder.isOccupied(this.columnHolder.columns[i].index, PLAYER_COLOR.WHITE) == false) {
-
-					let sumFirst = undefined;
-					let sumSecond = undefined;
-					if(fromPosition == -1) {
-						sumFirst = 25 - player.dice.first;
-						sumSecond = 25 - player.dice.second;
-
-					}else {
-						sumFirst = fromPosition - player.dice.first;
-						sumSecond = fromPosition - player.dice.second;
-					}
-
-		
-					const diceFirst = player.getMove(player.dice.first);
-					const diceSecond = player.getMove(player.dice.second);
-					const originColFirst = (diceFirst != undefined) ? diceFirst.getOriginColumn(fromPosition) : undefined;
-					const originColSecond = (diceSecond != undefined) ? diceSecond.getOriginColumn(fromPosition) : undefined;
-					
-
-					if((sumFirst == this.columnHolder.columns[i].index
-						&& diceFirst != undefined
-						&& diceFirst.moved == false
-						&& originColFirst != undefined
-						&& originColFirst.length > 0
-						&& originColFirst[0] == this.columnHolder.columns[i].index)
-						|| 
-						(sumSecond == this.columnHolder.columns[i].index
-						&& diceSecond != undefined
-						&& diceSecond.moved == false
-						&& originColSecond != undefined
-						&& originColSecond.length > 0
-						&& originColSecond[0] == this.columnHolder.columns[i].index)
-						) {
-							this.columnHolder.columns[i].focus = true;
-						
-						// if((sumSecond < 1 || sumFirst < 1) && player.isAllCheckersHome()) {
-						// 	this.columnHolder.columns[i].focus = true;
-						// }else if(sumSecond > 0 || sumFirst > 0) {
-						// }
-					}
-				}
+				this.columnHolder.columns[i].focus = true;
 			}
 		}
 		break;

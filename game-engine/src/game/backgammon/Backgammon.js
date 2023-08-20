@@ -131,7 +131,7 @@ Backgammon.prototype.turn = function() {
 			this.setStateActivePlayer({
 				text: undefined
 			});
-		},2000);
+		},1500);
 		
 	});
 
@@ -218,44 +218,25 @@ Backgammon.prototype.move = function(userMove) {
 			}
 			
 		}
-		// if(this.activePlayer.color == PLAYER_COLOR.BLACK) {
-
-		// 	this.setStatePlayer(PLAYER_COLOR.WHITE, {
-		// 		checkers: this.playerBlack.checkers
-		// 	});
-
-		// 	this.nextTick(() => {
-		// 		this.setStatePlayer(PLAYER_COLOR.WHITE, {
-		// 			checkers: undefined
-		// 		});
-		// 	});
-		// }else {
-
-		// 	this.setStatePlayer(PLAYER_COLOR.BLACK, {
-		// 		checkers: this.playerBlack.checkers
-		// 	});
-
-		// 	this.nextTick(() => {
-		// 		this.setStatePlayer(PLAYER_COLOR.BLACK, {
-		// 			checkers: undefined
-		// 		});
-		// 	});
-		// }
 
 		if(this.activePlayer.hasMove() == false) {
 			this.setStage(STAGE.MOVE_DICES);
 			if(!this.isWinner()) {
 				this.nextTurn();
 			}else {
-				this.setState(STAGE.END);
-				this.setStateBothPlayer({
-					state: STAGE.END
-				});
+				this.endGame();
 			}
 		}
 	}
 
 	
+}
+
+Backgammon.prototype.endGame = function() {
+	this.setStage(STAGE.END);
+	this.setStateBothPlayer({
+		state: STAGE.END
+	});
 }
 
 
@@ -265,6 +246,9 @@ Backgammon.prototype.nextTurn = function() {
 	this.activePlayer = (this.activePlayer.color == PLAYER_COLOR.BLACK) ? this.playerWhite : this.playerBlack;
 	this.state.game.timer = undefined;
 	this.activePlayer.timer = (new Timer()).create(this.initParams.timer);
+	this.activePlayer.timer.endEnd = function() {
+		this.endGame();
+	}
 	this.turn();
 }
 
@@ -316,9 +300,14 @@ Backgammon.prototype.throwDoubleDice = function() {
 
 		this.activePlayer.setupMovements(this.board.column);
 
-		if(! this.activePlayer.hasMove()) {
-			this.nextTurn();
-		}
+
+		// delay for display "No Move" to player
+		setTimeout(() => {
+			if(! this.activePlayer.hasMove()) {
+				this.nextTurn();
+			}
+		}, 1500);
+		
 
 		// this.nextTick(() => {
 		// 	this.setStateActivePlayer({

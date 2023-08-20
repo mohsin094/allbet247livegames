@@ -81,6 +81,45 @@ Move.prototype.calculateDestinations = function() {
 		}
 		
 	}
+
+	if(this.player.isHome()) {
+		if(this.player.color == PLAYER_COLOR.WHITE) {
+			let isLessThan = false;
+			for(const [key, value] of Object.entries(this.originColumns)) {
+				if(parseInt(key) + this.dice < 26) {
+					isLessThan = true;
+					break;
+				}
+			}
+			
+			if(isLessThan) {
+				for(const [key, value] of Object.entries(this.originColumns)) {
+					if(parseInt(key) + this.dice > 25) {
+						console.log(key)
+						delete this.originColumns[key];
+					}
+				}	
+			}
+
+		}else {
+
+			let isMoreThan = false;
+			for(const [key, value] of Object.entries(this.originColumns)) {
+				if(parseInt(key) - this.dice < -1) {
+					isMoreThan = true;
+					break;
+				}
+			}
+			if(isMoreThan) {
+				for(const [key, value] of Object.entries(this.originColumns)) {
+					if(parseInt(key) - this.dice < 0) {
+						delete this.originColumns[key];
+					}
+				}	
+			}
+
+		}
+	}
 }
 
 Move.prototype.setupOrigins = function() {
