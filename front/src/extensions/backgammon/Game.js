@@ -43,6 +43,7 @@ Game.prototype.isFreeze = undefined;
 Game.prototype.id = undefined;
 Game.prototype.stage = undefined;
 Game.prototype.timer = undefined;
+Game.prototype.winner = undefined;
 
 
 Game.prototype.socketInit = function(socket) {
@@ -75,6 +76,10 @@ Game.prototype.socketInit = function(socket) {
 Game.prototype.stateManager = function(params)
 {
 	State.manage(this, params);
+}
+
+Game.prototype.endGame = function() {
+
 }
 
 Game.prototype.touchCol = function(col)

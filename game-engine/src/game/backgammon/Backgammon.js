@@ -44,7 +44,9 @@ Backgammon.prototype.stateInterval = undefined;
 Backgammon.prototype._nextTick = undefined;
 Backgammon.prototype.dice = undefined;
 Backgammon.prototype.stage = undefined;
+Backgammon.prototype.winner = undefined;
 Backgammon.prototype.initParams = undefined;
+Backgammon.prototype.onEnd = undefined;
 
 /**
  * @param params example:
@@ -62,6 +64,7 @@ Backgammon.prototype.create = function(params) {
 	this.id = params.id;
 	this.board = new Board();
 	this._nextTick = [];
+	this.onEnd = params.onEnd;
 
 	//setub board
 	this.board.create();
@@ -103,6 +106,8 @@ Backgammon.prototype.create = function(params) {
 
 
 Backgammon.prototype.turn = function() {
+
+	const opositePlayer = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? this.playerBlack : this.playerWhite;
 	this.setStage(STAGE.TURN);
 
 	this.updatePlayer(this.playerBlack.color, {
@@ -161,70 +166,77 @@ Backgammon.prototype.turn = function() {
 		});
 	};
 
+	this.activePlayer.timer.onTick = () => {
+		this.endGame(opositePlayer);
+	}
+
 	this.activePlayer.timer.start();
 
 }
 
 Backgammon.prototype.move = function(userMove) {
-	const diceFirst = this.activePlayer.getMove(this.activePlayer.dice[0]);
-	const diceSecond = this.activePlayer.getMove(this.activePlayer.dice[1]); 
-	const checker = this.activePlayer.getChecker(userMove.checkerId);
-	const opositePlayer = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? this.playerBlack : this.playerWhite;
-	const opositeOut = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? -1 : 26;
-	let opositeSingleChecker = undefined;
+	if(this.stage.id != STAGE.END) {
+
+		const diceFirst = this.activePlayer.getMove(this.activePlayer.dice[0]);
+		const diceSecond = this.activePlayer.getMove(this.activePlayer.dice[1]); 
+		const checker = this.activePlayer.getChecker(userMove.checkerId);
+		const opositePlayer = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? this.playerBlack : this.playerWhite;
+		const opositeOut = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? -1 : 26;
+		let opositeSingleChecker = undefined;
 
 
-	if(checker != undefined) {
+		if(checker != undefined) {
 
-		let move = undefined;
-		move = diceFirst;
-		
-		let originCol = (move != undefined) ? move.getOriginColumn(checker.position) : undefined;
-		if(diceFirst != undefined
-			&& diceFirst.isPossible
-			&& originCol != undefined
-			&& originCol.length > 0
-			&& originCol[0] == userMove.toPosition
-			&& move.isPossible
-			&& move.moved == false) {
-
-			opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
+			let move = undefined;
+			move = diceFirst;
 			
-			if(opositeSingleChecker != false) {
-				opositePlayer.move(opositeSingleChecker.index, opositeOut);				
-			}
-
-			this.activePlayer.move(checker.index, originCol[0]);
-			this.activePlayer.delMove(move.id);
-			
-		}else if(diceSecond != undefined && diceSecond.isPossible) {
-			move = diceSecond;
-			
-			originCol = (move != undefined) ? move.getOriginColumn(checker.position) : undefined;
-
-			if(originCol != undefined
+			let originCol = (move != undefined) ? move.getOriginColumn(checker.position) : undefined;
+			if(diceFirst != undefined
+				&& diceFirst.isPossible
+				&& originCol != undefined
 				&& originCol.length > 0
 				&& originCol[0] == userMove.toPosition
 				&& move.isPossible
 				&& move.moved == false) {
 
 				opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
+				
 				if(opositeSingleChecker != false) {
 					opositePlayer.move(opositeSingleChecker.index, opositeOut);				
 				}
 
 				this.activePlayer.move(checker.index, originCol[0]);
 				this.activePlayer.delMove(move.id);
-			}
-			
-		}
+				
+			}else if(diceSecond != undefined && diceSecond.isPossible) {
+				move = diceSecond;
+				
+				originCol = (move != undefined) ? move.getOriginColumn(checker.position) : undefined;
 
-		if(this.activePlayer.hasMove() == false) {
-			this.setStage(STAGE.MOVE_DICES);
-			if(!this.isWinner()) {
-				this.nextTurn();
-			}else {
-				this.endGame();
+				if(originCol != undefined
+					&& originCol.length > 0
+					&& originCol[0] == userMove.toPosition
+					&& move.isPossible
+					&& move.moved == false) {
+
+					opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
+					if(opositeSingleChecker != false) {
+						opositePlayer.move(opositeSingleChecker.index, opositeOut);				
+					}
+
+					this.activePlayer.move(checker.index, originCol[0]);
+					this.activePlayer.delMove(move.id);
+				}
+				
+			}
+
+			if(this.activePlayer.hasMove() == false) {
+				this.setStage(STAGE.MOVE_DICES);
+				if(!this.isWinner()) {
+					this.nextTurn();
+				}else {
+					this.endGame(this.activePlayer);
+				}
 			}
 		}
 	}
@@ -232,11 +244,14 @@ Backgammon.prototype.move = function(userMove) {
 	
 }
 
-Backgammon.prototype.endGame = function() {
+Backgammon.prototype.endGame = function(player) {
+	this.winner = player;
+	this.state.game.winner = player.color;
 	this.setStage(STAGE.END);
 	this.setStateBothPlayer({
 		state: STAGE.END
 	});
+	this.onEnd(player.id);
 }
 
 
@@ -393,7 +408,9 @@ Backgammon.prototype.start123 = function() {
 		this.activePlayer = this.throwTurnDice();
 		this.state.game.timer = undefined;
 		
-		this.turn();
+
+		this.endGame(this.playerBlack);
+		// this.turn();
 		
 	}
 

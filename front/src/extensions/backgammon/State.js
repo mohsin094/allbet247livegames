@@ -13,6 +13,9 @@ export default {
 			case 'stage':
 				if(game.stage.id !== STAGE.MOVE_FIRST_DICE && game.stage.id !== STAGE.MOVE_SECOND_DICE) {
 					game.stage.id = state[stateKeys[index]].id;
+					if(game.stage.id == STAGE.END) {
+						game.endGame();
+					}
 				}
 				break;
 			case 'board':
@@ -20,6 +23,7 @@ export default {
 				break;
 			case 'game':
 				game.timer =  (state.game.timer != undefined) ? state.game.timer : undefined;
+				game.winner =  (state.game.winner != undefined) ? state.game.winner : undefined;
 				break;
 			case 'playerBlack':
 				game.playerBlack.text = (state.playerBlack.text != undefined) ? state.playerBlack.text : undefined;

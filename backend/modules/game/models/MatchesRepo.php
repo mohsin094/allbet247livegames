@@ -11,6 +11,11 @@ class MatchesRepo extends \backend\modules\game\models\Matches
     {
 		$user = UsersRepo::findOne(['_id' => $this->home_id]);
 		$stake = GameStakes::findOne(['_id' => $this->stake_id]);
+		$round = GameRounds::findOne(['round' => 1]);
+
+		//limit to 1 round for now, will be removed in future
+		$this->round_id = (string) $round->_id;
+
 
 		if($user->enoughBalance($stake->stake)) {
 	    	if($this->save()) {

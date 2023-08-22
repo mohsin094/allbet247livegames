@@ -1,94 +1,102 @@
 <template>
-			<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
-			<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)" @click="throwDice">Dice</button>
-			<p>System Message: {{systemMessage}}</p>
-			<div id="game" class="col-12">
-				<div id="board">
-					<template v-if="game != undefined" >
-
-					<!-- dice black -->
-					<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
-						<ul>
-							<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
-
-							<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
-						</ul>
-					</div>
-
-					<!-- dice white -->
-					<div v-if="game.playerWhite.dice && game.playerWhite.showDice" class="dices dice-white">
-						<ul>
-							<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
-
-							<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
-						</ul>
-					</div>
-
-					<div v-if="doubleActive" id="double-dice">
-						<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
-					</div>
-					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(-1)" />
-					<column @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)"/>
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(3)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(4)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(5)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(6)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(7)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(8)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(9)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(10)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(11)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(12)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(13)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(14)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(15)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(16)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(17)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(18)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(19)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(20)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(21)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(22)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
-					<column @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
-					<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(26)" />
-					
-
-					</template>
-					<div v-show="boardText != undefined" class="board-text">
-						{{boardText}}
-					</div>
-					<div v-if="game != undefined" v-show="game.playerWhite.text != undefined || game.playerBlack.text != undefined" class="board-text">
-						{{(game.playerWhite.text != undefined) ? game.playerWhite.text : ''}}
-						{{(game.playerBlack.text != undefined) ? game.playerBlack.text : ''}}
-					</div>
+	<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo" />
+	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)" @click="throwDice">Dice</button>
+	<p>System Message: {{systemMessage}}</p>
+	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
+	<div id="game" class="col-12">
+		<div id="board">
+			<template v-if="game != undefined">
+				<!-- dice black -->
+				<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
+					<ul>
+						<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
+						<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
+					</ul>
 				</div>
+				<!-- dice white -->
+				<div v-if="game.playerWhite.dice && game.playerWhite.showDice" class="dices dice-white">
+					<ul>
+						<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
+						<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
+					</ul>
+				</div>
+				<div v-if="doubleActive" id="double-dice">
+					<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
+				</div>
+				<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(-1)" />
+				<column @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(3)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(4)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(5)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(6)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(7)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(8)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(9)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(10)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(11)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(12)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(13)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(14)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(15)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(16)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(17)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(18)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(19)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(20)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(21)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(22)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
+				<column @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
+				<column @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(26)" />
+			</template>
+			<div v-show="boardText != undefined" class="board-text">
+				{{boardText}}
 			</div>
-
+			<div v-if="game != undefined" v-show="game.playerWhite.text != undefined || game.playerBlack.text != undefined" class="board-text">
+				{{(game.playerWhite.text != undefined) ? game.playerWhite.text : ''}}
+				{{(game.playerBlack.text != undefined) ? game.playerBlack.text : ''}}
+			</div>
+		</div>
+	</div>
 </template>
-
 <script>
 import Column from "./Column.vue";
-import Game, {STAGE} from "@/extensions/backgammon/Game.js";
+import Game,
+{
+	STAGE
+}
+from "@/extensions/backgammon/Game.js";
 import Global from "@/extensions/backgammon/Global";
-import {io} from "socket.io-client";
+import
+{
+	io
+}
+from "socket.io-client";
 import BoardHeader from '@/components/BoardHeader.vue';
-import {PLAYER_COLOR} from "@/extensions/backgammon/Player.js";
+import
+{
+	PLAYER_COLOR
+}
+from "@/extensions/backgammon/Player.js";
 
-export default {
-	components: {
+export default
+{
+	components:
+	{
 		Column,
 		BoardHeader
 	},
 	// props: ['match'],
-	data() {
+	data()
+	{
 		return {
 			game: undefined,
-			stage: {
+			stage:
+			{
 				init: STAGE.INIT,
 				start: STAGE.START,
 				turn: STAGE.TURN,
@@ -96,6 +104,7 @@ export default {
 				move_first_dice: STAGE.MOVE_FIRST_DICE,
 				move_second_dice: STAGE.MOVE_SECOND_DICE,
 				move_dices: STAGE.MOVE_DICES,
+				end: STAGE.END
 			},
 			showDice: false,
 			doubleActive: false,
@@ -109,147 +118,219 @@ export default {
 			blackPlayerInfo: undefined
 		}
 	},
-	methods: {
-		move(checkerId, toPositionId) {
-			this.io.emit('game/move', {checkerId: checkerId, toPosition: toPositionId, id: this.game.id});
-		},
-		getPlayerInfo() {
-			this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/player-public-info", {params: {
-				playerId: this.match.home_id
-			}}).then((res) => {
-				this.whitePlayerInfo = res.data.params
+	methods:
+	{
+		move(checkerId, toPositionId)
+		{
+			this.io.emit('game/move',
+			{
+				checkerId: checkerId,
+				toPosition: toPositionId,
+				id: this.game.id
 			});
-
-			if(this.match.away_id != undefined) {
-				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/player-public-info", {params: {
-					playerId: this.match.away_id
-				}}).then((res) => {
-					this.blackPlayerInfo = res.data.params
+		},
+		getPlayerInfo(callback)
+		{
+			this.$axios.get(
+					import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/player-public-info",
+					{
+						params:
+						{
+							playerId: this.match.home_id
+						}
+					})
+				.then((res) =>
+				{
+					this.whitePlayerInfo = res.data.params
+					callback();
 				});
+
+			if(this.match.away_id != undefined)
+			{
+				this.$axios.get(
+						import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/player-public-info",
+						{
+							params:
+							{
+								playerId: this.match.away_id
+							}
+						})
+					.then((res) =>
+					{
+						this.blackPlayerInfo = res.data.params
+					});
 			}
 		},
-		throwDice() {
-			 this.io.emit('game/throwDice', {id: this.game.activePlayer.id, gameId: this.game.id});
+		throwDice()
+		{
+			this.io.emit('game/throwDice',
+			{
+				id: this.game.activePlayer.id,
+				gameId: this.game.id
+			});
 		},
 
-		dice() {
-			if(this.game.activePlayer.allowDice) {
+		dice()
+		{
+			if(this.game.activePlayer.allowDice)
+			{
 				this.game.dice.throw();
 				this.showDice = true;
 			}
 		},
-		touchCol(col) {
-			
-			if(this.game.activePlayer.allowMove) {
+		touchCol(col)
+		{
+
+			if(this.game.activePlayer.allowMove)
+			{
 				this.game.touchCol(col);
 			}
 		},
-		touch(checker) {
-			if(this.game.activePlayer.allowMove) {
+		touch(checker)
+		{
+			if(this.game.activePlayer.allowMove)
+			{
 				this.game.touchChecker(checker);
 			}
 		}
 	},
-	created() {
-		this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/get-match", {params: {
-			id: this.$route.params.matchId
-		}}).then((data) => {
-			data = data.data;
-			if(data.result) {
-
-				this.match = data.params;
-
-				this.getPlayerInfo();
-				this.io = io(import.meta.env.VITE_BACKEND_SOCKET_URL, {
-					path: "/game",
-					auth: {
-						token: this.$user.data.sessionId
+	created()
+	{
+		this.$axios.get(
+				import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/get-match",
+				{
+					params:
+					{
+						id: this.$route.params.matchId
 					}
-				});
-				
-				this.game = new Game(this);
-				this.game.id = this.match.id;
-				this.game.init();
+				})
+			.then((data) =>
+			{
+				data = data.data;
+				if(data.result)
+				{
 
-				if(this.match.home_id == this.$user.data.id) {
-					this.game.activePlayer = this.game.playerWhite;
-				}else {
-					this.game.activePlayer = this.game.playerBlack;
+					this.match = data.params;
+
+					this.getPlayerInfo(() =>
+					{
+						this.io = io(
+							import.meta.env.VITE_BACKEND_SOCKET_URL,
+							{
+								path: "/game",
+								auth:
+								{
+									token: this.$user.data.sessionId
+								}
+							});
+
+						this.game = new Game(this);
+						this.game.id = this.match.id;
+						this.game.init();
+
+						if(this.match.home_id == this.$user.data.id)
+						{
+							this.game.activePlayer = this.game.playerWhite;
+						}
+						else
+						{
+							this.game.activePlayer = this.game.playerBlack;
+						}
+
+						this.game.socketInit(this.io);
+						this.doubleActive = this.game.doubleActive;
+
+						this.io.on("connect", () =>
+						{
+							console.log('socket connected')
+
+							this.io.on('game-state', (params) =>
+							{
+								if(this.game != undefined)
+								{
+
+									this.game.stateManager(params);
+
+									this.boardText = (this.game.timer != undefined) ? this.game.timer : undefined;
+
+									if(this.blackPlayerInfo != undefined && this.whitePlayerInfo != undefined)
+									{
+
+										this.blackPlayerInfo.time = (params.playerBlack.time != undefined) ? params.playerBlack.time : undefined;
+										this.whitePlayerInfo.time = (params.playerWhite.time != undefined) ? params.playerWhite.time : undefined;
+
+										// this.blackPlayerInfo.text = (params.playerBlack.text != undefined) ? params.playerBlack.text : undefined;
+										// this.whitePlayerInfo.text = (params.playerWhite.text != undefined) ? params.playerWhite.text : undefined;
+									}
+								}
+
+							});
+
+							this.io.on('player-join', (param) =>
+							{
+								if(this.game != undefined)
+								{
+
+									this.match.away_id = param.id;
+									this.getPlayerInfo();
+								}
+							});
+							this.io.on('system-message', (msg) =>
+							{
+								this.systemMessage = msg;
+							});
+
+							this.io.on('system-clock', (clock) =>
+							{
+								this.timer = clock;
+							});
+
+							this.io.on('board-text', (text) =>
+							{
+								this.boardText = text;
+							});
+
+							this.io.on('turn-dice', (dice) =>
+							{
+								if(this.game != undefined)
+								{
+
+									if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK)
+									{
+										this.game.dice.throwOne(dice.black);
+										this.showDice = true;
+									}
+
+									if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE)
+									{
+										this.game.dice.throwOne(dice.white);
+										this.showDice = true;
+									}
+								}
+							});
+
+
+							if(this.game != undefined)
+							{
+								this.io.emit('game/join',
+								{
+									id: this.match.id
+								});
+							}
+						});
+					});
 				}
 
-			  this.game.socketInit(this.io);
-				this.doubleActive = this.game.doubleActive;
-
-				this.io.on("connect", () => {
-					console.log('socket connected')
-
-					this.io.on('game-state', (params) => {
-						if(this.game != undefined) {
-
-							this.game.stateManager(params);
-
-							this.boardText = (this.game.timer != undefined) ? this.game.timer : undefined;
-
-							if(this.blackPlayerInfo != undefined && this.whitePlayerInfo != undefined) {
-								
-								this.blackPlayerInfo.time = (params.playerBlack.time != undefined) ? params.playerBlack.time : undefined;
-								this.whitePlayerInfo.time = (params.playerWhite.time != undefined) ? params.playerWhite.time : undefined;
-
-								// this.blackPlayerInfo.text = (params.playerBlack.text != undefined) ? params.playerBlack.text : undefined;
-								// this.whitePlayerInfo.text = (params.playerWhite.text != undefined) ? params.playerWhite.text : undefined;
-							}
-						}
-						
-					});
-
-					this.io.on('player-join',(param) => {
-						if(this.game != undefined) {
-							
-							this.match.away_id = param.id;
-							this.getPlayerInfo();
-						}
-					});
-				  this.io.on('system-message', (msg) => {
-				  	this.systemMessage = msg;
-				  });
-
-			  	this.io.on('system-clock', (clock) => {
-						this.timer = clock;
-					});
-
-					this.io.on('board-text', (text) => {
-						this.boardText = text;
-					});
-
-					this.io.on('turn-dice', (dice) => {
-						if(this.game != undefined) {
-							
-							if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK) {
-								this.game.dice.throwOne(dice.black);
-								this.showDice = true;
-							}
-
-							if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE) {
-								this.game.dice.throwOne(dice.white);
-								this.showDice = true;
-							}
-						}
-					});
-					
-					
-					if(this.game != undefined) {	
-						this.io.emit('game/join', {id: this.match.id});
-					}
-				});
-			}
-		})
+			})
 
 
 	},
-	mounted() {
+	mounted()
+	{
 
 	},
-	unmounted() {
+	unmounted()
+	{
 		if(this.io != undefined)
 			this.io.close();
 	}
@@ -258,7 +339,7 @@ export default {
 <style scoped>
 #game {
 	width: 100%;
-/*	max-width: 1117px;*/
+	/*	max-width: 1117px;*/
 
 	text-align: center;
 	margin: auto;
@@ -269,11 +350,11 @@ export default {
 	position: relative;
 	display: block;
 	margin: 0 auto;
-/*	max-width: 1117px;*/
+	/*	max-width: 1117px;*/
 }
 
 #board-bg {
-/*	max-height: 100vh;*/
+	/*	max-height: 100vh;*/
 	position: absolute;
 	display: block;
 	right: 0;
@@ -302,9 +383,9 @@ export default {
 }
 
 .dices {
-  position: absolute;
-  z-index: 1;
-  top: 48%;
+	position: absolute;
+	z-index: 1;
+	top: 48%;
 
 }
 
@@ -313,7 +394,7 @@ export default {
 }
 
 .dice-white {
-	  right: 25%;
+	right: 25%;
 }
 
 .dices ul {
