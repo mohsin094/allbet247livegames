@@ -24,6 +24,9 @@ return [
         'announcement' => [
             'class' => 'backend\modules\announcement\Module',
         ],
+        'financial' => [
+            'class' => 'backend\modules\financial\Module',
+        ],
     ],
     'components' => [
         'request' => [
