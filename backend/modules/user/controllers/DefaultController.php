@@ -2,7 +2,6 @@
 
 namespace app\modules\user\controllers;
 
-use 
 
 /**
  * Default controller for the `user` module

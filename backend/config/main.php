@@ -18,6 +18,12 @@ return [
         'game' => [
             'class' => 'backend\modules\game\Module',
         ],
+        'ticket' => [
+            'class' => 'backend\modules\ticket\Module',
+        ],
+        'announcement' => [
+            'class' => 'backend\modules\announcement\Module',
+        ],
     ],
     'components' => [
         'request' => [

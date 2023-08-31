@@ -99,7 +99,8 @@
 				}).then((response) => {
 					response = response.data
 					if(response.result){
-
+						//close modal
+						
 					}else{
 						this.error = response.error
 					}

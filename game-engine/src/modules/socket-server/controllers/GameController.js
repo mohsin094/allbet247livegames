@@ -68,7 +68,8 @@ function GameController() {
 							timeBank: 100
 						},
 						onEnd: async (winnerId) => {
-							await mongo.db.collection(MatchesModel.name).updateOne({_id: new ObjectId(gameId)}, {$set: {status: MatchesModel.status.END, winner: new ObjectId(winnerId)}});
+							
+							await mongo.db.collection(MatchesModel.name).updateOne({_id: new ObjectId(gameId)}, {$set: {status: MatchesModel.status.FINISHED, winner: new ObjectId(winnerId)}});
 						}
 					});
 					GameHolder.set(match._id, game);

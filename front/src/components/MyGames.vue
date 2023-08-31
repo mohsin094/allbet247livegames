@@ -8,7 +8,7 @@
 			</div>
 	     </div>
 	    </div>
-	    <div class="col px-2">
+	    <!-- <div class="col px-2">
 	      <div class="p-3 text-end">
 	      	<button class="btn-control btn-control-prev mr-3" type="button" data-bs-target="#carousel" data-bs-slide="prev">
 		        <span class="material-symbols-rounded">
@@ -24,7 +24,7 @@
 		       See all
 		    </button>
 	  	  </div>
-	    </div>
+	    </div> -->
   	</div>
   	<div id="carousel" class="carousel" data-bs-interval="false">
 	    <div class="carousel-inner">
@@ -294,3 +294,31 @@
 	    </div>
 	</div>
 </template>
+
+<script>
+	export default {
+		data() {
+			return {
+				fetchGamesInterval: undefined,
+				myGames: []
+			}
+		},
+		created() {
+			this.fetchGames();
+		},
+		methods: {
+			fetchGames() {
+				let url = import.meta.env.VITE_BACKEND_BASE_URL+'/game/default/my-games'
+				this.fetchGamesInterval = setInterval(() => {
+					this.$axios.get(url).then((res) => {
+						res = res.data;
+						if(res.result) {
+							this.myGames = res.params;
+						}
+					});
+				}, 2000);
+			}
+		},
+
+	}
+</script>

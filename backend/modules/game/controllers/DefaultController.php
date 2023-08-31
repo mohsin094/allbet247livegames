@@ -29,13 +29,40 @@ class DefaultController extends ApiController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['new', 'join'],
+                        'actions' => ['new', 'join', 'my-games'],
                         'roles' => ['@'],
                         'allow' => true
                     ]
                 ],
             ]
         ]);
+    }
+
+    public function actionMyGames()
+    {
+
+        $games = Matches::find()
+        ->where([
+            
+                'OR',
+                [
+                    'home_id' => \Yii::$app->user->id,
+                    // 'away_id' => \Yii::$app->user->id
+                ]
+            
+        ])->andWhere([
+            'OR',
+            [
+                'status' => Matches::STATUS_PLAYING,
+                'status' => Matches::STATUS_WAITING,
+            ]
+        ])
+        ->asArray()
+        ->all();
+
+        $this->resp->params = $games;
+        Tools::debug($games, true);
+        return $this->resp;
     }
 
     public function actionPlayerPublicInfo($playerId)
