@@ -18,7 +18,7 @@ class AdminController extends AdminApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['list', 'update', 'get-status-list', 'get-role-list'],
+                        'actions' => ['list', 'update', 'get-status-list', 'get-roles-list'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -27,7 +27,7 @@ class AdminController extends AdminApiController
 		]);
 	}
 
-	public function actionGetRoleList()
+	public function actionGetRolesList()
 	{
 		$this->resp->result = true;
 		$this->resp->params = UserRoles::getRolesList();
