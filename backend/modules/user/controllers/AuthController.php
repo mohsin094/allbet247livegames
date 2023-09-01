@@ -41,8 +41,9 @@ class AuthController extends ApiController
 			$this->resp->result = true;
 			$this->action(ApiAction::build([ApiAction::ACTION_REDIRECT, ['url' => 'login']]));
 
-			$token = (new \common\components\Token)->name(Tokens::TYPE_REGISTER)->userId($model->_id)->exp('24h')->generate();
-			$link = Url::to(['/user/auth/email-verify', 'user' => $model->_id, 'token' => $token], true);
+			$token = (new \common\components\Token)->name(Tokens::TYPE_REGISTER)->userId((string)$model->_id)->exp('24h')->generate();
+			
+			$link = Url::to(['/user/auth/email-verify', 'user' => (string)$model->_id, 'token' => $token->token], true);
 			Mail::send($model->email, \Yii::t('app', Mail::TYPE_EMAIL_VERIFICATION), $link);
 
 			$this->debug(['link' => $link]);
@@ -66,8 +67,7 @@ class AuthController extends ApiController
 	public function actionLogin()
 	{
 		$model = new LoginForm;
-		// $model->load(\Yii::$app->request->bodyParams);
-		// Tools::debug($model->attributes, true);
+
 		if($model->load(\Yii::$app->request->bodyParams) && $model->login()) {
 			$this->resp->result = true;
 			$this->action(ApiAction::build([ApiAction::ACTION_REDIRECT], ['url' => 'dashboard']));
@@ -98,11 +98,17 @@ class AuthController extends ApiController
 
 	public function actionEmailVerify($user, $token)
 	{
-		$token = Tokens::find()->where(['user_id' => $user, 'token' => $token])->andWhere('exp < :exp', [
+		$token = Tokens::find()
+		->where(['user_id' => $user, 'token' => $token])
+		->andWhere(['<', 'exp', ':exp'], [
 			':exp' => 24*60*60
-		])->one();
+		])
+		->one();
 		if($token) {
 			$this->resp->result = true;
+			$user = Users::findOne(['_id' => $user]);
+			$user->status = Users::STATUS_ACTIVE;
+			$user->save();
 		}else {
 			$this->error(\Yii::t('app', 'Token is invalid or expired!'));
 		}

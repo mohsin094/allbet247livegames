@@ -16,6 +16,14 @@ class UserRoles extends \yii\mongodb\ActiveRecord
     const ROLE_ADMIN = 'admin';
     const ROLE_USER = 'user';
 
+    public static function getRolesList()
+    {
+        return [
+            self::ROLE_USER => 'user',
+            self::ROLE_ADMIN => 'admin',
+            self::ROLE_AGENT => 'agent'
+        ];
+    }
 
     public static function getRole($role)
     {

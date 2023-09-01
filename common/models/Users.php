@@ -30,6 +30,16 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
 
     public $password_repeat;
 
+
+
+    public static function getStatusList()
+    {
+        return [
+            self::STATUS_ACTIVE => 'active',
+            self::STATUS_WAITING_CONFIRMATION => 'waiting confirmation'
+        ];
+    }
+
     public function formName()
     {
         return '';
