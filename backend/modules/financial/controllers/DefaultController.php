@@ -30,6 +30,16 @@ class DefaultController extends ApiController
 
     public function actionList()
     {
-        
+        $models = FinancialTransactions::find()
+        ->where(['user_id' => \Yii::$app->user->id])
+        ->orderBy('cdate DESC')
+        ->limit(20)
+        ->asArray()
+        ->all();
+
+        $this->resp->result = true;
+        $this->resp->params = $models;
+
+        return $this->resp;
     }
 }
