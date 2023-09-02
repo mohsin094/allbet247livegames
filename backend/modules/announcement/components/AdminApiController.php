@@ -1,6 +1,6 @@
 <?php
 
-namespace app\modules\game\components;
+namespace app\modules\announcement\components;
 
 use \common\components\CommonAdminApiController;
 
