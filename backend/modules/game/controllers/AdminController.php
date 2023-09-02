@@ -7,6 +7,7 @@ use yii\helpers\ArrayHelper;
 use \common\components\Tools;
 
 use \backend\modules\game\models\GameStakes;
+use \backend\modules\game\models\Matches;
 
 class AdminController extends AdminApiController
 {
@@ -17,13 +18,35 @@ class AdminController extends AdminApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['get-stakes-list', 'add-stake', 'delete-stake'],
+                        'actions' => ['get-stakes-list', 'add-stake', 'delete-stake',
+                        'matches-list', 'match-status-list'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
                 ],
             ]
 		]);
+	}
+
+	public function actionMatchStatusList()
+	{
+		$this->resp->result = true;
+		$this->resp->params = Matches::statusList();
+
+		return $this->resp;
+	}
+
+	public function actionMatchesList()
+	{
+		$this->resp->result = true;
+		$this->resp->params = Matches::find()
+		->with(['homeUser', 'awayUser','round', 'stake', 'timeframe'])
+		->orderBy('cdate DESC')
+		->asArray()
+		->all();
+
+
+		return $this->resp;
 	}
 
 	public function actionDeleteStake($id)

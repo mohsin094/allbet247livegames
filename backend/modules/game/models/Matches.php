@@ -30,6 +30,15 @@ class Matches extends \yii\mongodb\ActiveRecord
     const TYPE_CASH_GAME = 'cash_game';
     const TYPE_TOURNAMENT = 'tournament';
 
+    public static function statusList()
+    {
+        return [
+            self::STATUS_WAITING => 'waiting',
+            self::STATUS_PLAYING => 'playing',
+            self::STATUS_FINISHED => 'finished',
+            self::STATUS_EXPIRED => 'expired'
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -53,7 +62,8 @@ class Matches extends \yii\mongodb\ActiveRecord
             'timeframe_id',
             'status',
             'winner',
-            'type'
+            'type',
+            'cdate'
         ];
     }
 
@@ -63,7 +73,7 @@ class Matches extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['type', 'home_id', 'round_id', 'stake_id', 'timeframe_id', 'status'], 'required'],
+            [['type', 'home_id', 'round_id', 'stake_id', 'timeframe_id', 'status', 'cdate'], 'required'],
             ['away_id', 'exist', 'targetClass' => Users::class, 'targetAttribute' => ['away_id' => '_id'] ],
             ['round_id', 'exist', 'targetClass' => GameRounds::class, 'targetAttribute' => ['round_id' => '_id']],
             ['stake_id', 'exist', 'targetClass' => GameStakes::class, 'targetAttribute' => ['stake_id' => '_id']],
@@ -86,7 +96,8 @@ class Matches extends \yii\mongodb\ActiveRecord
             'timeframe_id' => Yii::t('app', 'Timeframe ID'),
             'status' => Yii::t('app', 'Status'),
             'winner' => Yii::t('app', 'Winner'),
-            'type' => Yii::t('app', 'Type')
+            'type' => Yii::t('app', 'Type'),
+            'cdate' => Yii::t('app', 'Create Date')
         ];
     }
 
@@ -99,8 +110,34 @@ class Matches extends \yii\mongodb\ActiveRecord
     {
         if($this->isNewRecord) {
             $this->status = self::STATUS_WAITING;
+            $this->cdate = (string) time();
         }
 
         return parent::beforeValidate();
+    }
+
+    public function getAwayUser()
+    {
+        return $this->hasOne(Users::class, ['_id' => 'away_id']);
+    }
+
+    public function getHomeUser()
+    {
+        return $this->hasOne(Users::class, ['_id' => 'home_id']);
+    }
+
+    public function getStake()
+    {
+        return $this->hasOne(GameStakes::class, ['_id' => 'stake_id']);
+    }
+
+    public function getTimeframe()
+    {
+        return $this->hasOne(GameTimeframes::class, ['_id' => 'timeframe_id']);
+    }
+
+    public function getRound()
+    {
+        return $this->hasOne(GameRounds::class, ['_id' => 'round_id']);
     }
 }
