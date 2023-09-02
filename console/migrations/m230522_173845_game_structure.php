@@ -25,31 +25,40 @@ class m230522_173845_game_structure extends \yii\mongodb\Migration
         $this->createCollection('game_stakes');
         $this->batchInsert('game_stakes',[
             [
-                'stake' => '0.5'
+                'stake' => '0.5',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
             [
-                'stake' => '1'
+                'stake' => '1',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
             [
-                'stake' => '3'
+                'stake' => '3',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
             [
-                'stake' => '5'
+                'stake' => '5',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
             [
-                'stake' => '15'
+                'stake' => '15',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
             [
-                'stake' => '25'
+                'stake' => '25',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
             [
-                'stake' => '50'
+                'stake' => '50',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
             [
-                'stake' => '75'
+                'stake' => '75',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
             [
-                'stake' => '100'
+                'stake' => '100',
+                'status' => GameStakes::STATUS_ACTIVE
             ],
 
         ]);

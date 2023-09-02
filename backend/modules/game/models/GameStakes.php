@@ -12,6 +12,9 @@ use Yii;
  */
 class GameStakes extends \yii\mongodb\ActiveRecord
 {
+    const STATUS_ACTIVE = 'active';
+    const STATUS_INACTIVE = 'inactive';
+    
     /**
      * {@inheritdoc}
      */
@@ -28,6 +31,7 @@ class GameStakes extends \yii\mongodb\ActiveRecord
         return [
             '_id',
             'stake',
+            'status'
         ];
     }
 
@@ -37,7 +41,7 @@ class GameStakes extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['stake'], 'safe']
+            [['stake', 'status'], 'safe']
         ];
     }
 
@@ -49,6 +53,7 @@ class GameStakes extends \yii\mongodb\ActiveRecord
         return [
             '_id' => Yii::t('app', 'ID'),
             'stake' => Yii::t('app', 'Stake'),
+            'status' => Yii::t('app', 'Status')
         ];
     }
 }

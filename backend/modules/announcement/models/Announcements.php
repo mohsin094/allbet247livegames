@@ -15,12 +15,32 @@ use Yii;
  */
 class Announcements extends \yii\mongodb\ActiveRecord
 {
+
+    const TYPE_WARNING = 'warning';
+    const TYPE_PRIMARY = 'primary';
+
+    public static function typeLists()
+    {
+        return [
+            self::TYPE_PRIMARY => 'primary',
+            self::TYPE_WARNING => 'warning'
+        ];
+    }
     /**
      * {@inheritdoc}
      */
     public static function collectionName()
     {
         return [\Yii::$app->params['mongodbDbName'], 'announcements'];
+    }
+
+    public function beforeValidate()
+    {
+        if($this->isNewRecord) {
+            $this->cdate = (string) time();
+        }
+
+        return parent::beforeValidate();
     }
 
     /**

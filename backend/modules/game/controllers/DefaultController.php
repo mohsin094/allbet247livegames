@@ -175,9 +175,9 @@ class DefaultController extends ApiController
 
     public function actionGetConfigs()
     {
-        $rounds = GameRounds::find()->All();
-        $stakes = GameStakes::find()->All();
-        $timeframes = GameTimeframes::find()->All();
+        $rounds = GameRounds::find()->all();
+        $stakes = GameStakes::find()->where(['status' => GameStakes::STATUS_ACTIVE])->all();
+        $timeframes = GameTimeframes::find()->all();
 
         $this->resp->result = true;
         $this->resp->params = [
