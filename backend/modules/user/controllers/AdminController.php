@@ -27,6 +27,19 @@ class AdminController extends AdminApiController
 		]);
 	}
 
+	public function actionUpdate($userId)
+	{
+		$model = Users::findOne(['_id' => $userId]);
+		$model->scenario = Users::SCENARIO_UPDATE_ADMIN;
+
+		if($model && $model->load(\Yii::$app->request->bodyParams, '') && $model->save()) {
+			$this->resp->result = true;
+			$this->resp->params = $model->attributes;
+		}
+
+		return $this->resp;
+	}
+
 	public function actionGetRolesList()
 	{
 		$this->resp->result = true;

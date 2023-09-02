@@ -1,0 +1,644 @@
+{
+	"info": {
+		"_postman_id": "ee403733-054e-437e-8975-cfe2f16206b5",
+		"name": "Backgammon-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24148128",
+		"_collection_link": "https://interstellar-rocket-961895.postman.co/workspace/My-Workspace~b489681e-cbb8-4bb0-8f1e-d49c854f41e3/collection/24148128-ee403733-054e-437e-8975-cfe2f16206b5?action=share&source=collection_link&creator=24148128"
+	},
+	"item": [
+		{
+			"name": "admin",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get-roles-list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/admin/get-roles-list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"admin",
+										"get-roles-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-status-list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/admin/get-status-list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"admin",
+										"get-status-list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/admin/list?limit=50&page=1&query=de",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"admin",
+										"list"
+									],
+									"query": [
+										{
+											"key": "limit",
+											"value": "50"
+										},
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "query",
+											"value": "de"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "common",
+			"item": [
+				{
+					"name": "get-avatars-list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/common/get-avatars-list",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"common",
+								"get-avatars-list"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "guest-user",
+			"item": [
+				{
+					"name": "game",
+					"item": [
+						{
+							"name": "get-configs",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/game/default/get-configs",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"game",
+										"default",
+										"get-configs"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-waiting",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/game/default/get-waiting",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"game",
+										"default",
+										"get-waiting"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "new",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-sid-token",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"round_id\": \"64808f61aa531523055fd353\",\n    \"stake_id\": \"64808f61aa531523055fd34a\",\n    \"timeframe_id\": \"64808f60aa531523055fd347\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/game/default/new",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"game",
+										"default",
+										"new"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "auth/register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@admin.com\",\n    \"password\": \"admin\",\n    \"password_repeat\": \"admin\",\n    \"avatar\": \"1\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/user/auth/register",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "auth/login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Your test name\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    if(jsonData.result) {",
+											"        pm.environment.set(\"session_id\", jsonData.params.sessionId);",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"admin@admin.com\",\n    \"password\": \"admin\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/user/auth/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "auth/is-login",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "x-sid-token",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/auth/is-login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"auth",
+										"is-login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "auth/request-email-verify",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "auth/email-verify",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "auth/reset-password",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "auth/request-reset-password",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "player",
+			"item": [
+				{
+					"name": "ticket",
+					"item": [
+						{
+							"name": "default/get",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/ticket/default/get?id=64ef966851fa84aead044be2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"ticket",
+										"default",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "64ef966851fa84aead044be2"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "default/list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/ticket/default/list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"ticket",
+										"default",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "default/new",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"test\",\n    \"message\": \"message test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/ticket/default/new",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"ticket",
+										"default",
+										"new"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "default/reply",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"message\": \"message test replyt\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/ticket/default/reply?id=64ef966851fa84aead044be2",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"ticket",
+										"default",
+										"reply"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "64ef966851fa84aead044be2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "announcement",
+					"item": [
+						{
+							"name": "default/list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/announcement/default/list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"announcement",
+										"default",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "default/get",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/announcement/default/get?id=64f0bc936c62af4eeabcd42b",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"announcement",
+										"default",
+										"get"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "64f0bc936c62af4eeabcd42b"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "get",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/profile/get",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"profile",
+										"get"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"avatar\": \"3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/user/profile/update",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"profile",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "financial",
+					"item": [
+						{
+							"name": "list",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "X-SID-TOKEN",
+										"value": "{{session_id}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/financial/default/list",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"financial",
+										"default",
+										"list"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}

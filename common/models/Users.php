@@ -24,6 +24,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
     const SCENARIO_REGISTER = 'register';
     const SCENARIO_LOGIN = 'login';
     const SCENARIO_UPDATE = 'update';
+    const SCENARIO_UPDATE_ADMIN = 'update_admin';
 
     const STATUS_ACTIVE = 'active';
     const STATUS_WAITING_CONFIRMATION = 'waiting_confirmation';
@@ -100,7 +101,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return array_merge(parent::scenarios(), [
             self::SCENARIO_LOGIN => ['email', 'password'],
             self::SCENARIO_REGISTER => ['email', 'password', 'password_repeat', 'avatar'],
-            self::SCENARIO_UPDATE => ['password', 'role', 'status', 'lvl', 'public_name', 'avatar']
+            self::SCENARIO_UPDATE_ADMIN => ['password', 'role', 'status', 'lvl', 'public_name', 'avatar', 'balance'],
+            self::SCENARIO_UPDATE => ['password', 'avatar']
         ]);
     }
 
