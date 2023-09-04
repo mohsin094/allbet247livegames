@@ -65,7 +65,7 @@ class AdminController extends AdminApiController
 
 		if(!empty($query)) {
 			$models = $models->where(['email' => ['$regex' => $query]]);
-			$models = $models->where(['public_name' => ['$regex' => $query]]);
+			$models = $models->orWhere(['public_name' => ['$regex' => $query]]);
 		}
 
 		$models = $models

@@ -3,7 +3,7 @@
 namespace common\models;
 
 use Yii;
-
+use common\models\Users;
 /**
  * This is the model class for collection "financial_transactions".
  *
@@ -94,5 +94,10 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
             'description' => Yii::t('app', 'Description'),
             'cdate' => Yii::t('app', 'Cdate'),
         ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(Users::class, ['_id' => 'user_id']);
     }
 }
