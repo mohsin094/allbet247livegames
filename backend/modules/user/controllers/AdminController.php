@@ -34,7 +34,7 @@ class AdminController extends AdminApiController
 
 		if($model && $model->load(\Yii::$app->request->bodyParams, '') && $model->save()) {
 			$this->resp->result = true;
-			$this->resp->params = $model->attributes;
+			$this->resp->params = $model;
 		}
 
 		return $this->resp;
@@ -69,7 +69,7 @@ class AdminController extends AdminApiController
 		}
 
 		$models = $models
-		->asArray()
+		// ->asArray()
 		->all();
 
 		$this->resp->result = true;

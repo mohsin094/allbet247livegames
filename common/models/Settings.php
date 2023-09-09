@@ -22,9 +22,13 @@ class Settings extends \yii\mongodb\ActiveRecord
     public static function getSetting($name=null)
     {
         if($name)
-            return self::find()->where(['name' => $name])->asArray()->one();
+            return self::find()->where(['name' => $name])
+        // ->asArray()
+        ->one();
 
-        return self::find()->indexBy('name')->asArray()->all();
+        return self::find()->indexBy('name')
+        // ->asArray()
+        ->all();
     }
 
     /**

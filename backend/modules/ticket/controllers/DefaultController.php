@@ -31,7 +31,7 @@ class DefaultController extends ApiController
     	$models = Tickets::find()
     	->select(['_id', 'title', 'udate', 'status'])
     	->where(['user_id' => \Yii::$app->user->id])
-    	->asArray()
+    	// ->asArray()
     	->all();
 
     	$this->resp->result = true;
@@ -48,7 +48,9 @@ class DefaultController extends ApiController
 
     	if($model) {
     		$this->resp->result = true;
-    		$messages = TicketMessages::find()->select(['message','cdate'])->where(['ticket_id' => (string) $model->_id])->asArray()->all();
+    		$messages = TicketMessages::find()->select(['message','cdate'])->where(['ticket_id' => (string) $model->_id])
+            // ->asArray()
+            ->all();
     		$this->resp->params = [
     			'title' => $model->title,
     			'status' => $model->status,

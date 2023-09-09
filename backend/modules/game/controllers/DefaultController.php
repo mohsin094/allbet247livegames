@@ -29,7 +29,7 @@ class DefaultController extends ApiController
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['new', 'join', 'my-games'],
+                        'actions' => ['new', 'join', 'my-games', 'cancel'],
                         'roles' => ['@'],
                         'allow' => true
                     ]
@@ -57,7 +57,7 @@ class DefaultController extends ApiController
                 'status' => Matches::STATUS_WAITING,
             ]
         ])
-        ->asArray()
+        // ->asArray()
         ->all();
 
         $this->resp->params = $games;
@@ -73,9 +73,24 @@ class DefaultController extends ApiController
             $this->resp->result = true;
             $this->resp->params = [
                 'public_name' => $player->public_name,
-                'avatar' => $player->avatar
+                'avatar' => $player->avatar,
+                'avatar_link' => \Yii::$app->params['clientUrl'].'/assets/images/avatars/'.$player->avatar.'.png'
             ];
         }
+
+        return $this->resp;
+    }
+
+    public function actionCancel($matchId)
+    {
+        $match = MatchesRepo::find()->where(['_id' => $matchId, 'home_id' => \Yii::$app->user->id, 'status' => Matches::STATUS_WAITING])->one();
+
+        if($match) {
+            if($match->cancel()) {
+                $this->resp->result = true;
+            }
+        }
+        
 
         return $this->resp;
     }

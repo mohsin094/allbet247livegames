@@ -35,7 +35,7 @@ class DefaultController extends ApiController
         $models = Announcements::find()
         ->select(['_id', 'title', 'text_body', 'cdate', 'type'])
         ->limit(10)
-        ->asArray()
+        // ->asArray()
         ->all();
 
         $this->resp->result = true;
@@ -52,7 +52,7 @@ class DefaultController extends ApiController
         if($model) {
             $this->resp->result = true;
             
-            $this->resp->params = $model->attributes;
+            $this->resp->params = $model;
         }
 
         return $this->resp;

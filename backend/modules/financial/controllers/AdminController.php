@@ -19,7 +19,7 @@ class AdminController extends AdminApiController
                 'rules' => [
                     [
                         'actions' => ['list'],
-                        'roles' => ['admin', '?'],
+                        'roles' => ['admin'],
                         'allow' => true,
                     ],
                 ],
@@ -43,16 +43,16 @@ class AdminController extends AdminApiController
         }
 
         $models = $models
-        ->asArray()
+        // ->asArray()
         ->all();
-        // Tools::debug($models, true);
+   
         if(!empty($query)) {
-            $models = array_filter($models, function($value) use($query) {
+            $models = array_values(array_filter($models, function($value) use($query) {
                 return ((str_contains((string)$value['_id'], $query))
                     || (str_contains($value['user_id'], $query))
                     || (str_contains($value['user']['email'], $query))
                     || (str_contains($value['user']['public_name'], $query)));
-            });
+            }));
         }
 
         $this->resp->result = true;

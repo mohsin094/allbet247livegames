@@ -34,7 +34,7 @@ class DefaultController extends ApiController
         ->where(['user_id' => \Yii::$app->user->id])
         ->orderBy('cdate DESC')
         ->limit(20)
-        ->asArray()
+        // ->asArray()
         ->all();
 
         $this->resp->result = true;

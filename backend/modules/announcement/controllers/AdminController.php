@@ -62,7 +62,9 @@ class AdminController extends AdminApiController
 	public function actionList()
 	{
 		$this->resp->result = true;
-		$this->resp->params = Announcements::find()->asArray()->all();
+		$this->resp->params = Announcements::find()
+		// ->asArray()
+		->all();
 
 		return $this->resp;
 	}

@@ -42,7 +42,7 @@ class AdminController extends AdminApiController
 		$this->resp->params = Matches::find()
 		->with(['homeUser', 'awayUser','round', 'stake', 'timeframe'])
 		->orderBy('cdate DESC')
-		->asArray()
+		// ->asArray()
 		->all();
 
 
@@ -68,7 +68,7 @@ class AdminController extends AdminApiController
 
 		if($model->load(\Yii::$app->request->bodyParams, '') && $model->save()) {
 			$this->resp->result = true;
-			$this->resp->params = $model->attributes;
+			$this->resp->params = $model;
 		}
 
 		return $this->resp;
@@ -77,7 +77,9 @@ class AdminController extends AdminApiController
 	public function actionGetStakesList()
 	{
 		$this->resp->result = true;
-		$this->resp->params = GameStakes::find()->asArray()->all();
+		$this->resp->params = GameStakes::find()
+		// ->asArray()
+		->all();
 
 		return $this->resp;
 	}
