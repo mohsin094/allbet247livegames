@@ -8,6 +8,7 @@ import Session from '#components/Session'
 import App from '#components/App'
 import User from '#extensions/user/User'
 import Response from "#extensions/http-com/Response";
+import {ROLES} from "#extensions/permissions/Role";
 
 let Web = function() {
 	let controller = '';
@@ -22,7 +23,7 @@ let Web = function() {
 Web.prototype.requestMaker = async function(req, res) {
 
 	// await this.initSession(req, res);
-	await this.initUser();
+	await this.initUser(req);
 	this.appendToApp();
 	return await this.initController(req, res);
 }
@@ -36,8 +37,12 @@ Web.prototype.responseMaker = function(res) {
 
 }
 
-Web.prototype.initUser = async function() {
+Web.prototype.initUser = async function(req) {
 	this.user = new User();
+	if(req.get('x-sess-id') === conf.getParam('adminWebServiceToken')) {
+		this.user.setRole(ROLES.SYSTEM);
+		this.user.setIsGuest(false);
+	}
 
 	// if(await this.session.has('role')) {
 	// 	this.user.setRole(await this.session.get('role'));

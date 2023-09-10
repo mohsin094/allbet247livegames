@@ -21,7 +21,8 @@ const STAGE = {
 	TURN: 2,
 	THROW_DOUBLE_DICE: 3,
 	MOVE_DICES: 4,
-	END: 5
+	END: 5,
+	CANCELED: 6
 }
 
 function Backgammon()
@@ -175,7 +176,7 @@ Backgammon.prototype.turn = function() {
 }
 
 Backgammon.prototype.move = function(userMove) {
-	if(this.stage.id != STAGE.END) {
+	if(this.stage.id == STAGE.TURN) {
 
 		const diceFirst = this.activePlayer.getMove(this.activePlayer.dice[0]);
 		const diceSecond = this.activePlayer.getMove(this.activePlayer.dice[1]); 

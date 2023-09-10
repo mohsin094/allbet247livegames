@@ -1,13 +1,21 @@
 import bg from "#backgammon/Backgammon";
-import session from "#components/Session";
+import {ROLES} from "#extensions/permissions/Role";
+import GameHolder from "#backgammon/GameHolder";
 
-function DefaultController() {
+function SystemController() {
 	
 	this.accessRules = [
 		{
+			methods: ['game-cancel'],
+			httpMethods: ['GET', 'POST'],
+			roles: [ROLES.SYSTEM],
 			allow: true
 		}
 	];
+
+	this.gameCancel = async function() {
+		
+	}
 
 	this.index = async function()
 	{
@@ -30,11 +38,11 @@ function DefaultController() {
 		// 		timeBank: 20
 		// 	}
 		// });
-		this.setResult('hi');
+		return this.send(JSON.stringify({hi: 'hi'}));
 	}
 }
 
 
 
-export default DefaultController
+export default SystemController
 
