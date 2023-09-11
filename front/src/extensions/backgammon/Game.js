@@ -58,7 +58,13 @@ Game.prototype.socketInit = function(socket) {
 		
 		switch(this.activePlayer.color) {
 		case PLAYER_COLOR.BLACK:
+			
 			document.getElementById("board").style.transform = 'rotate(180deg)';
+			document.getElementById("double-dice").style.transform = 'rotate(180deg)';
+			const boardTexts = document.getElementsByClassName("board-text");
+			for(let i=0; i< boardTexts.length; i++) {
+				boardTexts[i].style.transform = 'rotate(180deg)';
+			}
 			break;
 		case PLAYER_COLOR.WHITE:
 

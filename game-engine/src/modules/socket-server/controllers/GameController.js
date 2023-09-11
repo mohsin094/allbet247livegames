@@ -55,9 +55,9 @@ function GameController() {
 		if(gameId) {
 			const match = await mongo.db.collection(MatchesModel.name).findOne({_id: new ObjectId(gameId)});
 			
-
+		
 			if(match && (match.status == MatchesModel.status.PLAYING || match.status == MatchesModel.status.WAITING)) {
-
+				
 				let game = GameHolder.get(gameId);
 
 				if(game == false) {
@@ -78,6 +78,8 @@ function GameController() {
 					GameHolder.set(match._id, game);
 				}
 
+		
+
 				if(this.app.user.id == match.home_id) {
 					game.playerWhite.id = this.app.user.id;
 					
@@ -97,8 +99,8 @@ function GameController() {
 					});
 				}
 	
+			
 				if(typeof game.playerBlack.socket == 'object' && typeof game.playerWhite.socket == 'object') {
-				
 					if(game.stage == 0) {
 					
 						game.start123();
