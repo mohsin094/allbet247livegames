@@ -55,7 +55,8 @@ function GameController() {
 		if(gameId) {
 			const match = await mongo.db.collection(MatchesModel.name).findOne({_id: new ObjectId(gameId)});
 			
-			if(match) {
+
+			if(match && (match.status == MatchesModel.status.PLAYING || match.status == MatchesModel.status.WAITING)) {
 
 				let game = GameHolder.get(gameId);
 
@@ -69,6 +70,9 @@ function GameController() {
 						},
 						onEnd: async (winnerId) => {
 							await mongo.db.collection(MatchesModel.name).updateOne({_id: new ObjectId(gameId)}, {$set: {status: MatchesModel.status.FINISHED, winner: winnerId}});
+							setTimeout(() => {
+								GameHolder.remove(gameId);
+							}, 10000);
 						}
 					});
 					GameHolder.set(match._id, game);

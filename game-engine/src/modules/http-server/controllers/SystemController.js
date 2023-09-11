@@ -6,40 +6,36 @@ function SystemController() {
 	
 	this.accessRules = [
 		{
-			methods: ['game-cancel'],
+			methods: ['cancel'],
 			httpMethods: ['GET', 'POST'],
 			roles: [ROLES.SYSTEM],
 			allow: true
 		}
 	];
 
-	this.gameCancel = async function() {
+
+
+	this.cancel = async function() {
+		const gameId = this.request.query.gameId;
+		const game = GameHolder.get(gameId);
 		
+		console.log(gameId);
+		if(gameId && game) {
+			game.setStage(6);
+			setTimeout(() => {
+				GameHolder.remove(gameId);
+			}, 10000);
+			return this.send({result: true});
+		}
+
+		if(gameId == undefined) {
+			return this.send({result: false, errors: {gameId: 'game not found'}});
+		}
+
+		return this.send({result: false});
 	}
 
-	this.index = async function()
-	{
-
-		
-
-		// const sess = new session("hnwvEM4gieQSgB7UQ2d9xJ6e94otCTcg");
-		// await sess.begin();
-		// await sess.set('test', 'data');
-		// await sess.set('test', 'new data');
-		// console.log(await sess.has('test'));
-		// await sess.del('test')
-		// console.log(await sess.has('test'));
-		// console.log(sess.records);
-		// const t = new bg();
-		
-		// t.create({
-		// 	timer: {
-		// 		time: 10,
-		// 		timeBank: 20
-		// 	}
-		// });
-		return this.send(JSON.stringify({hi: 'hi'}));
-	}
+	
 }
 
 

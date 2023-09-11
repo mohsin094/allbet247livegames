@@ -12,31 +12,31 @@
 		              	</span>
 			        	<FormKit v-if="data != undefined"
 			        	  v-model="stake"
-			        	  placeholder="Select stake"	
+			        	  placeholder="Choose Stake"	
 						  type="select"
 						  label="Stake"
 						  :options="stakes"
 						/>
 					</div>
-					<!-- <div class="position-relative input-wrapper">
+					<div class="position-relative input-wrapper">
 		              	<span class="select-input-icon input-icon-left position-absolute">
 		                	<span class="material-symbols-outlined">refresh</span>
 		              	</span>
 						<FormKit v-if="data != undefined"
 						  v-model="round"
-						  placeholder="Select round"
+						  placeholder="Choose Round"
 						  type="select"
 						  label="Rounds"
 						  :options="rounds"
 						/>
-					</div> -->
+					</div>
 					<div class="position-relative input-wrapper">
 		              	<span class="select-input-icon input-icon-left position-absolute">
 		                	<span class="material-symbols-outlined">timelapse</span>
 		              	</span>
 						<FormKit v-if="data != undefined"
 						  v-model="timeframe"
-						  placeholder="Select Speed"
+						  placeholder="Choose Speed"
 						  type="select"
 						  label="Timeframes"
 						  :options="timeframes"

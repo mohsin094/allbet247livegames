@@ -167,7 +167,7 @@ Backgammon.prototype.turn = function() {
 		});
 	};
 
-	this.activePlayer.timer.onTick = () => {
+	this.activePlayer.timer.onEnd = () => {
 		this.endGame(opositePlayer);
 	}
 
@@ -176,7 +176,8 @@ Backgammon.prototype.turn = function() {
 }
 
 Backgammon.prototype.move = function(userMove) {
-	if(this.stage.id == STAGE.TURN) {
+
+	if(this.stage == STAGE.THROW_DOUBLE_DICE) {
 
 		const diceFirst = this.activePlayer.getMove(this.activePlayer.dice[0]);
 		const diceSecond = this.activePlayer.getMove(this.activePlayer.dice[1]); 
@@ -410,8 +411,7 @@ Backgammon.prototype.start123 = function() {
 		this.state.game.timer = undefined;
 		
 
-		this.endGame(this.playerBlack);
-		// this.turn();
+		this.turn();
 		
 	}
 

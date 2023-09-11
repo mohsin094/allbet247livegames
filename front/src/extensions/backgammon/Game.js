@@ -18,7 +18,8 @@ const STAGE = {
 	MOVE_FIRST_DICE: 3.1,
 	MOVE_SECOND_DICE: 3.2,
 	MOVE_DICES: 4,
-	END: 5
+	END: 5,
+	CANCEL: 6
 }
 
 function Game(vue, socket)

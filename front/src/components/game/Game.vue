@@ -3,6 +3,7 @@
 	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)" @click="throwDice">Dice</button>
 	<p>System Message: {{systemMessage}}</p>
 	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
+	<p v-if="game && game.stage.id == stage.cancel">Game stopped by admin, stake amount returned to your balance</p>
 	<div id="game" class="col-12">
 		<div id="board">
 			<template v-if="game != undefined">
@@ -104,7 +105,8 @@ export default
 				move_first_dice: STAGE.MOVE_FIRST_DICE,
 				move_second_dice: STAGE.MOVE_SECOND_DICE,
 				move_dices: STAGE.MOVE_DICES,
-				end: STAGE.END
+				end: STAGE.END,
+				cancel: STAGE.CANCEL
 			},
 			showDice: false,
 			doubleActive: false,

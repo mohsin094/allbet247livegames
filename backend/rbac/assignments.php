@@ -7,4 +7,7 @@ return [
     '648acca4ebc46b8e67046553' => [
         'user',
     ],
+    '646a68de7acd6a978a0698e6' => [
+        'user',
+    ],
 ];
