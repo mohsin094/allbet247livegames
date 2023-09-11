@@ -30,267 +30,46 @@
 	    <div class="carousel-inner">
 	        <div class="carousel-item active">
 	        	<div class="row">	
-				  	<div class="col-md-6 col-sm-12 col-xl-3 mb-5">
-				  		<div class="frame colorfull-border bg-gray">
-				  			<div class="position-relative card">
-				  				<!-- profile right -->
-				  				<span class="position-absolute card-profile-name-right card-profile-name">Me</span>
-				  				<div class="border-golden card-profile card-profile-right position-absolute">
-				  					<div class="position-absolute profile-bg bg-red bg-red-shadow bg-red bg-red-shadow-shadow" style="">
-				  						<img src="@/assets/profiles/gazal.svg"/>
-				  					</div>
-				  				</div>
-				  				<span class="position-absolute card-profile-name-left card-profile-name">Maya</span>
-				  				<span class="position-absolute card-user-level">LVL.22</span>
-				  				<!-- profile right end -->
-				  				<img class="vs" src="@/assets/icons/vs.svg" />
-				  				<!-- profile left -->
-				  				<div class="border-golden card-profile card-profile-left position-absolute">
-				  					<div class="position-absolute profile-bg bg-blue bg-blue-shadow bg-blue bg-blue-shadow-shadow">
-				  						<img src="@/assets/profiles/gazal.svg"/>
-				  					</div>
-				  				</div>
-				  				<!-- profile left end -->
-				  				<ul class="list-group-horizontal position-absolute card-star text-center">
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-red">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  				</ul>
-				  				<div class="position-absolute card-timelapse">
-				  					<div class="position-absolute card-timelapse-wrapper">
-				  						<div class="position-absolute card-timer-icon">
-				  							<i class="material-symbols-sharp"><span>timelapse</span></i>
-				  						</div>
-				  						<div class="time position-absolute">
-				  							03:24
-				  						</div>
-				  					</div>
-				  				</div>
-				  				<div class="stake position-absolute">
-				  					<i class="material-symbols-sharp float-start">monetization_on</i>
-				  					<span class="float-start">Stake:1000</span>
-				  				</div>
-				  				<div class="prize position-absolute">
-				  					<i class="material-symbols-sharp float-start">workspace_premium</i>
-				  					<span class="float-start">Prize:1400</span>
-				  				</div>
-				  			</div>
-				  		</div>
-		  			</div>
-		  			<div class="col-md-6 col-sm-12 col-xl-3 mb-5">
-				  		<div class="frame colorfull-border bg-gray">
-				  			<div class="position-relative card">
-				  				<!-- profile right -->
-				  				<span class="position-absolute card-profile-name-right card-profile-name">Me</span>
-				  				<div class="border-golden card-profile card-profile-right position-absolute">
-				  					<div class="position-absolute profile-bg bg-red bg-red-shadow" style="">
-				  						<img src="@/assets/profiles/gazal.svg"/>
-				  					</div>
-				  				</div>
-				  				<span class="position-absolute card-profile-name-left card-profile-name">Maya</span>
-				  				<span class="position-absolute card-user-level">LVL.22</span>
-				  				<!-- profile right end -->
-				  				<img class="vs" src="@/assets/icons/vs.svg" />
-				  				<!-- profile left -->
-				  				<div class="border-golden card-profile card-profile-left position-absolute">
-				  					<div class="position-absolute profile-bg bg-blue bg-blue-shadow">
-				  						<img src="@/assets/profiles/gazal.svg"/>
-				  					</div>
-				  				</div>
-				  				<!-- profile left end -->
-				  				<ul class="list-group-horizontal position-absolute card-star text-center">
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-red">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  				</ul>
-				  				<div class="position-absolute card-timelapse">
-				  					<div class="position-absolute card-timelapse-wrapper">
-				  						<div class="position-absolute card-timer-icon">
-				  							<i class="material-symbols-sharp"><span>timelapse</span></i>
-				  						</div>
-				  						<div class="time position-absolute">
-				  							03:24
-				  						</div>
-				  					</div>
-				  				</div>
-				  				<div class="stake position-absolute">
-				  					<i class="material-symbols-sharp float-start">monetization_on</i>
-				  					<span class="float-start">Stake:1000</span>
-				  				</div>
-				  				<div class="prize position-absolute">
-				  					<i class="material-symbols-sharp float-start">workspace_premium</i>
-				  					<span class="float-start">Prize:1400</span>
-				  				</div>
-				  			</div>
-				  		</div>
-		  			</div>
-		  			<div class="col-md-6 col-sm-12 col-xl-3 mb-5">
-				  		<div class="frame colorfull-border bg-gray">
-				  			<div class="position-relative card">
-				  				<!-- profile right -->
-				  				<span class="position-absolute card-profile-name-right card-profile-name">Me</span>
-				  				<div class="border-golden card-profile card-profile-right position-absolute">
-				  					<div class="position-absolute profile-bg bg-red bg-red-shadow" style="">
-				  						<img src="@/assets/profiles/gazal.svg"/>
-				  					</div>
-				  				</div>
-				  				<span class="position-absolute card-profile-name-left card-profile-name">Maya</span>
-				  				<span class="position-absolute card-user-level">LVL.22</span>
-				  				<!-- profile right end -->
-				  				<img class="vs" src="@/assets/icons/vs.svg" />
-				  				<!-- profile left -->
-				  				<div class="border-golden card-profile card-profile-left position-absolute">
-				  					<div class="position-absolute profile-bg bg-blue bg-blue-shadow">
-				  						<img src="@/assets/profiles/gazal.svg"/>
-				  					</div>
-				  				</div>
-				  				<!-- profile left end -->
-				  				<ul class="list-group-horizontal position-absolute card-star text-center">
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-red">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  				</ul>
-				  				<div class="position-absolute card-timelapse">
-				  					<div class="position-absolute card-timelapse-wrapper">
-				  						<div class="position-absolute card-timer-icon">
-				  							<i class="material-symbols-sharp"><span>timelapse</span></i>
-				  						</div>
-				  						<div class="time position-absolute">
-				  							03:24
-				  						</div>
-				  					</div>
-				  				</div>
-				  				<div class="stake position-absolute">
-				  					<i class="material-symbols-sharp float-start">monetization_on</i>
-				  					<span class="float-start">Stake:1000</span>
-				  				</div>
-				  				<div class="prize position-absolute">
-				  					<i class="material-symbols-sharp float-start">workspace_premium</i>
-				  					<span class="float-start">Prize:1400</span>
-				  				</div>
-				  			</div>
-				  		</div>
-		  			</div>
-		  			<div class="col-md-6 col-sm-12 col-xl-3 mb-5">
+		  			<div @click="join(game._id.$oid)" v-for="game in myGames" class="waiting-game-item col-md-6 col-sm-12 col-xl-3 mb-5">
 			  			<div class="frame colorfull-border colorfull-border-active">
 				  			<div class="position-relative card">
 				  				<!-- profile right -->
-				  				<span class="position-absolute card-profile-name-right card-profile-name">Me</span>
+				  				<span class="position-absolute card-profile-name-right card-profile-name">
+				  					{{ (game.awayUser != undefined) ? game.awayUser.public_name : ' ? ' }}
+				  				</span>
+				  				<span class="position-absolute card-user-level">LVL.22</span>
 				  				<div class="border-golden card-profile card-profile-right position-absolute">
 				  					<div class="position-absolute profile-bg bg-red bg-red-shadow" style="">
-				  						<img src="@/assets/profiles/gazal.svg"/>
+				  						<img class="img-fluid" v-if="game.awayUser != undefined" :src="frontUrl+'/assets/images/avatars/'+ game.awayUser.avatar +'.png'"/>
 				  					</div>
 				  				</div>
-				  				<span class="position-absolute card-profile-name-left card-profile-name">Maya</span>
-				  				<span class="position-absolute card-user-level">LVL.22</span>
 				  				<!-- profile right end -->
 				  				<img class="vs" src="@/assets/icons/vs.svg" />
 				  				<!-- profile left -->
+				  				<span class="position-absolute card-profile-name-left card-profile-name">Me</span>
 				  				<div class="border-golden card-profile card-profile-left position-absolute">
 				  					<div class="position-absolute profile-bg bg-blue bg-blue-shadow">
-				  						<img src="@/assets/profiles/gazal.svg"/>
+				  						<img class="img-fluid" :src="frontUrl+'/assets/images/avatars/'+ $user.data.avatar +'.png'"/>
 				  					</div>
 				  				</div>
 				  				<!-- profile left end -->
-				  				<ul class="list-group-horizontal position-absolute card-star text-center">
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-red">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  				</ul>
-				  				<div class="position-absolute card-timelapse">
-				  					<div class="position-absolute card-timelapse-wrapper">
-				  						<div class="position-absolute card-timer-icon">
-				  							<i class="material-symbols-sharp"><span>timelapse</span></i>
-				  						</div>
-				  						<div class="time position-absolute text-danger">
-				  							00:09
-				  						</div>
-				  					</div>
-				  				</div>
+				  				
 				  				<div class="stake position-absolute">
 				  					<i class="material-symbols-sharp float-start">monetization_on</i>
-				  					<span class="float-start">Stake:1000</span>
+				  					<span class="float-start">Stake: {{game.stake.stake}}</span>
 				  				</div>
-				  				<div class="prize position-absolute">
-				  					<i class="material-symbols-sharp float-start">workspace_premium</i>
-				  					<span class="float-start">Prize:1400</span>
-				  				</div>
+				  				<div v-if="game.awayUser == undefined" class="cancel-match position-absolute">
+					  				<a @click.prevent.stop="cancelMatch(game._id.$oid)" class="btn-outline text-golden-gradient">
+		  								<span>Cancel</span>
+		  							</a>
+	  							</div>
+				  				
 				  			</div> 
 				  		</div>
 	  				</div>
 	        	</div>
 	        </div>
-	        <div class="carousel-item">
-	        	<div class="row">
-		  			<div class="col-md-6 col-sm-12 col-xl-3 mb-5">
-			  			<div class="frame colorfull-border colorfull-border-active">
-				  			<div class="position-relative card">
-				  				<!-- profile right -->
-				  				<span class="position-absolute card-profile-name-right card-profile-name">Me</span>
-				  				<div class="border-golden card-profile card-profile-right position-absolute">
-				  					<div class="position-absolute profile-bg bg-red bg-red-shadow" style="">
-				  						<img src="@/assets/profiles/gazal.svg"/>
-				  					</div>
-				  				</div>
-				  				<span class="position-absolute card-profile-name-left card-profile-name">Maya</span>
-				  				<span class="position-absolute card-user-level">LVL.22</span>
-				  				<!-- profile right end -->
-				  				<img class="vs" src="@/assets/icons/vs.svg" />
-				  				<!-- profile left -->
-				  				<div class="border-golden card-profile card-profile-left position-absolute">
-				  					<div class="position-absolute profile-bg bg-blue bg-blue-shadow">
-				  						<img src="@/assets/profiles/gazal.svg"/>
-				  					</div>
-				  				</div>
-				  				<!-- profile left end -->
-				  				<ul class="list-group-horizontal position-absolute card-star text-center">
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-grass">star</i></li>
-				  					<li><i class="material-symbols-rounded text-red">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  					<li><i class="material-symbols-rounded text-disabled">star</i></li>
-				  				</ul>
-				  				<div class="position-absolute card-timelapse">
-				  					<div class="position-absolute card-timelapse-wrapper">
-				  						<div class="position-absolute card-timer-icon">
-				  							<i class="material-symbols-sharp"><span>timelapse</span></i>
-				  						</div>
-				  						<div class="time position-absolute text-danger">
-				  							00:09
-				  						</div>
-				  					</div>
-				  				</div>
-				  				<div class="stake position-absolute">
-				  					<i class="material-symbols-sharp float-start">monetization_on</i>
-				  					<span class="float-start">Stake:1000</span>
-				  				</div>
-				  				<div class="prize position-absolute">
-				  					<i class="material-symbols-sharp float-start">workspace_premium</i>
-				  					<span class="float-start">Prize:1400</span>
-				  				</div>
-				  			</div> 
-				  		</div>
-	  				</div>
-	        	</div>
-	        </div>
+	        
 	    </div>
 	</div>
 </template>
@@ -300,13 +79,32 @@
 		data() {
 			return {
 				fetchGamesInterval: undefined,
-				myGames: []
+				myGames: [],
+				frontUrl: import.meta.env.VITE_BASE_URL
 			}
 		},
 		created() {
 			this.fetchGames();
 		},
+		unmounted() {
+			clearInterval(this.fetchGamesInterval);
+		},
 		methods: {
+			join(matchId) {
+				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/join", {params: {matchId: matchId}}).then((res) => {
+					res = res.data;
+
+					if(res.result) {
+						this.$router.push({name: 'backgammon', params: {matchId: matchId}});
+					}
+				});
+			},
+			cancelMatch(matchId) {
+				const url = import.meta.env.VITE_BACKEND_BASE_URL+'/game/default/cancel?matchId=' + matchId;
+				this.$axios.get(url).then((res) => {
+					
+				});
+			},
 			fetchGames() {
 				let url = import.meta.env.VITE_BACKEND_BASE_URL+'/game/default/my-games'
 				this.fetchGamesInterval = setInterval(() => {
@@ -322,3 +120,15 @@
 
 	}
 </script>
+
+<style scoped>
+.cancel-match {
+	bottom: 10px;
+	left: 45%;
+}
+
+.waiting-game-item {
+	cursor: pointer;
+}
+
+</style>

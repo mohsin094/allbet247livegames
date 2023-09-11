@@ -26,7 +26,7 @@
 						  v-model="round"
 						  placeholder="Choose Round"
 						  type="select"
-						  label="Rounds"
+						  label="Round"
 						  :options="rounds"
 						/>
 					</div>
@@ -38,7 +38,7 @@
 						  v-model="timeframe"
 						  placeholder="Choose Speed"
 						  type="select"
-						  label="Timeframes"
+						  label="Speed"
 						  :options="timeframes"
 						/>
 					</div>

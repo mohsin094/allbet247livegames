@@ -42,26 +42,21 @@ class DefaultController extends ApiController
     {
 
         $games = Matches::find()
-        ->where([
-            
-                'OR',
-                [
-                    'home_id' => \Yii::$app->user->id,
-                    // 'away_id' => \Yii::$app->user->id
-                ]
-            
-        ])->andWhere([
-            'OR',
-            [
-                'status' => Matches::STATUS_PLAYING,
-                'status' => Matches::STATUS_WAITING,
-            ]
-        ])
-        // ->asArray()
+        ->with(['awayUser', 'stake'])
+        ->where(['home_id' => \Yii::$app->user->id])
+        ->orWhere(['away_id' => \Yii::$app->user->id])
+        ->asArray()
         ->all();
 
-        $this->resp->params = $games;
-        Tools::debug($games, true);
+
+
+        $final = array_values(array_filter($games, function($game) {
+            return ($game['status'] == Matches::STATUS_WAITING || $game['status'] == Matches::STATUS_PLAYING);
+        }));
+
+        $this->resp->result = true;
+        $this->resp->params = $final;
+       
         return $this->resp;
     }
 
@@ -97,7 +92,7 @@ class DefaultController extends ApiController
 
     public function actionJoin($matchId)
     {
-        $match = Matches::find()->where(['_id' => $matchId, 'status' => Matches::STATUS_WAITING])->one();
+        $match = Matches::find()->where(['_id' => $matchId])->one();
         if($match && $match->home_id != \Yii::$app->user->id) {
             $match->away_id = \Yii::$app->user->id;
             if($match->home_id != null) {
