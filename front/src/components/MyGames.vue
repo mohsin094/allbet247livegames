@@ -1,5 +1,5 @@
 <template>
-	<div class="row gx-5">
+	<div v-if="myGames.length > 0" class="row gx-5">
 	    <div class="col px-0">
 	     <div class="p-3">
 	     	<div class="relative position-relative mb-5 main-title">
@@ -37,7 +37,7 @@
 				  				<span class="position-absolute card-profile-name-right card-profile-name">
 				  					{{ (game.awayUser != undefined) ? game.awayUser.public_name : ' ? ' }}
 				  				</span>
-				  				<span class="position-absolute card-user-level">LVL.22</span>
+				  				<span class="position-absolute card-user-level">LVL.{{(game.awayUser != undefined && game.awayUser.lvl != undefined) ? game.awayUser.lvl : ' ? '}}</span>
 				  				<div class="border-golden card-profile card-profile-right position-absolute">
 				  					<div class="position-absolute profile-bg bg-red bg-red-shadow" style="">
 				  						<img class="img-fluid" v-if="game.awayUser != undefined" :src="frontUrl+'/assets/images/avatars/'+ game.awayUser.avatar +'.png'"/>
@@ -46,10 +46,11 @@
 				  				<!-- profile right end -->
 				  				<img class="vs" src="@/assets/icons/vs.svg" />
 				  				<!-- profile left -->
-				  				<span class="position-absolute card-profile-name-left card-profile-name">Me</span>
+				  				<span class="position-absolute card-profile-name-left card-profile-name">{{ game.homeUser.public_name }}</span>
+				  				<span class="position-absolute card-user-level">LVL.{{(game.homeUser != undefined && game.homeUser.lvl != undefined) ? game.homeUser.lvl : ' ? '}}</span>
 				  				<div class="border-golden card-profile card-profile-left position-absolute">
 				  					<div class="position-absolute profile-bg bg-blue bg-blue-shadow">
-				  						<img class="img-fluid" :src="frontUrl+'/assets/images/avatars/'+ $user.data.avatar +'.png'"/>
+				  						<img class="img-fluid" :src="frontUrl+'/assets/images/avatars/'+ game.homeUser.avatar +'.png'"/>
 				  					</div>
 				  				</div>
 				  				<!-- profile left end -->

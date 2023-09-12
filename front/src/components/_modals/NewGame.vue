@@ -44,7 +44,7 @@
 					</div>
 					<p class="text-danger">{{error}}</p>
 					<div class="row justify-content-center">
-						<button type="button" class="btn btn-golden text-dark login-btn" @click="addGame()">Add Game</button>
+						<button data-bs-dismiss="modal" type="button" class="btn btn-golden text-dark login-btn" @click="addGame()">Add Game</button>
 					</div>
 
 		        </div>

@@ -42,7 +42,7 @@ class DefaultController extends ApiController
     {
 
         $games = Matches::find()
-        ->with(['awayUser', 'stake'])
+        ->with(['homeUser', 'awayUser', 'stake'])
         ->where(['home_id' => \Yii::$app->user->id])
         ->orWhere(['away_id' => \Yii::$app->user->id])
         ->asArray()

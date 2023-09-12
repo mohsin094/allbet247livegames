@@ -69,6 +69,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             $this->email = strtolower(trim($this->email));
             $this->status = self::STATUS_WAITING_CONFIRMATION;
             $this->balance = '0';
+            $this->lvl = 1;
         }
         $this->balance = (string) $this->balance;
         return parent::beforeValidate();
