@@ -76,9 +76,9 @@ function GameController() {
 						},
 						onEnd: async (winnerId) => {
 							await mongo.db.collection(MatchesModel.name).updateOne({_id: new ObjectId(gameId)}, {$set: {status: MatchesModel.status.FINISHED, winner: winnerId}});
-							setTimeout(() => {
+							game.nextTick(() => {
 								GameHolder.remove(gameId);
-							}, 10000);
+							});
 						}
 					});
 					GameHolder.set(match._id, game);

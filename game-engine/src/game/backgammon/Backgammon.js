@@ -269,7 +269,7 @@ Backgammon.prototype.nextTurn = function()
 	this.activePlayer = (this.activePlayer.color == PLAYER_COLOR.BLACK) ? this.playerWhite : this.playerBlack;
 	this.state.game.timer = undefined;
 	this.activePlayer.timer = (new Timer()).create(this.initParams.timer);
-	this.activePlayer.timer.endEnd = function() {
+	this.activePlayer.timer.onEnd = function() {
 		this.endGame();
 	}
 	this.turn();
