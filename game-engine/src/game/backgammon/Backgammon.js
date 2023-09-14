@@ -234,6 +234,7 @@ Backgammon.prototype.move = function(userMove) {
 
 			if(this.activePlayer.hasMove() == false) {
 				this.setStage(STAGE.MOVE_DICES);
+				this.activePlayer.timer.clear();
 				if(!this.isWinner()) {
 					this.nextTurn();
 				}else {

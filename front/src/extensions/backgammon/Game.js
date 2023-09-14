@@ -177,7 +177,11 @@ Game.prototype.touchChecker = function(checker)
 		if(this.activePlayer.checkers[index].selected) {
 			
 			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer, this.stage);
+		}else {
+			console.debug('game.js:101');
 		}
+	}else {
+		console.debug('game.js:100');
 	}
 }
 

@@ -1,0 +1,21 @@
+1- [SERVER]should be on http (not https)
+2- [FRONT] set .env in front project
+	VITE_BASE_URL = http://codeplaya.com/demo/backgammon
+	VITE_BACKEND_BASE_URL = http://codeplaya.com/demo/backgammon/backend/web
+	VITE_BACKEND_SOCKET_URL = http://54.36.118.223:3002
+3- [FRONT] set vite.config
+	base: "/demo/backgammon
+4- [BACKEND] set params on common/config/params
+	'mongodbDbName' => 'backgammon',
+	'mongodbDbName' => 'backgammon',
+	'clientOrigin' => 'codeplaya.com',
+	'clientUrl' => 'https://codeplaya.com/demo/backgammon'
+5- [GAME_ENGINE] set in game-engine config.local
+	"host": "*"
+	or
+	"host": "codeplaya.com"
+6- migrate database
+7- fix backend and common permissions and owner
+8- extract front project in root of demo/backgammon
+9- game-engine should run manually and not close terminal
+
