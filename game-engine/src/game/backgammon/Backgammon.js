@@ -2,6 +2,7 @@ import Timer from "#backgammon/timer/Timer";
 import Board from "#backgammon/board/Board";
 import {randomUUID} from "crypto";
 import Player, {PLAYER_COLOR} from "#backgammon/player/Player";
+import Log from "#components/Log";
 
 const EMIT = {
 	SYSTEM_CLOCK: 'system-clock',
@@ -60,7 +61,8 @@ Backgammon.prototype.onEnd = undefined;
  *	}
 */
 
-Backgammon.prototype.create = function(params) {
+Backgammon.prototype.create = function(params) 
+{
 	this.initParams = params;
 	this.id = params.id;
 	this.board = new Board();
@@ -106,7 +108,8 @@ Backgammon.prototype.create = function(params) {
 
 
 
-Backgammon.prototype.turn = function() {
+Backgammon.prototype.turn = function() 
+{
 
 	const opositePlayer = (this.activePlayer.color == PLAYER_COLOR.WHITE) ? this.playerBlack : this.playerWhite;
 	this.setStage(STAGE.TURN);
@@ -175,7 +178,8 @@ Backgammon.prototype.turn = function() {
 
 }
 
-Backgammon.prototype.move = function(userMove) {
+Backgammon.prototype.move = function(userMove) 
+{
 
 	if(this.stage == STAGE.THROW_DOUBLE_DICE) {
 
@@ -232,14 +236,13 @@ Backgammon.prototype.move = function(userMove) {
 				
 			}
 
-			if(this.activePlayer.hasMove() == false) {
+			if(this.isWinner()) {
+				this.endGame(this.activePlayer);
+			}
+			else if(this.activePlayer.hasMove() == false) {
 				this.setStage(STAGE.MOVE_DICES);
 				this.activePlayer.timer.clear();
-				if(!this.isWinner()) {
-					this.nextTurn();
-				}else {
-					this.endGame(this.activePlayer);
-				}
+				this.nextTurn();
 			}
 		}
 	}
@@ -247,7 +250,8 @@ Backgammon.prototype.move = function(userMove) {
 	
 }
 
-Backgammon.prototype.endGame = function(player) {
+Backgammon.prototype.endGame = function(player)
+{
 	this.winner = player;
 	this.state.game.winner = player.color;
 	this.setStage(STAGE.END);
@@ -258,7 +262,8 @@ Backgammon.prototype.endGame = function(player) {
 }
 
 
-Backgammon.prototype.nextTurn = function() {
+Backgammon.prototype.nextTurn = function() 
+{
 
 
 	this.activePlayer = (this.activePlayer.color == PLAYER_COLOR.BLACK) ? this.playerWhite : this.playerBlack;
@@ -270,7 +275,8 @@ Backgammon.prototype.nextTurn = function() {
 	this.turn();
 }
 
-Backgammon.prototype.isWinner = function() {
+Backgammon.prototype.isWinner = function() 
+{
 	switch(this.activePlayer.color) {
 	case PLAYER_COLOR.BLACK:
 		if(this.activePlayer.isEndOfCheckers() && !this.playerWhite.isEndOfCheckers()) {
@@ -286,7 +292,8 @@ Backgammon.prototype.isWinner = function() {
 	return false;
 }
 
-Backgammon.prototype.throwDoubleDice = function() {
+Backgammon.prototype.throwDoubleDice = function() 
+{
 	
 	if(this.stage === STAGE.TURN) {
 		this.setStage(STAGE.THROW_DOUBLE_DICE);
@@ -322,6 +329,7 @@ Backgammon.prototype.throwDoubleDice = function() {
 		// delay for display "No Move" to player
 		setTimeout(() => {
 			if(! this.activePlayer.hasMove()) {
+				
 				this.nextTurn();
 			}
 		}, 1500);
@@ -333,13 +341,17 @@ Backgammon.prototype.throwDoubleDice = function() {
 		// 	});
 		// })
 
+	}else {
+		Log.debug('backgammon.js:100');
+		Log.debug('stage:' + this.stage);
 	}
 
 }
 
 
 
-Backgammon.prototype.start123 = function() {
+Backgammon.prototype.start123 = function() 
+{
 
 	this.setStage(STAGE.START);
 
@@ -420,7 +432,8 @@ Backgammon.prototype.start123 = function() {
 }
 
 
-Backgammon.prototype.throwTurnDice = function() {
+Backgammon.prototype.throwTurnDice = function() 
+{
 	const b = this.playerBlack.diceManager.throwOne();
 	const w = this.playerWhite.diceManager.throwOne();
 
@@ -480,7 +493,8 @@ Backgammon.prototype.throwTurnDice = function() {
 	return turn;
 }
 
-Backgammon.prototype.setStateActivePlayer = function(params) {
+Backgammon.prototype.setStateActivePlayer = function(params) 
+{
 	let keys = [];
 
 	switch(this.activePlayer.color) {
@@ -500,7 +514,8 @@ Backgammon.prototype.setStateActivePlayer = function(params) {
 	}
 }
 
-Backgammon.prototype.setStatePlayer = function(color, params) {
+Backgammon.prototype.setStatePlayer = function(color, params) 
+{
 	let keys = [];
 	
 	switch(color) {
@@ -520,7 +535,8 @@ Backgammon.prototype.setStatePlayer = function(color, params) {
 	}
 }
 
-Backgammon.prototype.setStateBothPlayer = function(params) {
+Backgammon.prototype.setStateBothPlayer = function(params) 
+{
 	
 	let keys = Object.keys(params);
 	for(let i = 0; i < keys.length; i++) {
@@ -551,7 +567,8 @@ Backgammon.prototype.updateBothPlayer = function(params)
 	}
 }
 
-Backgammon.prototype.updatePlayer = function(color, params) {
+Backgammon.prototype.updatePlayer = function(color, params) 
+{
 	let keys = [];
 
 	switch(color) {

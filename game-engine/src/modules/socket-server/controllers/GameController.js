@@ -44,7 +44,13 @@ function GameController() {
 			if(game.activePlayer != undefined && game.activePlayer.id == userId && game.activePlayer.allowDice == true) {
 				
 				game.throwDoubleDice();
+			}else {
+				Log.debug("gameController.js:101");
+				Log.debug(game);
 			}
+		}else {
+			Log.debug("gameController.js:100");
+			Log.debug(gameId, game);
 		}
 	}
 

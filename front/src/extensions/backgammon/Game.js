@@ -47,7 +47,8 @@ Game.prototype.timer = undefined;
 Game.prototype.winner = undefined;
 
 
-Game.prototype.socketInit = function(socket) {
+Game.prototype.socketInit = function(socket)
+{
 	this.socket = socket;
 
  // make game
@@ -154,7 +155,7 @@ Game.prototype.touchCol = function(col)
 		if(this.activePlayer.hasMove() == false) {
 			this.stage.id = STAGE.MOVE_DICES;
 		} 
-	}
+	}	
 
 }
 
@@ -190,7 +191,8 @@ Game.prototype.move = function(checker, to)
 	this.activePlayer.moveChecker(checker, to);
 }
 
-Game.prototype.setActivePlayer = function() {
+Game.prototype.setActivePlayer = function()
+{
 	this.activePlayer = this.playerWhite;
 }
 

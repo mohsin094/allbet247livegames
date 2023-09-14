@@ -95,7 +95,6 @@ Move.prototype.calculateDestinations = function() {
 			if(isLessThan) {
 				for(const [key, value] of Object.entries(this.originColumns)) {
 					if(parseInt(key) + this.dice > 25) {
-						console.log(key)
 						delete this.originColumns[key];
 					}
 				}	
@@ -105,7 +104,7 @@ Move.prototype.calculateDestinations = function() {
 
 			let isMoreThan = false;
 			for(const [key, value] of Object.entries(this.originColumns)) {
-				if(parseInt(key) - this.dice < -1) {
+				if(parseInt(key) - this.dice > 0) {
 					isMoreThan = true;
 					break;
 				}
