@@ -149,7 +149,6 @@ Game.prototype.touchCol = function(col)
 				this.vue.move(checker.index, originCol[0]);
 				this.board.removeOffer();
 			}
-			
 		}
 
 		if(this.activePlayer.hasMove() == false) {

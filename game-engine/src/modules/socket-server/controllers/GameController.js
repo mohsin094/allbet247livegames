@@ -41,11 +41,15 @@ function GameController() {
 		const game = GameHolder.get(gameId);
 
 		if(gameId && game) {
-			if(game.activePlayer != undefined && game.activePlayer.id == userId && game.activePlayer.allowDice == true) {
+			if(game.activePlayer != undefined
+				&& game.activePlayer.id == userId
+				&& game.activePlayer.allowDice == true) {
 				
 				game.throwDoubleDice();
 			}else {
+				// this log may seen in log history, that's because players click fast on throw dice when they are not allow to throw dice
 				Log.debug("gameController.js:101");
+				Log.debug(userId);
 				Log.debug(game);
 			}
 		}else {

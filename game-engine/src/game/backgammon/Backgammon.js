@@ -13,7 +13,8 @@ const EMIT = {
 	BOARD_TEXT: 'board-text',
 	MAKE_GAME: 'make-game',
 	GAME_STATE: 'game-state',
-	PLAYER_JOIN: 'player-join'
+	PLAYER_JOIN: 'player-join',
+	MOVED_FROM_TO: 'moved-from-to'
 }
 
 const STAGE = {
@@ -211,6 +212,7 @@ Backgammon.prototype.move = function(userMove)
 					opositePlayer.move(opositeSingleChecker.index, opositeOut);				
 				}
 
+				this.notifyMove(opositePlayer, checker.position, originCol[0]);
 				this.activePlayer.move(checker.index, originCol[0]);
 				this.activePlayer.delMove(move.id);
 				
@@ -230,6 +232,7 @@ Backgammon.prototype.move = function(userMove)
 						opositePlayer.move(opositeSingleChecker.index, opositeOut);				
 					}
 
+					this.notifyMove(opositePlayer, checker.position, originCol[0]);
 					this.activePlayer.move(checker.index, originCol[0]);
 					this.activePlayer.delMove(move.id);
 				}
@@ -237,6 +240,7 @@ Backgammon.prototype.move = function(userMove)
 			}
 
 			if(this.isWinner()) {
+				this.activePlayer.timer.clear();
 				this.endGame(this.activePlayer);
 			}
 			else if(this.activePlayer.hasMove() == false) {
@@ -248,6 +252,12 @@ Backgammon.prototype.move = function(userMove)
 	}
 
 	
+}
+
+Backgammon.prototype.notifyMove = function(player, from, to)
+{
+
+	player.socket.emit(EMIT.MOVED_FROM_TO, [from, to]);
 }
 
 Backgammon.prototype.endGame = function(player)
@@ -269,9 +279,11 @@ Backgammon.prototype.nextTurn = function()
 	this.activePlayer = (this.activePlayer.color == PLAYER_COLOR.BLACK) ? this.playerWhite : this.playerBlack;
 	this.state.game.timer = undefined;
 	this.activePlayer.timer = (new Timer()).create(this.initParams.timer);
-	this.activePlayer.timer.onEnd = function() {
-		this.endGame();
-	}
+
+	// setup this on turn() and duplicate logic
+	// this.activePlayer.timer.onEnd = function() {
+	// 	this.endGame();
+	// }
 	this.turn();
 }
 
