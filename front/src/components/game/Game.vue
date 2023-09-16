@@ -118,7 +118,11 @@ export default
 			boardText: undefined,
 			match: undefined,
 			whitePlayerInfo: undefined,
-			blackPlayerInfo: undefined
+			blackPlayerInfo: undefined,
+			audio: {
+				dice: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/dice.aac"),
+				checker: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/checker.aac"),
+			}
 		}
 	},
 	methods:
@@ -166,6 +170,7 @@ export default
 		},
 		throwDice()
 		{
+			this.audio.dice.play();
 			this.io.emit('game/throwDice',
 			{
 				id: this.game.activePlayer.id,
@@ -175,8 +180,10 @@ export default
 
 		dice()
 		{
+			
 			if(this.game.activePlayer.allowDice)
 			{
+
 				this.game.dice.throw();
 				this.showDice = true;
 			}
@@ -202,6 +209,7 @@ export default
 			setTimeout(() => {
 				toElm.classList.remove("column-border");
 			}, 500);
+			this.audio.checker.play();
 		},
 		getColumnElmFromId(id) {
 			return document.getElementById("column"+id);
