@@ -3,6 +3,10 @@ import {PLAYER_COLOR} from "@/extensions/backgammon/Player";
 import Checker from "@/extensions/backgammon/Checker";
 import {STAGE} from "@/extensions/backgammon/Game";
 export default {
+	_nextTick: [],
+	nextTick: function(func) {
+		this._nextTick.push(func);
+	},
 	manage: function(game, state) {
 		
 		const stateKeys = Object.keys(state);
@@ -123,6 +127,11 @@ export default {
 				break;
 			}
 		}
+
+		this._nextTick.forEach((elm, index) => {
+			elm();
+			this._nextTick.splice(index, 1);
+		});
 
 	}
 }

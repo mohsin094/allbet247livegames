@@ -29,6 +29,7 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 	case PLAYER_COLOR.WHITE:
 		
 		for(let i=0; i<this.columnHolder.columns.length; i++) {
+		
 			if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) 
 				&& diceFirst != undefined
 				&& diceFirst.moved == false
@@ -38,6 +39,7 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 				&& originColFirst[0] == this.columnHolder.columns[i].index) {
 
 				this.columnHolder.columns[i].focus = true;
+				console.log(this.columnHolder.columns[i]);
 
 			}else if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_FIRST_DICE) 
 				&& diceSecond != undefined

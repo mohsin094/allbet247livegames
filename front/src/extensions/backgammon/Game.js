@@ -125,8 +125,10 @@ Game.prototype.touchCol = function(col)
 			}
 			this.vue.move(checker.index, originCol[0]);
 			this.move(checker, originCol[0]);
-			this.activePlayer.delMove(move.id);
-			this.board.removeOffer();
+			State.nextTick(() => {
+				this.activePlayer.delMove(move.id);
+				this.board.removeOffer();
+			});
 			
 		}else if(diceSecond != undefined && diceSecond.isPossible) {
 			move = diceSecond;
@@ -146,16 +148,17 @@ Game.prototype.touchCol = function(col)
 				}
 				this.vue.move(checker.index, originCol[0]);
 				this.move(checker, originCol[0]);
-				this.activePlayer.delMove(move.id);
-				this.board.removeOffer();
+				State.nextTick(() => {
+					this.activePlayer.delMove(move.id);
+					this.board.removeOffer();
+				});
 			}
 		}
 
 		if(this.activePlayer.hasMove() == false) {
 			this.stage.id = STAGE.MOVE_DICES;
 		} 
-	}	
-
+	}
 }
 
 Game.prototype.checkMovement = function()
@@ -167,8 +170,8 @@ Game.prototype.touchChecker = function(checker)
 {
 	
 	this.activePlayer.removeCheckerSelection();
-
-	if(this.activePlayer.color == checker.color && this.stage.id == STAGE.THROW_DOUBLE_DICE) {
+	if(this.activePlayer.color == checker.color
+		&& this.stage.id !== STAGE.MOVE_DICES) {
 		
 		const index = this.activePlayer.getChecker(checker.index);
 
@@ -177,7 +180,11 @@ Game.prototype.touchChecker = function(checker)
 		
 		if(this.activePlayer.checkers[index].selected) {
 			
-			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer, this.stage);
+			this.board.offerMove(
+				this.activePlayer.checkers[index],
+				this.activePlayer.checkers[index].position,
+				this.activePlayer,
+				this.stage);
 		}else {
 			console.debug('game.js:101');
 		}
