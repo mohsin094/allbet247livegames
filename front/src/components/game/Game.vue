@@ -148,8 +148,10 @@ export default
 					})
 				.then((res) =>
 				{
-					this.whitePlayerInfo = res.data.params
-					callback();
+					this.whitePlayerInfo = res.data.params;
+					if(callback != undefined) {
+						callback();
+					}
 				});
 
 			if(this.match.away_id != undefined)

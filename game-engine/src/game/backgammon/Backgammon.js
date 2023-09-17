@@ -246,7 +246,11 @@ Backgammon.prototype.move = function(userMove)
 			else if(this.activePlayer.hasMove() == false) {
 				this.setStage(STAGE.MOVE_DICES);
 				this.activePlayer.timer.clear();
-				this.nextTurn();
+
+				// this delay is for that player can see the second move on the table
+				setTimeout(() => {
+					this.nextTurn();
+				}, 1000);
 			}
 		}
 	}
@@ -269,6 +273,9 @@ Backgammon.prototype.endGame = function(player)
 		state: STAGE.END
 	});
 	this.onEnd(player.id);
+
+	Log.debug("Game Ends");
+
 }
 
 
@@ -408,20 +415,6 @@ Backgammon.prototype.start123 = function()
 	}, 1000);
 
 
-
-
-
-	// this.nextTick(() => {
-	// 	this.setStatePlayer(PLAYER_COLOR.WHITE, {
-	// 		checkers: undefined
-	// 	});
-
-	// 	this.setStatePlayer(PLAYER_COLOR.BLACK, {
-	// 		checkers: undefined
-	// 	});
-	// });
-
-
 	const timer = (new Timer()).create({
 		time: 3,
 	});
@@ -435,8 +428,11 @@ Backgammon.prototype.start123 = function()
 		this.activePlayer = this.throwTurnDice();
 		this.state.game.timer = undefined;
 		
-
-		this.turn();
+		// delay to player can see turn dice
+		setTimeout(() => {
+			this.turn();
+		}, 2000);
+		
 		
 	}
 
@@ -468,14 +464,13 @@ Backgammon.prototype.throwTurnDice = function()
 		showDice: true
 	});
 
-	// this.nextTick(() => {
-	// 	setTimeout(() => {
-	// 		this.setStateBothPlayer({
-	// 			showDice: false
-	// 		});
-			
-	// 	}, 5000);
-	// });
+	// setTimeout(() => {
+	// 	this.setStateBothPlayer({
+	// 		showDice: false
+	// 	});
+		
+	// }, 1000);
+	
 
 	// this.nextTick(() => {
 	// 	this.updatePlayer(this.playerBlack.color, {

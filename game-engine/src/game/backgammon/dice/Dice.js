@@ -12,7 +12,8 @@ Dice.prototype.throwOne = function() {
 }
 
 Dice.prototype.throwTwo = function() {
-	return [randBetween(1,6), randBetween(1,6)];
+	// return [randBetween(1,6), randBetween(1,6)];
+	return [randBetween(1,3), randBetween(1,3)];
 }
 
 Dice.prototype.throwDouble = function() {

@@ -6,7 +6,10 @@ export default {
     },
     error: function(input, ...params) {
         params = ! isEmpty(params) ? params : '';
+        const err = new Error("Error Log");
+        
         console.error(input, params);
+        console.log(err.stack);
     },
     info: function(input, ...params) {
         params = ! isEmpty(params) ? params : '';
@@ -20,6 +23,9 @@ export default {
     debug: function(input, ...params) {
 
         params = ! isEmpty(params) ? params : '';
+        const err = new Error("Error Log");
+        
         console.log(input, params);
+        console.log(err.stack);
     }
 }

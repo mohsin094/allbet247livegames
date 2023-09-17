@@ -120,12 +120,12 @@ Game.prototype.touchCol = function(col)
 			opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 			
 			if(opositeSingleChecker != false) {
-				this.move(opositeSingleChecker, opositeOut);
 				this.vue.move(opositeSingleChecker.index, opositeOut);					
+				this.move(opositeSingleChecker, opositeOut);
 			}
+			this.vue.move(checker.index, originCol[0]);
 			this.move(checker, originCol[0]);
 			this.activePlayer.delMove(move.id);
-			this.vue.move(checker.index, originCol[0]);
 			this.board.removeOffer();
 			
 		}else if(diceSecond != undefined && diceSecond.isPossible) {
@@ -141,12 +141,12 @@ Game.prototype.touchCol = function(col)
 				opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 				
 				if(opositeSingleChecker != false) {
-					this.move(opositeSingleChecker, opositeOut);
 					this.vue.move(opositeSingleChecker.index, opositeOut);					
+					this.move(opositeSingleChecker, opositeOut);
 				}
+				this.vue.move(checker.index, originCol[0]);
 				this.move(checker, originCol[0]);
 				this.activePlayer.delMove(move.id);
-				this.vue.move(checker.index, originCol[0]);
 				this.board.removeOffer();
 			}
 		}
@@ -167,7 +167,8 @@ Game.prototype.touchChecker = function(checker)
 {
 	
 	this.activePlayer.removeCheckerSelection();
-	if(this.activePlayer.color == checker.color && this.stage.id !== STAGE.MOVE_DICES) {
+
+	if(this.activePlayer.color == checker.color && this.stage.id == STAGE.THROW_DOUBLE_DICE) {
 		
 		const index = this.activePlayer.getChecker(checker.index);
 
@@ -187,6 +188,8 @@ Game.prototype.touchChecker = function(checker)
 
 Game.prototype.move = function(checker, to)
 {
+	//commented due to syncing problem between user interactive and server checkers places
+	//cause front-end mixed up
 	this.activePlayer.moveChecker(checker, to);
 }
 
