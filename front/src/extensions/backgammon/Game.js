@@ -117,17 +117,25 @@ Game.prototype.touchCol = function(col)
 			&& originCol[0] == col.id
 			&& move.isPossible
 			&& move.moved == false) {
+			
+			// prevent to touch again
+			checker.lock();
+
 			opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 			
 			if(opositeSingleChecker != false) {
 				this.vue.move(opositeSingleChecker.index, opositeOut);					
 				this.move(opositeSingleChecker, opositeOut);
 			}
+
+
+
 			this.vue.move(checker.index, originCol[0]);
-			this.move(checker, originCol[0]);
+				// this.move(checker, originCol[0]);
+				this.board.removeOffer();
 			State.nextTick(() => {
 				this.activePlayer.delMove(move.id);
-				this.board.removeOffer();
+				checker.unlock();
 			});
 			
 		}else if(diceSecond != undefined && diceSecond.isPossible) {
@@ -140,6 +148,9 @@ Game.prototype.touchCol = function(col)
 				&& originCol[0] == col.id
 				&& move.isPossible
 				&& move.moved == false) {
+
+				checker.lock();
+
 				opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 				
 				if(opositeSingleChecker != false) {
@@ -147,10 +158,11 @@ Game.prototype.touchCol = function(col)
 					this.move(opositeSingleChecker, opositeOut);
 				}
 				this.vue.move(checker.index, originCol[0]);
-				this.move(checker, originCol[0]);
+					// this.move(checker, originCol[0]);
+					this.board.removeOffer();
 				State.nextTick(() => {
 					this.activePlayer.delMove(move.id);
-					this.board.removeOffer();
+					checker.unlock();
 				});
 			}
 		}
@@ -166,23 +178,25 @@ Game.prototype.checkMovement = function()
 
 }
 
-Game.prototype.touchChecker = function(checker)
+Game.prototype.touchChecker = function(clickedChecker)
 {
 	
 	this.activePlayer.removeCheckerSelection();
-	if(this.activePlayer.color == checker.color
-		&& this.stage.id !== STAGE.MOVE_DICES) {
+
+	const checker = this.activePlayer.checkers[clickedChecker.index];
+	if(this.activePlayer.color == clickedChecker.color
+		&& this.stage.id !== STAGE.MOVE_DICES
+		&& checker.touchLock == false) {
 		
-		const index = this.activePlayer.getChecker(checker.index);
 
 		this.board.removeOffer();
-		this.activePlayer.toggleTouchChecker(index);
+		this.activePlayer.toggleTouchChecker(checker.index);
 		
-		if(this.activePlayer.checkers[index].selected) {
+		if(checker.selected) {
 			
 			this.board.offerMove(
-				this.activePlayer.checkers[index],
-				this.activePlayer.checkers[index].position,
+				checker,
+				checker.position,
 				this.activePlayer,
 				this.stage);
 		}else {

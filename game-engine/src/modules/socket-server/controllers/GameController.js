@@ -75,7 +75,7 @@ function GameController() {
 					game.create({
 						id: match._id.toString(),
 						timer: {
-							time: 60,
+							time: 600,
 							timeBank: 100
 						},
 						onEnd: async (winnerId) => {

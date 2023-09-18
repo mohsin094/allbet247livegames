@@ -39,7 +39,6 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 				&& originColFirst[0] == this.columnHolder.columns[i].index) {
 
 				this.columnHolder.columns[i].focus = true;
-				console.log(this.columnHolder.columns[i]);
 
 			}else if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_FIRST_DICE) 
 				&& diceSecond != undefined
