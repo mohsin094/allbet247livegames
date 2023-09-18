@@ -274,7 +274,6 @@ Backgammon.prototype.endGame = function(player)
 	});
 	this.onEnd(player.id);
 
-	Log.debug("Game Ends");
 
 }
 
@@ -351,7 +350,7 @@ Backgammon.prototype.throwDoubleDice = function()
 				
 				this.nextTurn();
 			}
-		}, 1500);
+		}, 3000);
 		
 
 		// this.nextTick(() => {
@@ -384,11 +383,11 @@ Backgammon.prototype.start123 = function()
 	
 	this.stateInterval = setInterval(() => {
 		this.setStatePlayer(PLAYER_COLOR.BLACK, {
-			moves: this.playerBlack.getMovesDice()
+			moves: this.playerBlack.getMoves()
 		});
 
 		this.setStatePlayer(PLAYER_COLOR.WHITE, {
-			moves: this.playerWhite.getMovesDice()
+			moves: this.playerWhite.getMoves()
 		});
 		if(typeof this.playerWhite.socket == 'object') {
 			this.playerWhite.socket.emit(EMIT.GAME_STATE, this.state);
@@ -431,7 +430,9 @@ Backgammon.prototype.start123 = function()
 		// delay to player can see turn dice
 		setTimeout(() => {
 			this.turn();
-		}, 2000);
+		}, 3000);
+
+
 		
 		
 	}

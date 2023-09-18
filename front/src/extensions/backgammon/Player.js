@@ -98,6 +98,20 @@ Player.prototype.appendMoves = function(moves) {
 	}
 }
 
+Player.prototype.convertObjectToMove = function(onlineMoves)
+{
+	this.moves = [];
+	for(let i=0; i<onlineMoves.length; i++) {
+		const move = new Move(undefined, this, onlineMoves[i].dice);
+		move.isPossible = onlineMoves[i].isPossible;
+		move.originColumns = onlineMoves[i].originColumns;
+		move.moved = onlineMoves[i].moved;
+		move.id = onlineMoves[i].id;
+		move.dice = onlineMoves[i].dice;
+		this.moves.push(move);
+	}
+}
+
 Player.prototype.getMove = function(diceNum)
 {
 	return find(this.moves, (o) => (o.dice == diceNum && o.moved == false));

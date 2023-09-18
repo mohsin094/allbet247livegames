@@ -133,8 +133,8 @@ Game.prototype.touchCol = function(col)
 			this.vue.move(checker.index, originCol[0]);
 				// this.move(checker, originCol[0]);
 				this.board.removeOffer();
+				// this.activePlayer.delMove(move.id);
 			State.nextTick(() => {
-				this.activePlayer.delMove(move.id);
 				checker.unlock();
 			});
 			
@@ -160,8 +160,8 @@ Game.prototype.touchCol = function(col)
 				this.vue.move(checker.index, originCol[0]);
 					// this.move(checker, originCol[0]);
 					this.board.removeOffer();
+					// this.activePlayer.delMove(move.id);
 				State.nextTick(() => {
-					this.activePlayer.delMove(move.id);
 					checker.unlock();
 				});
 			}

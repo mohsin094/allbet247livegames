@@ -35,10 +35,10 @@ export default {
 				game.playerBlack.allowDice = (state.playerBlack.allowDice != undefined && state.playerBlack.allowDice === true) ? true : false;
 				game.playerBlack.showDice = (state.playerBlack.showDice != undefined && state.playerBlack.showDice === true) ? true : false;
 				game.playerBlack.allowMove = (state.playerBlack.allowMove != undefined && state.playerBlack.allowMove === true) ? true : false;
-				moves = (state.playerBlack.moves != undefined) ? state.playerBlack.moves : [];
+				moves = (state.playerBlack.moves != undefined) ? state.playerBlack.moves : undefined;
 
-				if(moves.length > 0) {
-					game.playerBlack.appendMoves(moves);
+				if(moves != undefined) {
+					game.playerBlack.convertObjectToMove(moves);
 				}
 				
 				if(state.playerBlack.checkers != undefined) {
@@ -65,7 +65,7 @@ export default {
 						&& (state.playerBlack.dice[0] != game.playerBlack.dice.first || state.playerBlack.dice[1] != game.playerBlack.dice.second)
 						) {
 						game.playerBlack.dice.throwTwo(state.playerBlack.dice[0], state.playerBlack.dice[1]);
-						game.playerBlack.setupMovements(game.board.columnHolder);
+						// game.playerBlack.setupMovements(game.board.columnHolder);
 						if(game.playerBlack.hasMove() == false) {
 							game.stage.id = STAGE.MOVE_DICES;
 						}
@@ -84,10 +84,11 @@ export default {
 				game.playerWhite.showDice = (state.playerWhite.showDice != undefined && state.playerWhite.showDice === true) ? true : false;
 				game.playerWhite.allowMove = (state.playerWhite.allowMove != undefined && state.playerWhite.allowMove === true) ? true : false;
 				
-				moves = (state.playerWhite.moves != undefined) ? state.playerWhite.moves : [];
+				moves = (state.playerWhite.moves != undefined) ? state.playerWhite.moves : undefined;
 
-				if(moves.length > 0) {
-					game.playerWhite.appendMoves(moves);
+				if(moves != undefined) {
+					game.playerWhite.convertObjectToMove(moves);
+
 				}
 
 				if(state.playerWhite.checkers != undefined) {
@@ -113,7 +114,7 @@ export default {
 						&& (state.playerWhite.dice[0] != game.playerWhite.dice.first || state.playerWhite.dice[1] != game.playerWhite.dice.second)
 						) {
 						game.playerWhite.dice.throwTwo(state.playerWhite.dice[0], state.playerWhite.dice[1]);
-						game.playerWhite.setupMovements(game.board.columnHolder);
+						// game.playerWhite.setupMovements(game.board.columnHolder);
 						if(game.playerWhite.hasMove() == false) {
 							game.stage.id = STAGE.MOVE_DICES;
 						}

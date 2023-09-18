@@ -75,8 +75,8 @@ function GameController() {
 					game.create({
 						id: match._id.toString(),
 						timer: {
-							time: 600,
-							timeBank: 100
+							time: 60,
+							timeBank: 10
 						},
 						onEnd: async (winnerId) => {
 							await mongo.db.collection(MatchesModel.name).updateOne({_id: new ObjectId(gameId)}, {$set: {status: MatchesModel.status.FINISHED, winner: winnerId}});
