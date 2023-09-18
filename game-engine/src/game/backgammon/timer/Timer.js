@@ -35,11 +35,7 @@ Timer.prototype.start = function() {
 		if(this.tickCounter >= 0) {
 			this.onTick();
 			this.roundTickCouner--;
-		}else if(this.tickCounter <= this.time && this.tickCounter > this.timeBank + this.time) {
-			this.tickCounter = this.timeBank;
-			this.onTimeBankTick();
-		}else if(this.tickCounter <= this.timeBank ) {
-			this.onTimeBankEnd();
+		}else{
 			this.onEnd();
 			this.clear();
 		}

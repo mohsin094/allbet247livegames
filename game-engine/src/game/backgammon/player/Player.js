@@ -74,6 +74,21 @@ Player.prototype.getMovesDice = function() {
 	return final;
 }
 
+Player.prototype.getMoves = function()
+{
+	let final = [];
+	for(let i=0; i<this.moves.length; i++) {
+		final.push({
+			isPossible: this.moves[i].isPossible,
+			originColumns: this.moves[i].originColumns,
+			moved: this.moves[i].moved,
+			id: this.moves[i].id,
+			dice: this.moves[i].dice
+		});
+	}
+	return final;
+}
+
 Player.prototype.hasMove = function() {
 	
 	return (findIndex(this.moves, o => (o.moved == false && o.isPossible == true)) > -1) ? true : false;

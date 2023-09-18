@@ -68,7 +68,7 @@ Player.prototype.hasMove = function() {
 
 Player.prototype.delMove = function(moveId)
 {
-	console.log(moveId)
+
 	const moveIndex = findIndex(this.moves, (o) => (o.id == moveId));
 	if(moveIndex != undefined) {
 		const moveKeys = Object.keys(this.moves);
@@ -95,6 +95,20 @@ Player.prototype.appendMoves = function(moves) {
 		}else {
 			this.moves[i].moved = true;
 		}
+	}
+}
+
+Player.prototype.convertObjectToMove = function(onlineMoves)
+{
+	this.moves = [];
+	for(let i=0; i<onlineMoves.length; i++) {
+		const move = new Move(undefined, this, onlineMoves[i].dice);
+		move.isPossible = onlineMoves[i].isPossible;
+		move.originColumns = onlineMoves[i].originColumns;
+		move.moved = onlineMoves[i].moved;
+		move.id = onlineMoves[i].id;
+		move.dice = onlineMoves[i].dice;
+		this.moves.push(move);
 	}
 }
 

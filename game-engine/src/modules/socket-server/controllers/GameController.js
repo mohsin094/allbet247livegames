@@ -41,10 +41,20 @@ function GameController() {
 		const game = GameHolder.get(gameId);
 
 		if(gameId && game) {
-			if(game.activePlayer != undefined && game.activePlayer.id == userId && game.activePlayer.allowDice == true) {
+			if(game.activePlayer != undefined
+				&& game.activePlayer.id == userId
+				&& game.activePlayer.allowDice == true) {
 				
 				game.throwDoubleDice();
+			}else {
+				// this log may seen in log history, that's because players click fast on throw dice when they are not allow to throw dice
+				Log.debug("gameController.js:101");
+				Log.debug(userId);
+				Log.debug(game);
 			}
+		}else {
+			Log.debug("gameController.js:100");
+			Log.debug(gameId, game);
 		}
 	}
 
@@ -66,13 +76,13 @@ function GameController() {
 						id: match._id.toString(),
 						timer: {
 							time: 60,
-							timeBank: 100
+							timeBank: 10
 						},
 						onEnd: async (winnerId) => {
 							await mongo.db.collection(MatchesModel.name).updateOne({_id: new ObjectId(gameId)}, {$set: {status: MatchesModel.status.FINISHED, winner: winnerId}});
-							setTimeout(() => {
+							game.nextTick(() => {
 								GameHolder.remove(gameId);
-							}, 10000);
+							});
 						}
 					});
 					GameHolder.set(match._id, game);

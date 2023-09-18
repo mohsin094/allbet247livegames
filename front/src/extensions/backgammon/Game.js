@@ -47,7 +47,8 @@ Game.prototype.timer = undefined;
 Game.prototype.winner = undefined;
 
 
-Game.prototype.socketInit = function(socket) {
+Game.prototype.socketInit = function(socket)
+{
 	this.socket = socket;
 
  // make game
@@ -116,16 +117,26 @@ Game.prototype.touchCol = function(col)
 			&& originCol[0] == col.id
 			&& move.isPossible
 			&& move.moved == false) {
+			
+			// prevent to touch again
+			checker.lock();
+
 			opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 			
 			if(opositeSingleChecker != false) {
-				this.move(opositeSingleChecker, opositeOut);
 				this.vue.move(opositeSingleChecker.index, opositeOut);					
+				this.move(opositeSingleChecker, opositeOut);
 			}
-			this.move(checker, originCol[0]);
-			this.activePlayer.delMove(move.id);
+
+
+
 			this.vue.move(checker.index, originCol[0]);
-			this.board.removeOffer();
+				// this.move(checker, originCol[0]);
+				this.board.removeOffer();
+				// this.activePlayer.delMove(move.id);
+			State.nextTick(() => {
+				checker.unlock();
+			});
 			
 		}else if(diceSecond != undefined && diceSecond.isPossible) {
 			move = diceSecond;
@@ -137,25 +148,29 @@ Game.prototype.touchCol = function(col)
 				&& originCol[0] == col.id
 				&& move.isPossible
 				&& move.moved == false) {
+
+				checker.lock();
+
 				opositeSingleChecker = opositePlayer.hasSingleChecker(originCol[0]);
 				
 				if(opositeSingleChecker != false) {
-					this.move(opositeSingleChecker, opositeOut);
 					this.vue.move(opositeSingleChecker.index, opositeOut);					
+					this.move(opositeSingleChecker, opositeOut);
 				}
-				this.move(checker, originCol[0]);
-				this.activePlayer.delMove(move.id);
 				this.vue.move(checker.index, originCol[0]);
-				this.board.removeOffer();
+					// this.move(checker, originCol[0]);
+					this.board.removeOffer();
+					// this.activePlayer.delMove(move.id);
+				State.nextTick(() => {
+					checker.unlock();
+				});
 			}
-			
 		}
 
 		if(this.activePlayer.hasMove() == false) {
 			this.stage.id = STAGE.MOVE_DICES;
 		} 
 	}
-
 }
 
 Game.prototype.checkMovement = function()
@@ -163,30 +178,44 @@ Game.prototype.checkMovement = function()
 
 }
 
-Game.prototype.touchChecker = function(checker)
+Game.prototype.touchChecker = function(clickedChecker)
 {
 	
 	this.activePlayer.removeCheckerSelection();
-	if(this.activePlayer.color == checker.color && this.stage.id !== STAGE.MOVE_DICES) {
+
+	const checker = this.activePlayer.checkers[clickedChecker.index];
+	if(this.activePlayer.color == clickedChecker.color
+		&& this.stage.id !== STAGE.MOVE_DICES
+		&& checker.touchLock == false) {
 		
-		const index = this.activePlayer.getChecker(checker.index);
 
 		this.board.removeOffer();
-		this.activePlayer.toggleTouchChecker(index);
+		this.activePlayer.toggleTouchChecker(checker.index);
 		
-		if(this.activePlayer.checkers[index].selected) {
+		if(checker.selected) {
 			
-			this.board.offerMove(this.activePlayer.checkers[index], this.activePlayer.checkers[index].position, this.activePlayer, this.stage);
+			this.board.offerMove(
+				checker,
+				checker.position,
+				this.activePlayer,
+				this.stage);
+		}else {
+			console.debug('game.js:101');
 		}
+	}else {
+		console.debug('game.js:100');
 	}
 }
 
 Game.prototype.move = function(checker, to)
 {
+	//commented due to syncing problem between user interactive and server checkers places
+	//cause front-end mixed up
 	this.activePlayer.moveChecker(checker, to);
 }
 
-Game.prototype.setActivePlayer = function() {
+Game.prototype.setActivePlayer = function()
+{
 	this.activePlayer = this.playerWhite;
 }
 

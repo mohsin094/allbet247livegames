@@ -29,6 +29,7 @@ Board.prototype.offerMove = function(checker, fromPosition, player, stage) {
 	case PLAYER_COLOR.WHITE:
 		
 		for(let i=0; i<this.columnHolder.columns.length; i++) {
+		
 			if((stage.id == STAGE.THROW_DOUBLE_DICE || stage.id == STAGE.MOVE_SECOND_DICE) 
 				&& diceFirst != undefined
 				&& diceFirst.moved == false
