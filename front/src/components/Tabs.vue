@@ -105,11 +105,11 @@
 			  <div class="tab-pane fade show active" id="pills-waiting-list" role="tabpanel">
 			  	<div class="row mb-5">
 				  	<div v-for="wait in waiting" class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
-			  			<div class="frame small-frame border-purple">
+			  			<div :class="['frame small-frame' ,getAvatarColor(wait.home.avatar+'.png')]">
 				  			<div class="position-relative card">
 				  				<div class="row gx-6 small-card-header">
 				  					<div class="col">
-					  					<div class="border-golden card-profile">
+					  					<div :class="[getAvatarColor(wait.home.avatar+'.png'),'card-profile']">
 						  					<div class="position-relative profile-bg bg-purple">
 						  						<img style="width: 50px;" :src="frontUrl+'/assets/images/avatars/'+ wait.home.avatar +'.png'" class="position-absolute"/>
 						  					</div>
@@ -485,7 +485,12 @@
 	import { Tab } from 'bootstrap'
 	import WaitingList from '@/components/_modals/WaitingList.vue';
 	import NewGame from '@/components/_modals/NewGame.vue';
+	import avatarColor from '@/composables/avatarColor.js'
 	export default {
+		setup(){
+			const getAvatarColor = avatarColor
+			return {getAvatarColor}
+		},
 		components: {
         	WaitingList,
         	NewGame
@@ -498,9 +503,62 @@
 		      baseUrl: import.meta.env.VITE_BACKEND_BASE_URL,
 		      frontUrl: import.meta.env.VITE_BASE_URL,
 		      waitingInterval: undefined,
+		      classes:[]
 		    }
 		},
 		methods: {
+			getClassName(avatar)
+			{
+				const avatars = {
+					'1.png': 'border-light-green',
+					'2.png': 'border-light-green',
+					'9.png': 'border-light-green',
+					'25.png': 'border-light-green',
+					'22.png': 'border-light-green',
+					'36.png': 'border-light-green',
+					'4.png': 'border-red',
+					'5.png': 'border-red',
+					'8.png': 'border-red',
+					'10.png': 'border-red',
+					'24.png': 'border-red',
+					'11.png': 'border-red',
+					'12.png': 'border-red',
+					'15.png': 'border-red',
+					'37.png': 'border-red',
+					'38.png': 'border-red',
+					'7.png': 'border-brown',
+					'8.png': 'border-brown',
+					'13.png': 'border-brown',
+					'14.png': 'border-brown',
+					'17.png': 'border-brown',
+					'18.png': 'border-brown',
+					'20.png': 'border-brown',
+					'26.png': 'border-brown',
+					'29.png': 'border-brown',
+					'31.png': 'border-brown',
+					'34.png': 'border-brown',
+					'40.png': 'border-brown',
+					'41.png': 'border-brown',
+					'45.png': 'border-brown',
+					'16.png': 'border-purple',
+					'23.png': 'border-purple',
+					'43.png': 'border-purple',
+					'44.png': 'border-purple',
+					'6.png': 'border-sky-blue',
+					'19.png': 'border-sky-blue',
+					'21.png': 'border-sky-blue',
+					'27.png': 'border-sky-blue',
+					'28.png': 'border-sky-blue',
+					'30.png': 'border-sky-blue',
+					'32.png': 'border-sky-blue',
+					'33.png': 'border-sky-blue',
+					'35.png': 'border-sky-blue',
+					'39.png': 'border-sky-blue',
+					'42.png': 'border-sky-blue',
+				};
+
+				return avatars[avatar];
+			},
 		    setTitle(title) {
 		      this.title = title
 		    },
@@ -518,6 +576,7 @@
 		},
 		created() {
 			this.fetchWaiting();
+			console.log(this.classes)
 		},
 		unmounted() {
 			clearInterval(this.waitingInterval);

@@ -126,7 +126,7 @@
 	          </div>
 	        </li>
 	        <li class="nav-item">
-	          <div class="header-box">
+	          <div class="header-box" @click="goToTicket()">
 	            <i class="material-symbols-rounded">forum</i>
 	          </div>
 	        </li>
@@ -151,7 +151,7 @@
 	              	
 	                <li>
 	                  <a href="#" class="dropdown-item fullname">
-	                    Hana Peterson
+	                    {{$user.data.email}}
 	                    <span class="user-level text-golden-gradient">LVL.12</span>
 	                  </a>
 	                </li>
@@ -174,7 +174,7 @@
 							expand_more
 					</i>
 	                <span class="position-absolute fullname">
-	              		Hana Peterson
+	              		{{$user.data.email}}
 	            	</span>
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
@@ -202,6 +202,9 @@
       },
       goToCashier:function(){
       	this.$router.push({path:'/cashier'})
+      },
+      goToTicket:function(){
+      	this.$router.push({path:'/ticket'})
       },
       openNotifies:function(){
       	var element = document.getElementById("notif-wrapper")

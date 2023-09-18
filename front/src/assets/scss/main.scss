@@ -883,7 +883,7 @@ small{
 	position:absolute !important;
 }
 .dropdown-menu[data-bs-popper]{
-	left:-110px;
+	left:0;
 }
 .navbar-toggler:focus,
 .navbar-toggler:active,
@@ -1111,7 +1111,7 @@ small{
 	-webkit-mask: /*4*/
 	linear-gradient(#fff 0 0) padding-box, 
 	linear-gradient(#fff 0 0);
-	-webkit-mask-composite: xor; /*5'*/
+	// -webkit-mask-composite: xor; /*5'*/
 	// mask-composite: exclude; /*5*/
 }
 .frame{
@@ -1125,8 +1125,10 @@ small{
 .btn-golden{
 	border-radius: 12px;
 	height:40px;
-	width: 100%;
 	font-weight: 700;
+}
+.btn-block{
+	width:100%;
 }
 ul > li > a{
 	border-radius: 12px;
