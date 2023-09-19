@@ -42,7 +42,7 @@ class DefaultController extends ApiController
     {
 
         $games = Matches::find()
-        ->with(['homeUser', 'awayUser', 'stake'])
+        ->with(['stake'])
         ->where(['home_id' => \Yii::$app->user->id])
         ->orWhere(['away_id' => \Yii::$app->user->id])
         ->asArray()
@@ -50,9 +50,19 @@ class DefaultController extends ApiController
 
 
 
-        $final = array_values(array_filter($games, function($game) {
+        $semiFinal = array_values(array_filter($games, function($game) {
             return ($game['status'] == Matches::STATUS_WAITING || $game['status'] == Matches::STATUS_PLAYING);
         }));
+
+        $final = [];
+        foreach($semiFinal as $g) {
+         
+            $homeUser = (Users::findOne(['_id' => $g['home_id']]))->getPublicData();
+            $awayUser = (!empty($g['away_id'])) ? (Users::findOne(['_id' => $g['away_id']]))->getPublicData() : null;
+            $g['homeUser'] = $homeUser;
+            $g['awayUser'] = ($awayUser) ? $awayUser : null;
+            array_push($final, $g);
+        }
 
         $this->resp->result = true;
         $this->resp->params = $final;

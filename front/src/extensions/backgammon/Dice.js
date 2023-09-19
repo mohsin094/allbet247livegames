@@ -22,7 +22,7 @@ Dice.prototype.throwTwo = function(first, second) {
 			clearInterval(interval);
 		}
 		i++;
-	},70);
+	},100);
 }
 
 Dice.prototype.throwOne = function(first) {
@@ -36,7 +36,7 @@ Dice.prototype.throwOne = function(first) {
 			clearInterval(interval);
 		}
 		i++;
-	},70);
+	},100);
 }
 
 export default Dice

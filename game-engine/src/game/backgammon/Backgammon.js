@@ -347,7 +347,8 @@ Backgammon.prototype.throwDoubleDice = function()
 		// delay for display "No Move" to player
 		setTimeout(() => {
 			if(! this.activePlayer.hasMove()) {
-				
+				// this line is experimental due fix bug: game automatically ends with timer onEnd func
+				this.activePlayer.timer.clear();
 				this.nextTurn();
 			}
 		}, 3000);
@@ -411,7 +412,7 @@ Backgammon.prototype.start123 = function()
 			})
 			this._nextTick = [];
 		}
-	}, 1000);
+	}, 500);
 
 
 	const timer = (new Timer()).create({

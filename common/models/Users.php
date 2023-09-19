@@ -97,6 +97,15 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         ];
     }
 
+    public function getPublicData()
+    {
+        return [
+            'id' => (string) $this->_id,
+            'avatar' => $this->avatar,
+            'lvl' => $this->lvl
+        ]; 
+    }
+
     public function scenarios()
     {
         return array_merge(parent::scenarios(), [

@@ -9,6 +9,7 @@ import Message from "#components/Message";
 import App from "#components/App";
 import mongo from "#components/Mongo";
 import MatchesModel from "#models/Matches";
+import GameTimeframesModel from "#models/GameTimeframes";
 import GameHolder from "#backgammon/GameHolder";
 import Game from "#backgammon/Backgammon";
 import {ObjectId} from "mongodb";
@@ -64,8 +65,19 @@ function GameController() {
 
 		if(gameId) {
 			const match = await mongo.db.collection(MatchesModel.name).findOne({_id: new ObjectId(gameId)});
-			
-		
+			const gameTime = await mongo.db.collection(GameTimeframesModel.name).findOne({_id: new ObjectId(match.timeframe_id)});
+			let time = 60;
+			switch(gameTime.timeframe) {
+			case GameTimeframesModel.timeframe.SLOW:
+				time = 60;
+				break;
+			case GameTimeframesModel.timeframe.NORMAL:
+				time = 30;
+			break;
+			case GameTimeframesModel.timeframe.FAST:
+				time = 15;
+			break;
+			}
 			if(match && (match.status == MatchesModel.status.PLAYING || match.status == MatchesModel.status.WAITING)) {
 				
 				let game = GameHolder.get(gameId);
@@ -75,11 +87,11 @@ function GameController() {
 					game.create({
 						id: match._id.toString(),
 						timer: {
-							time: 60,
-							timeBank: 10
+							time: time,
+							// timeBank: 10
 						},
 						onEnd: async (winnerId) => {
-							await mongo.db.collection(MatchesModel.name).updateOne({_id: new ObjectId(gameId)}, {$set: {status: MatchesModel.status.FINISHED, winner: winnerId}});
+							await mongo.db.collection(MatchesModel.name).updateOne({_id: new ObjectId(gameId), status: MatchesModel.status.PLAYING}, {$set: {status: MatchesModel.status.FINISHED, winner: winnerId}});
 							game.nextTick(() => {
 								GameHolder.remove(gameId);
 							});

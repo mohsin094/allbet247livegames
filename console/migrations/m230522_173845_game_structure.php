@@ -11,12 +11,12 @@ class m230522_173845_game_structure extends \yii\mongodb\Migration
     {
         $this->createCollection('game_timeframes');
         $this->batchInsert('game_timeframes',[
-            // [
-            //     'timeframe' => GameTimeframes::TIMEFRAME_SLOW
-            // ],
-            // [
-            //     'timeframe' => GameTimeframes::TIMEFRAME_FAST
-            // ],
+            [
+                'timeframe' => GameTimeframes::TIMEFRAME_SLOW
+            ],
+            [
+                'timeframe' => GameTimeframes::TIMEFRAME_FAST
+            ],
             [
                 'timeframe' => GameTimeframes::TIMEFRAME_NORMAL
             ],
