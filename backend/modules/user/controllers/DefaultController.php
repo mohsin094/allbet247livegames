@@ -2,18 +2,41 @@
 
 namespace app\modules\user\controllers;
 
+use app\modules\user\components\ApiController;
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use \common\components\Tools;
+use \common\models\Users;
 
-/**
- * Default controller for the `user` module
- */
-class DefaultController extends Controller
+use yii\helpers\Url;
+
+class DefaultController extends ApiController
 {
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
-    public function actionIndex()
+    public function behaviors()
     {
-        return $this->render('index');
+        return ArrayHelper::merge(parent::behaviors(), [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['find-player'],
+                        'roles' => ['@'],
+                        'allow' => true,
+                    ],
+                ],
+            ]
+        ]);
+    }
+
+    public function actionFindPlayer($publicName)
+    {
+        $users = Users::find()
+        ->select(['_id', 'public_name'])
+        ->where(['public_name' => $publicName])
+        ->all();
+
+        $this->resp->result = true;
+        $this->resp->params = $users;
+        return $this->resp;
     }
 }
