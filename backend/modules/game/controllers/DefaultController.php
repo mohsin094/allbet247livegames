@@ -13,6 +13,7 @@ use \backend\modules\game\models\MatchesRepo;
 use \backend\modules\game\models\Matches;
 use \backend\modules\game\models\MatchEvents;
 use \common\models\Users;
+use \common\components\ApiAction;
 /**
  * Default controller for the `game` module
  */
@@ -156,18 +157,19 @@ class DefaultController extends ApiController
             '_id' => $id,
         ]);
 
-        if($event && ($event->status == MatchEvents::STATUS_PLAYING || $event->status == MatchEvents::STATUS_WAITING)) {
+        if($event) {
 
             $match = Matches::find()->where(['_id' => $event->match_id])->one();
 
-            
+            if(($event->status == MatchEvents::STATUS_PLAYING || $event->status == MatchEvents::STATUS_WAITING)) {
+
                 $this->resp->result = true;
                 $this->resp->params = [
                     'away_id' => ($match->away_id != null) ? $match->away_id : null,
                     'home_id' => $match->home_id,
                     'id' => $id,
                 ];
-            
+            }
         }
 
         return $this->resp;

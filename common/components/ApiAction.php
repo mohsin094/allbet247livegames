@@ -3,6 +3,7 @@
 namespace common\components;
 class ApiAction {
 	const ACTION_REDIRECT = 'redirect';
+	const ACTION_SHOW_RESULT_ALERT = 'show_result_alert';
 
 	const REDIRECT_TYPE_SOFT = 'soft';
 	const REDIRECT_TYPE_HARD = 'hard';

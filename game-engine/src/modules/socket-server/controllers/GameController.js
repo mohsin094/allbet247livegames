@@ -174,7 +174,7 @@ function GameController()
 							{
 								$set:
 								{
-									status: MatcheEventsModel.status.FINISHED,
+									status: MatchEventsModel.status.FINISHED,
 									winner: winnerId
 								}
 							});
@@ -217,7 +217,7 @@ function GameController()
 			{
 				if(game.stage == 0)
 				{
-					console.log('successs')
+				
 					game.start123();
 				}
 			}
