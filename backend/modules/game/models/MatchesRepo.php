@@ -3,6 +3,7 @@ namespace backend\modules\game\models;
 
 use \common\models\UsersRepo;
 use \backend\modules\game\models\GameStakes;
+use \backend\modules\game\models\MatchEventsRepo;
 use \common\components\Tools;
 class MatchesRepo extends \backend\modules\game\models\Matches
 {
@@ -22,13 +23,17 @@ class MatchesRepo extends \backend\modules\game\models\Matches
     {
 		$user = UsersRepo::findOne(['_id' => $this->home_id]);
 		$stake = GameStakes::findOne(['_id' => $this->stake_id]);
-		$round = GameRounds::findOne(['round' => 1]);
+		$round = GameRounds::findOne(['_id' => $this->round_id]);
 
-		//limit to 1 round for now, will be removed in future
-		$this->round_id = (string) $round->_id;
-		
 		if($user->enoughBalance($stake->stake)) {
 	    	if($this->save()) {
+	    		for($i=0; $i<$round->round; $i++) {
+	    			$event = new MatchEventsRepo;
+	    			$event->match_id = (string) $this->_id;
+	    			$event->save();
+	    			
+	    		}
+
 	    		$user->decreaseBalance($stake->stake, self::class, (string) $this->_id, \Yii::t('app', 'Decrease Balance For Creating a Match'));
 	    		return $this;
 	    	}

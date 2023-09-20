@@ -11,6 +11,7 @@ use \backend\modules\game\models\GameTimeframes;
 use \backend\modules\game\models\GameStakes;
 use \backend\modules\game\models\MatchesRepo;
 use \backend\modules\game\models\Matches;
+use \backend\modules\game\models\MatchEvents;
 use \common\models\Users;
 /**
  * Default controller for the `game` module
@@ -103,20 +104,46 @@ class DefaultController extends ApiController
     public function actionJoin($matchId)
     {
         $match = Matches::find()->where(['_id' => $matchId])->one();
-        if($match && $match->home_id != \Yii::$app->user->id) {
-            $match->away_id = \Yii::$app->user->id;
-            if($match->home_id != null) {
-                $match->status = Matches::STATUS_PLAYING;
+
+        if($match) {
+
+            if($match && $match->home_id != \Yii::$app->user->id) {
+                $match->away_id = \Yii::$app->user->id;
+                if($match->home_id != null) {
+                    $match->status = Matches::STATUS_PLAYING;
+                }
+                if($match->save()) {
+                    $this->resp->result = true;
+                }
+            }elseif($match && $match->home_id == \Yii::$app->user->id) {
+                if($match->away_id != null) {
+                    $match->status = Matches::STATUS_PLAYING;
+                }
+                if($match->save()) {
+                    $this->resp->result = true;
+                }
             }
-            if($match->save()) {
-                $this->resp->result = true;
+
+            $events = MatchEvents::find()
+            ->where(['match_id' => (string) $match->_id])
+            ->all();
+
+            $activeEvent = null;
+
+            foreach($events as $event) {
+                if($event->status == MatchEvents::STATUS_PLAYING
+                    || $event->status == MatchEvents::STATUS_WAITING) {
+                    $event->status = $match->status;
+                    $event->save();
+                    $activeEvent = $event;
+                    break;
+                }
             }
-        }elseif($match && $match->home_id == \Yii::$app->user->id) {
-            if($match->away_id != null) {
-                $match->status = Matches::STATUS_PLAYING;
-            }
-            if($match->save()) {
-                $this->resp->result = true;
+
+            if($activeEvent) {
+                $this->resp->params = ['match_id' => (string) $activeEvent->_id];
+            }else {
+                $this->resp->result = false;
             }
         }
 
@@ -125,15 +152,22 @@ class DefaultController extends ApiController
 
     public function actionGetMatch($id)
     {
-        $match = Matches::find()->where(['_id' => $id])->one();
+        $event = MatchEvents::findOne([
+            '_id' => $id,
+        ]);
 
-        if($match) {
-            $this->resp->result = true;
-            $this->resp->params = [
-                'away_id' => ($match->away_id != null) ? $match->away_id : null,
-                'home_id' => $match->home_id,
-                'id' => (string)$match->_id,
-            ];
+        if($event && ($event->status == MatchEvents::STATUS_PLAYING || $event->status == MatchEvents::STATUS_WAITING)) {
+
+            $match = Matches::find()->where(['_id' => $event->match_id])->one();
+
+            
+                $this->resp->result = true;
+                $this->resp->params = [
+                    'away_id' => ($match->away_id != null) ? $match->away_id : null,
+                    'home_id' => $match->home_id,
+                    'id' => $id,
+                ];
+            
         }
 
         return $this->resp;

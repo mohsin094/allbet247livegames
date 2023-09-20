@@ -62,8 +62,8 @@
 				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/join", {params: {matchId: this.match.id}}).then((res) => {
 					res = res.data;
 
-					if(res.result) {
-						this.$router.push({name: 'backgammon', params: {matchId: this.match.id}});
+					if(res.result && res.params.match_id) {
+						this.$router.push({name: 'backgammon', params: {matchId: res.params.match_id}});
 					}
 				});
 				this.closeModal();

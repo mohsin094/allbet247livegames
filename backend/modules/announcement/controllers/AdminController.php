@@ -18,7 +18,7 @@ class AdminController extends AdminApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['list', 'delete', 'add', 'type-list'],
+                        'actions' => ['list', 'delete', 'add', 'type-list', 'to-list'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -31,6 +31,14 @@ class AdminController extends AdminApiController
 	{
 		$this->resp->result = true;
 		$this->resp->params = Announcements::typeLists();
+
+		return $this->resp;
+	}
+
+	public function actionToList()
+	{
+		$this->resp->result = true;
+		$this->resp->params = Announcements::toList();
 
 		return $this->resp;
 	}

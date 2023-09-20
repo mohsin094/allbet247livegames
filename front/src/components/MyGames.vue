@@ -94,9 +94,9 @@
 			join(matchId) {
 				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/join", {params: {matchId: matchId}}).then((res) => {
 					res = res.data;
-
-					if(res.result) {
-						this.$router.push({name: 'backgammon', params: {matchId: matchId}});
+					
+					if(res.result && res.params.match_id) {
+						this.$router.push({name: 'backgammon', params: {matchId: res.params.match_id}});
 					}
 				});
 			},

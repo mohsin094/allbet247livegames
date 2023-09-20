@@ -18,12 +18,27 @@ class Announcements extends \yii\mongodb\ActiveRecord
 
     const TYPE_WARNING = 'warning';
     const TYPE_PRIMARY = 'primary';
+    const TYPE_MANDATORY = 'mandatory';
+
+    const TO_ONE = 'one';
+    const TO_ALL = 'all';
+
+    const ACTION_REQUEST_PLAY_AGAIN = 'request_play_again';
+
+    public static function toList()
+    {
+        return [
+            self::TO_ONE => 'one',
+            self::TO_ALL => 'all'
+        ];
+    }
 
     public static function typeLists()
     {
         return [
             self::TYPE_PRIMARY => 'primary',
-            self::TYPE_WARNING => 'warning'
+            self::TYPE_WARNING => 'warning',
+            self::TYPE_MANDATORY => 'mandatory',
         ];
     }
     /**
@@ -54,6 +69,9 @@ class Announcements extends \yii\mongodb\ActiveRecord
             'text_body',
             'cdate',
             'type',
+            'to',
+            'receiver_id',
+            'action',
         ];
     }
 
@@ -63,7 +81,7 @@ class Announcements extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'text_body', 'cdate', 'type'], 'safe']
+            [['title', 'text_body', 'cdate', 'type', 'to', 'receiver_id', 'action'], 'safe']
         ];
     }
 

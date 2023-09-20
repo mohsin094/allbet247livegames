@@ -93,7 +93,7 @@
 				let instance = this
 				let url = import.meta.env.VITE_BACKEND_BASE_URL+'/game/default/new'
 				this.$axios.post(url,{
-					// round_id:this.round,
+					round_id:this.round,
 					stake_id:this.stake,
 					timeframe_id:this.timeframe
 				}).then((response) => {

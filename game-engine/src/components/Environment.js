@@ -14,16 +14,16 @@ export default {
         conf.debug = process.env.DEBUG;
         switch(process.env.ENV) {
             case this.env_prod:
-                conf.load('../configs/configs.json');
+                conf.load(path.join(path.basePath, 'src', 'configs')+ '/configs/configs.json');
                 break;
             case this.env_test:
-                conf.load('../configs/configs.test.json');
+                conf.load(path.join(path.basePath, 'src', 'configs')+ '/configs/configs.test.json');
                 break;
             case this.env_dev:
                 conf.load(path.join(path.basePath, 'src', 'configs')+ '/configs.local.json');
                 break;
             default:
-                conf.load('../configs/configs.local.json');
+                conf.load(path.join(path.basePath, 'src', 'configs')+ '/configs/configs.local.json');
         }
     }
 }

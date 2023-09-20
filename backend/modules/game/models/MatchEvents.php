@@ -11,15 +11,37 @@ use Yii;
  * @property mixed $winner_id
  * @property mixed $match_id
  * @property mixed $status
+ * @property mixed $cdate
  */
 class MatchEvents extends \yii\mongodb\ActiveRecord
 {
+    const STATUS_WAITING = 'waiting';
+    const STATUS_PLAYING = 'playing';
+    const STATUS_FINISHED = 'finished';
+
+    public static function statusList()
+    {
+        return [
+            self::STATUS_WAITING => 'waiting',
+            self::STATUS_PLAYING => 'playing',
+            self::STATUS_FINISHED => 'finished'
+        ];
+    }
     /**
      * {@inheritdoc}
      */
     public static function collectionName()
     {
         return [\Yii::$app->params['mongodbDbName'], 'match_events'];
+    }
+
+    public function beforeValidate()
+    {
+        if($this->isNewRecord) {
+            $this->cdate = (string) time();
+            $this->status = self::STATUS_WAITING;
+        }
+        return parent::beforeValidate();
     }
 
     /**
@@ -32,6 +54,7 @@ class MatchEvents extends \yii\mongodb\ActiveRecord
             'winner_id',
             'match_id',
             'status',
+            'cdate',
         ];
     }
 
@@ -41,7 +64,7 @@ class MatchEvents extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['winner_id', 'match_id', 'status'], 'safe']
+            [['winner_id', 'match_id', 'status', 'cdate'], 'safe']
         ];
     }
 
@@ -55,6 +78,7 @@ class MatchEvents extends \yii\mongodb\ActiveRecord
             'winner_id' => Yii::t('app', 'Winner ID'),
             'match_id' => Yii::t('app', 'Match ID'),
             'status' => Yii::t('app', 'Status'),
+            'cdate' => Yii::t('app', 'Cdate'),
         ];
     }
 }

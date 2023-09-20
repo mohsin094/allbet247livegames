@@ -67,15 +67,15 @@ class m230522_173845_game_structure extends \yii\mongodb\Migration
             [
                 'round' => 1
             ],
-            // [
-            //     'round' => 3
-            // ],
-            // [
-            //     'round' => 5
-            // ],
-            // [
-            //     'round' => 7
-            // ],
+            [
+                'round' => 3
+            ],
+            [
+                'round' => 5
+            ],
+            [
+                'round' => 7
+            ]
             
         ]);
 
