@@ -165,7 +165,7 @@ function GameController()
 					},
 					onEnd: async (winnerId) =>
 					{
-						await mongo.db.collection(MatchEventsModel.name)
+						mongo.db.collection(MatchEventsModel.name)
 							.updateOne(
 							{
 								_id: new ObjectId(event._id.toString()),
@@ -178,6 +178,45 @@ function GameController()
 									winner: winnerId
 								}
 							});
+
+						//check if last event
+						const events = await mongo.db.collection(MatchEventsModel.name)
+						.find({
+							match_id: event.match_id
+						}).toArray();
+						
+						let winner = 0;
+						let notDone = false;
+						for(let i=0; i<events.length; i++) {
+							if(events[i].status == MatchEventsModel.status.FINISHED) {
+								if(events[i].winner != undefined && events[i].winner == match.away_id) {
+									winner--;
+								}else if(events[i].winner != undefined && events[i].winner == match.home_id) {
+									winner++;
+								}
+							}else {
+								notDone = true;
+								break;
+							}
+						}
+
+						if(notDone == false && events.length > 0) {
+							
+							mongo.db.collection(MatchesModel.name)
+							.updateOne(
+							{
+								_id: new ObjectId(match._id.toString()),
+								status: MatchesModel.status.PLAYING
+							},
+							{
+								$set:
+								{
+									status: MatchesModel.status.FINISHED,
+									winner: (winner > 0) ? match.home_id : match.away_id
+								}
+							});
+						}
+
 						game.nextTick(() =>
 						{
 							GameHolder.remove(event._id.toString());
