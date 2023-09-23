@@ -252,6 +252,7 @@ function GameController()
 				});
 			}
 
+	
 			if(typeof game.playerBlack.socket == 'object' && typeof game.playerWhite.socket == 'object')
 			{
 				if(game.stage == 0)
