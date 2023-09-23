@@ -17,7 +17,7 @@
 
 				</div>
 				<div v-if="playerWhite != undefined" class="col-md-1 col-xl-1 txt-icon">
-					<strong class="float-end"> 18{{playerWhite.time}}</strong>
+					<strong class="float-end"> {{playerWhite.time}}</strong>
 					<i class="material-symbols-outlined text-golden-gradient float-end me-1">
 						timelapse
 					</i>
@@ -44,7 +44,7 @@
 					<p class="float-start ml-2"> Stake:{{match.stake}}1000</p>
 				</div>
 				<div v-if="playerBlack != undefined" class="col-md-1 col-xl-1 txt-icon">
-					<strong class="float-start large-text"> 1{{playerBlack.time}}</strong>
+					<strong class="float-start large-text"> {{playerBlack.time}}</strong>
 					<i class="material-symbols-outlined text-golden-gradient float-start ms-1">
 						timelapse
 					</i>
