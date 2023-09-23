@@ -68,8 +68,7 @@
 		<div class="col-md-2 col-xl-2 col-sm-2 px-0" id="right-sidebar">
 	        <div id="chat-box" class="sidebar-box" style="height:85%"></div>
 	        <div class="sidebar-box right-sidebar-footer">
-	        	<button  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">
-	        		<!-- v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)" -->
+	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">
 				Roll Dice
 				</button>
 				<div class="float-end mt-2">  
@@ -81,7 +80,6 @@
 	        </div>
 	    </div>
     </div>
-
 </template>
 <script>
 import Column from "./Column.vue";
