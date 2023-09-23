@@ -1,6 +1,5 @@
 <template>
-    
-    <Board/>
+	<Board/>
 </template>
 <script>
 	
@@ -12,25 +11,17 @@
       },
 		beforeRouteEnter(to,from,next){
 		    next(vm => {
-		     var sidebar = document.getElementById('nav-content')
 		     var header = document.getElementById('main-header')
 		     var bHeader = document.getElementById('backgammon-header')
-		     var chatBox = document.getElementById('chat-box')
-		      sidebar.style.display = 'none'
 		      header.style.display = 'none'
 		      bHeader.style.display = 'block'
-		      chatBox.style.display = 'block'
 		    })
 		  },
 		beforeRouteLeave(to,from,next){
-		    var sidebar = document.getElementById('nav-content')
 		    var header = document.getElementById('main-header')
 		    var bHeader = document.getElementById('backgammon-header')
-		    var chatBox = document.getElementById('chat-box')
-			sidebar.style.display = 'block'
 			 header.style.display = 'block'
 			 bHeader.style.display = 'none'
-			 chatBox.style.display = 'none'
 		    next()
 		  },
 	}

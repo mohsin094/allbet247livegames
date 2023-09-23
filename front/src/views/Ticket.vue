@@ -60,7 +60,9 @@
 		methods:{
 			getTicketList(){
 				const url = import.meta.env.VITE_BACKEND_BASE_URL+'/ticket/default/list'
-				this.$axios.get(url).then(function(response))
+				this.$axios.get(url).then(function(response){
+					
+				})
 			}
 		}
 	}

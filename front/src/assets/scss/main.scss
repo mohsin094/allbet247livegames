@@ -350,6 +350,69 @@ $brown:#AD914E;
 	}
 }
 // theme dark end
+body{
+	overflow-x:hidden;
+}
+.text-disable{
+	color:#95a4a7;
+}
+.flag{
+	font-size: 15px;
+}
+.online-flag{
+	color: #39ff14
+}
+.large-icon{
+	font-size: 5rem
+}
+.flag-left{
+	top: 24px;
+	left: 45px;
+}
+.flag-right{
+	top:24px;
+	right:60px;
+}
+.txt-icon i{
+	font-size: 35px
+}
+.txt-icon strong{
+	font-size: 25px
+}
+.txt-icon p{
+	font-weight:700;
+}
+.txt-icon span{
+	font-size: 25px
+}
+#chat-box{
+	height:80%;
+	margin-bottom: 3%;
+}
+.right-sidebar-footer{
+	display: flex;
+	height:15%;
+	align-items: center;
+	justify-content: center;
+	// padding:50px;
+}
+.sidebar-box{
+	background:$black;
+	border-radius: 20px;
+}
+.large-text{
+	font-size: large;
+}
+.btn-medium{
+	width: 55px !important;
+	height:55px !important;
+}
+.dice{
+  background-image: url('../icons/dice.png') !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: 35px !important;
+}
 .accordion-button:focus{
 	outline: 0
 }
@@ -497,12 +560,6 @@ ol,ul{
 }
 .header-right li{
 	margin-left:15px;
-}
-#chat-box{
-	background:$black;
-	right: 7px;
-	top: 100px;
-	border-radius: 20px 20px 0px 0px;
 }
 #forget-link{
 	left:85px;
@@ -904,6 +961,9 @@ small{
 	margin-left: auto;
 	margin-right: auto;
 }
+.card-star li i{
+	font-size: 28px !important
+}
 .text-grass{
 	color:$grass-green;
 }
@@ -1067,22 +1127,27 @@ small{
 	right: 85px;
 	top: 4px;
 }
+.user-level-left{
+	left:80px;
+}
+.user-level-right{
+	right:145px;
+}
 .bheader-user-level{
 	font-size: 10px;
 	top: 30px;
-	left: 80px;
 }
 .bg-blue{
 	background:$deep-blue;
 }
 .bg-blue-shadow{
-	box-shadow: 0 0 45px 10px $deep-blue;
+	box-shadow: 0 0 35px 10px $deep-blue;
 }
 .bg-red{
 	background:$deep-red;
 }
 .bg-red-shadow{
-	box-shadow: 0 0 45px 10px $deep-red;
+	box-shadow: 0 0 35px 10px $deep-red;
 }
 .card-profile-left{
 	left:14px;
@@ -1339,9 +1404,9 @@ div.content {
 }
 /* On screens that are less than 700px wide*/
 @media screen and (max-width: 700px) {
-	#chat-box{
-		display:none;
-	}
+	// #right-sidebar{
+	// 	display:none;
+	// }
 	.b-header-links{
 		margin-bottom:10px
 	}
@@ -1453,9 +1518,9 @@ small{
 	#search-input{
 		width:250px;
 	}
-	#chat-box{
-		display: none;
-	}
+	// #right-sidebar{
+	// 	display: none;
+	// }
 }
 @media screen and (min-width: 767px) {
 	.main-menu-collapse:not(.show){

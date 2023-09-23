@@ -1,7 +1,6 @@
 <template>
-	<div class="row">
-		<game />
-	</div>
+	<game />
+
 </template>
 <script>
 	import Game from "@/components/game/Game.vue";

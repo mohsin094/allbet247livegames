@@ -1,69 +1,85 @@
 <template>
-	<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo" />
-	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)" @click="throwDice">Dice</button>
-	<p>System Message: {{systemMessage}}</p>
-
+	
 	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
 	<p v-if="game && game.stage.id == stage.cancel">Game stopped by admin, stake amount returned to your balance</p>
-	<div id="game" class="col-12">
-		<div id="board">
-			<template v-if="game != undefined">
-				<!-- dice black -->
-				<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
-					<ul>
-						<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
-						<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
-					</ul>
+	<div class="row">
+		<div class="col-md-10 col-xl-10 px-sm-2 px-0 ">
+			<div id="game" class="col-12 main-wrapper" style="padding:20px 0">
+				<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo" />
+				<div id="board">
+					<template v-if="game != undefined">
+						<!-- dice black -->
+						<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
+							<ul>
+								<li v-if="game.playerBlack.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.first+'.png'" /></li>
+								<li v-if="game.playerBlack.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-black-'+game.playerBlack.dice.second+'.png'" /></li>
+							</ul>
+						</div>
+						<!-- dice white -->
+						<div v-if="game.playerWhite.dice && game.playerWhite.showDice" class="dices dice-white">
+							<ul>
+								<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
+								<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
+							</ul>
+						</div>
+						<div v-if="doubleActive" id="double-dice">
+							<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
+						</div>
+						<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
+						<column id="column-1" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(-1)" />
+						<column id="column0" @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
+						<column id="column1" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)" />
+						<column id="column2" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
+						<column id="column3" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(3)" />
+						<column id="column4" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(4)" />
+						<column id="column5" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(5)" />
+						<column id="column6" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(6)" />
+						<column id="column7" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(7)" />
+						<column id="column8" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(8)" />
+						<column id="column9" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(9)" />
+						<column id="column10" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(10)" />
+						<column id="column11" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(11)" />
+						<column id="column12" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(12)" />
+						<column id="column13" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(13)" />
+						<column id="column14" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(14)" />
+						<column id="column15" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(15)" />
+						<column id="column16" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(16)" />
+						<column id="column17" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(17)" />
+						<column id="column18" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(18)" />
+						<column id="column19" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(19)" />
+						<column id="column20" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(20)" />
+						<column id="column21" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(21)" />
+						<column id="column22" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(22)" />
+						<column id="column23" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
+						<column id="column24" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
+						<column id="column25" @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
+						<column id="column26" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(26)" />
+					</template>
+					<div v-show="boardText != undefined" class="board-text">
+						{{boardText}}
+					</div>
+					<div v-if="game != undefined" v-show="game.playerWhite.text != undefined || game.playerBlack.text != undefined" class="board-text">
+						{{(game.playerWhite.text != undefined) ? game.playerWhite.text : ''}}
+						{{(game.playerBlack.text != undefined) ? game.playerBlack.text : ''}}
+					</div>
 				</div>
-				<!-- dice white -->
-				<div v-if="game.playerWhite.dice && game.playerWhite.showDice" class="dices dice-white">
-					<ul>
-						<li v-if="game.playerWhite.dice.first != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.first+'.png'" /></li>
-						<li v-if="game.playerWhite.dice.second != undefined"><img :style="{'max-width': game.global.checkerSize+'px', opacity: (game.stage.id == stage.move_dices) ? '0.5' : '1'}" :src="baseUrl+'/assets/game/img/dice-white-'+game.playerWhite.dice.second+'.png'" /></li>
-					</ul>
-				</div>
-				<div v-if="doubleActive" id="double-dice">
-					<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
-				</div>
-				<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
-				<column id="column-1" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(-1)" />
-				<column id="column0" @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
-				<column id="column1" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)" />
-				<column id="column2" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(2)" />
-				<column id="column3" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(3)" />
-				<column id="column4" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(4)" />
-				<column id="column5" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(5)" />
-				<column id="column6" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(6)" />
-				<column id="column7" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(7)" />
-				<column id="column8" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(8)" />
-				<column id="column9" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(9)" />
-				<column id="column10" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(10)" />
-				<column id="column11" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(11)" />
-				<column id="column12" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(12)" />
-				<column id="column13" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(13)" />
-				<column id="column14" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(14)" />
-				<column id="column15" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(15)" />
-				<column id="column16" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(16)" />
-				<column id="column17" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(17)" />
-				<column id="column18" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(18)" />
-				<column id="column19" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(19)" />
-				<column id="column20" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(20)" />
-				<column id="column21" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(21)" />
-				<column id="column22" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(22)" />
-				<column id="column23" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(23)" />
-				<column id="column24" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(24)" />
-				<column id="column25" @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(25)" />
-				<column id="column26" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(26)" />
-			</template>
-			<div v-show="boardText != undefined" class="board-text">
-				{{boardText}}
-			</div>
-			<div v-if="game != undefined" v-show="game.playerWhite.text != undefined || game.playerBlack.text != undefined" class="board-text">
-				{{(game.playerWhite.text != undefined) ? game.playerWhite.text : ''}}
-				{{(game.playerBlack.text != undefined) ? game.playerBlack.text : ''}}
 			</div>
 		</div>
-	</div>
+		<div class="col-md-2 col-xl-2 col-sm-2 px-0" id="right-sidebar">
+	        <div id="chat-box" class="sidebar-box" style="height:85%"></div>
+	        <div class="sidebar-box right-sidebar-footer">
+	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">
+				Roll Dice
+				</button>
+				<div class="float-end mt-2">  
+					<input class="form-check-input" type="checkbox" value="" id="auto-dice">
+					<label class="form-check-label ms-1 text-golden-gradient" for="auto-dice">
+					    <strong>Auto Roll</strong>
+					</label>
+				</div>
+	        </div>
+	    </div>
+    </div>
 </template>
 <script>
 import Column from "./Column.vue";

@@ -18,7 +18,6 @@ export default {
     session: {},
     raw: '', // raw config
     load: function(confPath) {
-
         this.raw = JSON.parse(fs.readFileSync(confPath).toString());
         this.parse();
     },
