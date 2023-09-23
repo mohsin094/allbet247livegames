@@ -353,11 +353,14 @@ $brown:#AD914E;
 body{
 	overflow-x:hidden;
 }
+.text-disable{
+	color:#95a4a7;
+}
 .flag{
 	font-size: 15px;
 }
 .online-flag{
-	color: $light-green;
+	color: #39ff14
 }
 .flag-left{
 	top: 24px;

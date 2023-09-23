@@ -3,7 +3,7 @@
 		<div class="col-md-12 col-xl-12 board-header position-relative" style='height:55px'>
 			<div class="row">
 				<div v-if="playerWhite != undefined" class="col-md-1 col-xl-1 position-relative">
-					<span class="material-symbols-rounded text-grass position-absolute flag online-flag flag-left">
+					<span class="material-symbols-rounded position-absolute flag online-flag flag-left">
 						radio_button_unchecked
 					</span>
 					<div class="border-golden card-profile card-profile-left">
@@ -50,7 +50,7 @@
 					</i>
 				</div>
 				<div v-if="playerBlack != undefined" class="col-md-1 col-xl-1">
-					<span class="material-symbols-rounded text-danger position-absolute flag offline-flag flag-right">
+					<span class="material-symbols-rounded text-disable position-absolute flag offline-flag flag-right">
 						radio_button_unchecked
 					</span>
 					<div class="border-golden card-profile card-profile-right float-end">
