@@ -1,5 +1,10 @@
 <template>
-	
+	<p>
+		<ul>
+			<li v-for="chat in chats">{{chat}}</li>
+		</ul>
+	</p>
+	<input placeholder="Type and Send to Opponent!" v-model="chatbox" @keyup.enter="sendChat" type="text" />
 	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
 	<p v-if="game && game.stage.id == stage.cancel">Game stopped by admin, stake amount returned to your balance</p>
 	<div class="row">
@@ -68,15 +73,14 @@
 		<div class="col-md-2 col-xl-2 col-sm-2 px-0" id="right-sidebar">
 	        <div id="chat-box" class="sidebar-box" style="height:85%"></div>
 	        <div class="sidebar-box right-sidebar-footer">
-	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">
-				Roll Dice
-				</button>
-				<div class="float-end mt-2">  
+	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
+	        	</button>
+				<!-- <div class="float-end mt-2">  
 					<input class="form-check-input" type="checkbox" value="" id="auto-dice">
 					<label class="form-check-label ms-1 text-golden-gradient" for="auto-dice">
 					    <strong>Auto Roll</strong>
 					</label>
-				</div>
+				</div> -->
 	        </div>
 	    </div>
     </div>
@@ -138,11 +142,23 @@ export default
 			audio: {
 				dice: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/dice.aac"),
 				checker: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/checker.aac"),
-			}
+			},
+			chatbox: '',
+			chats: []
 		}
 	},
 	methods:
 	{
+		sendChat()
+		{
+			this.io.emit('game/sendchat', {
+				id: this.game.id,
+				text: this.chatbox
+			});
+
+			this.chats.push(this.chatbox);
+			this.chatbox = '';
+		},
 		move(checkerId, toPositionId)
 		{
 			this.io.emit('game/move',
@@ -332,6 +348,10 @@ export default
 							this.io.on('moved-from-to', (position) => {
 
 								this.animateCheckerPosition(position[0], position[1]);
+							});
+
+							this.io.on('send-chat', (text) => {
+								this.chats.push(text);
 							});
 
 							this.io.on('turn-dice', (dice) =>

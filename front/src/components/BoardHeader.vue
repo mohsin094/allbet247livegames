@@ -50,7 +50,10 @@
 					</i>
 				</div>
 				<div v-if="playerBlack != undefined" class="col-md-1 col-xl-1">
-					<span class="material-symbols-rounded text-disable position-absolute flag offline-flag flag-right">
+					<!-- <span class="material-symbols-rounded text-disable position-absolute flag offline-flag flag-right">
+						radio_button_unchecked
+					</span> -->
+					<span class="material-symbols-rounded position-absolute flag online-flag flag-right">
 						radio_button_unchecked
 					</span>
 					<div class="border-golden card-profile card-profile-right float-end">

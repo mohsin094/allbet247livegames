@@ -37,7 +37,7 @@ function GameController()
 {
 	this.accessRules = [
 		{
-			methods: ['join', 'move', 'throwdice'],
+			methods: ['join', 'move', 'throwdice', 'sendchat'],
 			roles: [ROLES.MEMBER],
 			allow: true
 		}
@@ -70,6 +70,21 @@ function GameController()
 		
 		return game;
 
+	}
+
+	this.sendchat = function()
+	{
+		const gameId = this.request.data.id;
+		const text = this.request.data.text;
+		const userId = this.app.user.id;
+		const game = GameHolder.get(gameId);
+		if(gameId && game)
+		{
+			const player = (game.playerWhite.id == userId) ? game.playerWhite : game.playerBlack;
+			const opponent = (player.color == PLAYER_COLOR.WHITE) ? game.playerBlack : game.playerWhite;
+
+			opponent.socket.emit(EMIT.SEND_CHAT, text);
+		}
 	}
 
 	this.move = function()
