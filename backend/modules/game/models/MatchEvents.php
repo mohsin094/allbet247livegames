@@ -51,7 +51,7 @@ class MatchEvents extends \yii\mongodb\ActiveRecord
     {
         return [
             '_id',
-            'winner_id',
+            'winner',
             'match_id',
             'status',
             'cdate',
@@ -64,7 +64,7 @@ class MatchEvents extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['winner_id', 'match_id', 'status', 'cdate'], 'safe']
+            [['winner', 'match_id', 'status', 'cdate'], 'safe']
         ];
     }
 

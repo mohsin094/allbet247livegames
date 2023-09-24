@@ -26,7 +26,7 @@ class DefaultController extends ApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['get-configs', 'get-waiting', 'get-match', 'player-public-info'],
+                        'actions' => ['get-configs', 'get-waiting', 'get-match', 'player-public-info', 'result'],
                         'roles' => ['?', '@'],
                         'allow' => true,
                     ],
@@ -38,6 +38,41 @@ class DefaultController extends ApiController
                 ],
             ]
         ]);
+    }
+
+    public function actionResult($id)
+    {
+        $event = MatchEvents::findOne(['_id' => $id, 'status' => MatchEvents::STATUS_FINISHED]);
+
+        if($event) {
+            $this->resp->result = true;
+            $match = Matches::findOne(['_id' => $event->match_id]);
+            $events = MatchEvents::find()
+            ->select(['status', 'winner'])
+            ->where(['match_id' => $event->match_id])
+            ->all();
+            if($match->status === Matches::STATUS_PLAYING || $match->status == Matches::STATUS_WAITING) {
+
+                $this->action(ApiAction::build([ApiAction::ACTION_JOIN_TO_NEXT_GAME, [
+                    'match_id' => (string) $match->_id
+                ]]));
+
+                $this->resp->params = [
+                    'ends' => false,
+                    'winner' => $event->winner,
+                    'events' => $events
+                ];
+
+            }elseif($match->status === Matches::STATUS_FINISHED) {
+                $this->resp->params = [
+                    'ends' => true,
+                    'winner' => $match->winner,
+                    'events' => $events
+                ];
+            }
+        }
+
+        return $this->resp;
     }
 
     public function actionMyGames()

@@ -4,6 +4,7 @@ namespace common\components;
 class ApiAction {
 	const ACTION_REDIRECT = 'redirect';
 	const ACTION_SHOW_RESULT_ALERT = 'show_result_alert';
+	const ACTION_JOIN_TO_NEXT_GAME = 'join_to_next_game';
 
 	const REDIRECT_TYPE_SOFT = 'soft';
 	const REDIRECT_TYPE_HARD = 'hard';
