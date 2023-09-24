@@ -15,7 +15,8 @@ const EMIT = {
 	GAME_STATE: 'game-state',
 	PLAYER_JOIN: 'player-join',
 	MOVED_FROM_TO: 'moved-from-to',
-	SEND_CHAT: 'send-chat'
+	SEND_CHAT: 'send-chat',
+	GAME_ENDS: 'game-ends',
 }
 
 const STAGE = {

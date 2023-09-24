@@ -231,7 +231,8 @@ function GameController()
 								}
 							});
 						}
-
+						game.playerWhite.socket.emit(EMIT.GAME_ENDS, {});
+						game.playerBlack.socket.emit(EMIT.GAME_ENDS, {});
 						game.nextTick(() =>
 						{
 							GameHolder.remove(event._id.toString());

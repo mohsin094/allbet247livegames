@@ -6,6 +6,7 @@
 	</p>
 	<input placeholder="Type and Send to Opponent!" v-model="chatbox" @keyup.enter="sendChat" type="text" />
 	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
+	
 	<p v-if="game && game.stage.id == stage.cancel">Game stopped by admin, stake amount returned to your balance</p>
 	<div class="row">
 		<div class="col-md-10 col-xl-10 px-sm-2 px-0 ">
@@ -144,11 +145,33 @@ export default
 				checker: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/checker.aac"),
 			},
 			chatbox: '',
-			chats: []
+			chats: [],
+			result: {}
 		}
 	},
 	methods:
 	{
+		gameEnds() {
+			this.$axios.get(
+					import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/result",
+					{
+						params:
+						{
+							id: this.$route.params.matchId
+						}
+					})
+				.then((res) =>
+				{
+					res = res.data;
+					if(res.result) {
+						if(res.params.ends) {
+
+						}else {
+
+						}
+					}	
+				});
+		},
 		sendChat()
 		{
 			this.io.emit('game/sendchat', {
@@ -352,6 +375,10 @@ export default
 
 							this.io.on('send-chat', (text) => {
 								this.chats.push(text);
+							});
+
+							this.io.on('game-ends', () => {
+								this.gameEnds();
 							});
 
 							this.io.on('turn-dice', (dice) =>
