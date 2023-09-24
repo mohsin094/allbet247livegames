@@ -180,7 +180,7 @@ function GameController()
 					},
 					onEnd: async (winnerId) =>
 					{
-						mongo.db.collection(MatchEventsModel.name)
+						await mongo.db.collection(MatchEventsModel.name)
 							.updateOne(
 							{
 								_id: new ObjectId(event._id.toString()),
@@ -199,9 +199,22 @@ function GameController()
 						.find({
 							match_id: event.match_id
 						}).toArray();
+
+						const match = await	mongo.db.collection(MatchesModel.name)
+						.findOne({
+							_id: ObjectId(event.match_id)
+						});
 						
 						let winner = 0;
 						let notDone = false;
+						for(let i=0; i<events.length; i++) {
+							if(events[i].status !== MatchEventsModel.status.FINISHED) {
+								notDone = true;
+								break;
+							}
+						}
+
+						//count wins
 						for(let i=0; i<events.length; i++) {
 							if(events[i].status == MatchEventsModel.status.FINISHED) {
 								if(events[i].winner != undefined && events[i].winner == match.away_id) {
@@ -209,15 +222,13 @@ function GameController()
 								}else if(events[i].winner != undefined && events[i].winner == match.home_id) {
 									winner++;
 								}
-							}else {
-								notDone = true;
-								break;
 							}
 						}
 
-						if(notDone == false && events.length > 0) {
+						if((notDone == false || Math.abs(winner) > events.length/2) && events.length > 0) {
 							
-							mongo.db.collection(MatchesModel.name)
+							
+							await mongo.db.collection(MatchesModel.name)
 							.updateOne(
 							{
 								_id: new ObjectId(match._id.toString()),
@@ -230,6 +241,8 @@ function GameController()
 									winner: (winner > 0) ? match.home_id : match.away_id
 								}
 							});
+
+
 						}
 						game.playerWhite.socket.emit(EMIT.GAME_ENDS, {});
 						game.playerBlack.socket.emit(EMIT.GAME_ENDS, {});
