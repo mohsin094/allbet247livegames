@@ -161,7 +161,7 @@ function GameController()
 					time = 30;
 					break;
 				case GameTimeframesModel.timeframe.FAST:
-					time = 15;
+					time = 20;
 					break;
 			}
 
