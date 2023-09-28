@@ -29,7 +29,7 @@
 					<span class="material-symbols-outlined text-golden-gradient float-end">workspace_premium</span>
 				</div>
 				<div class="col-md-4 col-xl-4">
-					<ul class="list-group-horizontal card-star text-center">
+					<!-- <ul class="list-group-horizontal card-star text-center">
 						<li><i class="material-symbols-rounded text-grass">star</i></li>
 						<li><i class="material-symbols-rounded text-grass">star</i></li>
 						<li><i class="material-symbols-rounded text-red">star</i></li>
@@ -37,7 +37,7 @@
 						<li><i class="material-symbols-rounded text-disabled">star</i></li>
 						<li><i class="material-symbols-rounded text-disabled">star</i></li>
 						<li><i class="material-symbols-rounded text-disabled">star</i></li>
-					</ul>
+					</ul> -->
 				</div>
 				<div class="col-md-2 col-xl-2 txt-icon">
 					<span class="material-symbols-outlined text-golden-gradient float-start me-2">currency_exchange</span>

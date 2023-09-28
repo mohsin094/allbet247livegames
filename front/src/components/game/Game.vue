@@ -85,8 +85,11 @@
 	        </div>
 	    </div>
     </div>
+    <WinnerModal :events = "events"/>
+    <LooserModal :events = "events"/>
 </template>
 <script>
+import { Modal } from 'bootstrap';
 import Column from "./Column.vue";
 import Game,
 {
@@ -105,18 +108,23 @@ import
 	PLAYER_COLOR
 }
 from "@/extensions/backgammon/Player.js";
-
+import WinnerModal from '@/components/_modals/WinnerModal.vue';
+import LooserModal from '@/components/_modals/LooserModal.vue';
 export default
 {
 	components:
 	{
 		Column,
-		BoardHeader
+		BoardHeader,
+		WinnerModal,
+		LooserModal
 	},
 	// props: ['match'],
 	data()
 	{
 		return {
+			modal:null,
+			events:[],
 			game: undefined,
 			stage:
 			{
@@ -164,10 +172,38 @@ export default
 				{
 					res = res.data;
 					if(res.result) {
+						this.events = res.params.events
 						if(res.params.ends) {
-
-						}else {
-
+							const btns = document.getElementsByClassName('continue-game');
+							for (const btn of btns) {
+							  btn.style.display = 'none';
+							}
+							if(res.params.winner == this.$user.data.id){
+								let modalSucc = document.getElementById('winner-modal');
+								let modal = new Modal(modalSucc)
+								modal.show()
+							}else {
+								let modalFailed = document.getElementById('looser-modal');
+								let modal = new Modal(modalFailed)
+								modal.show()
+							}
+						}else{
+							let obj = this.events.find(item => item._id === this.$route.params.matchId);
+							const btns = document.getElementsByClassName('continue-game');
+							for (const btn of btns) {
+							  btn.style.display = 'block';
+							}
+							if(obj.status == 'finished'){
+								if(obj.winner == this.$user.data.id){
+									let modalSucc = document.getElementById('winner-modal');
+									let modal = new Modal(modalSucc)
+									modal.show()
+								}else{
+									let modalFailed = document.getElementById('looser-modal');
+									let modal = new Modal(modalFailed)
+									modal.show()
+								}
+							}
 						}
 					}	
 				});
