@@ -85,8 +85,8 @@
 	        </div>
 	    </div>
     </div>
-    <WinnerModal :events = "events"/>
-    <LooserModal :events = "events"/>
+    <WinnerModal @next="moveToNext" :events = "events"/>
+    <LooserModal @next="moveToNext" :events = "events"/>
 </template>
 <script>
 import { Modal } from 'bootstrap';
@@ -154,11 +154,43 @@ export default
 			},
 			chatbox: '',
 			chats: [],
-			result: {}
+			result: {},
+			resultAction: undefined,
+			failModal: "",
+			succModal: ""
 		}
 	},
 	methods:
 	{
+		moveToNext() {
+            const modalSucc = document.getElementById('winner-modal');
+            modalSucc.style.display = 'none';
+            const backdrop = document.getElementsByClassName("modal-backdrop");
+            for(let i=0; i<backdrop.length; i++) {
+            	backdrop[i].remove();
+            }
+
+
+			const modalFailed = document.getElementById('looser-modal');
+            this.failModal = Modal.getOrCreateInstance(modalFailed);
+            this.failModal.hide();
+
+				const matchId = this.resultAction.params.match_id;
+				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/join", {
+					params: {
+						matchId: matchId
+					}
+				}).then((res) => {
+					res = res.data;
+					if(res.result) {
+						
+						this.$router.push({name: 'nextMatch', params: {matchId: res.params.match_id}});
+					}
+				});
+
+            // setTimeout(() => {
+            // }, 1000);
+		},
 		gameEnds() {
 			this.$axios.get(
 					import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/result",
@@ -171,8 +203,10 @@ export default
 				.then((res) =>
 				{
 					res = res.data;
+					console.log(res);
 					if(res.result) {
-						this.events = res.params.events
+						this.events = res.params.events;
+						this.resultAction = res.action;
 						if(res.params.ends) {
 							const btns = document.getElementsByClassName('continue-game');
 							for (const btn of btns) {
