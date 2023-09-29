@@ -6,7 +6,6 @@
 	</p>
 	<input placeholder="Type and Send to Opponent!" v-model="chatbox" @keyup.enter="sendChat" type="text" />
 	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
-	
 	<p v-if="game && game.stage.id == stage.cancel">Game stopped by admin, stake amount returned to your balance</p>
 	<div class="row">
 		<div class="col-md-10 col-xl-10 px-sm-2 px-0 ">
@@ -71,8 +70,33 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-2 col-xl-2 col-sm-2 px-0" id="right-sidebar">
-	        <div id="chat-box" class="sidebar-box" style="height:85%"></div>
+		<div class="col-md-2 col-xl-2 col-sm-2" id="right-sidebar">
+	        <div id="chat-box" class="sidebar-box position-relative px-2 py-2">
+	        	<div id="chatbox-header" class="px-4 py-1">
+		        	<div class="float-end mt-2">  
+						<input class="form-check-input" type="checkbox" value="" id="mute">
+						<label class="form-check-label ms-1 text-golden-gradient" for="mute">
+						    <strong>Mute</strong>
+						</label>
+					</div>
+					<div class="float-start mt-2">  
+						<strong class="text-golden-gradient">
+							Chat
+						</strong>
+					</div>
+	        	</div>
+	        	<Chat/>
+	        	<div id="chatbox-footer" class="px-1 py-1">
+	        		<div class="input-group mb-3">
+					  <input type="text" class="form-control" id="input-msg" placeholder="Write here..." aria-describedby="basic-addon2">
+					  <div class="input-group-append">
+					    <button class="btn btn-outline-secondary" id="send-msg" type="button">
+					    	<img src="@/assets/icons/send.svg" />
+					    </button>
+					  </div>
+					</div>
+	        	</div>
+	        </div>
 	        <div class="sidebar-box right-sidebar-footer">
 	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
 	        	</button>
@@ -89,6 +113,7 @@
     <LooserModal :events = "events"/>
 </template>
 <script>
+import Chat from '@/components/Chat.vue';
 import { Modal } from 'bootstrap';
 import Column from "./Column.vue";
 import Game,
@@ -117,7 +142,8 @@ export default
 		Column,
 		BoardHeader,
 		WinnerModal,
-		LooserModal
+		LooserModal,
+		Chat
 	},
 	// props: ['match'],
 	data()

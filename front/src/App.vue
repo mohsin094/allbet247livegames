@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <div class="row flex-nowrap">
         <!-- <Sidebar/> -->
-        <div class="col-md-12 col-xl-12 px-sm-2 px-0">
+        <div>
             <RouterView />
          </div>
         
