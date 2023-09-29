@@ -1,5 +1,5 @@
 <template>
-	<div class="modal fade" ref="sModal" id="winner-modal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+	<div class="modal" ref="sModal" id="winner-modal" tabindex="-1" aria-labelledby="">
 		<div class="modal-dialog modal-dialog-centered modal-md">
 		    <div class="modal-content">
 		        <div class="modal-header">
@@ -18,7 +18,7 @@
 					<h4>You're Winner</h4>
 		        </div>
 		        <div class="modal-footer continue-game text-center" style="display:none">
-			        <button type="button" class="btn btn-golden text-dark">Join to next game</button>
+			        <button @click="$emit('next')" type="button" class="btn btn-golden text-dark">Join to next game</button>
 			    </div>
 		    </div>
 		</div>

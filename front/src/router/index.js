@@ -46,6 +46,11 @@ const router = createRouter({
       path: '/backgammon/:matchId',
       name: 'backgammon',
       component: () => import('../views/BackgammonView.vue')
+    },
+    {
+      path: '/next-match/:matchId',
+      name: 'nextMatch',
+      component: () => import('../components/NextMatch.vue')
     }
   ]
 })
