@@ -83,7 +83,9 @@ function GameController()
 			const player = (game.playerWhite.id == userId) ? game.playerWhite : game.playerBlack;
 			const opponent = (player.color == PLAYER_COLOR.WHITE) ? game.playerBlack : game.playerWhite;
 
-			opponent.socket.emit(EMIT.SEND_CHAT, text);
+			if(typeof opponent.socket === 'object') {
+				opponent.socket.emit(EMIT.SEND_CHAT, text);
+			}
 		}
 	}
 
@@ -244,8 +246,12 @@ function GameController()
 
 
 						}
-						game.playerWhite.socket.emit(EMIT.GAME_ENDS, {});
-						game.playerBlack.socket.emit(EMIT.GAME_ENDS, {});
+						if(typeof game.playerWhite.socket === 'object') {
+							game.playerWhite.socket.emit(EMIT.GAME_ENDS, {});
+						}
+						if(typeof game.playerBlack.socket === 'object') {
+							game.playerBlack.socket.emit(EMIT.GAME_ENDS, {});
+						}
 						game.nextTick(() =>
 						{
 							GameHolder.remove(event._id.toString());
