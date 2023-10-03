@@ -1,10 +1,4 @@
 <template>
-	<p>
-		<ul>
-			<li v-for="chat in chats">{{chat}}</li>
-		</ul>
-	</p>
-	<input placeholder="Type and Send to Opponent!" v-model="chatbox" @keyup.enter="sendChat" type="text" />
 	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
 	<p v-if="game && game.stage.id == stage.cancel">Game stopped by admin, stake amount returned to your balance</p>
 	<div class="row">
@@ -85,12 +79,12 @@
 						</strong>
 					</div>
 	        	</div>
-	        	<Chat/>
+	        	<Chat :chats="chats" />
 	        	<div id="chatbox-footer" class="px-1 py-1">
 	        		<div class="input-group mb-3">
-					  <input type="text" class="form-control" id="input-msg" placeholder="Write here..." aria-describedby="basic-addon2">
+					  <input v-model="chatbox" @keyup.enter="sendChat" type="text" class="form-control" id="input-msg" placeholder="Write here..." aria-describedby="basic-addon2">
 					  <div class="input-group-append">
-					    <button class="btn btn-outline-secondary" id="send-msg" type="button">
+					    <button @click="sendChat" class="btn btn-outline-secondary" id="send-msg" type="button">
 					    	<img src="@/assets/icons/send.svg" />
 					    </button>
 					  </div>
