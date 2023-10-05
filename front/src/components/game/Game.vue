@@ -129,8 +129,13 @@ import
 from "@/extensions/backgammon/Player.js";
 import WinnerModal from '@/components/_modals/WinnerModal.vue';
 import LooserModal from '@/components/_modals/LooserModal.vue';
+import avatarColor from '@/composables/avatarColor.js'
 export default
 {
+	setup(){
+			const getAvatarColor = avatarColor
+			return {getAvatarColor}
+	},
 	components:
 	{
 		Column,
@@ -143,6 +148,7 @@ export default
 	data()
 	{
 		return {
+			inProgress:false,
 			modal:null,
 			events:[],
 			game: undefined,
@@ -228,10 +234,7 @@ export default
 						this.events = res.params.events;
 						this.resultAction = res.action;
 						if(res.params.ends) {
-							const btns = document.getElementsByClassName('continue-game');
-							for (const btn of btns) {
-							  btn.style.display = 'none';
-							}
+							this.inProgress =false
 							if(res.params.winner == this.$user.data.id){
 								let modalSucc = document.getElementById('winner-modal');
 								let modal = new Modal(modalSucc)
@@ -242,6 +245,7 @@ export default
 								modal.show()
 							}
 						}else{
+							this.inProgress = true;
 							let obj = this.events.find(item => item._id === this.$route.params.matchId);
 							const btns = document.getElementsByClassName('continue-game');
 							for (const btn of btns) {
