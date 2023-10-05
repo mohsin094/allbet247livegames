@@ -66,7 +66,7 @@
 	        <div id="chat-box" class="sidebar-box position-relative px-2 py-2">
 	        	<div id="chatbox-header" class="px-4 py-1">
 		        	<div class="float-end mt-2">  
-						<input class="form-check-input" type="checkbox" value="" id="mute">
+						<input class="form-check-input" type="checkbox" v-model="muteChat" id="mute">
 						<label class="form-check-label ms-1 text-golden-gradient" for="mute">
 						    <strong>Mute</strong>
 						</label>
@@ -101,8 +101,8 @@
 	        </div>
 	    </div>
     </div>
-    <WinnerModal @next="moveToNext" :events = "events"/>
-    <LooserModal @next="moveToNext" :events = "events"/>
+    <WinnerModal @next="moveToNext" :in-progress="inProgress" :events = "events"/>
+    <LooserModal @next="moveToNext" :in-progress="inProgress" :events = "events"/>
 </template>
 <script>
 import Chat from '@/components/Chat.vue';
@@ -181,7 +181,8 @@ export default
 			result: {},
 			resultAction: undefined,
 			failModal: "",
-			succModal: ""
+			succModal: "",
+			muteChat: false,
 		}
 	},
 	methods:
@@ -266,12 +267,14 @@ export default
 		},
 		sendChat()
 		{
-			this.io.emit('game/sendchat', {
-				id: this.game.id,
-				text: this.chatbox
-			});
+			if(this.muteChat == false) {
+				this.io.emit('game/sendchat', {
+					id: this.game.id,
+					text: this.chatbox
+				});
 
-			this.chats.push(this.chatbox);
+				this.chats.push(this.chatbox);
+			}
 			this.chatbox = '';
 		},
 		move(checkerId, toPositionId)

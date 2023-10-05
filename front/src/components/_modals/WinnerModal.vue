@@ -27,6 +27,6 @@
 </template>
 <script>
 export default {
-  props: ['events']
+  props: ['events', 'inProgress']
 }
 </script>
