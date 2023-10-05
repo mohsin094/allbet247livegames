@@ -8,7 +8,7 @@
 	      <!-- Brand -->
 	     <div class="col-md-3 col-xl-2 px-sm-2 px-0 brand">
 	        <router-link to="/" class="navbar-brand">
-	          <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="" style="width:150px">
+	          <img src="@/assets/logo.png" class="d-inline-block align-top" alt="" style="width:150px">
 	        </router-link>
 	     </div>
 	     <!-- <div class="col-md-6" id="bheader-mob-links" v-if="this.$isMobile">
