@@ -1,35 +1,43 @@
 <template>
 	<div class="row">
-		<div class="col">
-			<button class="btn btn-golden text-dark mt-3" data-bs-toggle="modal" data-bs-target="#newTicket">
-				New ticket
-			</button>
-		</div>
-	</div>
-	<div class="row mt-3">
-		<div class="col-md-6">
-			<div class="bg-dark-gradient text-center p-4 simple-page">
-				<h6>Ticket list</h6>
-				<hr class="hr-text"/>
-				<table class="table table-responsive">
-				   <thead>
-					   	<tr>
-					   		<th>Title</th>
-						   	<th>Date</th>
-						   	<th>Status</th>
-						   	<th>Action</th>
-					   	</tr>
-				   </thead>
-				   <tbody>
-					    <tr>
-					    	<td></td>
-					    </tr>
-					</tbody>
-				</table>
+		<Sidebar/>
+		<div class="col-md-10 col-xl-10 px-sm-2 px-0">
+			<div class="main-wrapper min-vh-100">
+				<div class="row">
+					<div class="col">
+						<button class="btn btn-golden text-dark mt-3" data-bs-toggle="modal" data-bs-target="#newTicket">
+							New ticket
+						</button>
+					</div>
+				</div>
+				<div class="row mt-3">
+					<div class="col-md-6">
+						<div class="bg-dark-gradient text-center p-4 simple-page">
+							<h6>Ticket list</h6>
+							<hr class="hr-text"/>
+							<table class="table table-responsive">
+							   <thead>
+								   	<tr>
+								   		<th>Title</th>
+									   	<th>Date</th>
+									   	<th>Status</th>
+									   	<th>Action</th>
+								   	</tr>
+							   </thead>
+							   <tbody>
+								    <tr>
+								    	<td></td>
+								    </tr>
+								</tbody>
+							</table>
+						</div>
+						
+					</div>
+				</div>
 			</div>
-			
 		</div>
 	</div>
+	
 	<div class="modal fade" id="newTicket" tabindex="-1" aria-hidden="true">
 	  	<div class="modal-dialog">
 		    <div class="modal-content">
@@ -53,7 +61,11 @@
 	</div>
 </template>
 <script>
+	import Sidebar from '@/components/Sidebar.vue';
 	export default{
+		components:{
+			Sidebar
+		},
 		data(){
 			tickets:[]
 		},
