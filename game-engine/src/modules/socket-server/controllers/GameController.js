@@ -37,11 +37,19 @@ function GameController()
 {
 	this.accessRules = [
 		{
-			methods: ['join', 'move', 'throwdice', 'sendchat'],
+			methods: ['join', 'move', 'throwdice', 'sendchat', 'joinnotification'],
 			roles: [ROLES.MEMBER],
 			allow: true
 		}
 	];
+
+	this.joinnotification = function() {
+		setTimeout(() => {
+			this.request.socket.emit('notification', {
+				user_id: this.app.user.id
+			});
+		}, 1000);
+	}
 
 	this._getEvent = async function(eventId)
 	{
@@ -83,7 +91,9 @@ function GameController()
 			const player = (game.playerWhite.id == userId) ? game.playerWhite : game.playerBlack;
 			const opponent = (player.color == PLAYER_COLOR.WHITE) ? game.playerBlack : game.playerWhite;
 
-			opponent.socket.emit(EMIT.SEND_CHAT, text);
+			if(typeof opponent.socket === 'object') {
+				opponent.socket.emit(EMIT.SEND_CHAT, text);
+			}
 		}
 	}
 
@@ -244,8 +254,12 @@ function GameController()
 
 
 						}
-						game.playerWhite.socket.emit(EMIT.GAME_ENDS, {});
-						game.playerBlack.socket.emit(EMIT.GAME_ENDS, {});
+						if(typeof game.playerWhite.socket === 'object') {
+							game.playerWhite.socket.emit(EMIT.GAME_ENDS, {});
+						}
+						if(typeof game.playerBlack.socket === 'object') {
+							game.playerBlack.socket.emit(EMIT.GAME_ENDS, {});
+						}
 						game.nextTick(() =>
 						{
 							GameHolder.remove(event._id.toString());

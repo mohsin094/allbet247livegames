@@ -102,7 +102,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return [
             'id' => (string) $this->_id,
             'avatar' => $this->avatar,
-            'lvl' => $this->lvl
+            'lvl' => $this->lvl,
+            'public_name' => $this->public_name
         ]; 
     }
 

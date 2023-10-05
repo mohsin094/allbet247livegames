@@ -349,9 +349,46 @@ $brown:#AD914E;
 		background:$dark;
 	}
 }
+
 // theme dark end
-body{
-	overflow-x:hidden;
+
+#chatbox-header{
+	width: 100%;
+	height:55px;
+	top:0;
+	left:0;
+	border-bottom:1px solid $golden-dark;
+}
+#chatbox-footer{
+	width:100%;
+	height: 55px;
+	bottom:0;
+	left:0;
+}
+#send-msg{
+	background-color:$dark;
+	border:none;
+	border-top-left-radius:0;
+	border-bottom-left-radius:0
+}
+#input-msg{
+	background-color:$dark;
+	border:none;
+}
+#chat-body{
+	overflow-y: scroll;
+	height:60vh;
+	padding-top:10px
+}
+.message-box{
+	padding: 10px;
+	background-color:$dark;
+	border-radius:10px;
+	min-width: 85%;
+	min-height:55px
+}
+#chat-body ul li{
+	margin-bottom: 10px
 }
 .text-disable{
 	color:#95a4a7;
@@ -386,12 +423,12 @@ body{
 	font-size: 25px
 }
 #chat-box{
-	height:80%;
+	height:80vh;
 	margin-bottom: 3%;
 }
 .right-sidebar-footer{
 	display: flex;
-	height:15%;
+	height:15vh;
 	align-items: center;
 	justify-content: center;
 	// padding:50px;
@@ -1112,6 +1149,10 @@ small{
 	white-space: nowrap;
 	overflow: hidden;
 }
+.bheader-profile-name{
+	font-weight: 700;
+	top:10px;
+}
 .card-profile-name-left{
 	left:70px;
 }
@@ -1131,7 +1172,7 @@ small{
 	left:80px;
 }
 .user-level-right{
-	right:145px;
+	right:85px;
 }
 .bheader-user-level{
 	font-size: 10px;

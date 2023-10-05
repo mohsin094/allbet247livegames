@@ -13,7 +13,7 @@
 	      <!-- Brand -->
 	     <div class="col-md-3 col-xl-2 px-sm-2 px-0 brand">
 	        <router-link to="/" class="navbar-brand">
-	          <img src="@/assets/logo.png" class="d-inline-block align-top" alt="">
+	          <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="">
 	        </router-link>
 	     </div>
 	      <!-- Search form -->

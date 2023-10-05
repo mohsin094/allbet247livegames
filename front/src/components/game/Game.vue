@@ -1,13 +1,4 @@
 <template>
-	<p>
-		<ul>
-			<li v-for="chat in chats">{{chat}}</li>
-		</ul>
-	</p>
-	<input placeholder="Type and Send to Opponent!" v-model="chatbox" @keyup.enter="sendChat" type="text" />
-	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
-	
-	<p v-if="game && game.stage.id == stage.cancel">Game stopped by admin, stake amount returned to your balance</p>
 	<div class="row">
 		<div class="col-md-10 col-xl-10 px-sm-2 px-0 ">
 			<div id="game" class="col-12 main-wrapper" style="padding:20px 0">
@@ -71,8 +62,33 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-2 col-xl-2 col-sm-2 px-0" id="right-sidebar">
-	        <div id="chat-box" class="sidebar-box" style="height:85%"></div>
+		<div class="col-md-2 col-xl-2 col-sm-2" id="right-sidebar">
+	        <div id="chat-box" class="sidebar-box position-relative px-2 py-2">
+	        	<div id="chatbox-header" class="px-4 py-1">
+		        	<div class="float-end mt-2">  
+						<input class="form-check-input" type="checkbox" v-model="muteChat" id="mute">
+						<label class="form-check-label ms-1 text-golden-gradient" for="mute">
+						    <strong>Mute</strong>
+						</label>
+					</div>
+					<div class="float-start mt-2">  
+						<strong class="text-golden-gradient">
+							Chat
+						</strong>
+					</div>
+	        	</div>
+	        	<Chat :chats="chats" />
+	        	<div id="chatbox-footer" class="px-1 py-1">
+	        		<div class="input-group mb-3">
+					  <input v-model="chatbox" @keyup.enter="sendChat" type="text" class="form-control" id="input-msg" placeholder="Write here..." aria-describedby="basic-addon2">
+					  <div class="input-group-append">
+					    <button @click="sendChat" class="btn btn-outline-secondary" id="send-msg" type="button">
+					    	<img src="@/assets/icons/send.svg" />
+					    </button>
+					  </div>
+					</div>
+	        	</div>
+	        </div>
 	        <div class="sidebar-box right-sidebar-footer">
 	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
 	        	</button>
@@ -85,10 +101,11 @@
 	        </div>
 	    </div>
     </div>
-    <WinnerModal @next="moveToNext" :events = "events"/>
-    <LooserModal @next="moveToNext" :events = "events"/>
+    <WinnerModal @next="moveToNext" :in-progress="inProgress" :events = "events"/>
+    <LooserModal @next="moveToNext" :in-progress="inProgress" :events = "events"/>
 </template>
 <script>
+import Chat from '@/components/Chat.vue';
 import { Modal } from 'bootstrap';
 import Column from "./Column.vue";
 import Game,
@@ -110,19 +127,26 @@ import
 from "@/extensions/backgammon/Player.js";
 import WinnerModal from '@/components/_modals/WinnerModal.vue';
 import LooserModal from '@/components/_modals/LooserModal.vue';
+import avatarColor from '@/composables/avatarColor.js'
 export default
 {
+	setup(){
+			const getAvatarColor = avatarColor
+			return {getAvatarColor}
+	},
 	components:
 	{
 		Column,
 		BoardHeader,
 		WinnerModal,
-		LooserModal
+		LooserModal,
+		Chat
 	},
 	// props: ['match'],
 	data()
 	{
 		return {
+			inProgress:false,
 			modal:null,
 			events:[],
 			game: undefined,
@@ -157,7 +181,8 @@ export default
 			result: {},
 			resultAction: undefined,
 			failModal: "",
-			succModal: ""
+			succModal: "",
+			muteChat: false,
 		}
 	},
 	methods:
@@ -208,10 +233,7 @@ export default
 						this.events = res.params.events;
 						this.resultAction = res.action;
 						if(res.params.ends) {
-							const btns = document.getElementsByClassName('continue-game');
-							for (const btn of btns) {
-							  btn.style.display = 'none';
-							}
+							this.inProgress =false
 							if(res.params.winner == this.$user.data.id){
 								let modalSucc = document.getElementById('winner-modal');
 								let modal = new Modal(modalSucc)
@@ -222,6 +244,7 @@ export default
 								modal.show()
 							}
 						}else{
+							this.inProgress = true;
 							let obj = this.events.find(item => item._id === this.$route.params.matchId);
 							const btns = document.getElementsByClassName('continue-game');
 							for (const btn of btns) {
@@ -244,12 +267,14 @@ export default
 		},
 		sendChat()
 		{
-			this.io.emit('game/sendchat', {
-				id: this.game.id,
-				text: this.chatbox
-			});
+			if(this.muteChat == false) {
+				this.io.emit('game/sendchat', {
+					id: this.game.id,
+					text: this.chatbox
+				});
 
-			this.chats.push(this.chatbox);
+				this.chats.push(this.chatbox);
+			}
 			this.chatbox = '';
 		},
 		move(checkerId, toPositionId)

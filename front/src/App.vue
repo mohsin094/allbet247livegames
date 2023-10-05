@@ -8,7 +8,7 @@
   <div class="container-fluid">
     <div class="row flex-nowrap">
         <!-- <Sidebar/> -->
-        <div class="col-md-12 col-xl-12 px-sm-2 px-0">
+        <div>
             <RouterView />
          </div>
         
@@ -21,11 +21,17 @@
   // import Sidebar from '@/components/Sidebar.vue';
   import Auth from '@/components/Auth.vue';
   import BackgammonHeader from '@/components/BackgammonHeader.vue';
+  import io from "socket.io-client"
   export default {
     components: {
         Header,
         // Sidebar,
         BackgammonHeader
+      },
+      data() {
+        return {
+          socket: undefined
+        }
       },
       created(){
         if(this.$storage.getItem("data") != null){
