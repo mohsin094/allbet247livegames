@@ -21,11 +21,17 @@
   // import Sidebar from '@/components/Sidebar.vue';
   import Auth from '@/components/Auth.vue';
   import BackgammonHeader from '@/components/BackgammonHeader.vue';
+  import io from "socket.io-client"
   export default {
     components: {
         Header,
         // Sidebar,
         BackgammonHeader
+      },
+      data() {
+        return {
+          socket: undefined
+        }
       },
       created(){
         if(this.$storage.getItem("data") != null){

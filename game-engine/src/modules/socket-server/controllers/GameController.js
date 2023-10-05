@@ -37,11 +37,19 @@ function GameController()
 {
 	this.accessRules = [
 		{
-			methods: ['join', 'move', 'throwdice', 'sendchat'],
+			methods: ['join', 'move', 'throwdice', 'sendchat', 'joinnotification'],
 			roles: [ROLES.MEMBER],
 			allow: true
 		}
 	];
+
+	this.joinnotification = function() {
+		setTimeout(() => {
+			this.request.socket.emit('notification', {
+				user_id: this.app.user.id
+			});
+		}, 1000);
+	}
 
 	this._getEvent = async function(eventId)
 	{

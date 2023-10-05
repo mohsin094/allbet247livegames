@@ -1,6 +1,4 @@
 <template>
-	<p v-if="game && game.stage.id == stage.end">END, Winner IS: {{game.winner}}</p>
-	<p v-if="game && game.stage.id == stage.cancel">Game stopped by admin, stake amount returned to your balance</p>
 	<div class="row">
 		<div class="col-md-10 col-xl-10 px-sm-2 px-0 ">
 			<div id="game" class="col-12 main-wrapper" style="padding:20px 0">
