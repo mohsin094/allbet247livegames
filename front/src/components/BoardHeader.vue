@@ -2,7 +2,7 @@
 	<div class="row">
 		<div class="col-md-12 col-xl-12 board-header position-relative" style='height:55px'>
 			<div class="row">
-				<div v-if="playerWhite != undefined" class="col-md-1 col-xl-1 position-relative">
+				<div v-if="playerWhite != undefined" class="col-md-2 col-xl-2 position-relative">
 					<span class="material-symbols-rounded position-absolute flag online-flag flag-left">
 						radio_button_unchecked
 					</span>
@@ -12,44 +12,32 @@
 						</div>
 
 					</div>
-					<span class="position-absolute bheader-profile-name-left card-profile-name">{{playerWhite.public_name}}</span>
+					<span class="position-absolute bheader-profile-name-left bheader-profile-name">{{playerWhite.public_name}}</span>
 					<span class="position-absolute bheader-user-level user-level-left">LVL.{{playerWhite.lvl}}</span>
 
 				</div>
-				<div v-if="playerWhite != undefined" class="col-md-1 col-xl-1 txt-icon">
-					<strong class="float-end"> {{playerWhite.time}}</strong>
-					<i class="material-symbols-outlined text-golden-gradient float-end me-1">
+				<div v-if="playerWhite != undefined" class="col-md-2 col-xl-2 txt-icon">
+					<i class="material-symbols-outlined text-golden-gradient float-start me-1">
 						timelapse
 					</i>
-					
+					<strong class="float-start"> {{playerWhite.time}}</strong>
 				</div>
 				
 				<div class="col-md-2 col-xl-2 txt-icon">
-					<p class="float-end">Prize:1400</p>
-					<span class="material-symbols-outlined text-golden-gradient float-end">workspace_premium</span>
-				</div>
-				<div class="col-md-4 col-xl-4">
-					<!-- <ul class="list-group-horizontal card-star text-center">
-						<li><i class="material-symbols-rounded text-grass">star</i></li>
-						<li><i class="material-symbols-rounded text-grass">star</i></li>
-						<li><i class="material-symbols-rounded text-red">star</i></li>
-						<li><i class="material-symbols-rounded text-disabled">star</i></li>
-						<li><i class="material-symbols-rounded text-disabled">star</i></li>
-						<li><i class="material-symbols-rounded text-disabled">star</i></li>
-						<li><i class="material-symbols-rounded text-disabled">star</i></li>
-					</ul> -->
+					<span class="material-symbols-outlined text-golden-gradient float-start">workspace_premium</span>
+					<p class="float-start ms-2">Prize:1400</p>
 				</div>
 				<div class="col-md-2 col-xl-2 txt-icon">
-					<span class="material-symbols-outlined text-golden-gradient float-start me-2">currency_exchange</span>
-					<p class="float-start ml-2"> Stake:{{match.stake}}1000</p>
+					<p class="float-end ms-2"> Stake:{{match.stake}}1000</p>
+					<span class="material-symbols-outlined text-golden-gradient float-end ms-2">currency_exchange</span>
 				</div>
-				<div v-if="playerBlack != undefined" class="col-md-1 col-xl-1 txt-icon">
-					<strong class="float-start large-text"> {{playerBlack.time}}</strong>
-					<i class="material-symbols-outlined text-golden-gradient float-start ms-1">
+				<div v-if="playerBlack != undefined" class="col-md-2 col-xl-2 txt-icon">
+					<i class="material-symbols-outlined text-golden-gradient float-end ms-1">
 						timelapse
 					</i>
+					<strong class="float-end large-text"> {{playerBlack.time}}</strong>
 				</div>
-				<div v-if="playerBlack != undefined" class="col-md-1 col-xl-1">
+				<div v-if="playerBlack != undefined" class="col-md-2 col-xl-2">
 					<!-- <span class="material-symbols-rounded text-disable position-absolute flag offline-flag flag-right">
 						radio_button_unchecked
 					</span> -->
@@ -61,7 +49,7 @@
 							<img class="avatar-img" :src="baseUrl+'/assets/images/avatars/'+ playerBlack.avatar +'.png'" />
 						</div>
 					</div>
-					<span class="position-absolute bheader-profile-name-right card-profile-name">{{playerBlack.public_name }}</span>
+					<span class="position-absolute bheader-profile-name-right bheader-profile-name">{{playerBlack.public_name }}</span>
 					<span class="position-absolute bheader-user-level user-level-right">LVL.{{playerBlack.lvl}}</span>
 				</div>
 			</div>
