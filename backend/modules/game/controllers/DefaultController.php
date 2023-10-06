@@ -116,7 +116,8 @@ class DefaultController extends ApiController
             $this->resp->params = [
                 'public_name' => $player->public_name,
                 'avatar' => $player->avatar,
-                'avatar_link' => \Yii::$app->params['clientUrl'].'/assets/images/avatars/'.$player->avatar.'.png'
+                'avatar_link' => \Yii::$app->params['clientUrl'].'/assets/images/avatars/'.$player->avatar.'.png',
+                'lvl' => $player->lvl
             ];
         }
 
