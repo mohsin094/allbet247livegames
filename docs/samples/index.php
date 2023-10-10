@@ -33,7 +33,27 @@ if($res->result) {
 
 // set callback (webhook) url
 
+if($res->result) {
+	$userId = $res->params->userId;
 
+	$curl = curl_init();
+	curl_setopt_array($curl, array(
+	  CURLOPT_URL => 'http://localhost/backgammon/backend/web/admin-setting/update?id=$settingId',
+	  CURLOPT_RETURNTRANSFER => true,
+	  CURLOPT_FOLLOWLOCATION => true,
+	  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	  CURLOPT_CUSTOMREQUEST => 'POST',
+	  CURLOPT_HTTPHEADER => ['Content-type: application/json',"X-SID-TOKEN: $adminSession"],
+	  CURLOPT_POSTFIELDS =>'{
+	    "value": "http://webhook/url"
+	}'
+	));
+
+	$res = curl_exec($curl);
+
+	curl_close($curl);
+
+	$res = json_decode($res);
 // create a user
 $curl = curl_init();
 
