@@ -39,6 +39,9 @@ class AuthController extends ApiController
 		$model->scenario = Users::SCENARIO_REGISTER;
 		if($model->load(\Yii::$app->request->bodyParams) && $model->save()) {
 			$this->resp->result = true;
+			$this->resp->params = [
+				'userId' => (string) $model->_id
+			];
 			$this->action(ApiAction::build([ApiAction::ACTION_REDIRECT, ['url' => 'login']]));
 
 			$token = (new \common\components\Token)->name(Tokens::TYPE_REGISTER)->userId((string)$model->_id)->exp('24h')->generate();
