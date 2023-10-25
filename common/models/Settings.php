@@ -16,7 +16,7 @@ class Settings extends \yii\mongodb\ActiveRecord
 {
 
     const NAME_SITE_NAME = 'site_name';
-
+    const NAME_WEBHOOK_URL = 'webhook_url';
     
 
     public static function getSetting($name=null)
