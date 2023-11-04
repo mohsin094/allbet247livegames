@@ -1,28 +1,61 @@
 <template>
 <!-- Edit User Modal -->
-  <div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal" id="editUserModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-simple modal-edit-user">
       <div class="modal-content p-3 p-md-5">
         <div class="modal-body">
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          
           <div class="text-center mb-4">
             <h3 class="mb-2">Edit User Information</h3>
-            <p class="text-muted">Updating user details will receive a privacy audit.</p>
           </div>
           <form id="editUserForm" class="row g-3" onsubmit="return false">
             <div class="col-12">
-              <label class="form-label" for="modalEditUserName">Username</label>
+              <label class="form-label">Public Name</label>
               <input v-model="user.public_name" type="text" class="form-control" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Balance</label>
+              <input v-model="user.balance" type="text" class="form-control" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">LVL</label>
+              <input v-model="user.lvl" type="text" class="form-control" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Username</label>
+              <input v-model="user.public_name" type="text" class="form-control" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Role</label>
+              <input v-model="user.public_name" type="text" class="form-control" />
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Status</label>
+              <select v-model="user.status" type="text" class="form-control">
+              	<option v-for="status in Object.keys(statusList)" :value="status">{{status}}</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Role</label>
+              <select v-model="user.role" type="text" class="form-control">
+              	<option v-for="role in Object.keys(roleList)" :value="role">{{role}}</option>
+              </select>
             </div>
             
             <div class="col-12 text-center">
               <button @click="update" type="button" class="btn btn-primary me-sm-3 me-1">Update</button>
               <button
-                type="reset"
+                type="button"
                 class="btn btn-label-secondary"
                 data-bs-dismiss="modal"
                 aria-label="Close">
-                Cancel
+                close
               </button>
             </div>
           </form>
@@ -36,10 +69,21 @@
 export default {
 	props: {
 		user: {
-		default: {}
-		}
+			default: {}
+		},
+		statusList: {
+			default: {}
+		},
+		roleList: {
+			default: {}
+		},
 	},
 	methods: {
+		closeModal() {
+	
+			const modal = new bootstrap.Modal('#editUserModal');
+			modal.hide();
+		},
 		update() {
 			
 			const data = {
@@ -58,8 +102,8 @@ export default {
 				if(res.result) {
 					// close modal
 					const modal = new bootstrap.Modal('#editUserModal');
-					console.log(modal);
-					modal.toggle();
+					
+					this.closeModal();
 					this.$emit('updated');
 				}
 			})

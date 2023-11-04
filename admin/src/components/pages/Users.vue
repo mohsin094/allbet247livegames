@@ -13,6 +13,7 @@
 						<th>Public Name</th>
 						<th>Email</th>
 						<th>Balance</th>
+						<th>Role</th>
 						<th>Status</th>
 						<th>Actions</th>
 					</tr>
@@ -28,6 +29,9 @@
 						<td>{{user.email}}</td>
 						<td>
 							{{user.balance}}
+						</td>
+						<td>
+							{{user.role}}
 						</td>
 						<td><span :class="'bg-label-'+getStatusClass(user.status)" class="badge me-1">{{user.status}}</span></td>
 						<td>
@@ -45,7 +49,7 @@
 			</table>
 		</div>
 	</div>
-	<edit-modal @updated="fetchUsers()" :user="userForEdit" />
+	<edit-modal @updated="fetchUsers()" :user="userForEdit" :status-list="statusList" :role-list="roleList" />
 </template>
 <script>
 import EditModal from './../users/_editModal.vue';
