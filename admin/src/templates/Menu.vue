@@ -43,7 +43,7 @@
 			  >
 		    <li class="menu-item" :class="{active: isActive}">
 	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
-	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <i class="menu-icon tf-icons ti ti-users"></i>
 	            <div>Users</div>
 	          </a>
 	        </li>
@@ -57,7 +57,7 @@
 			  >
 		    <li class="menu-item" :class="{active: isActive}">
 	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
-	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <i class="menu-icon tf-icons ti ti-dice-6"></i>
 	            <div>Games</div>
 	          </a>
 	        </li>
@@ -71,7 +71,7 @@
 			  >
 		    <li class="menu-item" :class="{active: isActive}">
 	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
-	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <i class="menu-icon tf-icons ti ti-report-money"></i>
 	            <div>Financial</div>
 	          </a>
 	        </li>
@@ -85,7 +85,7 @@
 			  >
 		    <li class="menu-item" :class="{active: isActive}">
 	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
-	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <i class="menu-icon tf-icons ti ti-speakerphone"></i>
 	            <div>Announcements</div>
 	          </a>
 	        </li>
@@ -99,7 +99,7 @@
 			  >
 		    <li class="menu-item" :class="{active: isActive}">
 	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
-	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <i class="menu-icon tf-icons ti ti-adjustments"></i>
 	            <div>Settings</div>
 	          </a>
 	        </li>
