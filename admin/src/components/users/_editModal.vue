@@ -24,15 +24,6 @@
               <input v-model="user.lvl" type="text" class="form-control" />
             </div>
 
-            <div class="col-12">
-              <label class="form-label">Username</label>
-              <input v-model="user.public_name" type="text" class="form-control" />
-            </div>
-
-            <div class="col-12">
-              <label class="form-label">Role</label>
-              <input v-model="user.public_name" type="text" class="form-control" />
-            </div>
 
             <div class="col-12">
               <label class="form-label">Status</label>
@@ -102,7 +93,7 @@ export default {
 				if(res.result) {
 					// close modal
 					const modal = new bootstrap.Modal('#editUserModal');
-					
+					this.$notif.show('Updated!', 'success');
 					this.closeModal();
 					this.$emit('updated');
 				}
