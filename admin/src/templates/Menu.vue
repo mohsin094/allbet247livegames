@@ -20,7 +20,7 @@
       </div>
       <div class="menu-inner-shadow"></div>
       <ul class="menu-inner py-1">
-	        
+      	<!-- dashboard -->
 	        <router-link
 	        	:to="{name: 'dashboard'}"
 			    v-bind="$props"
@@ -34,6 +34,7 @@
 	          </a>
 	        </li>
 		  </router-link>
+		  <!-- users -->
 		  <router-link
 	        	:to="{name: 'users'}"
 			    v-bind="$props"
@@ -44,6 +45,62 @@
 	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
 	            <i class="menu-icon tf-icons ti ti-app-window"></i>
 	            <div>Users</div>
+	          </a>
+	        </li>
+		  </router-link>
+		  <!-- game -->
+		  <router-link
+	        	:to="{name: 'games'}"
+			    v-bind="$props"
+			    custom
+			    v-slot="{ isActive, href, navigate }"
+			  >
+		    <li class="menu-item" :class="{active: isActive}">
+	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
+	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <div>Games</div>
+	          </a>
+	        </li>
+		  </router-link>
+		  <!-- financial -->
+		  <router-link
+	        	:to="{name: 'financial'}"
+			    v-bind="$props"
+			    custom
+			    v-slot="{ isActive, href, navigate }"
+			  >
+		    <li class="menu-item" :class="{active: isActive}">
+	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
+	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <div>Financial</div>
+	          </a>
+	        </li>
+		  </router-link>
+		  <!-- announcement -->
+		  <router-link
+	        	:to="{name: 'announcements'}"
+			    v-bind="$props"
+			    custom
+			    v-slot="{ isActive, href, navigate }"
+			  >
+		    <li class="menu-item" :class="{active: isActive}">
+	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
+	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <div>Announcements</div>
+	          </a>
+	        </li>
+		  </router-link>
+		  <!-- settings -->
+		  <router-link
+	        	:to="{name: 'settings'}"
+			    v-bind="$props"
+			    custom
+			    v-slot="{ isActive, href, navigate }"
+			  >
+		    <li class="menu-item" :class="{active: isActive}">
+	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
+	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <div>Settings</div>
 	          </a>
 	        </li>
 		  </router-link>

@@ -13,6 +13,26 @@ const router = createRouter({
       name: 'users',
       component: () => import('./../components/pages/Users.vue')
     },
+    {
+      path: '/games',
+      name: 'games',
+      component: () => import('./../components/pages/Games.vue')
+    },
+    {
+      path: '/financial',
+      name: 'financial',
+      component: () => import('./../components/pages/Financial.vue')
+    },
+    {
+      path: '/announcements',
+      name: 'announcements',
+      component: () => import('./../components/pages/Announcements.vue')
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('./../components/pages/Settings.vue')
+    },
   ]
 })
 
