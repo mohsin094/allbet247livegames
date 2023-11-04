@@ -36,8 +36,7 @@
 									<i class="ti ti-dots-vertical"></i>
 								</button>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-pencil me-1"></i> Edit</a>
-									<a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-trash me-1"></i> Delete</a>
+									<a @click.prevent="editUser(user)" class="dropdown-item"><i class="ti ti-pencil me-1"></i> Edit</a>
 								</div>
 							</div>
 						</td>
@@ -46,22 +45,58 @@
 			</table>
 		</div>
 	</div>
+	<edit-modal @updated="fetchUsers()" :user="userForEdit" />
 </template>
 <script>
+import EditModal from './../users/_editModal.vue';
 export default {
+	components: {
+		EditModal,
+	},
 	data() {
 		return {
 			users: [],
 			search: '',
-			baseUrl: import.meta.env.VITE_FRONT_BASE_URL
+			baseUrl: import.meta.env.VITE_FRONT_BASE_URL,
+			roleList: [],
+			statusList: [],
+			userForEdit: {}
 		}
 	},
 	mounted() {
 		this.fetchUsers();
+		this.fetchInitials();
 	},
 
 	methods: {
-		getStatusClass(status) {
+		editUser(user)
+		{
+			// open modal
+			const modal = new bootstrap.Modal('#editUserModal')
+			modal.show();
+
+			this.userForEdit = user;
+		},
+
+		//fetch role list and status list for editing user
+		fetchInitials()
+		{
+			this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/user/admin/get-roles-list").then((res) => {
+				res = res.data;
+				if(res.result) {
+					this.roleList = res.params;
+				}
+			});
+
+			this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/user/admin/get-status-list").then((res) => {
+				res = res.data;
+				if(res.result) {
+					this.statusList = res.params;
+				}
+			});
+		},
+		getStatusClass(status)
+		{
 			let htmlClass = '';
 			switch(status) {
 			case 'active':
@@ -74,7 +109,8 @@ export default {
 
 			return htmlClass;
 		},
-		fetchUsers() {
+		fetchUsers()
+		{
 			let query = "";
 			if(this.search != "") {
 				query = "?query=" + this.search;
