@@ -20,36 +20,50 @@
       </div>
       <div class="menu-inner-shadow"></div>
       <ul class="menu-inner py-1">
-        <!-- Page -->
-        <li class="menu-item" :class="{active: (route == 'dashboard')}">
-          <router-link :to="{name:'dashboard'}" class="menu-link">
-            <i class="menu-icon tf-icons ti ti-smart-home"></i>
-            <div>Dashboard</div>
-          </router-link>
-        </li>
-        <!-- Page -->
-        <li class="menu-item" :class="{active: (route == 'users')}">
-          <router-link :to="{name:'users'}" class="menu-link">
-            <i class="menu-icon tf-icons ti ti-app-window"></i>
-            <div>Users</div>
-          </router-link>
-        </li>
+	        
+	        <router-link
+	        	:to="{name: 'dashboard'}"
+			    v-bind="$props"
+			    custom
+			    v-slot="{ isActive, href, navigate }"
+			  >
+		    <li class="menu-item" :class="{active: isActive}">
+	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
+	            <i class="menu-icon tf-icons ti ti-smart-home"></i>
+	            <div>Dashboard</div>
+	          </a>
+	        </li>
+		  </router-link>
+		  <router-link
+	        	:to="{name: 'users'}"
+			    v-bind="$props"
+			    custom
+			    v-slot="{ isActive, href, navigate }"
+			  >
+		    <li class="menu-item" :class="{active: isActive}">
+	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
+	            <i class="menu-icon tf-icons ti ti-app-window"></i>
+	            <div>Users</div>
+	          </a>
+	        </li>
+		  </router-link>
       </ul>
     </aside>
     <!-- / Menu -->
 </template>
 <script>
+import {reactive} from 'vue';
+import {RouterLink} from 'vue-router';
 export default {
+	nheritAttrs: false,
+	props: {
+		...RouterLink
+	},
 	data()
 	{
 		return {
 			route: 'dashboard'
 		}
-	},
-	onBeforeEnter(to, from)
-	{
-		console.log('hi')
-		console.log(to)
 	}
 }
 </script>
