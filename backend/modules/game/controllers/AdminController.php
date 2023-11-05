@@ -42,6 +42,7 @@ class AdminController extends AdminApiController
 		$this->resp->params = Matches::find()
 		->with(['homeUser', 'awayUser','round', 'stake', 'timeframe'])
 		->orderBy('cdate DESC')
+		->limit(100)
 		->asArray()
 		->all();
 
