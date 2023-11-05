@@ -17,7 +17,7 @@
 	              </span>
 	            </button>
 	        </li>
-	        <li class="nav-item ">
+	       <!--  <li class="nav-item ">
 	          <button @click="setTitle('Tournaments')" type="button" class="nav-link btn tab-btn position-relative" data-bs-toggle="pill" data-bs-target="#pills-tournaments">
 	              <div class="icon-border">
 	              <div class="icon-bg">
@@ -46,7 +46,7 @@
 	                <span class="badge-text">15</span>
 	              </span>
 	            </button>
-	        </li>
+	        </li> -->
 	         <li class="nav-item ">
 	          <button @click="setTitle('Other games')" type="button" class="nav-link btn tab-btn position-relative" data-bs-toggle="pill" data-bs-target="#pills-others">
 	              <div class="icon-border">
@@ -85,7 +85,7 @@
 			     	<h4>{{title}}</h4>
 			     </div>
 			    </div>
-			    <div class="col px-2">
+			   <!--  <div class="col px-2">
 			      <div class="p-3 text-end">
 			      	<button class="btn-control btn-filter" type="button">
 				        <span class="material-symbols-outlined">
@@ -98,13 +98,13 @@
 						</span>
 				    </button>
 			  	  </div>
-			    </div>
+			    </div> -->
   			</div>
 	      	<div class="tab-content" id="pills-tabContent">
 	      		<!-- waiting list start -->
 			  <div class="tab-pane fade show active" id="pills-waiting-list" role="tabpanel">
 			  	<div class="row mb-5">
-				  	<div v-for="wait in waiting" class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
+				  	<div v-if="waiting.length > 0" v-for="wait in waiting" class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
 			  			<div :class="['frame small-frame' ,getAvatarColor(wait.home.avatar+'.png')]">
 				  			<div class="position-relative card">
 				  				<div class="row gx-6 small-card-header">
@@ -125,7 +125,7 @@
 										<small>Stake:<span class="text-golden-gradient">{{wait.stake}}</span></small>
 									</div>
 								    <div class="col-4 text-center">
-								    	<!-- <small>Time:<span class="text-golden-gradient">{{wait.timeframe}}</span></small> -->
+								    	<small>Time:<span class="text-golden-gradient">{{wait.timeframe}}</span></small>
 								    </div>
 								    <div class="col-4 text-end">
 								    	<small>Rounds:<span class="text-golden-gradient">{{wait.round}}</span></small>
@@ -143,7 +143,10 @@
 				  			</div> 
 				  		</div>
 	  				</div>
-	  				<div class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
+	  				<div v-else>
+	  					<strong class="text-red">There is no game. Click the "Play Now" button to start a new game</strong>
+	  				</div>
+	  				<!-- <div class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
 			  			<div class="frame small-frame border-red">
 				  			<div class="position-relative card">
 				  				<div class="row gx-6 small-card-header">
@@ -181,8 +184,8 @@
 				  				</div>
 				  			</div> 
 				  		</div>
-	  				</div>
-	  				<div class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
+	  				</div> -->
+	  				<!-- <div class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
 			  			<div class="frame small-frame border-light-green">
 				  			<div class="position-relative card">
 				  				<div class="row gx-6 small-card-header">
@@ -259,8 +262,8 @@
 				  				</div>
 				  			</div> 
 				  		</div>
-	  				</div>
-	  				<div class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
+	  				</div> -->
+	  				<!-- <div class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
 			  			<div class="frame small-frame border-brown">
 				  			<div class="position-relative card">
 				  				<div class="row gx-6 small-card-header">
@@ -298,9 +301,8 @@
 				  				</div>
 				  			</div> 
 				  		</div>
-	  				</div>
+	  				</div> -->
 			  	</div>
-
 			  </div>
 			  <!-- waiting list end -->
 			  <div class="tab-pane fade" id="pills-tournaments" role="tabpanel">

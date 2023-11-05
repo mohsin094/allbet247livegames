@@ -6,7 +6,6 @@
 	import Board from '@/components/Board.vue';
 	export default{
 		components: {
-
         Board
       },
 		beforeRouteEnter(to,from,next){

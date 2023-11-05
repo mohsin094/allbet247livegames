@@ -92,13 +92,14 @@ class DefaultController extends ApiController
         }));
 
         $final = [];
-        foreach($semiFinal as $g) {
-         
-            $homeUser = (Users::findOne(['_id' => $g['home_id']]))->getPublicData();
-            $awayUser = (!empty($g['away_id'])) ? (Users::findOne(['_id' => $g['away_id']]))->getPublicData() : null;
-            $g['homeUser'] = $homeUser;
-            $g['awayUser'] = ($awayUser) ? $awayUser : null;
-            array_push($final, $g);
+        if($semiFinal){
+            foreach($semiFinal as $g) {
+                $homeUser = (Users::findOne(['_id' => $g['home_id']]))->getPublicData();
+                $awayUser = (!empty($g['away_id'])) ? (Users::findOne(['_id' => $g['away_id']]))->getPublicData() : null;
+                $g['homeUser'] = $homeUser;
+                $g['awayUser'] = ($awayUser) ? $awayUser : null;
+                array_push($final, $g);
+            }
         }
 
         $this->resp->result = true;

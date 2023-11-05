@@ -78,7 +78,7 @@
 					</div>
 	        	</div>
 	        	<Chat :chats="chats" />
-	        	<div id="chatbox-footer" class="px-1 py-1">
+	        	<div id="chatbox-footer" class="px-2 py-1 position-absolute" style="bottom: 5px">
 	        		<div class="input-group mb-3">
 					  <input v-model="chatbox" @keyup.enter="sendChat" type="text" class="form-control" id="input-msg" placeholder="Write here..." aria-describedby="basic-addon2">
 					  <div class="input-group-append">
