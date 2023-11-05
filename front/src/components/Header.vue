@@ -198,7 +198,7 @@
       doLogout:function(){
       	this.$user.doLogout()
         this.$storage.removeItem("data")
-        console.log(this.$user.data.isGuest)
+        
       },
       goToCashier:function(){
       	this.$router.push({path:'/cashier'})

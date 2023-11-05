@@ -43,7 +43,7 @@ class AdminController extends AdminApiController
         }
 
         $models = $models
-        // ->asArray()
+        ->asArray()
         ->all();
    
         if(!empty($query)) {
