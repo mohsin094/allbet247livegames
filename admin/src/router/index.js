@@ -39,6 +39,10 @@ const router = createRouter({
       component: () => import('./../components/pages/Settings.vue')
     },
   ]
-})
+});
+
+router.beforeEach(async (to, from) => {
+  console.log(to)
+});
 
 export default router

@@ -45,6 +45,7 @@ import "./assets/vendor/css/rtl/theme-default.css";
 import "./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
 import "./assets/css/demo.css";
 import "./assets/vendor/js/helpers.js";
+import "./assets/css/custom.css";
 // import "./assets/vendor/js/template-customizer.js";
 // import "./assets/js/config.js";
 import "./assets/vendor/libs/jquery/jquery.js";
