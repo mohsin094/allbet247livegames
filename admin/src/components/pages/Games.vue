@@ -34,7 +34,7 @@
                         </div>
 						<span v-if="match.awayUser.public_name != undefined" class="fw-medium">{{match.awayUser.public_name}}</span>
 					</td>
-					<td>{{match.stake.stake}}</td>
+					<td>{{(match.stake != null) ? match.stake.stake : ''}}</td>
 					<td>
 						{{(match.home_id == match.winner) ? 'Home' : ''}}
 						{{(match.away_id != '' && match.away_id == match.winner) ? 'Away' : ''}}

@@ -27,14 +27,14 @@
 
             <div class="col-12">
               <label class="form-label">Status</label>
-              <select v-model="user.status" type="text" class="form-control">
+              <select v-model="user.status" class="form-control">
               	<option v-for="status in Object.keys(statusList)" :value="status">{{status}}</option>
               </select>
             </div>
 
             <div class="col-12">
               <label class="form-label">Role</label>
-              <select v-model="user.role" type="text" class="form-control">
+              <select v-model="user.role" class="form-control">
               	<option v-for="role in Object.keys(roleList)" :value="role">{{role}}</option>
               </select>
             </div>

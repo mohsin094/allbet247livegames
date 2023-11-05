@@ -78,7 +78,9 @@ export default
     if(this.$storage.getItem("data") != null)
     {
       let data = JSON.parse(this.$storage.getItem("data"));
-      this.$user.doLogin(data)
+      this.$user.doLogin(data);
+      console.log(this.$user.data);
+      console.log(data);
     }
   }
 }
