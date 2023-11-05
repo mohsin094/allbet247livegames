@@ -54,7 +54,8 @@ export default {
 	{
 		return {
 			matchStatusList: {},
-			matchesList: []
+			matchesList: [],
+			baseUrl: import.meta.env.VITE_FRONT_BASE_URL,
 		}
 	},
 	mounted()
