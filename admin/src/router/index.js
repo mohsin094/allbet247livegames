@@ -19,6 +19,11 @@ const router = createRouter({
       component: () => import('./../components/pages/Games.vue')
     },
     {
+      path: '/game-stakes',
+      name: 'gameStakes',
+      component: () => import('./../components/pages/GameStakes.vue')
+    },
+    {
       path: '/financial',
       name: 'financial',
       component: () => import('./../components/pages/Financial.vue')

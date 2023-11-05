@@ -62,6 +62,20 @@
 	          </a>
 	        </li>
 		  </router-link>
+		  <router-link
+	        	:to="{name: 'gameStakes'}"
+			    v-bind="$props"
+			    custom
+			    v-slot="{ isActive, href, navigate }"
+			  >
+		    <li class="menu-item" :class="{active: isActive}">
+	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
+	            <i class="menu-icon tf-icons ti-app-window"></i>
+	            <div>Game Stakes</div>
+	          </a>
+	        </li>
+		  </router-link>
+
 		  <!-- financial -->
 		  <router-link
 	        	:to="{name: 'financial'}"
