@@ -1,5 +1,5 @@
 <template>
-<h4>Games</h4>
+<h4>Games <small>(last 100)</small></h4>
 <div class="card">
 	<div class="table-responsive text-nowrap">
 		<table class="table">
@@ -34,7 +34,7 @@
                         </div>
 						<span v-if="match.awayUser.public_name != undefined" class="fw-medium">{{match.awayUser.public_name}}</span>
 					</td>
-					<td>{{user.stake.stake}}</td>
+					<td>{{match.stake.stake}}</td>
 					<td>
 						{{(match.home_id == match.winner) ? 'Home' : ''}}
 						{{(match.away_id != '' && match.away_id == match.winner) ? 'Away' : ''}}
@@ -60,6 +60,7 @@ export default {
 	mounted()
 	{
 		this.initialize();
+		this.fetchMatchesList();
 	},
 	methods: {
 		initialize()
