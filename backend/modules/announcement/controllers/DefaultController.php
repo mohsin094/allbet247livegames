@@ -21,7 +21,7 @@ class DefaultController extends ApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['get', 'list'],
+                        'actions' => ['get', 'list','announcements'],
                         'roles' => ['@'],
                         'allow' => true,
                     ]
@@ -42,7 +42,6 @@ class DefaultController extends ApiController
         $this->resp->params = $models;
         return $this->resp;
     }
-
     public function actionGet($id)
     {
         $model = Announcements::findOne([

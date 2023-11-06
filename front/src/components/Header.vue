@@ -87,43 +87,28 @@
 	      </ul>
 	      <ul v-if="!$user.data.isGuest" class="navbar-nav ms-auto d-flex flex-row navbar-header">
 	        <li class="nav-item">
-	          <div class="header-box" @click="openNotifies()">
-	            <i class="material-symbols-rounded">
-	              notifications
-	            </i>
-	            <div id="notif-wrapper" class="notif-wrapper position-absolute d-none">
-		           <ul class="notif-list">
-		           	<li>
-		           		<router-link to="/notifications">
-		           			<i class="material-symbols-rounded float-start text-golden-dark">
-				              notifications
-				            </i>
-			            Test Notification 1
-		           		</router-link>
-			            <hr class="hr-text" style="margin:0" />
-		           	</li>
-		           	<li>
-		           		<router-link to="/notifications">
-		           			<i class="material-symbols-rounded float-start text-golden-dark">
-				              notifications
-				            </i>
-			            Test Notification 2
-		           		</router-link>
-			            <hr class="hr-text" style="margin:0" />
-		           	</li>
-		           	<li>
-		           		<router-link to="/notifications">
-		           			<i class="material-symbols-rounded float-start text-golden-dark">
-				              notifications
-				            </i>
-			            Test Notification 3
-		           		</router-link>
-			            <hr class="hr-text" style="margin:0" />
-		           	</li>
-		           </ul>
-
-	            </div>
-	          </div>
+		        <div class="header-box position-relative" @click="openNotifies()">
+					<span v-if="announcements.length > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light-gray">
+						{{announcements.length}}
+					    <span class="visually-hidden">unread messages</span>
+					</span>
+		            <i class="material-symbols-rounded">
+		              notifications
+		            </i>
+		            <div id="notif-wrapper" class="notif-wrapper position-absolute d-none" v-if="announcements.length > 0">
+			           <ul class="notif-list">
+			           	<li v-for="announcement in announcements">
+			           		<router-link to="/notifications">
+			           			<i class="material-symbols-rounded float-start text-golden-dark">
+					              notifications
+					            </i>
+				            	{{announcement.title}}
+			           		</router-link>
+				            <hr class="hr-text" style="margin:0" />
+			           	</li>
+			           </ul>
+		            </div>
+		        </div>
 	        </li>
 	        <li class="nav-item">
 	          <div class="header-box" @click="goToTicket()">
@@ -191,30 +176,47 @@
 	  <!-- Navbar -->
 	</header>
 </template>
-	<script>
-  export default{
-   
-    methods:{
-      doLogout:function(){
-      	this.$user.doLogout()
-        this.$storage.removeItem("data")
-        
-      },
-      goToCashier:function(){
-      	this.$router.push({path:'/cashier'})
-      },
-      goToTicket:function(){
-      	this.$router.push({path:'/ticket'})
-      },
-      openNotifies:function(){
-      	var element = document.getElementById("notif-wrapper")
-      	if(element.classList.contains('d-none')){
-      		element.classList.remove("d-none");
-      	}else{
-      		element.classList.add("d-none");
-      	}
-      	
-      }
-    }
-  }
+<script>
+	export default{
+	   data(){
+	   	return{
+	   		announcements:[]
+	   	}
+	   },
+	   mounted(){
+	   	this.getAnnouncements()
+	   },
+	   methods:{
+		    getAnnouncements(){
+		      const url = import.meta.env.VITE_BACKEND_BASE_URL+'/announcement/default/list'
+	          let instance = this
+	          this.$axios.get(url).then(function(response){
+	            let data = response.data.params
+	            if(data.length > 0){
+	              instance.announcements = data
+	            }
+          })
+		    },
+		    doLogout:function(){
+		      	this.$user.doLogout()
+		        this.$storage.removeItem("data")
+		        
+		    },
+		    goToCashier:function(){
+		      	this.$router.push({path:'/cashier'})
+		    },
+		    goToTicket:function(){
+		      	this.$router.push({path:'/ticket'})
+		    },
+		    openNotifies:function(){
+		      	var element = document.getElementById("notif-wrapper")
+		      	if(element.classList.contains('d-none')){
+		      		element.classList.remove("d-none");
+		      	}else{
+		      		element.classList.add("d-none");
+		      	}
+		      	
+		    }
+	    }
+  	}
 </script>
