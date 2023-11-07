@@ -5,7 +5,7 @@ import "bootstrap"
 import '@/assets/scss/main.scss';
 import { useDark, useToggle } from '@vueuse/core'
 import { plugin, defaultConfig } from '@formkit/vue'
-import { isMobile } from 'mobile-device-detect';
+import { isMobile,isTablet } from 'mobile-device-detect';
 import axios from 'axios'
 import User from "@/plugins/User.js";
 
@@ -34,6 +34,7 @@ app.config.globalProperties.isDark = true;
 app.config.globalProperties.isGuest = false;
 app.config.globalProperties.toggleDark = useToggle(app.config.globalProperties.isDark)
 app.config.globalProperties.isMobile = isMobile;
+app.config.globalProperties.isTablet = isTablet;
 app.config.globalProperties.$axios = axios
 app.config.globalProperties.$storage = window.localStorage
 

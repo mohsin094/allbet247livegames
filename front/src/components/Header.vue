@@ -1,5 +1,6 @@
 <template>
-	<header id="main-header">
+	<MobileHeader />
+	<header id="main-header" v-if="!this.isMobile">
 	  <!-- Navbar -->
 	  <!-- Button trigger modal -->
 	  <nav id="main-navbar" class="navbar navbar-expand-lg">
@@ -177,7 +178,11 @@
 	</header>
 </template>
 <script>
+	import MobileHeader from '@/components/MobileHeader.vue';
 	export default{
+	   components:{
+	   	MobileHeader
+	   },	
 	   data(){
 	   	return{
 	   		announcements:[]
