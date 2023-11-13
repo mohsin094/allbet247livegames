@@ -1,8 +1,8 @@
 <template>
   <div class="row">
-  	<Sidebar/>
-  	<div class="col-md-10 col-xl-10 px-sm-2 px-0">
-	  <div class="main-wrapper min-vh-100" :style="this.isMobile ? 'padding-top:100px' : ''">
+  	<Sidebar v-if="!this.isMobile"/>
+  	<div class="col-md-10 col-xl-10 px-sm-2 px-0"  :style="this.isMobile ? 'padding-top:120px' : ''">
+	  <div class="main-wrapper min-vh-100">
 		  <main v-if="!isGuest">
 		  	<MyGames v-if="!$user.data.isGuest"/>
 		  	<Tabs/>

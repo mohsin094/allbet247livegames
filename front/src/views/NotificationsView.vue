@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
-    <Sidebar/>
-    <div class="col-md-10 col-xl-10 px-sm-2 px-0">
+    <Sidebar v-if="!this.isMobile" />
+    <div class="col-md-10 col-xl-10 px-sm-2 px-0" :style="this.isMobile ? 'padding-top:120px' : ''">
       <div class="main-wrapper min-vh-100">
         <div class="accordion" id="accordion">
           <div v-for="announcement in announcements" class="accordion-item">
