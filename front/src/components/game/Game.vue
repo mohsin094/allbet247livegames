@@ -119,7 +119,6 @@ import
 	io
 }
 from "socket.io-client";
-import BoardHeader from '@/components/BoardHeader.vue';
 import
 {
 	PLAYER_COLOR
@@ -137,7 +136,6 @@ export default
 	components:
 	{
 		Column,
-		BoardHeader,
 		WinnerModal,
 		LooserModal,
 		Chat

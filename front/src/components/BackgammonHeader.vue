@@ -1,5 +1,5 @@
 <template>
-	<header id="backgammon-header" style="display:none">
+	<header id="backgammon-header">
 	  <!-- Navbar -->
 	  <!-- Button trigger modal -->
 	  <nav id="main-navbar" class="navbar navbar-expand-lg py-1">

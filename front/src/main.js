@@ -8,9 +8,9 @@ import { plugin, defaultConfig } from '@formkit/vue'
 import { isMobile,isTablet } from 'mobile-device-detect';
 import axios from 'axios'
 import User from "@/plugins/User.js";
+import PrimeVue from 'primevue/config';
 
 const app = createApp(App)
-
 app.config.globalProperties.isDark = useDark({
   selector: "body",
   attribute: "data-bs-theme",
@@ -23,6 +23,7 @@ app
 .use(router)
 .use(plugin, defaultConfig)
 .use(User)
+.use(PrimeVue)
 
 axios.interceptors.request.use((config) => {
 	config.headers['x-sid-token'] = app.config.globalProperties.$user.data.sessionId;

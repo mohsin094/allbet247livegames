@@ -1,9 +1,6 @@
 <template>
-	<div class="row">
-		<Sidebar v-if="!this.isMobile"/>
-		<div class="col-md-10 col-xl-10 px-sm-2 px-0" :style="this.isMobile ? 'padding-top:120px' : ''">
-			<div class="main-wrapper min-vh-100">
-				<div class="row">
+	<div>
+		<div class="row">
 					<div class="col">
 						<button class="btn btn-golden text-dark mt-3" data-bs-toggle="modal" data-bs-target="#newTicket">
 							New ticket
@@ -60,10 +57,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
+	
 	<TicketModal />
+	</div>
 </template>
 <script>
 	import Sidebar from '@/components/Sidebar.vue';

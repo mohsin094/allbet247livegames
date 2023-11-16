@@ -70,6 +70,12 @@
 					            
 			        		</div>
 			          	</li>
+			          	<li class="nav-item">
+				          <router-link to="/ticket" @click="hideThisCanvas()" aria-controls="offcanvasExample">
+					          <span class="material-symbols-rounded menu-icon">mail</span>
+					          <span class="ms-1  menu-link">Ticket</span>
+				          </router-link>
+			          	</li>
 			        </ul>
 				    <ul v-if="$user.data.isGuest" class="navbar-nav justify-content-end flex-grow-1 pe-3">
 				        <li class="nav-item">
