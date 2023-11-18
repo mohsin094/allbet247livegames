@@ -15,18 +15,16 @@
   </div> -->
 </template>
 <script>
-  import MainLayout from '@/layout/MainLayout.vue';
-  import GameLayout from '@/layout/GameLayout.vue';
-  // import Sidebar from '@/components/Sidebar.vue';
+  import DefaultLayout from '@/layouts/DefaultLayout.vue';
+  import AppLayout from '@/layouts/AppLayout.vue';
   import Auth from '@/components/Auth.vue';
-  
   import io from "socket.io-client"
   
   export default {
     components: {
-        // Sidebar,
-        MainLayout,
-        GameLayout
+        DefaultLayout,
+        AppLayout,
+        Auth
       },
       data() {
         return {
@@ -40,7 +38,7 @@
           if (to.meta.layout !== undefined) {
             this.layout = to.meta.layout
           } else {
-            this.layout = "MainLayout" // this is default layout if route meta is not set
+            this.layout = "DefaultLayout" // this is default layout if route meta is not set
           }
         }
         },

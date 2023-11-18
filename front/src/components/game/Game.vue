@@ -1,7 +1,38 @@
 <template>
-	<div class="row">
-		<div class="col-md-10 col-xl-10 px-sm-2 px-0 ">
-			<div id="game" class="col-12 main-wrapper" style="padding:20px 0">
+	<div class="col-auto ps-md-1 pt-2">
+            <div id="sidebar" class="collapse collapse-horizontal sidebar-box">
+                <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
+                   <div id="chatbox-header" class="px-4 py-1">
+		        	<div class="float-end mt-2">  
+						<input class="form-check-input" type="checkbox" id="mute">
+						<label class="form-check-label ms-1 text-golden-gradient" for="mute">
+						    <strong>Mute</strong>
+						</label>
+					</div>
+					<div class="float-start mt-2">  
+						<strong class="text-golden-gradient">
+							Chat
+						</strong>
+					</div>
+	        	</div>
+                </div>
+            </div>
+            <div class="sidebar-box right-sidebar-footer">
+	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
+	        	</button>
+				<!-- <div class="float-end mt-2">  
+					<input class="form-check-input" type="checkbox" value="" id="auto-dice">
+					<label class="form-check-label ms-1 text-golden-gradient" for="auto-dice">
+					    <strong>Auto Roll</strong>
+					</label>
+				</div> -->
+	        </div>
+        </div>
+          <main class="col ps-md-1 pt-2">
+            <div class="row">
+                <div class="col-12">
+
+			<div id="game" class="main-wrapper col ps-md-2 pt-2">
 				<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo" />
 				<div id="board">
 					<template v-if="game != undefined">
@@ -61,46 +92,13 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-md-2 col-xl-2 col-sm-2" id="right-sidebar">
-	        <div id="chat-box" class="sidebar-box position-relative px-2 py-2">
-	        	<div id="chatbox-header" class="px-4 py-1">
-		        	<div class="float-end mt-2">  
-						<input class="form-check-input" type="checkbox" v-model="muteChat" id="mute">
-						<label class="form-check-label ms-1 text-golden-gradient" for="mute">
-						    <strong>Mute</strong>
-						</label>
-					</div>
-					<div class="float-start mt-2">  
-						<strong class="text-golden-gradient">
-							Chat
-						</strong>
-					</div>
-	        	</div>
-	        	<Chat :chats="chats" />
-	        	<div id="chatbox-footer" class="px-2 py-1 position-absolute" style="bottom: 5px">
-	        		<div class="input-group mb-3">
-					  <input v-model="chatbox" @keyup.enter="sendChat" type="text" class="form-control" id="input-msg" placeholder="Write here..." aria-describedby="basic-addon2">
-					  <div class="input-group-append">
-					    <button @click="sendChat" class="btn btn-outline-secondary" id="send-msg" type="button">
-					    	<img src="@/assets/icons/send.svg" />
-					    </button>
-					  </div>
-					</div>
-	        	</div>
-	        </div>
-	        <div class="sidebar-box right-sidebar-footer">
-	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
-	        	</button>
-				<!-- <div class="float-end mt-2">  
-					<input class="form-check-input" type="checkbox" value="" id="auto-dice">
-					<label class="form-check-label ms-1 text-golden-gradient" for="auto-dice">
-					    <strong>Auto Roll</strong>
-					</label>
-				</div> -->
-	        </div>
-	    </div>
-    </div>
+                </div>
+            </div>
+        </main>
+
+
+			
+		
     <WinnerModal @next="moveToNext" :in-progress="inProgress" :events = "events"/>
     <LooserModal @next="moveToNext" :in-progress="inProgress" :events = "events"/>
 </template>
@@ -126,7 +124,8 @@ import
 from "@/extensions/backgammon/Player.js";
 import WinnerModal from '@/components/_modals/WinnerModal.vue';
 import LooserModal from '@/components/_modals/LooserModal.vue';
-import avatarColor from '@/composables/avatarColor.js'
+import avatarColor from '@/composables/avatarColor.js';
+import BoardHeader from '@/components/BoardHeader.vue'
 export default
 {
 	setup(){
@@ -138,7 +137,8 @@ export default
 		Column,
 		WinnerModal,
 		LooserModal,
-		Chat
+		Chat,
+		BoardHeader
 	},
 	// props: ['match'],
 	data()

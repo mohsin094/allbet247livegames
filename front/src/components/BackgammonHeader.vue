@@ -10,6 +10,8 @@
 	        <router-link to="/" class="navbar-brand">
 	          <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="" style="width:150px">
 	        </router-link>
+
+
 	     </div>
 	     <!-- <div class="col-md-6" id="bheader-mob-links" v-if="this.$isMobile">
 	     	<ul class="navbar-nav  flex-row b-header-links bheader-mob-links">
@@ -20,14 +22,15 @@
 	     	</ul>
 	     </div> -->
 	  
-	     <div class="col-md-3 float-end px-1">
+	     <!-- <div class="col-md-3 float-end px-1"> -->
 	     	 <!-- Right links -->
 	      	<router-link to="/" class="float-end btn btn-golden">
 	     		<span class="material-symbols-outlined text-dark float-start">Home</span>
 				<p class="float-start text-dark ms-2">Lobby</p>
 	     	</router-link>
-	     </div>
-	     
+	     	            <a href="#" data-bs-target="#sidebar" data-bs-toggle="collapse" class="border rounded-3 p-1 text-decoration-none"><i class="fa fa-navicon fa-lg py-2 p-1"></i> Menu</a>
+
+	     <!-- </div> -->
 	    </div>
 	    <!-- Container wrapper -->
 	  </nav>
