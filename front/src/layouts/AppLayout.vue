@@ -1,8 +1,8 @@
 <template>
 	<BackgammonHeader/>
 	<div class="container-fluid">
-		<div class="row flex-nowrap">
-		  <router-view></router-view>
+		<div class="row">
+			<router-view></router-view>
 		</div>	
 	</div>
 </template>

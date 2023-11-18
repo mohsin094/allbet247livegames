@@ -1,40 +1,8 @@
-<template>
-	<div class="col-auto ps-md-1 pt-2">
-            <div id="sidebar" class="collapse collapse-horizontal sidebar-box">
-                <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
-                   <div id="chatbox-header" class="px-4 py-1">
-		        	<div class="float-end mt-2">  
-						<input class="form-check-input" type="checkbox" id="mute">
-						<label class="form-check-label ms-1 text-golden-gradient" for="mute">
-						    <strong>Mute</strong>
-						</label>
-					</div>
-					<div class="float-start mt-2">  
-						<strong class="text-golden-gradient">
-							Chat
-						</strong>
-					</div>
-	        	</div>
-                </div>
-            </div>
-            <div class="sidebar-box right-sidebar-footer">
-	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
-	        	</button>
-				<!-- <div class="float-end mt-2">  
-					<input class="form-check-input" type="checkbox" value="" id="auto-dice">
-					<label class="form-check-label ms-1 text-golden-gradient" for="auto-dice">
-					    <strong>Auto Roll</strong>
-					</label>
-				</div> -->
-	        </div>
-        </div>
-          <main class="col ps-md-1 pt-2">
-            <div class="row">
-                <div class="col-12">
-
-			<div id="game" class="main-wrapper col ps-md-2 pt-2">
-				<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo" />
-				<div id="board">
+<template>          
+    <div class="col-md-10 col-xl-10 px-sm-2 px-0" :style="this.isMobile ? 'width:100%' : ''">
+		<div id="game" class="main-wrapper min-vh-100">
+			<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo" />
+			<div id="board">
 					<template v-if="game != undefined">
 						<!-- dice black -->
 						<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
@@ -93,9 +61,20 @@
 				</div>
 			</div>
                 </div>
-            </div>
-        </main>
-
+            
+        <div class="col-md-2 ps-md-1 pt-2" v-if="!this.isMobile">
+        	<div class="right-sidebar"></div>
+            <div class="sidebar-box right-sidebar-footer">
+	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
+	        	</button>
+				<!-- <div class="float-end mt-2">  
+					<input class="form-check-input" type="checkbox" value="" id="auto-dice">
+					<label class="form-check-label ms-1 text-golden-gradient" for="auto-dice">
+					    <strong>Auto Roll</strong>
+					</label>
+				</div> -->
+	        </div>
+        </div>
 
 			
 		

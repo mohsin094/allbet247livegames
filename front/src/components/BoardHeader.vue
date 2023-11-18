@@ -7,7 +7,7 @@
 						radio_button_unchecked
 					</span>
 					<div class="border-golden card-profile card-profile-left">
-						<div class="profile-bg bg-blue bg-blue-shadow">
+						<div class="profile-bg bg-blue bg-blue-shadow bg-blue bg-blue-shadow">
 							<img class="avatar-img" :src="baseUrl+'/assets/images/avatars/'+ playerWhite.avatar +'.png'" />
 						</div>
 
@@ -45,7 +45,7 @@
 						radio_button_unchecked
 					</span>
 					<div class="border-golden card-profile card-profile-right float-end">
-						<div class=" profile-bg bg-red bg-red-shadow">
+						<div class=" profile-bg bg-blue bg-blue-shadow bg-red bg-red-shadow">
 							<img class="avatar-img" :src="baseUrl+'/assets/images/avatars/'+ playerBlack.avatar +'.png'" />
 						</div>
 					</div>

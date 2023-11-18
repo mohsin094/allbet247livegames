@@ -1,6 +1,14 @@
 <template>
+<<<<<<< HEAD
 	<div>
 		<div class="row">
+=======
+	<div class="row">
+		<Sidebar/>
+		<div class="col-md-10 col-xl-10 px-sm-2 px-0">
+			<div class="main-wrapper min-vh-100">
+				<div class="row">
+>>>>>>> parent of ada59e5... update
 					<div class="col">
 						<button class="btn btn-golden text-dark mt-3" data-bs-toggle="modal" data-bs-target="#newTicket">
 							New ticket

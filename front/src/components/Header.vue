@@ -1,5 +1,5 @@
 <template>
-	<MobileHeader :announcements="arrayLength"/>
+	<MobileHeader />
 	<header id="main-header" v-if="!this.isMobile">
 	  <!-- Navbar -->
 	  <!-- Button trigger modal -->
@@ -31,7 +31,7 @@
 
 	      <!-- Right links -->
 	      <ul  v-if="$user.data.isGuest" class="navbar-nav ms-auto d-flex flex-row navbar-header">
-	      	<!-- <li class="nav-item">
+	      	<li class="nav-item">
 	         <div class="header-box" @click="openNotifies()">
 	            <i class="material-symbols-rounded">
 	              notifications
@@ -69,7 +69,7 @@
 
 	            </div>
 	          </div>
-	        </li> -->
+	        </li>
 	        <li class="nav-item">
 	          <div class="header-box">
 	            <i class="material-symbols-outlined">smart_toy</i>
@@ -185,8 +185,7 @@
 	   },	
 	   data(){
 	   	return{
-	   		announcements:[],
-	   		arrayLength:''
+	   		announcements:[]
 	   	}
 	   },
 	   mounted(){
@@ -200,7 +199,6 @@
 	            let data = response.data.params
 	            if(data.length > 0){
 	              instance.announcements = data
-	              instance.arrayLength = data.length
 	            }
           })
 		    },

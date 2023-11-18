@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="modal-footer text-center">
-          <p class="text-gray">Not a member?</p><a data-bs-toggle="modal" data-bs-target="#signup" href="#">Sign up</a>
+          <p class="text-gray">Not a member?</p><a href="#">Sign up</a>
         </div>
       </div>
     </div>
@@ -188,7 +188,7 @@
           </div>
         </div>
         <div class="modal-footer text-center">
-          <p class="text-gray">Already have an account?</p><a data-bs-toggle="modal" data-bs-target="#login" href="#">Login</a>
+          <p class="text-gray">Already have an account?</p><a href="#">Login</a>
         </div>
       </div>
     </div>

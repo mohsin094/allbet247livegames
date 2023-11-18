@@ -28,7 +28,6 @@
 	     		<span class="material-symbols-outlined text-dark float-start">Home</span>
 				<p class="float-start text-dark ms-2">Lobby</p>
 	     	</router-link>
-	     	            <a href="#" data-bs-target="#sidebar" data-bs-toggle="collapse" class="border rounded-3 p-1 text-decoration-none"><i class="fa fa-navicon fa-lg py-2 p-1"></i> Menu</a>
 
 	     <!-- </div> -->
 	    </div>
