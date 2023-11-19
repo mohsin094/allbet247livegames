@@ -6,7 +6,7 @@
 		created() {
 
 			this.$router.push({name: 'backgammon', params: {matchId: this.$route.params.matchId}});
-		}
+		},
 		beforeRouteEnter(to,from,next){
 		    next(vm => {
 		     var header = document.getElementById('main-header')
