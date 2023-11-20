@@ -27,7 +27,9 @@ export default {
 			let certificate = fs.readFileSync(serverConfig.https.cert);
 			this.server = createHttpsServer({
 				key: privateKey,
-				cert: certificate
+				cert: certificate,
+				requestCert: true,
+				rejectUnauthorized: false 
 			},this.express);
 		}else {
 			this.server = createServer(this.express);
