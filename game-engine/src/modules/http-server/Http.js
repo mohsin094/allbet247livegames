@@ -25,9 +25,11 @@ export default {
 		if(serverConfig.https.active) {
 			let privateKey = fs.readFileSync(serverConfig.https.key);
 			let certificate = fs.readFileSync(serverConfig.https.cert);
+			let caCertificate = fs.readFileSync(serverConfig.https.ca);
 			this.server = createHttpsServer({
 				key: privateKey,
 				cert: certificate,
+				ca: caCertificate,
 				requestCert: true,
 				rejectUnauthorized: false 
 			},this.express);
