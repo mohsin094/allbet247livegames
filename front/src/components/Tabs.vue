@@ -104,7 +104,7 @@
 	      		<!-- waiting list start -->
 			  <div class="tab-pane fade show active" id="pills-waiting-list" role="tabpanel">
 			  	<div class="row mb-5">
-				  	<div v-if="waiting.length > 0" v-for="wait in waiting" class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
+				  	<div v-if="Object.values(waiting).length > 0" v-for="wait in waiting" class="col-md-4 col-sm-6 col-lg-2 px-2 mb-3">
 			  			<div :class="['frame small-frame' ,getAvatarColor(wait.home.avatar+'.png')]">
 				  			<div class="position-relative card">
 				  				<div class="row gx-6 small-card-header">
@@ -524,6 +524,7 @@
 			    	this.$axios.get(this.baseUrl+"/game/default/get-waiting").then((res) => {
 			    		res = res.data.params;
 			    		this.waiting = res;
+			    		console.log(this.waiting)
 			    	});
 		    	},	2000);
 		    }

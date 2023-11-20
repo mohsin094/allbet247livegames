@@ -1,6 +1,6 @@
 <template>
 <header id="main-header" v-if="this.isMobile">
-	<nav class="navbar navbar-dark bg-dark mb-2 fixed-top">
+	<nav class="navbar navbar-dark bg-dark mb-2 fixed-top p-2">
 		<div class="container-fluid">
 		    <router-link to="/" class="navbar-brand">
 		      <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="">
@@ -65,10 +65,6 @@
 								    <span class="visually-hidden">unread messages</span>
 								</span>
 				            </router-link>
-				          	<div class="position-relative">
-								
-					            
-			        		</div>
 			          	</li>
 			          	<li class="nav-item">
 				          <router-link to="/ticket" @click="hideThisCanvas()" aria-controls="offcanvasExample">

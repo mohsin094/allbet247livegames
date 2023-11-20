@@ -1,5 +1,5 @@
 <template>
-  <div class="col-auto col-md-2 col-xl-2 col-sm-2 px-sm-2 px-0 collapse main-menu-collapse" id="nav-content">
+  <div class="col-md-2 col-xl-2 col-sm-2 px-sm-2 px-0 collapse main-menu-collapse" id="nav-content">
     <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 min-vh-100 position-relative">
         <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none px-3">
             <span class="fs-6 menu-header">Lobby</span>

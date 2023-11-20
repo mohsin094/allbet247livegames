@@ -1,5 +1,5 @@
 <template>
-  <main v-if="!isGuest">
+  <main>
   	<MyGames v-if="!$user.data.isGuest"/>
   	<Tabs/>
   </main>
