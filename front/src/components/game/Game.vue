@@ -1,6 +1,6 @@
 <template>
 	<div id="overlay"></div>
-    <div class="col-md-10 col-xl-10 px-sm-2 px-0 main-wrapper min-vh-100" :style="this.isMobile ? 'width:100%' : ''">
+    <div class="col-md-10 col-xl-10 px-sm-2 px-0 main-wrapper min-vh-100" :style="this.isMobile ? 'width:100%;display:inline-flex' : ''">
 		<div id="game">
 			<board-header v-if="match != undefined && !this.isMobile" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
 			<div id="board">
