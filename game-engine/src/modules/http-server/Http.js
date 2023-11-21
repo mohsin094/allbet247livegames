@@ -29,7 +29,7 @@ export default {
 			this.server = createHttpsServer({
 				key: privateKey,
 				cert: certificate,
-				ca: caCertificate,
+				//ca: caCertificate,
 				requestCert: true,
 				rejectUnauthorized: false 
 			},this.express);
