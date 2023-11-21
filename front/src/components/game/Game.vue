@@ -1,6 +1,19 @@
 <template>
-	<div id="overlay"></div>
-    <div class="col-md-10 col-xl-10 px-sm-2 px-0 main-wrapper min-vh-100" :style="this.isMobile ? 'width:100%;display:inline-flex' : ''">
+	<div id="overlay" v-if="this.isMobile">
+		<!-- <img src="./../../assets/images/rotate-mobile.gif" width="300px" height="350px"/> -->
+		<div class="screen-center w-100">
+			<span class="material-symbols-outlined fs-large mb-4 text-golden-gradient">
+			screen_rotation
+			</span>
+			<h3><strong>please rotate your device to landscape</strong></h3>
+			<span class="material-symbols-outlined fs-large text-golden-gradient mt-5">
+			screen_lock_rotation
+			</span>
+			<h5>If screen does not rotate, make sure your screen oriention is unlocked.</h5>
+		</div>
+	</div>
+    <div class="col-md-12 col-sm-12 col-xs-12 col-xl-10 px-sm-2 px-0" :style="this.isMobile ? 'width:100%;' : ''">
+    	<div class="main-wrapper min-vh-100">
 		<div id="game">
 			<board-header v-if="match != undefined && !this.isMobile" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
 			<div id="board">
@@ -61,9 +74,10 @@
 				</div>
 			</div>
 		</div>
+	</div>
     </div>
             
-    <div class="col-md-2" v-if="!this.isMobile">
+    <div class="col-md-2 min-vh-100" v-if="!this.isMobile">
         <div id="sidebar" class="sidebar-box mb-2">
             <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
                <div id="chatbox-header" class="px-4 py-1">
@@ -515,6 +529,9 @@
 	}
 </script>
 <style scoped>
+#sidebar{
+	height:85vh;
+}
 #game {
 	width: 100%;
 	/*	max-width: 1117px;*/
