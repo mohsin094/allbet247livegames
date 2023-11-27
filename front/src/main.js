@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import "bootstrap"
 import '@/assets/scss/main.scss';
+
 import { useDark, useToggle } from '@vueuse/core'
 import { plugin, defaultConfig } from '@formkit/vue'
 import { isMobile,isTablet } from 'mobile-device-detect';

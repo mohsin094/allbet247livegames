@@ -175,10 +175,10 @@ $brown:#AD914E;
 	.main-title i{
 		color:$light-green !important;
 	}
-	.tabs{
+	.tabs,.p-tabview-nav-container{
 		background: linear-gradient(243.94deg, #181B1F 24.7%, rgba(46, 52, 60, 0.23) 78.12%);
 	}
-	.tabs li a{
+	.tabs li a , .text-golden-shine{
 		background: linear-gradient(135.91deg, #DEB864 35.32%, #FFF3D8 51.23%, #DEB864 69.05%);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
@@ -348,7 +348,44 @@ $brown:#AD914E;
 	.accordion-body{
 		background:$dark;
 	}
+	//primevue dark
+	.p-tabview .p-tabview-nav{
+		border:none;
+	}
+	.p-tabview-panels{
+		background:transparent;
+	}
+	.bg-golden-gradient{
+		background:conic-gradient(from 216.1deg at 100% 7.5%, #F4D577 0deg, #FFFFFF 180deg, #E1BA43 360deg)
+	}
+	// primevue dark end
 }
+// theme dark end
+
+// primevue public
+.p-tabview-nav-container{
+	padding:16px 6px 8px;
+	border-radius:9px
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link{
+	border-color: transparent;
+}
+.p-tabview-nav-content{
+	border-radius:9px;
+}
+.p-tabview-nav{
+	margin:2px;
+}
+.p-overlay-badge {
+    top: -8px;
+}
+.p-tabview-nav-link{
+	background:transparent;
+}
+li[data-p-highlight="true"] a{
+	border-bottom: 1px solid $golden-light !important;
+}
+// primevue public end
 .accordion-button:focus {
     box-shadow: none;
     border-color: rgba(0,0,0,.125);
@@ -357,7 +394,7 @@ $brown:#AD914E;
   
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
-// theme dark end
+
 .mobHeader-profile-name{
 	top:0;
 	font-weight: 700;
@@ -1010,7 +1047,9 @@ small{
 	left:1px;
 	background: $gray;
 	border-radius: 40px;
-	z-index: 1
+	z-index: 1;
+	text-align: center;
+  padding: 5px 0;
 }
 .icon-bg img{
 	position: relative;

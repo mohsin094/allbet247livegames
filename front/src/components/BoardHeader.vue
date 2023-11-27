@@ -98,26 +98,24 @@
 				<div class="profile-bg bg-blue">
 					<img class="avatar-img" :src="baseUrl+'/assets/images/avatars/'+ playerBlack.avatar +'.png'" />
 				</div>
-
 			</div>
 			<span class="position-absolute mobHeader-profile-name mobHeader-profile-name-right">{{playerBlack.public_name}}</span>
 			<span class="position-absolute mobHeader-user-level mobUser-level-right">LVL.{{playerBlack.lvl}}</span>
-
 		</div>
 	</div>
 </template>
 <script>
 	import Menubar from 'primevue/menubar';
-export default
-{
-	components:{
-		Menubar
-	},
-	props: ['match', 'playerBlack', 'playerWhite'],
-	data() {
-		return {
-			baseUrl: import.meta.env.VITE_BASE_URL
+	export default
+	{
+		components:{
+			Menubar
+		},
+		props: ['match', 'playerBlack', 'playerWhite'],
+		data() {
+			return {
+				baseUrl: import.meta.env.VITE_BASE_URL
+			}
 		}
 	}
-}
 </script>
