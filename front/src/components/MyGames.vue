@@ -26,7 +26,7 @@
 	  	  </div>
 	    </div> -->
   	</div>
-  	<div class="" style="background:none">
+  	<div class="" v-if="myGames.length > 0" style="background:none">
   	<Carousel :value="myGames" :numVisible="4" :numScroll="1" :responsiveOptions="responsiveOptions">
             <template #item="game">
             	 <div class="text-center px-3">
@@ -116,7 +116,6 @@
 			clearInterval(this.fetchGamesInterval);
 		},
 		methods: {
-			
 			join(matchId) {
 				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/join", {params: {matchId: matchId}}).then((res) => {
 					res = res.data;

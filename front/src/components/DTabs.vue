@@ -518,20 +518,20 @@
 		    },
 		    joinMatch(id) {
 		    	this.joinMatchModal = this.waiting[id];
+		    	console.log(this.waiting[id])
 		    },
-		    fetchWaiting() {
+		    fetchWaiting(){
 		    	this.waitingInterval = setInterval(() => {
 			    	this.$axios.get(this.baseUrl+"/game/default/get-waiting").then((res) => {
 			    		res = res.data.params;
 			    		this.waiting = res;
-			    		console.log(this.waiting)
 			    	});
 		    	},	2000);
 		    }
 		},
 		created() {
 			this.fetchWaiting();
-			console.log(this.classes)
+			// console.log(this.classes)
 		},
 		unmounted() {
 			clearInterval(this.waitingInterval);

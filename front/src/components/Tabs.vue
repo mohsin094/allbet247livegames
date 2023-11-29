@@ -17,7 +17,7 @@
 			            </div>
 			        </template>
 			        <p class="m-0">
-			            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+			            ;j;sf;jsLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 			            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 			        </p>
 			    </TabPanel>
@@ -26,8 +26,8 @@
 			            <div class="flex align-items-center gap-2">
 			            	<div class="icon-border float-start">
 					            <div class="icon-bg">
-					                <span class="material-symbols-outlined text-golden-gradient">
-									hourglass_bottom
+					                <span class="material-symbols-outlined text-golden-shine">
+									other_admission
 									</span>
 					            </div>
 			        		</div>
@@ -93,15 +93,16 @@
 		    	this.waitingInterval = setInterval(() => {
 			    	this.$axios.get(this.baseUrl+"/game/default/get-waiting").then((res) => {
 			    		res = res.data.params;
+			    		// console.log(res)
 			    		this.waiting = res;
-			    		console.log(this.waiting)
+			    		// console.log(this.waiting)
 			    	});
 		    	},	2000);
 		    }
 		},
 		created() {
 			this.fetchWaiting();
-			console.log(this.classes)
+			// console.log(this.classes)
 		},
 		unmounted() {
 			clearInterval(this.waitingInterval);

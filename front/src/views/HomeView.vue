@@ -1,7 +1,7 @@
 <template>
   <main>
   	<MyGames v-if="!$user.data.isGuest"/>
-  	<Tabs/>
+  	<!-- <Tabs/> -->
   	<DTabs/>
   </main>
 </template>
