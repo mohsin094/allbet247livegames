@@ -35,7 +35,7 @@
 					<div v-if="doubleActive" id="double-dice">
 						<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
 					</div>
-					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
+					<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.jpg" />
 					<column id="column-1" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(-1)" />
 					<column id="column0" @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
 					<column id="column1" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)" />
