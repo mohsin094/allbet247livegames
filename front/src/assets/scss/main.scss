@@ -361,16 +361,27 @@ $brown:#AD914E;
 .mobHeader-profile-name{
 	top:0;
 	font-weight: 700;
-	left:55px;
 	width: 100px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
 }
+.mobHeader-profile-name-left{
+	left:65px !important;
+}
+.mobHeader-profile-name-right{
+	right:65px !important;
+}
+
 .mobHeader-user-level{
-	left:55px;
 	top:25px;
 	font-size:12px;
+}
+.mobUser-level-right{
+	right:65px !important;
+}
+.mobUser-level-left{
+	left:65px !important;
 }
 .mobHeader-box{
 	background:0 !important;
@@ -461,7 +472,7 @@ tbody > tr > td{
 }
 .flag-right{
 	top:24px;
-	right:60px;
+	right:45px;
 }
 .txt-icon i{
 	font-size: 35px
@@ -474,6 +485,18 @@ tbody > tr > td{
 }
 .txt-icon span{
 	font-size: 25px
+}
+.mobtxt-icon i{
+	font-size: 25px
+}
+.mobtxt-icon strong{
+	font-size: 17px
+}
+.mobtxt-icon p{
+	font-weight:normal;
+}
+.mobtxt-icon span{
+	font-size: 15px
 }
 #chat-box{
 	height:80vh;
@@ -1696,6 +1719,7 @@ small{
 	height:85vh !important;
 }
 .screen-center{
+	z-index:999;
 	margin: 0;
   position: absolute;
   top: 50%;
@@ -1707,6 +1731,11 @@ small{
 .fs-large{
 	font-size: 80px;
 	font-weight: bold
+}
+.res-btn{
+  font-size: 14px;
+  height: 40px;
+  width: 40px;
 }
 
 

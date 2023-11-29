@@ -22,6 +22,6 @@
       Sidebar,
       Header,
       Auth
-    }
+    },
   }
 </script>
