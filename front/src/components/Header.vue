@@ -1,6 +1,6 @@
 <template>
 	<MobileHeader :announcements="arrayLength"/>
-	<header id="main-header" v-if="!this.isMobile">
+	<header id="main-header" v-if="!this.isMobile" style="height: 10vh;">
 	  <!-- Navbar -->
 	  <!-- Button trigger modal -->
 	  <nav id="main-navbar" class="navbar navbar-expand-lg">
@@ -13,9 +13,9 @@
 
 	      <!-- Brand -->
 	     <div class="col-md-3 col-xl-2 px-sm-2 px-0 brand">
-	        <router-link to="/" class="navbar-brand">
-	          <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="">
-	        </router-link>
+	          <img src="@/assets/logo.svg" @click="goHome()" class="d-inline-block align-top logo" alt="">
+	       <!--  <router-link to="/" class="navbar-brand">
+	        </router-link> -->
 	     </div>
 	      <!-- Search form -->
 	      <form class="form-inline search-form">
@@ -118,10 +118,12 @@
 	        </li>
 	        <li class="nav-item">
 	          <div class="header-box" @click="goToCashier()">
-	            <i class="material-symbols-rounded">
-	              currency_bitcoin
-	            </i>
-	            <span>0.0037</span>
+	            <i class="material-symbols-outlined">
+				monetization_on
+				</i>
+	            <span>
+	            	{{$user.data.balance}}
+	            </span>
 	            <i class="material-symbols-rounded">
 	              add_box
 	            </i>
@@ -137,7 +139,7 @@
 	              	
 	                <li>
 	                  <a href="#" class="dropdown-item fullname">
-	                    {{$user.data.email}}
+	                    {{$user.data.publicName}}
 	                    <span class="user-level text-golden-gradient">LVL.12</span>
 	                  </a>
 	                </li>
@@ -160,7 +162,7 @@
 							expand_more
 					</i>
 	                <span class="position-absolute fullname">
-	              		{{$user.data.email}}
+	              		{{$user.data.publicName}}
 	            	</span>
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
@@ -190,7 +192,9 @@
 	   	}
 	   },
 	   mounted(){
-	   	this.getAnnouncements()
+	   	if(!this.$user.data.isGuest){
+	   		this.getAnnouncements()
+	   	}
 	   },
 	   methods:{
 		    getAnnouncements(){
@@ -208,6 +212,9 @@
 		      	this.$user.doLogout()
 		        this.$storage.removeItem("data")
 		        
+		    },
+		    goHome:function(){
+		    	this.$router.push({path:'/'})
 		    },
 		    goToCashier:function(){
 		      	this.$router.push({path:'/cashier'})

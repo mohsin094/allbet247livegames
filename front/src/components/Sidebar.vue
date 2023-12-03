@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-2 col-xl-2 col-sm-2 px-sm-2 px-0 collapse main-menu-collapse" id="nav-content">
-    <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 min-vh-100 position-relative">
+    <div class="d-flex flex-column align-items-center align-items-sm-start pt-2 position-relative">
         <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none px-3">
             <span class="fs-6 menu-header">Lobby</span>
         </a>
@@ -42,8 +42,10 @@
             </div>
             <form class="mt-3">
               <div class="form-control" contenteditable="true" v-if="!$user.data.isGuest">
-                <span class="material-symbols-outlined">attach_money</span>
-                26.004039
+                <span class="material-symbols-outlined">
+                monetization_on
+                </span>
+                {{$user.data.balance}}
               </div>
               <button v-if="$user.data.isGuest" type="button" class="btn btn-golden text-dark btn-block mt-3"            data-bs-toggle="modal" data-bs-target="#login">Cashier</button>
               <router-link to="/cashier" class="btn btn-golden text-dark btn-block mt-3" v-if="!$user.data.isGuest">Cashier</router-link>
