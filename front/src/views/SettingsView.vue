@@ -29,13 +29,13 @@
 				                </span>
 				                 <FormKit
 				                    v-model="OldPass"
-				                    type="password"
+				                    :type="showOldPass ? 'text' : 'password'"
 				                    name="password"
 				                    validation="required"
 				                    placeholder="Current Password"
 				                  />
-				                  <span class="input-icon input-icon-right position-absolute">
-				                    <span class=" material-symbols-outlined">visibility</span>
+				                  <span class="input-icon input-icon-right position-absolute" @click="showOldPass = !showOldPass">
+				                    <span class=" material-symbols-outlined">{{showOldPass ? 'visibility_off' : 'visibility'}}</span>
 				                  </span>
 				            </div>
 							<FormKit type="group">
@@ -45,13 +45,13 @@
 				                </span>
 				                 <FormKit
 				                    v-model="password"
-				                    type="password"
+				                    :type="showPass ? 'text' : 'password'"
 				                    name="password"
 				                    validation="required"
 				                    placeholder="New Password"
 				                  />
-				                  <span class="input-icon input-icon-right position-absolute">
-				                    <span class=" material-symbols-outlined">visibility</span>
+				                  <span class="input-icon input-icon-right position-absolute" @click="showPass = !showPass">
+				                    <span class=" material-symbols-outlined">{{showPass ? 'visibility_off' : 'visibility'}}</span>
 				                  </span>
 				              </div>
 				            </FormKit>
@@ -94,6 +94,8 @@
 		},
 		data(){
 			return{
+				showPass:false,
+				showOldPass:false,
 				password:'',
 				oldPass:''
 			}

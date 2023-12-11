@@ -1,5 +1,5 @@
 <template>
-	<MobileHeader :announcements="arrayLength"/>
+	<MobileHeader :announcements="arrayLength" v-if="this.isMobile"/>
 	<header id="main-header" v-if="!this.isMobile" style="height: 10vh;">
 	  <!-- Navbar -->
 	  <!-- Button trigger modal -->

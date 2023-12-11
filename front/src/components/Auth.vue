@@ -26,13 +26,13 @@
               </span>
               <FormKit class="position-absolute"
                   v-model="password"
-                  type="password"
+                  :type="showPass ? 'text' : 'password'"
                   name="password"
                   placeholder="Password"
                   validation="required"
                 />
-                 <span class="input-icon input-icon-right position-absolute">
-                <span class=" material-symbols-outlined">visibility</span>
+              <span class="input-icon input-icon-right position-absolute" @click="showPass = !showPass">
+                <span class=" material-symbols-outlined">{{showPass ? 'visibility_off' : 'visibility'}}</span>
               </span>
             </div>
 
@@ -95,7 +95,6 @@
                   validation="required"
                   validation-label="Username"
                 />
-              
             </div>
             <div class="position-relative input-wrapper">
               <span class="input-icon input-icon-left position-absolute">
@@ -108,7 +107,6 @@
                   placeholder="Enter Email"
                   validation="required|email"
                 />
-              
             </div>
             <FormKit type="group">
               <div class="position-relative input-wrapper">
@@ -117,13 +115,13 @@
                 </span>
                  <FormKit
                     v-model="password"
-                    type="password"
+                    :type="showPass ? 'text' : 'password'"
                     name="password"
                     validation="required"
                     placeholder="Password"
                   />
-                  <span class="input-icon input-icon-right position-absolute">
-                    <span class=" material-symbols-outlined">visibility</span>
+                  <span class="input-icon input-icon-right position-absolute" @click="showPass = !showPass">
+                    <span class=" material-symbols-outlined">{{showPass ? 'visibility_off' : 'visibility'}}</span>
                   </span>
               </div>
               <div class="position-relative input-wrapper">
@@ -132,15 +130,14 @@
                 </span>
                 <FormKit
                     v-model="confirmPass"
-                    type="password"
+                    :type="showConfPass ? 'text' : 'password'"
                     name="password_confirm"
                     validation="required|confirm"
-                    validation-visibility="live"
                     validation-label="Confirmation"
                     placeholder="Confirm password"
                   />
-                  <span class="input-icon input-icon-right position-absolute">
-                    <span class=" material-symbols-outlined">visibility</span>
+                  <span class="input-icon input-icon-right position-absolute" @click="showConfPass = !showConfPass">
+                    <span class=" material-symbols-outlined">{{showConfPass ? 'visibility_off' : 'visibility'}}</span>
                   </span>
               </div>
             </FormKit>
@@ -224,9 +221,10 @@
 <script>
   import { Modal } from 'bootstrap';
   export default{
-   
     data(){
       return {
+        showPass:false,
+        showConfPass:false,
         username:"",
         email:"",
         password:"",

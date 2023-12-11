@@ -38,7 +38,7 @@
 					  					<div class="col-4 text-start">
 											<small>Stake:<span class="text-golden-gradient">{{waiting[wkey].stake}}</span></small>
 										</div>
-									    <div class="col-4 text-center">
+									    <div class="col-4 text-center p-0">
 									    	<small>Time:<span class="text-golden-gradient">{{waiting[wkey].timeframe}}</span></small>
 									    </div>
 									    <div class="col-4 text-end">
@@ -58,23 +58,21 @@
 					  		</div>
 	  					</div>
 		  				<div v-else>
-		  					<strong class="text-red">There is no game. Click the "Play Now" button to start a new game</strong>
+		  					<p class="text-danger">
+		  						There is no game. Click the "Play Now" button to start a new game
+		  					</p>
 		  				</div>
 			  		</div>
 			    </TabPanel>
 			</TabView>
-			<button v-if="!$user.data.isGuest" class="btn default-btn btn-purple-border position-absolute" style="top:20px;right: 25px"  data-bs-toggle="modal" data-bs-target="#newGame">
-	      	<span class="text-golden-gradient">
-	      		Play Now
-	      	</span>
-	      	<span class="material-symbols-outlined float-end text-golden-gradient">stadia_controller</span>
-	      </button>
-	      <button v-if="$user.data.isGuest" class="btn default-btn btn-purple-border position-absolute" style="top:20px;right: 25px"  data-bs-toggle="modal" data-bs-target="#login">
-	      	<span class="text-golden-gradient">
-	      		Play Now
-	      	</span>
-	      	<span class="material-symbols-outlined float-end text-golden-gradient">stadia_controller</span>
-	      </button>
+			<div v-if="!this.$isMobile" class="animated-border"  style="top:20px;right: 25px;z-index:1">
+		      <button v-if="$user.data.isGuest" class="animated-border btn default-btn position-absolute" data-bs-toggle="modal" :data-bs-target="$user.data.isGuest ? '#login' : '#newGame'">
+		      	<span class="text-golden-gradient">
+		      		Play Now
+		      	</span>
+		      	<span class="material-symbols-outlined float-end text-golden-gradient">stadia_controller</span>
+		      </button>
+		  	</div>
 	    </div>
     </div>
     <WaitingList :match="joinMatchModal" />
@@ -92,8 +90,7 @@
 	import "primevue/resources/themes/viva-dark/theme.css"; //theme
 	import "primevue/resources/primevue.min.css"; //core CSS
 	import '@/assets/scss/primevue.scss'
-	import { isProxy, toRaw } from 'vue';
-
+	import Message from 'primevue/message';
 	export default{
 		setup(){
 			const getAvatarColor = avatarColor
@@ -105,7 +102,8 @@
         	TabView,
         	TabPanel,
         	Avatar,
-        	Badge
+        	Badge,
+        	Message
        },
 		data() {
 		    return {
@@ -130,14 +128,12 @@
 			    	this.$axios.get(this.baseUrl+"/game/default/get-waiting").then((res) => {
 			    		res = res.data;
 						this.waiting = res.params;
-						console.log(res.params)
 			    	});
 		    	},	2000);
 		    }
 		},
 		created() {
 			this.fetchWaiting();
-			// console.log(this.classes)
 		},
 		unmounted() {
 			clearInterval(this.waitingInterval);

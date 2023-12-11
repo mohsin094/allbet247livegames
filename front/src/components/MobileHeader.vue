@@ -1,5 +1,5 @@
 <template>
-<header id="main-header" v-if="this.isMobile">
+<header id="main-header">
 	<nav class="navbar navbar-dark bg-dark mb-2 fixed-top p-2">
 		<div class="container-fluid">
 		    <router-link to="/" class="navbar-brand">
@@ -15,7 +15,8 @@
 				    </router-link>
 			        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			    </div>
-			    <div v-if="!$user.data.isGuest" class="offcanvas-body">
+			    <div class="offcanvas-body">
+			    	<div v-if="!$user.data.isGuest">
 		            <div class="position-relative">
 						<div class="row">
 							<div class="col-6 float-start">
@@ -73,7 +74,8 @@
 				          </router-link>
 			          	</li>
 			        </ul>
-				    <ul v-if="$user.data.isGuest" class="navbar-nav justify-content-end flex-grow-1 pe-3">
+			    </div>
+				    <ul v-else class="navbar-nav justify-content-end flex-grow-1 pe-3">
 				        <li class="nav-item">
 					        <a href="#" @click="hideThisCanvas()" data-bs-toggle="modal" data-bs-target="#login">
 								<span class="material-symbols-rounded menu-icon">
@@ -139,9 +141,6 @@
 			                </form>
 			            </div>
 		            </div>
-			   	</div>
-			   	<div v-else>
-			   		<!-- user guest -->
 			   	</div>
 			</div>
 		</div>

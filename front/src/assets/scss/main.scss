@@ -359,9 +359,48 @@ $brown:#AD914E;
 	}
 	// primevue dark end
 }
+.input-icon-right:hover{
+	cursor: pointer;
+}
 html,body{height:100% !important}
 // theme dark end
+.animated-border {
+	width: 138px;
+height: 44px;
+	position: absolute !important;
+  background: linear-gradient(0deg, #000, #272727);
+}
 
+.animated-border:before, .animated-border:after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(45deg, #A161AB, #cabfdd, #A161AB,#A161AB, #cabfdd, #A161AB, 
+    #A161AB, #A161AB,#A161AB, #cabfdd);
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 15s linear infinite;
+  border-radius: 5px;
+}
+
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.animated-border:after {
+  filter: blur(2px);
+}
 // primevue public
 .p-tabview-nav-container{
 	padding:16px 6px 8px;
