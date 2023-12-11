@@ -162,7 +162,7 @@
               />
             <button type="button" class="btn btn-golden text-dark login-btn mt-5" @click="register()">Sign up</button>
             <hr class="hr-text" data-content="Or"/>
-            <div class="container d-flex align-items-center justify-content-center">
+            <!-- <div class="container d-flex align-items-center justify-content-center">
             <ul class="social-links d-flex flex-row" id="footer">
               <li class="nav-item">
                 <div class="header-box">
@@ -185,7 +185,7 @@
                 </div>
               </li>
             </ul>
-          </div>
+          </div> -->
         </div>
         <div class="modal-footer text-center">
           <p class="text-gray">Already have an account?</p><a data-bs-toggle="modal" data-bs-target="#login" href="#">Login</a>
@@ -245,12 +245,12 @@
           username: instance.username,
           password: instance.password
         }).then((response) => {
+          console.log(response.data.params)
           response = response.data
           if(response.result){
             var modalEl = document.getElementById('login');
             var modal = Modal.getInstance(modalEl)
             modal.hide();
-
             instance.$user.doLogin(response.params)
             let data = JSON.stringify(response.params)
             instance.$storage.setItem("data", data);

@@ -12,7 +12,7 @@
 		</div>
 	</div>
     <div class="col-md-12 col-sm-12 col-xs-12 col-xl-10 px-sm-2 px-0" :style="this.isMobile ? 'width:100%;' : ''">
-    	<div class="main-wrapper min-vh-100 pt-0">
+    	<div class="main-wrapper pt-0" style="height:95vh">
 			<div id="game">
 				<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
 				<div id="board">
@@ -79,9 +79,9 @@
 		</div>
     </div>
             
-    <div class="col-md-2 min-vh-100" v-if="!this.isMobile">
+    <div class="col-md-2" v-if="!this.isMobile" style="height:95vh">
         <div id="sidebar" class="sidebar-box mb-2">
-            <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-100">
+            <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start">
                <div id="chatbox-header" class="px-4 py-1">
 		        	<div class="float-end mt-2">  
 						<input class="form-check-input" type="checkbox" id="mute">
@@ -94,7 +94,8 @@
 							Chat
 						</strong>
 					</div>
-        	</div>
+        		</div>
+        		<Chat :chats="chats"/>
             </div>
         </div>
         <div class="sidebar-box right-sidebar-footer">
@@ -531,7 +532,7 @@
 </script>
 <style scoped>
 #sidebar{
-	height:85vh;
+	height:84%;
 }
 #game {
 	width: 100%;

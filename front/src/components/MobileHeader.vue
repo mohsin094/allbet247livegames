@@ -22,14 +22,14 @@
 								<div class="border-golden card-profile card-profile-left">
 									<img class="avatar" :src="'/assets/images/avatars/'+$user.data.avatar+'.png'"/>
 								</div>
-								<span class="position-absolute mobHeader-profile-name">{{$user.data.email}}</span>
+								<span class="position-absolute mobHeader-profile-name">{{$user.data.publicName}}</span>
 								<span class="position-absolute mobHeader-user-level">LVL.12</span>
 							</div>
 							<div class="col-6 float-end text-end header-box mobHeader-box">
 				            	<i class="material-symbols-rounded">
-				              	currency_bitcoin
+				              	monetization_on
 				            	</i>
-				            	<span>0.0037</span>
+				            	<span>{{$user.data.param}}</span>
 				            	<i class="material-symbols-rounded">
 					              add_box
 					            </i>
@@ -127,8 +127,11 @@
 			                </div>
 			                <form class="mt-3">
 			                  <div class="form-control" contenteditable="true" v-if="!$user.data.isGuest">
-			                    <span class="material-symbols-outlined">attach_money</span>
-			                    26.004039
+			                    <!-- <span class="material-symbols-outlined">attach_money</span> -->
+			                    <span class="material-symbols-outlined">
+								monetization_on
+								</span>
+			                    {{$user.data.balance}}
 			                  </div>
 			                  <button v-if="$user.data.isGuest" @click="hideThisCanvas()" type="button" class="btn btn-golden text-dark btn-block mt-3" data-bs-toggle="modal" data-bs-target="#login">Cashier</button>
 			                  <router-link @click="hideThisCanvas()" to="/cashier" class="btn btn-golden text-dark btn-block mt-3" v-if="!$user.data.isGuest">Cashier
@@ -136,6 +139,9 @@
 			                </form>
 			            </div>
 		            </div>
+			   	</div>
+			   	<div v-else>
+			   		<!-- user guest -->
 			   	</div>
 			</div>
 		</div>
@@ -147,7 +153,7 @@
 	export default{
 		props:['announcements'],
 		mounted(){
-			console.log(this.announcements)
+			// console.log(this.announcements)
 		},
 		methods:{
 			hideThisCanvas(){

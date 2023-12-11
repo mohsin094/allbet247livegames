@@ -47,7 +47,7 @@
 	              </span>
 	            </button>
 	        </li> -->
-	         <li class="nav-item ">
+	         <!-- <li class="nav-item ">
 	          <button @click="setTitle('Other games')" type="button" class="nav-link btn tab-btn position-relative" data-bs-toggle="pill" data-bs-target="#pills-others">
 	              <div class="icon-border">
 	              <div class="icon-bg">
@@ -61,7 +61,7 @@
 	                <span class="badge-text">12</span>
 	              </span>
 	            </button>
-	        </li>
+	        </li> -->
 	      </ul>
 	      <button v-if="!$user.data.isGuest" class="btn default-btn btn-purple-border position-absolute" style="top:20px;right: 25px"  data-bs-toggle="modal" data-bs-target="#newGame">
 	      	<span class="text-golden-gradient">
@@ -484,9 +484,8 @@
     <NewGame />
 </template>
 <script>
-	import { Tab } from 'bootstrap';
-	import TabView from 'primevue/tabview';
-	import TabPanel from 'primevue/tabpanel';
+	import Avatar from 'primevue/avatar';
+	import Badge from 'primevue/badge';
 	import WaitingList from '@/components/_modals/WaitingList.vue';
 	import NewGame from '@/components/_modals/NewGame.vue';
 	import avatarColor from '@/composables/avatarColor.js'
@@ -498,13 +497,13 @@
 		components: {
         	WaitingList,
         	NewGame,
-        	TabView,
-        	TabPanel
+        	Avatar,
+        	Badge
        },
 		data() {
 		    return {
-		      title: "Waiting list",
 		      waiting: [],
+		      isLoaded: false,
 		      joinMatchModal: undefined,
 		      baseUrl: import.meta.env.VITE_BACKEND_BASE_URL,
 		      frontUrl: import.meta.env.VITE_BASE_URL,
@@ -518,27 +517,25 @@
 		    },
 		    joinMatch(id) {
 		    	this.joinMatchModal = this.waiting[id];
-		    	console.log(this.waiting[id])
 		    },
-		    fetchWaiting(){
-		    	this.waitingInterval = setInterval(() => {
+			fetchWaiting(){
+			    this.waitingInterval = setInterval(() => {
 			    	this.$axios.get(this.baseUrl+"/game/default/get-waiting").then((res) => {
 			    		res = res.data.params;
-			    		this.waiting = res;
+			    		this.waiting = res
 			    	});
 		    	},	2000);
-		    }
-		},
-		created() {
-			this.fetchWaiting();
-			// console.log(this.classes)
-		},
-		unmounted() {
-			clearInterval(this.waitingInterval);
-		}
+			  }
+			},
+			created() {
+				this.fetchWaiting();
+				// console.log(this.classes)
+			},
+			unmounted(){
+				clearInterval(this.waitingInterval);
+			}
 	};
 </script>
-
 <style scoped>
 	.profile-bg img {
 		top: 0;

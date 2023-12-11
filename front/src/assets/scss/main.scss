@@ -231,7 +231,6 @@ $brown:#AD914E;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
 		text-fill-color: transparent;
-
 	}
 	.silver-gradient-border a span{
 		background: linear-gradient(91.55deg, #AEA497 3.19%, #969696 9.11%, #CCC8BD 14.1%, #B8B4A9 26.09%, #CEC8B6 61.05%, #D1CFCA 76.59%, #C1BCAA 84.74%, #746B5F 100%) !important;
@@ -360,6 +359,7 @@ $brown:#AD914E;
 	}
 	// primevue dark end
 }
+html,body{height:100% !important}
 // theme dark end
 
 // primevue public
@@ -381,6 +381,9 @@ $brown:#AD914E;
 }
 .p-tabview-nav-link{
 	background:transparent;
+}
+.logo:hover{
+	cursor: pointer;
 }
 li[data-p-highlight="true"] a{
 	border-bottom: 1px solid $golden-light !important;
@@ -541,7 +544,7 @@ tbody > tr > td{
 }
 .right-sidebar-footer{
 	display: flex;
-	height:15vh;
+	height:15%;
 	align-items: center;
 	justify-content: center;
 	// padding:50px;
@@ -1344,6 +1347,13 @@ small{
 .main-wrapper{
 	border-radius:20px;
 	padding:20px 16px;
+	height:90vh
+}
+#main-menu{
+	height:10vh
+}
+#nav-content{
+	height:90vh
 }
 .btn-golden{
 	border-radius: 12px;

@@ -37,7 +37,7 @@
 				  				<span class="position-absolute card-profile-name-right card-profile-name">
 				  					{{ (game.data.awayUser != undefined) ? game.data.awayUser.public_name : ' ? ' }}
 				  				</span>
-				  				<span class="position-absolute card-user-level">LVL.{{(game.data.awayUser != undefined && game.awayUser.lvl != undefined) ? game.data.awayUser.lvl : ' ? '}}</span>
+				  				<span class="position-absolute card-user-level">LVL.{{(game.data.awayUser != undefined && game.data.awayUser.lvl != undefined) ? game.data.awayUser.lvl : ' ? '}}</span>
 				  				<div class="border-golden card-profile card-profile-right position-absolute">
 				  					<div class="position-absolute profile-bg bg-red bg-red-shadow" style="">
 				  						<img class="img-fluid" v-if="game.data.awayUser != undefined" :src="frontUrl+'/assets/images/avatars/'+ game.data.awayUser.avatar +'.png'"/>
@@ -110,7 +110,9 @@
 			}
 		},
 		created() {
-			this.fetchGames();
+			if(!this.$user.isGuest){
+				this.fetchGames();
+			}
 		},
 		unmounted() {
 			clearInterval(this.fetchGamesInterval);
