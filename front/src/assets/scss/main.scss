@@ -401,6 +401,9 @@ height: 44px;
   filter: blur(2px);
 }
 // primevue public
+.p-disabled{
+	display: none;
+}
 .p-tabview-nav-container{
 	padding:16px 6px 8px;
 	border-radius:9px
