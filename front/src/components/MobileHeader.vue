@@ -2,17 +2,17 @@
 <header id="main-header">
 	<nav class="navbar navbar-dark bg-dark mb-2 fixed-top p-2">
 		<div class="container-fluid">
-		    <router-link to="/" class="navbar-brand">
+		    <a @click="$router.push({path:'/'}); hideThisCanvas()" class="navbar-brand">
 		      <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="">
-		    </router-link>
+		    </a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
 		      <span class="navbar-toggler-icon"></span>
 		    </button>
 		    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
 			    <div class="offcanvas-header">
-			      	<router-link to="/" class="navbar-brand">
+			      	<a @click="$router.push({path:'/'}); hideThisCanvas()" class="navbar-brand">
 				        <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="" data-bs-dismiss="offcanvas">
-				    </router-link>
+				    </a>
 			        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			    </div>
 			    <div class="offcanvas-body">
@@ -23,20 +23,19 @@
 								<div class="border-golden card-profile card-profile-left">
 									<img class="avatar" :src="'/assets/images/avatars/'+$user.data.avatar+'.png'"/>
 								</div>
-								<span class="position-absolute mobHeader-profile-name">{{$user.data.publicName}}</span>
-								<span class="position-absolute mobHeader-user-level">LVL.12</span>
+								<span class="position-absolute mobHeader-profile-name mobHeader-profile-name-left">{{$user.data.publicName}}</span>
+								<span class="position-absolute mobHeader-user-level mobUser-level-left">LVL.{{$user.data.lvl}}</span>
 							</div>
 							<div class="col-6 float-end text-end header-box mobHeader-box">
 				            	<i class="material-symbols-rounded">
 				              	monetization_on
 				            	</i>
-				            	<span>{{$user.data.param}}</span>
+				            	<span>{{$user.data.balance}}</span>
 				            	<i class="material-symbols-rounded">
 					              add_box
 					            </i>
 				            </div>
 						</div>
-						<hr class="hr-text">
 					</div>
 		    		<form class="form-inline search-form mt-2">
 				        <div class="input-group">
@@ -49,14 +48,20 @@
 				        </div>
 				    </form>
 				    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+				    	<li class="nav-item">
+				        	<a @click="$router.push({path:'/'})"  aria-controls="offcanvasExample">
+					          <span class="material-symbols-rounded menu-icon">admin_panel_settings</span>
+					          <span class="ms-1  menu-link">Admin panel</span>
+				          	</a>
+				        </li>
 			          	<li class="nav-item">
-				          <router-link to="/" @click="hideThisCanvas()" aria-controls="offcanvasExample">
+				          <a @click="$router.push({path:'/'}); hideThisCanvas()"  aria-controls="offcanvasExample">
 					          <span class="material-symbols-rounded menu-icon">home</span>
 					          <span class="ms-1  menu-link">Lobby</span>
-				          </router-link>
+				          </a>
 			          	</li>
 			          	<li class="nav-item">
-			          		<router-link @click="hideThisCanvas()" to="/notifications" class="position-relative">
+			          		<a @click="$router.push({path:'/notifications'}); hideThisCanvas()"  class="position-relative">
 				            	<span class="material-symbols-rounded menu-icon">
 				              		notifications
 				            	</span>
@@ -65,19 +70,19 @@
 									{{announcements}}
 								    <span class="visually-hidden">unread messages</span>
 								</span>
-				            </router-link>
+				            </a>
 			          	</li>
 			          	<li class="nav-item">
-				          <router-link to="/ticket" @click="hideThisCanvas()" aria-controls="offcanvasExample">
+				          <a @click="$router.push({path:'/ticket'})"  aria-controls="offcanvasExample">
 					          <span class="material-symbols-rounded menu-icon">mail</span>
 					          <span class="ms-1  menu-link">Ticket</span>
-				          </router-link>
+				          </a>
 			          	</li>
 			        </ul>
 			    </div>
 				    <ul v-else class="navbar-nav justify-content-end flex-grow-1 pe-3">
 				        <li class="nav-item">
-					        <a href="#" @click="hideThisCanvas()" data-bs-toggle="modal" data-bs-target="#login">
+					        <a href="#"  data-bs-toggle="modal" data-bs-target="#login">
 								<span class="material-symbols-rounded menu-icon">
 									login
 								</span>
@@ -85,7 +90,7 @@
 							</a>
 				        </li>
 				        <li class="nav-item">
-					        <a href="#" @click="hideThisCanvas()" data-bs-toggle="modal" data-bs-target="#signup">
+					        <a href="#"  data-bs-toggle="modal" data-bs-target="#signup">
 								<span class="material-symbols-rounded menu-icon">
 									app_registration
 								</span>
@@ -93,32 +98,32 @@
 							</a>
 				        </li>
 				    	<li class="nav-item">
-					    	<router-link to="/" data-bs-toggle="offcanvas" aria-controls="offcanvasExample">
+					    	<a @click="$router.push({path:'/'}); hideThisCanvas()" data-bs-toggle="offcanvas" aria-controls="offcanvasExample">
 					            <span class="material-symbols-outlined menu-icon">smart_toy</span>
 					            <span class="ms-1  menu-link">Chat</span>
-					        </router-link>
+					        </a>
 				        </li>
 				    </ul> 
 		            <div class="sidebar-footer mt-4">
 		            	<p>Help & support</p>
 			            <ul class="nav nav-pills flex-column mb-0 align-items-center align-items-sm-start" id="sidebar-footer-menu">
 			                <li class="nav-item">
-			                    <router-link @click="hideThisCanvas()" to="/terms" class="nav-link align-middle" aria-controls="offcanvasDarkNavbar">
+			                    <a @click="$router.push({path:'/terms'}); hideThisCanvas()"  class="nav-link align-middle" aria-controls="offcanvasDarkNavbar">
 			                      <span class="material-symbols-outlined sidebar-footer-icon">workspace_premium</span>
 			                      <span class="ms-1">Terms & policy</span>
-			                    </router-link>
+			                    </a>
 			                </li>
 			                <li class="nav-item">
-			                    <a href="#" @click="hideThisCanvas()" class="nav-link align-middle" data-bs-dismiss="offcanvas">
+			                    <a href="#"  class="nav-link align-middle" data-bs-dismiss="offcanvas">
 			                      <span class="material-symbols-outlined sidebar-footer-icon">thumb_up</span>
 			                      <span class="ms-1  ">Feedback</span>
 			                    </a>
 			                </li>
 			                <li class="nav-item">
-			                    <router-link @click="hideThisCanvas()" to="/settings" class="nav-link align-middle" data-bs-dismiss="offcanvas">
+			                    <a @click="$router.push({path:'/settings'}); hideThisCanvas()" class="nav-link align-middle" data-bs-dismiss="offcanvas">
 			                      <span class="material-symbols-outlined sidebar-footer-icon">settings</span>
 			                      <span class="ms-1">Settings</span>
-			                    </router-link>
+			                    </a>
 			                </li>
 			            </ul>
 			            <div class="ms-2 mb-5 box">
@@ -135,9 +140,9 @@
 								</span>
 			                    {{$user.data.balance}}
 			                  </div>
-			                  <button v-if="$user.data.isGuest" @click="hideThisCanvas()" type="button" class="btn btn-golden text-dark btn-block mt-3" data-bs-toggle="modal" data-bs-target="#login">Cashier</button>
-			                  <router-link @click="hideThisCanvas()" to="/cashier" class="btn btn-golden text-dark btn-block mt-3" v-if="!$user.data.isGuest">Cashier
-			                  </router-link>
+			                  <button v-if="$user.data.isGuest"  type="button" class="btn btn-golden text-dark btn-block mt-3" data-bs-toggle="modal" data-bs-target="#login">Cashier</button>
+			                  <a @click="$router.push({path:'/cashier'}); hideThisCanvas()"  class="btn btn-golden text-dark btn-block mt-3" v-if="!$user.data.isGuest">Cashier
+			                  </a>
 			                </form>
 			            </div>
 		            </div>
@@ -155,6 +160,9 @@
 			// console.log(this.announcements)
 		},
 		methods:{
+			 beforeRouteLeave(to, from) {
+    			this.hideThisCanvas()
+  			},
 			hideThisCanvas(){
 			    let myOffcanvas = document.getElementById('offcanvasDarkNavbar')
 			    let bsOffcanvas = Offcanvas.getInstance(myOffcanvas);

@@ -13,7 +13,7 @@
 
 	      <!-- Brand -->
 	     <div class="col-md-3 col-xl-2 px-sm-2 px-0 brand">
-	          <img src="@/assets/logo.svg" @click="goHome()" class="d-inline-block align-top logo" alt="">
+	          <img src="@/assets/logo.svg" @click="this.$router.push({path:'/'})" class="d-inline-block align-top logo" alt="">
 	       <!--  <router-link to="/" class="navbar-brand">
 	        </router-link> -->
 	     </div>
@@ -48,6 +48,12 @@
 	        </li>
 	      </ul>
 	      <ul v-if="!$user.data.isGuest" class="navbar-nav ms-auto d-flex flex-row navbar-header">
+	      	<li class="nav-item" v-if="$user.data.role == 'admin'">
+		      	<div class="header-box" @click="">
+		            <i class="material-symbols-rounded">admin_panel_settings</i>
+		            Admin panel
+		        </div>
+	      	</li>
 	        <li class="nav-item">
 		        <div class="header-box position-relative" @click="openNotifies()">
 					<span v-if="announcements.length > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light-gray">
@@ -73,14 +79,14 @@
 		        </div>
 	        </li>
 	        <li class="nav-item">
-	          <div class="header-box" @click="goToTicket()">
+	          <div class="header-box" @click="this.$router.push({path:'/tickets'})">
 	            <i class="material-symbols-rounded">forum</i>
 	          </div>
 	        </li>
 	        <li class="nav-item">
-	          <div class="header-box" @click="goToCashier()">
+	          <div class="header-box" @click="this.$router.push({path:'/cashier'})">
 	            <i class="material-symbols-outlined">
-				monetization_on
+					monetization_on
 				</i>
 	            <span>
 	            	{{$user.data.balance}}
@@ -97,7 +103,6 @@
 	                <img :src="'/assets/images/avatars/'+$user.data.avatar+'.png'" class="avatar"/>
 	              </a>
 	              <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-	              	
 	                <li>
 	                  <a href="#" class="dropdown-item fullname">
 	                    {{$user.data.publicName}}
@@ -118,9 +123,9 @@
 	              <img class="avatar" :src="'/assets/images/avatars/'+$user.data.avatar+'.png'"/>
 	            </div>
 	           
-	            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+	            <a href="#" class="d-flex align-items-center text-white text-h-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
 	            	<i class="material-symbols-outlined position-absolute" style="left:2px;top:5px">
-							expand_more
+						expand_more
 					</i>
 	                <span class="position-absolute fullname">
 	              		{{$user.data.publicName}}
@@ -129,7 +134,7 @@
 	              <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
 	                <li><a class="dropdown-item" href="#" @click="doLogout()">Sign out</a></li>
 	              </ul>
-	            <span class="position-absolute user-level text-golden-gradient">LVL.12</span>
+	            <span class="position-absolute user-level text-golden-gradient">LVL.{{$user.data.lvl}}</span>
 	          </div>
 	        </li>
 	      </ul>
@@ -173,15 +178,6 @@
 		      	this.$user.doLogout()
 		        this.$storage.removeItem("data")
 		        
-		    },
-		    goHome:function(){
-		    	this.$router.push({path:'/'})
-		    },
-		    goToCashier:function(){
-		      	this.$router.push({path:'/cashier'})
-		    },
-		    goToTicket:function(){
-		      	this.$router.push({path:'/ticket'})
 		    },
 		    openNotifies:function(){
 		      	var element = document.getElementById("notif-wrapper")

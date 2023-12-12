@@ -191,10 +191,6 @@ $brown:#AD914E;
 	.diamond-badge{
 		color:$dark;
 	}
-	.search-game{
-		background: linear-gradient(246.98deg, #141516 29.64%, rgba(34, 37, 41, 0.23) 156.01%);
-		border: 1px solid #23272D;
-	}
 	.form-control:focus{
 		color:#fff;
 	}
@@ -350,6 +346,9 @@ $brown:#AD914E;
 	//primevue dark
 	.p-tabview .p-tabview-nav{
 		border:none;
+	}
+	.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button{
+		background: conic-gradient(from 216.1deg at 100% 7.5%, #F4D577 0deg, #FFFFFF 180deg, #E1BA43 360deg) !important;
 	}
 	.p-tabview-panels{
 		background:transparent;
@@ -1029,8 +1028,8 @@ small{
 	background:transparent;
 }
 .search-game{
-	bottom:25%;
-	right:20px;
+	background: linear-gradient(246.98deg, #141516 29.64%, rgba(34, 37, 41, 0.23) 156.01%);
+	border: 1px solid #23272D;
 	width:320px;
 	border-radius:9px;
 }
@@ -1314,6 +1313,11 @@ small{
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;
+}
+.mob-profile-name{
+	font-weight: 500;
+	width:58px;
+	font-size: 12px;
 }
 .bheader-profile-name{
 	font-weight: 700;
@@ -1714,9 +1718,9 @@ div.content {
 	border-left:2px solid $golden-light;
 	}
 .search-game{
-	bottom:20px;
-	left:0;
-	margin:0 auto;
+	// bottom:20px;
+	// left:0;
+	// margin:0 auto;
 }
 .tabs li:last-child{
 	margin-bottom: 20px

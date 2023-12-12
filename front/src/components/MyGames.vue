@@ -34,10 +34,10 @@
 			  			<div :class="['frame colorfull-border',(game.data.awayUser != undefined) ? 'colorfull-border-active' : 'colorfull-border-deactive']">
 				  			<div class="position-relative card">
 				  				<!-- profile right -->
-				  				<span class="position-absolute card-profile-name-right card-profile-name">
-				  					{{ (game.data.awayUser != undefined) ? game.data.awayUser.public_name : 'No Player ' }}
+				  				<span :class="['position-absolute card-profile-name-right card-profile-name', this.isMobile ? 'mob-profile-name' : '']">
+				  					{{ (game.data.awayUser != undefined) ? game.data.awayUser.public_name : 'No Player' }}
 				  				</span>
-				  				<span class="position-absolute card-user-level user-level-right">LVL.{{(game.data.awayUser != undefined && game.data.awayUser.lvl != undefined) ? game.data.awayUser.lvl : ' None '}}</span>
+				  				<span class="position-absolute card-user-level user-level-right" :style="this.isMobile ? 'right:35px' : ''">LVL.{{(game.data.awayUser != undefined && game.data.awayUser.lvl != undefined) ? game.data.awayUser.lvl : ' None '}}</span>
 				  				<div class="border-golden card-profile card-profile-right position-absolute">
 				  					<div class="position-absolute profile-bg bg-red bg-red-shadow" style="">
 				  						<img class="img-fluid" v-if="game.data.awayUser != undefined" :src="frontUrl+'/assets/images/avatars/'+ game.data.awayUser.avatar +'.png'"/>
@@ -47,7 +47,7 @@
 				  				<!-- profile right end -->
 				  				<img class="vs" src="@/assets/icons/vs.svg" />
 				  				<!-- profile left -->
-				  				<span class="position-absolute card-profile-name-left card-profile-name">{{ game.data.homeUser.public_name }}</span>
+				  				<span :class="['position-absolute card-profile-name-left card-profile-name', this.isMobile ? 'mob-profile-name' : '']">{{ game.data.homeUser.public_name }}</span>
 				  				<span class="position-absolute card-user-level user-level-left">LVL.{{(game.data.homeUser != undefined && game.data.homeUser.lvl != undefined) ? game.data.homeUser.lvl : ' None '}}</span>
 				  				<div class="border-golden card-profile card-profile-left position-absolute">
 				  					<div class="position-absolute profile-bg bg-blue bg-blue-shadow">
