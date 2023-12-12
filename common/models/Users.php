@@ -89,6 +89,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return [
             'id' => (string) $this->_id,
             'email' => $this->email,
+            'public_name' => $this->public_name,
             'avatar' => $this->avatar,
             'role' => \Yii::$app->user->getIdentity()->role,
             'status' => $this->status,

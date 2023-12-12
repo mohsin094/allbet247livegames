@@ -66,7 +66,7 @@
 			    </TabPanel>
 			</TabView>
 			<div v-if="!this.$isMobile" class="animated-border"  style="top:20px;right: 25px;z-index:1">
-		      <button v-if="$user.data.isGuest" class="animated-border btn default-btn position-absolute" data-bs-toggle="modal" :data-bs-target="$user.data.isGuest ? '#login' : '#newGame'">
+		      <button class="animated-border btn default-btn position-absolute" data-bs-toggle="modal" :data-bs-target="$user.data.isGuest ? '#login' : '#newGame'">
 		      	<span class="text-golden-gradient">
 		      		Play Now
 		      	</span>

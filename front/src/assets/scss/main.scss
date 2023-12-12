@@ -1287,8 +1287,15 @@ small{
 }
 .card-user-level{
 	font-size: 10px;
-	top:40px;
+	top: 40px;
+	width: 80px;
+	text-align: left;
+}
+.user-level-left{
 	left:70px;
+}
+.user-level-right{
+	right:60px;
 }
 .modal-header-level{
 	top:-30px;
@@ -1316,8 +1323,7 @@ small{
 	left:70px;
 }
 .card-profile-name-right{
-	right: 30px;
-	top: 23px;
+	right: 60px;
 }
 .bheader-profile-name-left{
 	left:80px;
@@ -1327,12 +1333,7 @@ small{
 	right: 85px;
 	top: 4px;
 }
-.user-level-left{
-	left:80px;
-}
-.user-level-right{
-	right:85px;
-}
+
 .bheader-user-level{
 	font-size: 10px;
 	top: 30px;

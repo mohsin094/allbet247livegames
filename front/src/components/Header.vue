@@ -31,45 +31,6 @@
 
 	      <!-- Right links -->
 	      <ul  v-if="$user.data.isGuest" class="navbar-nav ms-auto d-flex flex-row navbar-header">
-	      	<!-- <li class="nav-item">
-	         <div class="header-box" @click="openNotifies()">
-	            <i class="material-symbols-rounded">
-	              notifications
-	            </i>
-	            <div class="notif-wrapper position-absolute d-none">
-		           <ul class="notif-list">
-		           	<li>
-		           		<router-link to="/">
-		           			<i class="material-symbols-rounded float-start text-golden-dark">
-				              notifications
-				            </i>
-			            Test Notification 1
-		           		</router-link>
-			            <hr class="hr-text" style="margin:0" />
-		           	</li>
-		           	<li>
-		           		<router-link to="/">
-		           			<i class="material-symbols-rounded float-start text-golden-dark">
-				              notifications
-				            </i>
-			            Test Notification 2
-		           		</router-link>
-			            <hr class="hr-text" style="margin:0" />
-		           	</li>
-		           	<li>
-		           		<router-link to="/">
-		           			<i class="material-symbols-rounded float-start text-golden-dark">
-				              notifications
-				            </i>
-			            Test Notification 3
-		           		</router-link>
-			            <hr class="hr-text" style="margin:0" />
-		           	</li>
-		           </ul>
-
-	            </div>
-	          </div>
-	        </li> -->
 	        <li class="nav-item">
 	          <div class="header-box">
 	            <i class="material-symbols-outlined">smart_toy</i>
@@ -140,7 +101,7 @@
 	                <li>
 	                  <a href="#" class="dropdown-item fullname">
 	                    {{$user.data.publicName}}
-	                    <span class="user-level text-golden-gradient">LVL.12</span>
+	                    <span class="user-level text-golden-gradient">LVL.{{$user.data.lvl}}</span>
 	                  </a>
 	                </li>
 	                <li>

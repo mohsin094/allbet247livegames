@@ -10,6 +10,7 @@ const user = {
           publicName:"",
           avatar:"",
           role:"",
+          lvl:"",
           status:"",
           balance:"",
           sessionId:""
@@ -27,6 +28,7 @@ const user = {
           this.data.publicName = response.public_name
           this.data.avatar = response.avatar
           this.data.role = response.role
+          this.data.lvl = response.lvl
           this.data.balance = new Intl.NumberFormat().format(response.balance)
           this.data.sessionId = response.sessionId
         },
@@ -36,6 +38,7 @@ const user = {
           this.data.email = ""
           this.data.avatar = ""
           this.data.role = ""
+          this.data.lvl = ""
           this.data.balance = ""
           this.data.sessionId = ""
           this.data.publicName = ""
