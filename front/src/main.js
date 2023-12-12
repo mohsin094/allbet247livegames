@@ -42,4 +42,5 @@ app.config.globalProperties.isTablet = isTablet;
 app.config.globalProperties.$axios = axios
 app.config.globalProperties.$storage = window.localStorage
 app.config.globalProperties.$loader = useLoading({color:'#53FFAC',backgroundColor:'#5D6879'});
+app.config.globalProperties.$environment = 'demo';
 app.mount('#app')

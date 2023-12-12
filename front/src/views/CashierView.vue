@@ -1,5 +1,13 @@
 <template>
 	<div class="row">
+		 <Dialog v-if="this.$environment = 'demo'" v-model:visible="visible" header="Please note!" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }" position="bottomleft" :modal="true" :draggable="false">
+            <p class="m-0">
+               This section does not function in the demo version,and it is only provided for demonstration purposes.
+            </p>
+            <template #footer>
+                <Button label="Ok" icon="pi pi-check" @click="visible = false" autofocus />
+            </template>
+        </Dialog>
 		<div class="col px-3">
 			<button class="btn-thin btn-active bg-dark-gradient" id="deposit" @click="getDepositMethods()">
 				<span class="text-golden-gradient" id="text-deposit">
@@ -153,8 +161,15 @@
 	</div>
 </template>
 <script>
+	import Dialog from 'primevue/dialog';
+	import Button from 'primevue/button';
+	import 'primeicons/primeicons.css'
 	export default{
 		name:'cashier',
+		components:{
+			Dialog,
+			Button
+		},
 		data(){
 			return{
 				payment:'',
@@ -162,8 +177,13 @@
 					{label:'Paypal',value:'paypal'},
 					{label:'Binance',value:'binance'},
 					{label:'Credit card',value:'creditcard'},
-				]
+				],
+            	visible: false
 			}
+
+		},
+		created(){
+            this.visible = true;
 		},
 		methods:{
 			getPaymentMethod(name){
@@ -190,3 +210,20 @@
 		}
 	}
 </script>
+<style scope>
+	.p-dialog{
+		border:2px solid #BF5656;
+	}
+	.p-dialog .p-dialog-header .p-dialog-title{
+		color:#BF5656;
+	}
+	.p-button {
+	  color: #fff;
+	  background: #202930 !important;
+	  border: none !important;
+	  border-radius: 5px;
+	}
+	.p-button:focus{
+		box-shadow: none;
+	}
+</style>
