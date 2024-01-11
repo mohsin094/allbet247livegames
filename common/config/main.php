@@ -6,6 +6,7 @@ return [
     ],
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
     'components' => [
+        'mavens' => 'common\components\Mavens',
         // 'session' => [
         //     'class' => 'yii\web\DbSession',
         //     'db' => 'mongodb',
