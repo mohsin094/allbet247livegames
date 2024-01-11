@@ -2,29 +2,12 @@
 	<Board/>
 </template>
 <script>
-	
 	import Board from '@/components/Board.vue';
 	export default{
 		components: {
-
         Board
-      },
-		beforeRouteEnter(to,from,next){
-		    next(vm => {
-		     var header = document.getElementById('main-header')
-		     var bHeader = document.getElementById('backgammon-header')
-		      header.style.display = 'none'
-		      bHeader.style.display = 'block'
-		    })
-		  },
-		beforeRouteLeave(to,from,next){
-		    var header = document.getElementById('main-header')
-		    var bHeader = document.getElementById('backgammon-header')
-			 header.style.display = 'block'
-			 bHeader.style.display = 'none'
-		    next()
-		  },
-	}
+      }
+  }
 </script>
 <style>
 	.main-wrapper{

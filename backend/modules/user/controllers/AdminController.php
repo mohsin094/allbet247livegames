@@ -35,6 +35,8 @@ class AdminController extends AdminApiController
 		if($model && $model->load(\Yii::$app->request->bodyParams, '') && $model->save()) {
 			$this->resp->result = true;
 			$this->resp->params = $model;
+		}else {
+			$this->error($model->getErrors());
 		}
 
 		return $this->resp;

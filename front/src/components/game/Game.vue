@@ -1,9 +1,24 @@
 <template>
-	<div class="row">
-		<div class="col-md-10 col-xl-10 px-sm-2 px-0 ">
-			<div id="game" class="col-12 main-wrapper" style="padding:20px 0">
-				<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo" />
+	<div id="overlay" v-if="this.isMobile">
+		<div class="screen-center w-100">
+			<span class="material-symbols-outlined fs-large mb-4 text-golden-gradient">
+			screen_rotation
+			</span>
+			<h3><strong>please rotate your device to landscape</strong></h3>
+			<span class="material-symbols-outlined fs-large text-golden-gradient mt-5">
+			screen_lock_rotation
+			</span>
+			<h5>If screen does not rotate, make sure your screen oriention is unlocked.</h5>
+		</div>
+	</div>
+    <div class="col-md-12 col-sm-12 col-xs-12 col-xl-10 px-sm-2 px-0" :style="this.isMobile ? 'width:100%;' : ''">
+    	<div class="main-wrapper pt-0" style="height:95vh">
+			<div id="game">
+				<board-header v-if="match != undefined" :match="match" :player-black="blackPlayerInfo" :player-white="whitePlayerInfo"/>
 				<div id="board">
+					<button  v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="btn btn-golden text-dark position-absolute screen-center p-1 res-btn">
+						Dice
+					</button>
 					<template v-if="game != undefined">
 						<!-- dice black -->
 						<div v-if="game.playerBlack.dice && game.playerBlack.showDice" class="dices dice-black">
@@ -22,7 +37,7 @@
 						<div v-if="doubleActive" id="double-dice">
 							<img :style="{'max-width': game.global.checkerSize+'px'}" src="@/assets/game/img/double-dice.png" />
 						</div>
-						<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.png" />
+						<img id="board-bg" class="img-fluid" src="./../../assets/game/img/board.jpg" />
 						<column id="column-1" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(-1)" />
 						<column id="column0" @touch-column="touchCol" :show-side="true" :global-vars="game.global" :data="game.board.getColumnAt(0)" />
 						<column id="column1" @touch="touch" @touch-column="touchCol" :global-vars="game.global" :data="game.board.getColumnAt(1)" />
@@ -62,11 +77,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-2 col-xl-2 col-sm-2" id="right-sidebar">
-	        <div id="chat-box" class="sidebar-box position-relative px-2 py-2">
-	        	<div id="chatbox-header" class="px-4 py-1">
+    </div>
+            
+    <div class="col-md-2" v-if="!this.isMobile" style="height:95vh">
+        <div id="sidebar" class="sidebar-box mb-2">
+            <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start">
+               <div id="chatbox-header" class="px-4 py-1">
 		        	<div class="float-end mt-2">  
-						<input class="form-check-input" type="checkbox" v-model="muteChat" id="mute">
+						<input class="form-check-input" type="checkbox" id="mute">
 						<label class="form-check-label ms-1 text-golden-gradient" for="mute">
 						    <strong>Mute</strong>
 						</label>
@@ -76,453 +94,446 @@
 							Chat
 						</strong>
 					</div>
-	        	</div>
-	        	<Chat :chats="chats" />
-	        	<div id="chatbox-footer" class="px-1 py-1">
-	        		<div class="input-group mb-3">
-					  <input v-model="chatbox" @keyup.enter="sendChat" type="text" class="form-control" id="input-msg" placeholder="Write here..." aria-describedby="basic-addon2">
-					  <div class="input-group-append">
-					    <button @click="sendChat" class="btn btn-outline-secondary" id="send-msg" type="button">
-					    	<img src="@/assets/icons/send.svg" />
-					    </button>
-					  </div>
-					</div>
-	        	</div>
-	        </div>
-	        <div class="sidebar-box right-sidebar-footer">
-	        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
-	        	</button>
-				<!-- <div class="float-end mt-2">  
-					<input class="form-check-input" type="checkbox" value="" id="auto-dice">
-					<label class="form-check-label ms-1 text-golden-gradient" for="auto-dice">
-					    <strong>Auto Roll</strong>
-					</label>
-				</div> -->
-	        </div>
-	    </div>
+        		</div>
+        		<Chat :chats="chats"/>
+            </div>
+        </div>
+        <div class="sidebar-box right-sidebar-footer">
+        	<button v-if="game && game.activePlayer" v-show="(game.activePlayer.allowDice != undefined && game.activePlayer.allowDice)"  @click="throwDice" class="float-end me-2 ms-3 btn btn-golden text-dark">Roll Dice
+        	</button>
+			<!-- <div class="float-end mt-2">  
+				<input class="form-check-input" type="checkbox" value="" id="auto-dice">
+				<label class="form-check-label ms-1 text-golden-gradient" for="auto-dice">
+				    <strong>Auto Roll</strong>
+				</label>
+			</div> -->
+        </div>
     </div>
     <WinnerModal @next="moveToNext" :in-progress="inProgress" :events = "events"/>
     <LooserModal @next="moveToNext" :in-progress="inProgress" :events = "events"/>
 </template>
 <script>
-import Chat from '@/components/Chat.vue';
-import { Modal } from 'bootstrap';
-import Column from "./Column.vue";
-import Game,
-{
-	STAGE
-}
-from "@/extensions/backgammon/Game.js";
-import Global from "@/extensions/backgammon/Global";
-import
-{
-	io
-}
-from "socket.io-client";
-import BoardHeader from '@/components/BoardHeader.vue';
-import
-{
-	PLAYER_COLOR
-}
-from "@/extensions/backgammon/Player.js";
-import WinnerModal from '@/components/_modals/WinnerModal.vue';
-import LooserModal from '@/components/_modals/LooserModal.vue';
-import avatarColor from '@/composables/avatarColor.js'
-export default
-{
-	setup(){
-			const getAvatarColor = avatarColor
-			return {getAvatarColor}
-	},
-	components:
+	import Chat from '@/components/Chat.vue';
+	import { Modal } from 'bootstrap';
+	import Column from "./Column.vue";
+	import Game,
 	{
-		Column,
-		BoardHeader,
-		WinnerModal,
-		LooserModal,
-		Chat
-	},
-	// props: ['match'],
-	data()
+		STAGE
+	}
+	from "@/extensions/backgammon/Game.js";
+	import Global from "@/extensions/backgammon/Global";
+	import
 	{
-		return {
-			inProgress:false,
-			modal:null,
-			events:[],
-			game: undefined,
-			stage:
-			{
-				init: STAGE.INIT,
-				start: STAGE.START,
-				turn: STAGE.TURN,
-				throw_double_dice: STAGE.THROW_DOUBLE_DICE,
-				move_first_dice: STAGE.MOVE_FIRST_DICE,
-				move_second_dice: STAGE.MOVE_SECOND_DICE,
-				move_dices: STAGE.MOVE_DICES,
-				end: STAGE.END,
-				cancel: STAGE.CANCEL
-			},
-			showDice: false,
-			doubleActive: false,
-			io: undefined,
-			systemMessage: '',
-			timer: 0,
-			baseUrl: import.meta.env.VITE_BASE_URL,
-			boardText: undefined,
-			match: undefined,
-			whitePlayerInfo: undefined,
-			blackPlayerInfo: undefined,
-			audio: {
-				dice: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/dice.aac"),
-				checker: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/checker.aac"),
-			},
-			chatbox: '',
-			chats: [],
-			result: {},
-			resultAction: undefined,
-			failModal: "",
-			succModal: "",
-			muteChat: false,
-		}
-	},
-	methods:
+		io
+	}
+	from "socket.io-client";
+	import
 	{
-		moveToNext() {
-            const modalSucc = document.getElementById('winner-modal');
-            modalSucc.style.display = 'none';
-            const backdrop = document.getElementsByClassName("modal-backdrop");
-            for(let i=0; i<backdrop.length; i++) {
-            	backdrop[i].remove();
-            }
-
-
-			const modalFailed = document.getElementById('looser-modal');
-            this.failModal = Modal.getOrCreateInstance(modalFailed);
-            this.failModal.hide();
-
-				const matchId = this.resultAction.params.match_id;
-				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/join", {
-					params: {
-						matchId: matchId
-					}
-				}).then((res) => {
-					res = res.data;
-					if(res.result) {
-						
-						this.$router.push({name: 'nextMatch', params: {matchId: res.params.match_id}});
-					}
-				});
-
-            // setTimeout(() => {
-            // }, 1000);
+		PLAYER_COLOR
+	}
+	from "@/extensions/backgammon/Player.js";
+	import WinnerModal from '@/components/_modals/WinnerModal.vue';
+	import LooserModal from '@/components/_modals/LooserModal.vue';
+	import avatarColor from '@/composables/avatarColor.js';
+	import BoardHeader from '@/components/BoardHeader.vue';
+	export default
+	{
+		setup(){
+				const getAvatarColor = avatarColor
+				return {getAvatarColor}
 		},
-		gameEnds() {
-			this.$axios.get(
-					import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/result",
-					{
-						params:
-						{
-							id: this.$route.params.matchId
-						}
-					})
-				.then((res) =>
+		components:
+		{
+			Column,
+			WinnerModal,
+			LooserModal,
+			Chat,
+			BoardHeader,
+		},
+		// props: ['match'],
+		data()
+		{
+			return {
+				inProgress:false,
+				modal:null,
+				events:[],
+				game: undefined,
+				stage:
 				{
-					res = res.data;
-					console.log(res);
-					if(res.result) {
-						this.events = res.params.events;
-						this.resultAction = res.action;
-						if(res.params.ends) {
-							this.inProgress =false
-							if(res.params.winner == this.$user.data.id){
-								let modalSucc = document.getElementById('winner-modal');
-								let modal = new Modal(modalSucc)
-								modal.show()
-							}else {
-								let modalFailed = document.getElementById('looser-modal');
-								let modal = new Modal(modalFailed)
-								modal.show()
+					init: STAGE.INIT,
+					start: STAGE.START,
+					turn: STAGE.TURN,
+					throw_double_dice: STAGE.THROW_DOUBLE_DICE,
+					move_first_dice: STAGE.MOVE_FIRST_DICE,
+					move_second_dice: STAGE.MOVE_SECOND_DICE,
+					move_dices: STAGE.MOVE_DICES,
+					end: STAGE.END,
+					cancel: STAGE.CANCEL
+				},
+				showDice: false,
+				doubleActive: false,
+				io: undefined,
+				systemMessage: '',
+				timer: 0,
+				baseUrl: import.meta.env.VITE_BASE_URL,
+				boardText: undefined,
+				match: undefined,
+				whitePlayerInfo: undefined,
+				blackPlayerInfo: undefined,
+				audio: {
+					dice: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/dice.aac"),
+					checker: new Audio(import.meta.env.VITE_BASE_URL + "/assets/game/audio/checker.aac"),
+				},
+				chatbox: '',
+				chats: [],
+				result: {},
+				resultAction: undefined,
+				failModal: "",
+				succModal: "",
+				muteChat: false,
+			}
+		},
+		methods:
+		{
+			moveToNext() {
+	            const modalSucc = document.getElementById('winner-modal');
+	            modalSucc.style.display = 'none';
+	            const backdrop = document.getElementsByClassName("modal-backdrop");
+	            for(let i=0; i<backdrop.length; i++) {
+	            	backdrop[i].remove();
+	            }
+
+
+				const modalFailed = document.getElementById('looser-modal');
+	            this.failModal = Modal.getOrCreateInstance(modalFailed);
+	            this.failModal.hide();
+
+					const matchId = this.resultAction.params.match_id;
+					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/join", {
+						params: {
+							matchId: matchId
+						}
+					}).then((res) => {
+						res = res.data;
+						if(res.result) {
+							
+							this.$router.push({name: 'nextMatch', params: {matchId: res.params.match_id}});
+						}
+					});
+
+	            // setTimeout(() => {
+	            // }, 1000);
+			},
+			gameEnds() {
+				this.$axios.get(
+						import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/result",
+						{
+							params:
+							{
+								id: this.$route.params.matchId
 							}
-						}else{
-							this.inProgress = true;
-							let obj = this.events.find(item => item._id === this.$route.params.matchId);
-							const btns = document.getElementsByClassName('continue-game');
-							for (const btn of btns) {
-							  btn.style.display = 'block';
-							}
-							if(obj.status == 'finished'){
-								if(obj.winner == this.$user.data.id){
+						})
+					.then((res) =>
+					{
+						res = res.data;
+						console.log(res);
+						if(res.result) {
+							this.events = res.params.events;
+							this.resultAction = res.action;
+							if(res.params.ends) {
+								this.inProgress =false
+								if(res.params.winner == this.$user.data.id){
 									let modalSucc = document.getElementById('winner-modal');
 									let modal = new Modal(modalSucc)
 									modal.show()
-								}else{
+								}else {
 									let modalFailed = document.getElementById('looser-modal');
 									let modal = new Modal(modalFailed)
 									modal.show()
 								}
+							}else{
+								this.inProgress = true;
+								let obj = this.events.find(item => item._id === this.$route.params.matchId);
+								const btns = document.getElementsByClassName('continue-game');
+								for (const btn of btns) {
+								  btn.style.display = 'block';
+								}
+								if(obj.status == 'finished'){
+									if(obj.winner == this.$user.data.id){
+										let modalSucc = document.getElementById('winner-modal');
+										let modal = new Modal(modalSucc)
+										modal.show()
+									}else{
+										let modalFailed = document.getElementById('looser-modal');
+										let modal = new Modal(modalFailed)
+										modal.show()
+									}
+								}
 							}
-						}
-					}	
-				});
-		},
-		sendChat()
-		{
-			if(this.muteChat == false) {
-				this.io.emit('game/sendchat', {
-					id: this.game.id,
-					text: this.chatbox
-				});
-
-				this.chats.push(this.chatbox);
-			}
-			this.chatbox = '';
-		},
-		move(checkerId, toPositionId)
-		{
-			this.io.emit('game/move',
+						}	
+					});
+			},
+			sendChat()
 			{
-				checkerId: checkerId,
-				toPosition: toPositionId,
-				id: this.game.id
-			});
-		},
-		getPlayerInfo(callback)
-		{
-			this.$axios.get(
-					import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/player-public-info",
-					{
-						params:
-						{
-							playerId: this.match.home_id
-						}
-					})
-				.then((res) =>
-				{
-					this.whitePlayerInfo = res.data.params;
-					if(callback != undefined) {
-						callback();
-					}
-				});
+				if(this.muteChat == false) {
+					this.io.emit('game/sendchat', {
+						id: this.game.id,
+						text: this.chatbox
+					});
 
-			if(this.match.away_id != undefined)
+					this.chats.push(this.chatbox);
+				}
+				this.chatbox = '';
+			},
+			move(checkerId, toPositionId)
+			{
+				this.io.emit('game/move',
+				{
+					checkerId: checkerId,
+					toPosition: toPositionId,
+					id: this.game.id
+				});
+			},
+			getPlayerInfo(callback)
 			{
 				this.$axios.get(
 						import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/player-public-info",
 						{
 							params:
 							{
-								playerId: this.match.away_id
+								playerId: this.match.home_id
 							}
 						})
 					.then((res) =>
 					{
-						this.blackPlayerInfo = res.data.params
+						this.whitePlayerInfo = res.data.params;
+						if(callback != undefined) {
+							callback();
+						}
 					});
-			}
-		},
-		throwDice()
-		{
-			this.audio.dice.play();
-			this.io.emit('game/throwDice',
-			{
-				id: this.game.activePlayer.id,
-				gameId: this.game.id
-			});
-		},
 
-		dice()
-		{
-			
-			if(this.game.activePlayer.allowDice)
-			{
-
-				this.game.dice.throw();
-				this.showDice = true;
-			}
-		},
-		touchCol(col)
-		{
-
-			if(this.game.activePlayer.allowMove)
-			{
-				this.game.touchCol(col);
-			}
-		},
-		touch(checker)
-		{
-			if(this.game.activePlayer.allowMove)
-			{
-				this.game.touchChecker(checker);
-			}
-		},
-		animateCheckerPosition(from, to) {
-			const toElm = this.getColumnElmFromId(to);
-			toElm.classList.add("column-border");
-			setTimeout(() => {
-				toElm.classList.remove("column-border");
-			}, 500);
-			this.audio.checker.play();
-		},
-		getColumnElmFromId(id) {
-			return document.getElementById("column"+id);
-		}
-	},
-	created()
-	{
-		this.$axios.get(
-				import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/get-match",
+				if(this.match.away_id != undefined)
 				{
-					params:
-					{
-						id: this.$route.params.matchId
-					}
-				})
-			.then((data) =>
-			{
-				data = data.data;
-				if(data.result)
-				{
-
-					this.match = data.params;
-
-					this.getPlayerInfo(() =>
-					{
-						this.io = io(
-							import.meta.env.VITE_BACKEND_SOCKET_URL,
+					this.$axios.get(
+							import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/player-public-info",
 							{
-								path: "/game",
-								auth:
+								params:
 								{
-									token: this.$user.data.sessionId
+									playerId: this.match.away_id
 								}
-							});
-
-						this.game = new Game(this);
-						this.game.id = this.match.id;
-						this.game.init();
-
-						if(this.match.home_id == this.$user.data.id)
+							})
+						.then((res) =>
 						{
-							this.game.activePlayer = this.game.playerWhite;
-						}
-						else
-						{
-							this.game.activePlayer = this.game.playerBlack;
-						}
-
-						this.game.socketInit(this.io);
-						this.doubleActive = this.game.doubleActive;
-
-						this.io.on("connect", () =>
-						{
-							console.log('socket connected')
-
-							this.io.on('game-state', (params) =>
-							{
-								if(this.game != undefined)
-								{
-
-									this.game.stateManager(params);
-
-									this.boardText = (this.game.timer != undefined) ? this.game.timer : undefined;
-
-									if(this.blackPlayerInfo != undefined && this.whitePlayerInfo != undefined)
-									{
-
-										this.blackPlayerInfo.time = (params.playerBlack.time != undefined) ? params.playerBlack.time : undefined;
-										this.whitePlayerInfo.time = (params.playerWhite.time != undefined) ? params.playerWhite.time : undefined;
-
-										// this.blackPlayerInfo.text = (params.playerBlack.text != undefined) ? params.playerBlack.text : undefined;
-										// this.whitePlayerInfo.text = (params.playerWhite.text != undefined) ? params.playerWhite.text : undefined;
-									}
-								}
-
-							});
-
-							this.io.on('player-join', (param) =>
-							{
-								if(this.game != undefined)
-								{
-
-									this.match.away_id = param.id;
-									this.getPlayerInfo();
-								}
-							});
-							this.io.on('system-message', (msg) =>
-							{
-								this.systemMessage = msg;
-							});
-
-							this.io.on('system-clock', (clock) =>
-							{
-								this.timer = clock;
-							});
-
-							this.io.on('board-text', (text) =>
-							{
-								this.boardText = text;
-							});
-
-							this.io.on('moved-from-to', (position) => {
-
-								this.animateCheckerPosition(position[0], position[1]);
-							});
-
-							this.io.on('send-chat', (text) => {
-								this.chats.push(text);
-							});
-
-							this.io.on('game-ends', () => {
-								this.gameEnds();
-							});
-
-							this.io.on('turn-dice', (dice) =>
-							{
-								if(this.game != undefined)
-								{
-
-									if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK)
-									{
-										this.game.dice.throwOne(dice.black);
-										this.showDice = true;
-									}
-
-									if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE)
-									{
-										this.game.dice.throwOne(dice.white);
-										this.showDice = true;
-									}
-								}
-							});
-
-
-							if(this.game != undefined)
-							{
-								this.io.emit('game/join',
-								{
-									id: this.match.id
-								});
-							}
+							this.blackPlayerInfo = res.data.params
 						});
-					});
 				}
+			},
+			throwDice()
+			{
+				this.audio.dice.play();
+				this.io.emit('game/throwDice',
+				{
+					id: this.game.activePlayer.id,
+					gameId: this.game.id
+				});
+			},
 
-			})
+			dice()
+			{
+				
+				if(this.game.activePlayer.allowDice)
+				{
+
+					this.game.dice.throw();
+					this.showDice = true;
+				}
+			},
+			touchCol(col)
+			{
+
+				if(this.game.activePlayer.allowMove)
+				{
+					this.game.touchCol(col);
+				}
+			},
+			touch(checker)
+			{
+				if(this.game.activePlayer.allowMove)
+				{
+					this.game.touchChecker(checker);
+				}
+			},
+			animateCheckerPosition(from, to) {
+				const toElm = this.getColumnElmFromId(to);
+				toElm.classList.add("column-border");
+				setTimeout(() => {
+					toElm.classList.remove("column-border");
+				}, 500);
+				this.audio.checker.play();
+			},
+			getColumnElmFromId(id) {
+				return document.getElementById("column"+id);
+			}
+		},
+		created()
+		{
+			this.$axios.get(
+					import.meta.env.VITE_BACKEND_BASE_URL + "/game/default/get-match",
+					{
+						params:
+						{
+							id: this.$route.params.matchId
+						}
+					})
+				.then((data) =>
+				{
+					data = data.data;
+					if(data.result)
+					{
+
+						this.match = data.params;
+
+						this.getPlayerInfo(() =>
+						{
+							this.io = io(
+								import.meta.env.VITE_BACKEND_SOCKET_URL,
+								{
+									path: "/game",
+									auth:
+									{
+										token: this.$user.data.sessionId
+									}
+								});
+
+							this.game = new Game(this);
+							this.game.id = this.match.id;
+							this.game.init();
+
+							if(this.match.home_id == this.$user.data.id)
+							{
+								this.game.activePlayer = this.game.playerWhite;
+							}
+							else
+							{
+								this.game.activePlayer = this.game.playerBlack;
+							}
+
+							this.game.socketInit(this.io);
+							this.doubleActive = this.game.doubleActive;
+
+							this.io.on("connect", () =>
+							{
+								console.log('socket connected')
+
+								this.io.on('game-state', (params) =>
+								{
+									if(this.game != undefined)
+									{
+
+										this.game.stateManager(params);
+
+										this.boardText = (this.game.timer != undefined) ? this.game.timer : undefined;
+
+										if(this.blackPlayerInfo != undefined && this.whitePlayerInfo != undefined)
+										{
+
+											this.blackPlayerInfo.time = (params.playerBlack.time != undefined) ? params.playerBlack.time : undefined;
+											this.whitePlayerInfo.time = (params.playerWhite.time != undefined) ? params.playerWhite.time : undefined;
+
+											// this.blackPlayerInfo.text = (params.playerBlack.text != undefined) ? params.playerBlack.text : undefined;
+											// this.whitePlayerInfo.text = (params.playerWhite.text != undefined) ? params.playerWhite.text : undefined;
+										}
+									}
+
+								});
+
+								this.io.on('player-join', (param) =>
+								{
+									if(this.game != undefined)
+									{
+
+										this.match.away_id = param.id;
+										this.getPlayerInfo();
+									}
+								});
+								this.io.on('system-message', (msg) =>
+								{
+									this.systemMessage = msg;
+								});
+
+								this.io.on('system-clock', (clock) =>
+								{
+									this.timer = clock;
+								});
+
+								this.io.on('board-text', (text) =>
+								{
+									this.boardText = text;
+								});
+
+								this.io.on('moved-from-to', (position) => {
+
+									this.animateCheckerPosition(position[0], position[1]);
+								});
+
+								this.io.on('send-chat', (text) => {
+									this.chats.push(text);
+								});
+
+								this.io.on('game-ends', () => {
+									this.gameEnds();
+								});
+
+								this.io.on('turn-dice', (dice) =>
+								{
+									if(this.game != undefined)
+									{
+
+										if(dice.black != undefined && this.game.activePlayer.color == PLAYER_COLOR.BLACK)
+										{
+											this.game.dice.throwOne(dice.black);
+											this.showDice = true;
+										}
+
+										if(dice.white != undefined && this.game.activePlayer.color == PLAYER_COLOR.WHITE)
+										{
+											this.game.dice.throwOne(dice.white);
+											this.showDice = true;
+										}
+									}
+								});
 
 
-	},
-	mounted()
-	{
+								if(this.game != undefined)
+								{
+									this.io.emit('game/join',
+									{
+										id: this.match.id
+									});
+								}
+							});
+						});
+					}
 
-	},
-	unmounted()
-	{
-		if(this.io != undefined)
-			this.io.close();
+				})
+
+
+		},
+		mounted()
+		{
+
+		},
+		unmounted()
+		{
+			if(this.io != undefined)
+				this.io.close();
+		}
 	}
-}
 </script>
 <style scoped>
+#sidebar{
+	height:84%;
+}
 #game {
 	width: 100%;
 	/*	max-width: 1117px;*/

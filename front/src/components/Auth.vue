@@ -26,13 +26,13 @@
               </span>
               <FormKit class="position-absolute"
                   v-model="password"
-                  type="password"
+                  :type="showPass ? 'text' : 'password'"
                   name="password"
                   placeholder="Password"
                   validation="required"
                 />
-                 <span class="input-icon input-icon-right position-absolute">
-                <span class=" material-symbols-outlined">visibility</span>
+              <span class="input-icon input-icon-right position-absolute" @click="showPass = !showPass">
+                <span class=" material-symbols-outlined">{{showPass ? 'visibility_off' : 'visibility'}}</span>
               </span>
             </div>
 
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="modal-footer text-center">
-          <p class="text-gray">Not a member?</p><a href="#">Sign up</a>
+          <p class="text-gray">Not a member?</p><a data-bs-toggle="modal" data-bs-target="#signup" href="#">Sign up</a>
         </div>
       </div>
     </div>
@@ -95,7 +95,6 @@
                   validation="required"
                   validation-label="Username"
                 />
-              
             </div>
             <div class="position-relative input-wrapper">
               <span class="input-icon input-icon-left position-absolute">
@@ -108,7 +107,6 @@
                   placeholder="Enter Email"
                   validation="required|email"
                 />
-              
             </div>
             <FormKit type="group">
               <div class="position-relative input-wrapper">
@@ -117,13 +115,13 @@
                 </span>
                  <FormKit
                     v-model="password"
-                    type="password"
+                    :type="showPass ? 'text' : 'password'"
                     name="password"
                     validation="required"
                     placeholder="Password"
                   />
-                  <span class="input-icon input-icon-right position-absolute">
-                    <span class=" material-symbols-outlined">visibility</span>
+                  <span class="input-icon input-icon-right position-absolute" @click="showPass = !showPass">
+                    <span class=" material-symbols-outlined">{{showPass ? 'visibility_off' : 'visibility'}}</span>
                   </span>
               </div>
               <div class="position-relative input-wrapper">
@@ -132,15 +130,14 @@
                 </span>
                 <FormKit
                     v-model="confirmPass"
-                    type="password"
+                    :type="showConfPass ? 'text' : 'password'"
                     name="password_confirm"
                     validation="required|confirm"
-                    validation-visibility="live"
                     validation-label="Confirmation"
                     placeholder="Confirm password"
                   />
-                  <span class="input-icon input-icon-right position-absolute">
-                    <span class=" material-symbols-outlined">visibility</span>
+                  <span class="input-icon input-icon-right position-absolute" @click="showConfPass = !showConfPass">
+                    <span class=" material-symbols-outlined">{{showConfPass ? 'visibility_off' : 'visibility'}}</span>
                   </span>
               </div>
             </FormKit>
@@ -162,7 +159,7 @@
               />
             <button type="button" class="btn btn-golden text-dark login-btn mt-5" @click="register()">Sign up</button>
             <hr class="hr-text" data-content="Or"/>
-            <div class="container d-flex align-items-center justify-content-center">
+            <!-- <div class="container d-flex align-items-center justify-content-center">
             <ul class="social-links d-flex flex-row" id="footer">
               <li class="nav-item">
                 <div class="header-box">
@@ -185,10 +182,10 @@
                 </div>
               </li>
             </ul>
-          </div>
+          </div> -->
         </div>
         <div class="modal-footer text-center">
-          <p class="text-gray">Already have an account?</p><a href="#">Login</a>
+          <p class="text-gray">Already have an account?</p><a data-bs-toggle="modal" data-bs-target="#login" href="#">Login</a>
         </div>
       </div>
     </div>
@@ -224,9 +221,10 @@
 <script>
   import { Modal } from 'bootstrap';
   export default{
-   
     data(){
       return {
+        showPass:false,
+        showConfPass:false,
         username:"",
         email:"",
         password:"",
@@ -245,12 +243,12 @@
           username: instance.username,
           password: instance.password
         }).then((response) => {
+          console.log(response.data.params)
           response = response.data
           if(response.result){
             var modalEl = document.getElementById('login');
             var modal = Modal.getInstance(modalEl)
             modal.hide();
-
             instance.$user.doLogin(response.params)
             let data = JSON.stringify(response.params)
             instance.$storage.setItem("data", data);

@@ -5,6 +5,7 @@ import Router from '#extensions/router/Router'
 import Middlewares from '#extensions/router/middlewares/Middlewares'
 import cookieParse from 'cookie-parser';
 import ConfProvider, {SERVER} from "#components/ConfProvider";
+import fs from "fs";
 
 export default {
 	app: '',
@@ -22,9 +23,15 @@ export default {
 		Router.invokeRoutes(this.express);
 		const serverConfig = ConfProvider.getServer(SERVER.HTTP);
 		if(serverConfig.https.active) {
+			let privateKey = fs.readFileSync(serverConfig.https.key);
+			let certificate = fs.readFileSync(serverConfig.https.cert);
+			//let caCertificate = fs.readFileSync(serverConfig.https.ca);
 			this.server = createHttpsServer({
-				key: serverConfig.https.key,
-				cert: serverConfig.https.cert
+				key: privateKey,
+				cert: certificate,
+				//ca: caCertificate,
+				requestCert: true,
+				rejectUnauthorized: false 
 			},this.express);
 		}else {
 			this.server = createServer(this.express);

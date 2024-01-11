@@ -69,7 +69,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             $this->email = strtolower(trim($this->email));
             $this->status = self::STATUS_WAITING_CONFIRMATION;
             $this->balance = '0';
-            $this->lvl = 1;
+            $this->lvl = '1';
         }
         $this->balance = (string) $this->balance;
         return parent::beforeValidate();
@@ -89,6 +89,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return [
             'id' => (string) $this->_id,
             'email' => $this->email,
+            'public_name' => $this->public_name,
             'avatar' => $this->avatar,
             'role' => \Yii::$app->user->getIdentity()->role,
             'status' => $this->status,

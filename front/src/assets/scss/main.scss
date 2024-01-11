@@ -175,10 +175,10 @@ $brown:#AD914E;
 	.main-title i{
 		color:$light-green !important;
 	}
-	.tabs{
+	.tabs,.p-tabview-nav-container{
 		background: linear-gradient(243.94deg, #181B1F 24.7%, rgba(46, 52, 60, 0.23) 78.12%);
 	}
-	.tabs li a{
+	.tabs li a , .text-golden-shine{
 		background: linear-gradient(135.91deg, #DEB864 35.32%, #FFF3D8 51.23%, #DEB864 69.05%);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
@@ -190,10 +190,6 @@ $brown:#AD914E;
 	}
 	.diamond-badge{
 		color:$dark;
-	}
-	.search-game{
-		background: linear-gradient(246.98deg, #141516 29.64%, rgba(34, 37, 41, 0.23) 156.01%);
-		border: 1px solid #23272D;
 	}
 	.form-control:focus{
 		color:#fff;
@@ -231,7 +227,6 @@ $brown:#AD914E;
 		-webkit-text-fill-color: transparent;
 		background-clip: text;
 		text-fill-color: transparent;
-
 	}
 	.silver-gradient-border a span{
 		background: linear-gradient(91.55deg, #AEA497 3.19%, #969696 9.11%, #CCC8BD 14.1%, #B8B4A9 26.09%, #CEC8B6 61.05%, #D1CFCA 76.59%, #C1BCAA 84.74%, #746B5F 100%) !important;
@@ -348,10 +343,160 @@ $brown:#AD914E;
 	.accordion-body{
 		background:$dark;
 	}
+	//primevue dark
+	.p-tabview .p-tabview-nav{
+		border:none;
+	}
+	.p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button{
+		background: conic-gradient(from 216.1deg at 100% 7.5%, #F4D577 0deg, #FFFFFF 180deg, #E1BA43 360deg) !important;
+	}
+	.p-tabview-panels{
+		background:transparent;
+	}
+	.bg-golden-gradient{
+		background:conic-gradient(from 216.1deg at 100% 7.5%, #F4D577 0deg, #FFFFFF 180deg, #E1BA43 360deg)
+	}
+	// primevue dark end
+}
+.input-icon-right:hover{
+	cursor: pointer;
+}
+html,body{height:100% !important}
+// theme dark end
+.animated-border {
+	width: 138px;
+height: 44px;
+	position: absolute !important;
+  background: linear-gradient(0deg, #000, #272727);
 }
 
-// theme dark end
+.animated-border:before, .animated-border:after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: linear-gradient(45deg, #A161AB, #cabfdd, #A161AB,#A161AB, #cabfdd, #A161AB, 
+    #A161AB, #A161AB,#A161AB, #cabfdd);
+  background-size: 400%;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  z-index: -1;
+  animation: steam 15s linear infinite;
+  border-radius: 5px;
+}
 
+@keyframes steam {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 400% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.animated-border:after {
+  filter: blur(2px);
+}
+// primevue public
+.p-disabled{
+	display: none;
+}
+.p-tabview-nav-container{
+	padding:16px 6px 8px;
+	border-radius:9px
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link{
+	border-color: transparent;
+}
+.p-tabview-nav-content{
+	border-radius:9px;
+}
+.p-tabview-nav{
+	margin:2px;
+}
+.p-overlay-badge {
+    top: -8px;
+}
+.p-tabview-nav-link{
+	background:transparent;
+}
+.logo:hover{
+	cursor: pointer;
+}
+li[data-p-highlight="true"] a{
+	border-bottom: 1px solid $golden-light !important;
+}
+// primevue public end
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0,0,0,.125);
+}
+.accordion-button:after { 
+  
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+.mobHeader-profile-name{
+	top:0;
+	font-weight: 700;
+	width: 100px;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.mobHeader-profile-name-left{
+	left:65px !important;
+}
+.mobHeader-profile-name-right{
+	right:65px !important;
+}
+
+.mobHeader-user-level{
+	top:25px;
+	font-size:12px;
+}
+.mobUser-level-right{
+	right:65px !important;
+}
+.mobUser-level-left{
+	left:65px !important;
+}
+.mobHeader-box{
+	background:0 !important;
+	border:none !important;
+	padding:0 12px !important;
+}
+tbody > tr:hover{
+	cursor:pointer;
+	background-color:#23272d;
+	transition: 0.5s;
+}
+.vertical-center{
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+tbody > tr > td{
+	padding:15px 0 !important;
+}
+.sticky-header{
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	border-bottom: none !important;
+}
+.overflow-box{
+	height:350px;
+	overflow-y:scroll;
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+	border-top:none !important;
+}
 #chatbox-header{
 	width: 100%;
 	height:55px;
@@ -377,7 +522,7 @@ $brown:#AD914E;
 }
 #chat-body{
 	overflow-y: scroll;
-	height:60vh;
+	height:65vh;
 	padding-top:10px
 }
 .message-box{
@@ -408,7 +553,7 @@ $brown:#AD914E;
 }
 .flag-right{
 	top:24px;
-	right:60px;
+	right:45px;
 }
 .txt-icon i{
 	font-size: 35px
@@ -422,13 +567,25 @@ $brown:#AD914E;
 .txt-icon span{
 	font-size: 25px
 }
+.mobtxt-icon i{
+	font-size: 25px
+}
+.mobtxt-icon strong{
+	font-size: 17px
+}
+.mobtxt-icon p{
+	font-weight:normal;
+}
+.mobtxt-icon span{
+	font-size: 15px
+}
 #chat-box{
 	height:80vh;
 	margin-bottom: 3%;
 }
 .right-sidebar-footer{
 	display: flex;
-	height:15vh;
+	height:15%;
 	align-items: center;
 	justify-content: center;
 	// padding:50px;
@@ -835,6 +992,9 @@ small{
 .bg-dark-red{
 	background:$deep-red;
 }
+.bg-light-gray{
+	background-color:$light-gray;
+}
 .small-card-header{
 	height:45.5px;
 }
@@ -871,8 +1031,8 @@ small{
 	background:transparent;
 }
 .search-game{
-	bottom:25%;
-	right:20px;
+	background: linear-gradient(246.98deg, #141516 29.64%, rgba(34, 37, 41, 0.23) 156.01%);
+	border: 1px solid #23272D;
 	width:320px;
 	border-radius:9px;
 }
@@ -931,7 +1091,9 @@ small{
 	left:1px;
 	background: $gray;
 	border-radius: 40px;
-	z-index: 1
+	z-index: 1;
+	text-align: center;
+  padding: 5px 0;
 }
 .icon-bg img{
 	position: relative;
@@ -969,9 +1131,8 @@ small{
 	border-radius: 9px;
 	width:100%;
 }
-.navbar-toggler{
-	position:absolute;
-	top:30px;
+.navbar-nav li{
+	margin-bottom: 15px
 }
 .navbar-nav .dropdown-menu{
 	position:absolute !important;
@@ -1128,8 +1289,15 @@ small{
 }
 .card-user-level{
 	font-size: 10px;
-	top:40px;
+	top: 40px;
+	width: 80px;
+	text-align: left;
+}
+.user-level-left{
 	left:70px;
+}
+.user-level-right{
+	right:60px;
 }
 .modal-header-level{
 	top:-30px;
@@ -1149,6 +1317,11 @@ small{
 	white-space: nowrap;
 	overflow: hidden;
 }
+.mob-profile-name{
+	font-weight: 500;
+	width:58px;
+	font-size: 12px;
+}
 .bheader-profile-name{
 	font-weight: 700;
 	top:10px;
@@ -1157,8 +1330,7 @@ small{
 	left:70px;
 }
 .card-profile-name-right{
-	right: 30px;
-	top: 23px;
+	right: 60px;
 }
 .bheader-profile-name-left{
 	left:80px;
@@ -1168,12 +1340,7 @@ small{
 	right: 85px;
 	top: 4px;
 }
-.user-level-left{
-	left:80px;
-}
-.user-level-right{
-	right:85px;
-}
+
 .bheader-user-level{
 	font-size: 10px;
 	top: 30px;
@@ -1227,6 +1394,13 @@ small{
 .main-wrapper{
 	border-radius:20px;
 	padding:20px 16px;
+	height:90vh
+}
+#main-menu{
+	height:10vh
+}
+#nav-content{
+	height:90vh
 }
 .btn-golden{
 	border-radius: 12px;
@@ -1431,6 +1605,28 @@ div.content {
 	font-weight: bold;
 	font-size:10.5px
 }
+@media screen and (min-width:576px){
+	.carosel-inner{
+		display: flex !important;
+	}
+	.carosel-item{
+		display: block !important;
+		margin-right:0 !important;
+		flex:0 0 calc(100%/3) !important;
+	}
+}
+@media (min-width: 1025px) and (max-width: 1280px){ 
+            .p-carousel-item{
+            	flex: 0 0 25% !important
+            }
+        } 
+          
+        /* Media Query for Large screens */ 
+        @media (min-width: 1281px) { 
+            .p-carousel-item{
+            	flex: 0 0 25% !important
+            }
+        } 
 @media screen and (max-width: 1367px) {
 	.b-header-links li{
 		margin-right: 10px;
@@ -1525,9 +1721,9 @@ div.content {
 	border-left:2px solid $golden-light;
 	}
 .search-game{
-	bottom:20px;
-	left:0;
-	margin:0 auto;
+	// bottom:20px;
+	// left:0;
+	// margin:0 auto;
 }
 .tabs li:last-child{
 	margin-bottom: 20px
@@ -1567,6 +1763,75 @@ small{
 	.main-menu-collapse:not(.show){
 		display: block;
 	}
+}
+@media screen and (orientation: portrait) {
+  #overlay{
+  	display:block !important;
+  }
+  .board-header{
+  	display:none;
+  }
+  #game{
+  	display: none
+  }
+}
+
+/* For landscape, we want the toolbar stick on the left */
+
+@media screen and (orientation: landscape){
+	#game{
+		display:block;
+	}
+	.bheader-profile-name{
+		font-weight: normal;
+		font-size: 12px;
+		width: 100px;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+	#overlay{
+		display: none !important
+	}
+	
+}
+#overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  width: 100%; /* Full width (cover the whole page) */
+  height: 100%; /* Full height (cover the whole page) */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+}
+#overlay h3{
+	text-transform: uppercase;
+}
+#sidebar-nav{
+	height:85vh !important;
+}
+.screen-center{
+	z-index:999;
+	margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center
+}
+.fs-large{
+	font-size: 80px;
+	font-weight: bold
+}
+.res-btn{
+  font-size: 14px;
+  height: 40px;
+  width: 40px;
 }
 
 

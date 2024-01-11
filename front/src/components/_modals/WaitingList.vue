@@ -2,6 +2,7 @@
 	<div ref="wListModal" class="modal fade" id="wList" tabindex="-1" aria-labelledby="listLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 		    <div class="modal-content">
+		    	
 		        <div class="modal-header w-list-modal-header position-relative">
 		          <button type="button" class="btn-close position-absolute" data-bs-dismiss="modal" aria-label="Close"></button>
 		        </div>
@@ -12,7 +13,8 @@
 			  					<div class="position-relative profile-bg bg-purple">
 			  						<img style="width: 50px;" :src="frontUrl+'/assets/images/avatars/'+ match.home.avatar +'.png'" class="position-absolute"/>
 			  					</div>
-			  					<span class="position-absolute modal-profile-name-left card-profile-name small-card-profile-name">{{match.home.public_name}}</span>
+			  					<span class="position-absolute modal-profile-name-left card-profile-name small-card-profile-name">{{match.home.public_name}}
+			  					</span>
 			  				</div>
 						</div>
 						<div class="col text-end position-relative">
@@ -27,8 +29,6 @@
 		        		<div class="col-4 text-center">Stake:<span class="text-golden-gradient">{{match.stake}}</span></div>
 		        		<div class="col-4 text-center">Speed:<span class="text-golden-gradient">{{match.timeframe}}</span></div>
 		        		<div class="col-4 text-center">Rounds:<span class="text-golden-gradient">{{match.round}}</span></div>
-		        		
-		        		
 		        	</div>
 		        	<div class="row justify-content-center mt-3">
 		        		<div class="position-relative btn-bg btn-bg-larg" style="margin-right:10px">
@@ -51,9 +51,8 @@
 	import { Modal } from 'bootstrap';
 	export default {
 		props: ['match'],
-		data: function() {
+		data: function(){
 			return {
-
 				frontUrl: import.meta.env.VITE_BASE_URL
 			}
 		},
@@ -61,7 +60,6 @@
 			join: function() {
 				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL+"/game/default/join", {params: {matchId: this.match.id}}).then((res) => {
 					res = res.data;
-
 					if(res.result && res.params.match_id) {
 						this.$router.push({name: 'backgammon', params: {matchId: res.params.match_id}});
 					}

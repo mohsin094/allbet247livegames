@@ -7,8 +7,10 @@ const user = {
           isGuest:true,
           id:"",
           email:"",
+          publicName:"",
           avatar:"",
           role:"",
+          lvl:"",
           status:"",
           balance:"",
           sessionId:""
@@ -23,9 +25,11 @@ const user = {
           this.data.isGuest = false
           this.data.id = response.id
           this.data.email = response.email
+          this.data.publicName = response.public_name
           this.data.avatar = response.avatar
           this.data.role = response.role
-          this.data.balance = response.balance
+          this.data.lvl = response.lvl
+          this.data.balance = new Intl.NumberFormat().format(response.balance)
           this.data.sessionId = response.sessionId
         },
         doLogout:function(response){
@@ -34,8 +38,10 @@ const user = {
           this.data.email = ""
           this.data.avatar = ""
           this.data.role = ""
+          this.data.lvl = ""
           this.data.balance = ""
           this.data.sessionId = ""
+          this.data.publicName = ""
         }
     }
   }

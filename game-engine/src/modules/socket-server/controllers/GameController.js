@@ -168,10 +168,10 @@ function GameController()
 					time = 60;
 					break;
 				case GameTimeframesModel.timeframe.NORMAL:
-					time = 30;
+					time = 45;
 					break;
 				case GameTimeframesModel.timeframe.FAST:
-					time = 20;
+					time = 35;
 					break;
 			}
 

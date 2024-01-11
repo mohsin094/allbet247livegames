@@ -1,15 +1,8 @@
 <template>
-  <div class="row">
-  	<Sidebar/>
-  	<div class="col-md-10 col-xl-10 px-sm-2 px-0">
-	  <div class="main-wrapper min-vh-100">
-		  <main v-if="!isGuest">
-		  	<MyGames v-if="!$user.data.isGuest"/>
-		  	<Tabs/>
-		  </main>
-	  </div>
-	</div>
-</div>
+  <main>
+  	<MyGames v-if="!$user.data.isGuest"/>
+  	<Tabs/>
+  </main>
 </template>
 <script>
 	import MyGames from '@/components/MyGames.vue';

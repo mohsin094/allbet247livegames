@@ -1,6 +1,14 @@
 <template>
 	<div class="row">
-		<div class="col px-3">
+		<!--  <Dialog v-if="this.$environment = 'demo'" v-model:visible="visible" header="Please note!" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }" position="topleft" :modal="true" :draggable="false">
+            <p class="m-0">
+               This section does not function in the demo version,and it is only provided for demonstration purposes.
+            </p>
+            <template #footer>
+                <Button label="Ok" icon="pi pi-check" @click="visible = false" autofocus />
+            </template>
+        </Dialog> -->
+		<div :class="['col px-3',this.isMobile ? 'text-center mb-2' : '']">
 			<button class="btn-thin btn-active bg-dark-gradient" id="deposit" @click="getDepositMethods()">
 				<span class="text-golden-gradient" id="text-deposit">
 					<!-- <img src="@/assets/icons/deposit.svg" style="margin-top:-6px;margin-right:4px"/> -->
@@ -8,7 +16,7 @@
 				</span>
 			</button>
 		</div>
-		<div class="col px-3 text-end">
+		<div :class="['col px-3',this.isMobile ? 'text-center' : 'text-end']">
 			<button class="btn-thin bg-dark-gradient" id="withdrawal" @click="getWithdrawalMethods()">
 				<span class="text-gray" id="text-withdraw">
 					<!-- <img src="@/assets/icons/withdrawal.svg" style="margin-top:-6px;margin-right:4px"/> -->
@@ -18,32 +26,32 @@
 		</div>
 	</div>
 	<div class="row mt-5">
-		<div class="col-md-3 col-sm-12">
+		<div class="col-md-3 col-sm-12 mb-2">
 			<div class="credit-card-active position-relative">
-				<div class="credit-card position-absolute bg-balance">
+				<div class="credit-card bg-balance">
 					<h2 class="text-center text-golden-gradient" style="padding-top: 90px">$ 3398.2</h2>
 					<h6 class="text-center">8% Growth last week</h6>
 				</div>
 			</div>
 			
 		</div>
-		<div class="col-md-3 col-sm-12">
+		<div class="col-md-3 col-sm-12 mb-2">
 			<div class="position-relative" >
-				<div class="credit-card position-absolute">
+				<div class="credit-card">
 					<img src="@/assets/images/paypal.png" width="100%" height="100%">
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3 col-sm-12">
+		<div class="col-md-3 col-sm-12 mb-2">
 			<div class="position-relative">
-				<div class="credit-card position-absolute">
+				<div class="credit-card">
 					<img src="@/assets/images/binance.png" width="100%" height="100%">
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3 col-sm-12">
+		<div class="col-md-3 col-sm-12 mb-2">
 			<div class="position-relative">
-				<div class="credit-card position-absolute">
+				<div class="credit-card">
 					<img src="@/assets/images/creditcard.png" width="100%" height="100%">
 				</div>
 			</div>
@@ -96,7 +104,7 @@
 		</div>
 	</div>
 	<div class="row mt-5">
-		<div class="col px-3">
+		<div class="col-6 px-3">
 			<div class="dropdown">
 			  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
 			    10
@@ -108,8 +116,8 @@
 			  </ul>
 			</div>
 		</div>
-		<div class="col px-3 position-relative">
-			<div class="input-group search-game position-absolute" style="right:15px;">
+		<div class="col-6 px-3 position-relative">
+			<div class="input-group search-game float-end">
 				<input type="text" class="form-control" placeholder="Search..." aria-label="" aria-describedby="button-addon2"><button class="btn btn-outline-secondary" type="button" id="search-addon">
 					<i class="material-symbols-rounded">search</i>
 				</button>
@@ -117,7 +125,7 @@
 		</div>
 	</div>
 	<div class="row mt-3">
-		<div class="table-scrollable">
+		<div class="table-scrollable mt-3">
 			<table class="table table-responsive dark-tbl text-center">
 				<thead>
 					<th>Payment Method</th>
@@ -153,8 +161,15 @@
 	</div>
 </template>
 <script>
+	import Dialog from 'primevue/dialog';
+	import Button from 'primevue/button';
+	import 'primeicons/primeicons.css'
 	export default{
 		name:'cashier',
+		components:{
+			Dialog,
+			Button
+		},
 		data(){
 			return{
 				payment:'',
@@ -162,8 +177,13 @@
 					{label:'Paypal',value:'paypal'},
 					{label:'Binance',value:'binance'},
 					{label:'Credit card',value:'creditcard'},
-				]
+				],
+            	visible: false
 			}
+
+		},
+		created(){
+            this.visible = true;
 		},
 		methods:{
 			getPaymentMethod(name){
@@ -190,3 +210,20 @@
 		}
 	}
 </script>
+<style scope>
+	.p-dialog{
+		border:2px solid #BF5656;
+	}
+	.p-dialog .p-dialog-header .p-dialog-title{
+		color:#BF5656;
+	}
+	.p-button {
+	  color: #fff;
+	  background: #202930 !important;
+	  border: none !important;
+	  border-radius: 5px;
+	}
+	.p-button:focus{
+		box-shadow: none;
+	}
+</style>
