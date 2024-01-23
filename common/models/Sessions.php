@@ -36,7 +36,7 @@ class Sessions extends \yii\mongodb\ActiveRecord
                 $this->_records[$key]->save();
                 return true;
             }else {
-                $model = $this;
+                $model = new self;
                 $model->token = $this->token;
                 $model->session_key = $key;
                 $model->session_value = $value;
@@ -45,7 +45,7 @@ class Sessions extends \yii\mongodb\ActiveRecord
                 return true;
             }
         }else {
-            $model = $this;
+            $model = new self;
             $model->token = \Yii::$app->security->generateRandomString();
             $model->session_key = $key;
             $model->session_value = $value;
