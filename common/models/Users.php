@@ -65,7 +65,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         if($this->isNewRecord) {
             $this->cdate = (string) time();
             $this->role = UserRoles::ROLE_USER;
-            $this->public_name = 'bg_'.rand(1,9).time();
+            $this->public_name = strtolower(trim($this->public_name));
             $this->email = strtolower(trim($this->email));
             $this->status = self::STATUS_WAITING_CONFIRMATION;
             $this->balance = '0';
@@ -112,7 +112,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
     {
         return array_merge(parent::scenarios(), [
             self::SCENARIO_LOGIN => ['email', 'password'],
-            self::SCENARIO_REGISTER => ['email', 'password', 'password_repeat', 'avatar'],
+            self::SCENARIO_REGISTER => ['public_name', 'email', 'password', 'password_repeat', 'avatar'],
             self::SCENARIO_UPDATE_ADMIN => ['password', 'role', 'status', 'lvl', 'public_name', 'avatar', 'balance'],
             self::SCENARIO_UPDATE => ['password', 'avatar']
         ]);
@@ -153,6 +153,14 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
     {
         return [
             [['email', 'password', 'cdate', 'role', 'public_name', 'balance'], 'required'],
+            [['public_name'], 'unique', 'targetAttribute' => ['public_name'],'when' => function(){
+                return  $this->isNewRecord === true;
+            }],
+            [['email'], 'unique', 'targetAttribute' => ['email'],'when' => function(){
+                return  $this->isNewRecord === true;
+            }],
+            [['public_name'], 'string', 'min'=> 3, 'max' => 12],
+            [['public_name'], 'match', 'pattern'=> '/^[A-Za-z0-9\_\-]+$/', 'message' => \Yii::t('app', 'Public name can be only a-z A-Z 0-9 _ and -')],
             ['password_repeat', 'required', 'on' => self::SCENARIO_REGISTER],
             [['email', 'password', 'lang', 'role', 'balance', 'lvl'], 'string'],
             [['email'], 'email'],
