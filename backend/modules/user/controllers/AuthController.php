@@ -68,7 +68,9 @@ class AuthController extends ApiController
 	{
 		if(!\Yii::$app->user->isGuest) {
 			$this->resp->result = true;
-			$this->resp->params = \Yii::$app->user->getIdentity()->publicAttributes();
+			$this->resp->params = \Yii::$app->user->getIdentity()->publicAttributes() + [
+				'mavens_url' => $this->session->get('mavens_url')
+			];
 		}
 
 		return $this->resp;
@@ -77,13 +79,21 @@ class AuthController extends ApiController
 	public function actionLogin()
 	{
 		$model = new LoginForm;
-
+		$url = '';
 		if($model->load(\Yii::$app->request->bodyParams) && $model->login()) {
+			$loginToMavens = \Yii::$app->mavens->account->login(\Yii::$app->user->identity->public_name, $model->password);
+			if(is_object($loginToMavens)){
+                $this->error($loginToMavens->params->Error);
+            }else{
+                $url = \Yii::$app->mavens->account->mavensUrl(\Yii::$app->user->identity->public_name);
+                $this->session->set("mavens_url",$url);
+            }
 			$this->resp->result = true;
 			$this->action(ApiAction::build([ApiAction::ACTION_REDIRECT], ['url' => 'dashboard']));
 			$this->session->set('user_id', \Yii::$app->user->id);
 			$this->resp->params = \Yii::$app->user->getIdentity()->publicAttributes() + [
-				'sessionId' => $this->session->token
+				'sessionId' => $this->session->token,
+				'mavensUrl' => $url
 			];
 		}else {
 			$this->error($model->getErrors());

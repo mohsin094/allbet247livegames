@@ -25,4 +25,10 @@ return [
     '65af7e1f56ecea5d6e0b3513' => [
         'user',
     ],
+    '65af81134afa90d5c708fad9' => [
+        'user',
+    ],
+    '65af98f99d35ed7a440f9785' => [
+        'user',
+    ],
 ];
