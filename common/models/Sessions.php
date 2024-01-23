@@ -15,6 +15,7 @@ class Sessions extends \yii\mongodb\ActiveRecord
     public $_records = [];
     public function begin($key)
     {
+        $this->token = $key;
         $this->_records = self::find()->where(['token' => $key])->indexBy('session_key')->all();
         return $this;
     }
@@ -41,7 +42,7 @@ class Sessions extends \yii\mongodb\ActiveRecord
                 $model->session_key = $key;
                 $model->session_value = $value;
                 $model->save();
-                $this->begin($this->token);
+                $this->begin($model->token);
                 return true;
             }
         }else {
@@ -50,7 +51,7 @@ class Sessions extends \yii\mongodb\ActiveRecord
             $model->session_key = $key;
             $model->session_value = $value;
             $model->save();
-            $this->begin($this->token);
+            $this->begin($model->token);
         
             return true;
         }
