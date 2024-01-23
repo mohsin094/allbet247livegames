@@ -30,7 +30,7 @@ return [
         ],
         'mongodb' => [
             'class' => '\yii\mongodb\Connection',
-            'dsn' => 'mongodb://localhost:27017/backgammon',
+            'dsn' => 'mongodb://localhost:27017/allbet-backgammon',
         ],
         'redis' => [
             'class' => 'yii\redis\Connection',

@@ -38,18 +38,25 @@ class AuthController extends ApiController
 		$model = new Users;
 		$model->scenario = Users::SCENARIO_REGISTER;
 		if($model->load(\Yii::$app->request->bodyParams) && $model->save()) {
-			$this->resp->result = true;
-			$this->resp->params = [
-				'userId' => (string) $model->_id
-			];
-			$this->action(ApiAction::build([ApiAction::ACTION_REDIRECT, ['url' => 'login']]));
+			$mavensNewAccount = \Yii::$app->mavens->account->addNew($model);
+			if($mavensNewAccount->success){
+				$this->resp->result = true;
+				$this->resp->params = [
+					'userId' => (string) $model->_id
+				];
+				$this->action(ApiAction::build([ApiAction::ACTION_REDIRECT, ['url' => 'login']]));
 
-			$token = (new \common\components\Token)->name(Tokens::TYPE_REGISTER)->userId((string)$model->_id)->exp('24h')->generate();
-			
-			$link = Url::to(['/user/auth/email-verify', 'user' => (string)$model->_id, 'token' => $token->token], true);
-			Mail::send($model->email, \Yii::t('app', Mail::TYPE_EMAIL_VERIFICATION), $link);
+				$token = (new \common\components\Token)->name(Tokens::TYPE_REGISTER)->userId((string)$model->_id)->exp('24h')->generate();
+				
+				$link = Url::to(['/user/auth/email-verify', 'user' => (string)$model->_id, 'token' => $token->token], true);
+				Mail::send($model->email, \Yii::t('app', Mail::TYPE_EMAIL_VERIFICATION), $link);
 
-			$this->debug(['link' => $link]);
+				$this->debug(['link' => $link]);
+
+			}else {
+				$model->delete();
+				$this->error($mavensNewAccount);
+			}
 		}else {
 			$this->error($model->getErrors());
 		}

@@ -16,4 +16,13 @@ return [
     '646a68de7acd6a978a0698e6' => [
         'user',
     ],
+    '65af7c264afa90d5c708fad8' => [
+        'user',
+    ],
+    '65af7cc0cba5d9090a00b304' => [
+        'user',
+    ],
+    '65af7e1f56ecea5d6e0b3513' => [
+        'user',
+    ],
 ];

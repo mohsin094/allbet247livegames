@@ -1,5 +1,5 @@
 <?php
-
+use \common\models\Settings;
 class m240111_083711_mavens_settings extends \yii\mongodb\Migration
 {
     public function up()

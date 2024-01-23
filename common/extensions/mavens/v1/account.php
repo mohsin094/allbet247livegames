@@ -15,8 +15,8 @@ class account extends MavensV1
     public function addNew($user)
     {
         $params = [
-            "Player"   => $user->username,
-            "RealName" => $user->username,
+            "Player"   => $user->public_name,
+            "RealName" => $user->public_name,
             "PW"       => $user->password,
             "Location" => self::ATTR_USER_LOCATION,
             "Email"    => $user->email,

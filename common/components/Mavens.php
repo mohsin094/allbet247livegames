@@ -22,7 +22,7 @@ class Mavens extends Component
         $this->apiUrl = Settings::getSettingValue(Settings::NAME_MAVENS_API_URL);
         $this->serverUrl = Settings::getSettingValue(Settings::NAME_MAVENS_SERVER_URL);
         $this->apiVersion = Settings::getSettingValue(Settings::NAME_MAVENS_API_VERSION);
-        $this->version = \app\extensions\mavens\Mavens::VERSION_1;
+        $this->version = \common\extensions\mavens\Mavens::VERSION_1;
         $this->callbackPassword = Settings::getSettingValue(Settings::NAME_MAVENS_CALLBACK_PASSWORD);
         return parent::init();
     }
