@@ -31,6 +31,17 @@ class Settings extends \yii\mongodb\ActiveRecord
         ->all();
     }
 
+    
+    public static function getSettingValue($name)
+    {
+        $models = self::find()->indexBy('name')->all();
+        // print_r($models);
+        if(array_key_exists($name, $models)) {
+            return $models[$name]->value;
+        }
+        return '';
+    }
+
     /**
      * {@inheritdoc}
      */
