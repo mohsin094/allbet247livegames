@@ -86,7 +86,7 @@ class AuthController extends ApiController
                 $this->error($loginToMavens->params->Error);
             }else{
                 $url = \Yii::$app->mavens->account->mavensUrl(\Yii::$app->user->identity->public_name);
-                $this->session->set("mavens_url",$url);
+                $this->session->set('mavens_url',$url);
             }
 			$this->resp->result = true;
 			$this->action(ApiAction::build([ApiAction::ACTION_REDIRECT], ['url' => 'dashboard']));
