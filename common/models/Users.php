@@ -204,7 +204,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        if($model = Sessions::findOne(['token' => $token])) {
+        if($model = Sessions::findOne(['token' => $token, 'session_key' => 'user_id'])) {
 
             return self::findOne(['_id' => $model->user_id]);
         }
