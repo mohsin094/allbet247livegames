@@ -17,12 +17,12 @@ class Settings extends \yii\mongodb\ActiveRecord
 
     const NAME_SITE_NAME = 'site_name';
     const NAME_WEBHOOK_URL = 'webhook_url';
-
     const NAME_MAVENS_API_URL = 'mavens_api_url';
     const NAME_MAVENS_SERVER_URL = 'mavens_server_url';
     const NAME_MAVENS_API_PASSWORD = 'mavens_api_password';
     const NAME_MAVENS_API_VERSION = 'mavens_api_version';
     const NAME_MAVENS_CALLBACK_PASSWORD = 'mavens_callback_password';
+    const NAME_SHARE_PERCENT = 'share_percent';
     
 
     public static function getSetting($name=null)

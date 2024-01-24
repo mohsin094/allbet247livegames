@@ -15,6 +15,10 @@ import mongo from "#components/Mongo";
 import MatchesModel from "#models/Matches";
 import MatchEventsModel from "#models/MatchEvents";
 import GameTimeframesModel from "#models/GameTimeframes";
+import UsersModel from "#models/Users";
+import FinancialTransactionsModel from "#models/FinancialTransactions";
+import GameStakesModel from "#models/GameStakes";
+import SettingsModel from "#models/Settings";
 import GameHolder from "#backgammon/GameHolder";
 import Game from "#backgammon/Backgammon";
 import
@@ -214,6 +218,16 @@ function GameController()
 						.findOne({
 							_id: ObjectId(event.match_id)
 						});
+
+						const stake = await mongo.db.collection(GameStakesModel.name)
+						.findOne({
+							_id: ObjectId(match.stake_id)
+						});
+
+						const sharePercentSetting = await mongo.db.collection(SettingsModel.name)
+						.findOne({
+							name: SettingsModel._name.share_percent
+						});
 						
 						let winner = 0;
 						let notDone = false;
@@ -252,6 +266,50 @@ function GameController()
 								}
 							});
 
+							const sharePercent = sharePercentSetting.value;
+							const bankAmount = ((stake.stake * 2) * sharePercent) / 100;
+							const winAmount = (stake.stake * 2) - bankAmount;
+
+							// get winner user
+							const winnerUser = await mongo.db.collection(UsersModel.name)
+							.findOne({
+								_id: ObjectId((winner > 0) ? match.home_id : match.away_id)
+							});
+							// add transactions for player
+							await mongo.db.collection(FinancialTransactionsModel.name)
+							.insertOne({
+								user_id: (winner > 0) ? match.home_id : match.away_id,
+								source: "game-engine-match-end",
+								source_id: match._id.toString(),
+								type: FinancialTransactionsModel.type.increase,
+								amount: winAmount,
+								description: "Win a match",
+								cdate: Math.floor(Date.now() / 1000)
+							});
+
+							// add transaction for bank
+							await mongo.db.collection(FinancialTransactionsModel.name)
+							.insertOne({
+								source: "game-engine-match-end",
+								source_id: match._id.toString(),
+								type: FinancialTransactionsModel.type.bank,
+								amount: bankAmount,
+								description: "share of stake",
+								cdate: Math.floor(Date.now() / 1000)
+							});
+
+							// add win amount to player balance
+							await mongo.db.collection(UsersModel.name)
+							.updateOne(
+							{
+								_id: ObjectId((winner > 0) ? match.home_id : match.away_id)
+							},
+							{
+								$set: {
+									balance: parseFloat(winnerUser.balance) + parseFloat(winAmount)
+								}	
+							});
+							
 
 						}
 						if(typeof game.playerWhite.socket === 'object') {

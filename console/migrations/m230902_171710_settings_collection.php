@@ -11,6 +11,11 @@ class m230902_171710_settings_collection extends \yii\mongodb\Migration
                 'value' => 'http://sample/webhook',
                 'description' => 'Webhook Url'
             ],
+            [
+                'name' => Settings::NAME_SHARE_PERCENT,
+                'value' => '30',
+                'description' => 'The amount of money deducted from each game and adds to site\'s bank'
+            ],
             
         ]);
     }
