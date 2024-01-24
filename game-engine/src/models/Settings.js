@@ -1,6 +1,6 @@
 export default {
 	name: "settings",
-	name: {
+	_name: {
 		share_percent: "share_percent"
 	}
 }

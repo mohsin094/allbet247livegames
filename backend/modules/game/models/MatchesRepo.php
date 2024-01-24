@@ -44,4 +44,19 @@ class MatchesRepo extends \backend\modules\game\models\Matches
 
 		return false;
     }
+
+    public function joinNewMatch()
+    {
+    	$user = UsersRepo::findOne(['_id' => $this->away_id]);
+		$stake = GameStakes::findOne(['_id' => $this->stake_id]);
+
+		if($user->enoughBalance($stake->stake)) {
+	    	$user->decreaseBalance($stake->stake, self::class, (string) $this->_id, \Yii::t('app', 'Decrease Balance For Creating a Match'));
+	    	return $this;
+		}else {
+			$this->addError('stake_id', \Yii::t('app', 'Low Balance'));
+		}
+
+		return false;
+    }
 }

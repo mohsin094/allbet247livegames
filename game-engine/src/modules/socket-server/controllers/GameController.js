@@ -226,7 +226,7 @@ function GameController()
 
 						const sharePercentSetting = await mongo.db.collection(SettingsModel.name)
 						.findOne({
-							name: SettingsModel.name.share_percent
+							name: SettingsModel._name.share_percent
 						});
 						
 						let winner = 0;
@@ -267,12 +267,17 @@ function GameController()
 							});
 
 							const sharePercent = sharePercentSetting.value;
-							const bankAmount = (stake.stake * sharePercent) / 100;
-							const winAmount = stake.stake - bankAmount;
+							const bankAmount = ((stake.stake * 2) * sharePercent) / 100;
+							const winAmount = (stake.stake * 2) - bankAmount;
 
+							// get winner user
+							const winnerUser = await mongo.db.collection(UsersModel.name)
+							.findOne({
+								_id: ObjectId((winner > 0) ? match.home_id : match.away_id)
+							});
 							// add transactions for player
 							await mongo.db.collection(FinancialTransactionsModel.name)
-							.insert({
+							.insertOne({
 								user_id: (winner > 0) ? match.home_id : match.away_id,
 								source: "game-engine-match-end",
 								source_id: match._id.toString(),
@@ -284,7 +289,7 @@ function GameController()
 
 							// add transaction for bank
 							await mongo.db.collection(FinancialTransactionsModel.name)
-							.insert({
+							.insertOne({
 								source: "game-engine-match-end",
 								source_id: match._id.toString(),
 								type: FinancialTransactionsModel.type.bank,
@@ -300,11 +305,11 @@ function GameController()
 								_id: ObjectId((winner > 0) ? match.home_id : match.away_id)
 							},
 							{
-								$inc: {
-									balance: winAmount
+								$set: {
+									balance: parseFloat(winnerUser.balance) + parseFloat(winAmount)
 								}	
 							});
-
+							
 
 						}
 						if(typeof game.playerWhite.socket === 'object') {

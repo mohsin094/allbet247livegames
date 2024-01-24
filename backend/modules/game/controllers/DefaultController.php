@@ -141,12 +141,20 @@ class DefaultController extends ApiController
 
     public function actionJoin($matchId)
     {
-        $match = Matches::find()->where(['_id' => $matchId])->one();
+        $match = MatchesRepo::find()->where(['_id' => $matchId])->one();
 
         if($match) {
 
             if($match && $match->home_id != \Yii::$app->user->id) {
                 $match->away_id = \Yii::$app->user->id;
+
+                if($match->status == Matches::STATUS_WAITING) {
+                    if(!is_object($match->joinNewMatch())) {
+                        $this->error($match->getErrors());
+                        return $this->resp;
+                    }
+                }
+
                 if($match->home_id != null) {
                     $match->status = Matches::STATUS_PLAYING;
                 }
