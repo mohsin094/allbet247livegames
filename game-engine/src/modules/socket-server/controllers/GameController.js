@@ -15,6 +15,10 @@ import mongo from "#components/Mongo";
 import MatchesModel from "#models/Matches";
 import MatchEventsModel from "#models/MatchEvents";
 import GameTimeframesModel from "#models/GameTimeframes";
+import UsersModel from "#models/Users";
+import FinancialTransactionsModel from "#models/FinancialTransactions";
+import GameStakesModel from "#models/GameStakes";
+import SettingsModel from "#models/Settings";
 import GameHolder from "#backgammon/GameHolder";
 import Game from "#backgammon/Backgammon";
 import
@@ -214,6 +218,16 @@ function GameController()
 						.findOne({
 							_id: ObjectId(event.match_id)
 						});
+
+						const stake = await mongo.db.collection(GameStakesModel.name)
+						.findOne({
+							_id: ObjectId(match.stake_id)
+						});
+
+						const sharePercentSetting = await mongo.db.collection(SettingsModel.name)
+						.findOne({
+							name: SettingsModel.name.share_percent
+						});
 						
 						let winner = 0;
 						let notDone = false;
@@ -250,6 +264,33 @@ function GameController()
 									status: MatchesModel.status.FINISHED,
 									winner: (winner > 0) ? match.home_id : match.away_id
 								}
+							});
+
+							const sharePercent = sharePercentSetting.value;
+							const bankAmount = (stake.stake * sharePercent) / 100;
+							const winAmount = stake.stake - bankAmount;
+
+							// add transactions for player
+							await mongo.db.collection(FinancialTransactionsModel.name)
+							.insert({
+								user_id: (winner > 0) ? match.home_id : match.away_id,
+								source: "game-engine-match-end",
+								source_id: match._id.toString(),
+								type: FinancialTransactionsModel.type.increase,
+								amount: winAmount,
+								description: "Win a match",
+								cdate: Math.floor(Date.now() / 1000)
+							});
+
+							// add transaction for bank
+							await mongo.db.collection(FinancialTransactionsModel.name)
+							.insert({
+								source: "game-engine-match-end",
+								source_id: match._id.toString(),
+								type: FinancialTransactionsModel.type.bank,
+								amount: bankAmount,
+								description: "share of stake",
+								cdate: Math.floor(Date.now() / 1000)
 							});
 
 

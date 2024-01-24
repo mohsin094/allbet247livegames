@@ -17,6 +17,7 @@ class Settings extends \yii\mongodb\ActiveRecord
 
     const NAME_SITE_NAME = 'site_name';
     const NAME_WEBHOOK_URL = 'webhook_url';
+    const NAME_SHARE_PERCENT = 'share_percent';
     
 
     public static function getSetting($name=null)

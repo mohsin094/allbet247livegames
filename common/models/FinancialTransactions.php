@@ -20,6 +20,10 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
 {
     const TYPE_INCREASE = 'increase';
     const TYPE_DECREASE = 'decrease';
+    const TYPE_TRANSFER = 'transfer';
+    const TYPE_DEPOSIT = 'deposit';
+    const TYPE_WITHDRAWAL = 'withdrawal';
+    const TYPE_BANK = 'bank';
 
 
     public static function new($userId, $amount, $type, $source, $sourceId, $description) {
