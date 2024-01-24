@@ -293,6 +293,18 @@ function GameController()
 								cdate: Math.floor(Date.now() / 1000)
 							});
 
+							// add win amount to player balance
+							await mongo.db.collection(UsersModel.name)
+							.updateOne(
+							{
+								_id: ObjectId((winner > 0) ? match.home_id : match.away_id)
+							},
+							{
+								$inc: {
+									balance: winAmount
+								}	
+							});
+
 
 						}
 						if(typeof game.playerWhite.socket === 'object') {
