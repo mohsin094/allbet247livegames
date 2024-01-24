@@ -142,7 +142,7 @@ class AuthController extends ApiController
 		$token = (new \common\components\Token)
 		->name(Tokens::TYPE_RESET_PASSWORD)
 		->userId(\Yii::$app->user->id)
-		->exp('4h')
+		->exp('24h')
 		->generate();
 		$link = Url::to(['/user/auth/reset-password', 'token' => $token], true);
 		Email::send(\Yii::$app->user->getIdentity()->email, Mail::TYPE_RESET_PASSWORD, $link);
