@@ -10,6 +10,7 @@
 				                <span class=" material-symbols-outlined">attach_money</span>
 				              </span>
 				              <FormKit class="position-absolute"
+				              	v-model="amount"
 				                  type="text"
 				                  name="amount"
 				                  placeholder="Amount"
@@ -23,6 +24,7 @@
 				                <span class=" material-symbols-outlined">payments</span>
 				              </span>
 								<FormKit
+								v-model="method"
 								  placeholder="Select Method"
 								  type="select"
 								  :options="methods"
@@ -30,7 +32,7 @@
 							</div>
 						</div>
 						<div class="col-md-2">
-							<button type="button" class="btn btn-golden text-dark login-btn">Continue</button>
+							<button @click="deposit" type="button" class="btn btn-golden text-dark login-btn">Continue</button>
 						</div>
 					</div>
 				</div>
@@ -42,11 +44,42 @@
 	export default{
 		data(){
 			return{
+				amount: '',
+				method: '',
 				methods:[
 					{label:'Paypal',value:'paypal'},
-					{label:'Binance',value:'binance'},
-					{label:'Credit card',value:'creditcard'},
+					// {label:'Binance',value:'binance'},
+					{label:'Credit Card & Debit Card',value:'creditcard'},
 				],
+			}
+		},
+		methods: {
+			deposit() {
+				if(this.method != '' && this.amount != '') {
+					let url = '';
+					switch(this.method) {
+						case 'paypal':
+
+						break;
+						case 'creditcard':
+
+							url = import.meta.env.VITE_BACKEND_BASE_URL+'/payment/stripe/new-transaction?amount='+this.amount;
+
+						break;
+					} 
+					this.$axios.get(url).then(res => {
+						res = res.data;
+
+						switch(this.method) {
+						case 'paypal':
+
+						break;
+						case 'creditcard':
+							window.location = res.params.url;
+						break;
+					} 
+					});
+				}
 			}
 		}
 	}

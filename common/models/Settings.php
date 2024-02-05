@@ -23,6 +23,7 @@ class Settings extends \yii\mongodb\ActiveRecord
     const NAME_MAVENS_API_VERSION = 'mavens_api_version';
     const NAME_MAVENS_CALLBACK_PASSWORD = 'mavens_callback_password';
     const NAME_SHARE_PERCENT = 'share_percent';
+    const NAME_STRIPE_API_KEY = 'stripe_api_key';
     
 
     public static function getSetting($name=null)
