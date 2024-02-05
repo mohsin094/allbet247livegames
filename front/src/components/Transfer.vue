@@ -2,6 +2,10 @@
 	<div class="row d-none">
 		<div class="col-md-12 bg-dark-gradient px-3 mt-5" style="padding-top:20px">
 			<div class="row">
+				<FormKit
+				type="form"
+				@submit="transfer"
+				>
 				<div class="col-md-5">
 					<div :class="!this.isMobile ? 'position-relative' : ''">
 		              <span class="input-icon input-icon-left position-absolute" v-if="!this.isMobile">
@@ -23,6 +27,7 @@
 		              </span>
 						<FormKit
 						v-data="from"
+						name="from"
 						  placeholder="Select Option"
 						  type="select"
 						  :options="options"
@@ -30,8 +35,9 @@
 					</div>
 				</div>
 				<div class="col-md-2">
-					<button @click="transfer" type="button" class="btn btn-golden text-dark login-btn">Transfer</button>
+					<button type="submit" class="btn btn-golden text-dark login-btn">Transfer</button>
 				</div>
+				</FormKit>
 			</div>
 		</div>
 	</div>
@@ -49,10 +55,10 @@
 			}
 		},
 		methods: {
-			transfer() {
-				console.log(this.from)
-				if(this.from != '' && this.amount != '') {
-					const url = import.meta.env.VITE_BACKEND_BASE_URL+'/financial/default/transfer?from'+$this.from+'&amount='+this.amount;
+			transfer(input) {
+				
+				if(input.from != '' && input.amount != '') {
+					const url = import.meta.env.VITE_BACKEND_BASE_URL+'/financial/default/transfer?from='+input.from+'&amount='+input.amount;
 					this.$axios.get(url).then(res => {
 						res = res.data;
 						this.$emit('update-balance');
