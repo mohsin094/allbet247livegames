@@ -12,6 +12,9 @@ return [
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
     'modules' => [
+        'poker' => [
+            'class' => 'app\modules\poker\Module',
+        ],
         'user' => [
             'class' => 'app\modules\user\Module',
         ],

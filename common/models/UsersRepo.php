@@ -5,7 +5,7 @@ use \common\components\Tools;
 use \common\models\FinancialTransactions;
 class UsersRepo extends \common\models\Users
 {
-	public function increaseBalance($amount, $source, $sourceId, $description)
+	public function increaseBalance($amount, $source, $sourceId, $description, $type = FinancialTransactions::TYPE_INCREASE)
 	{
 		try {
 			$this->balance += (string)$amount;
@@ -23,7 +23,7 @@ class UsersRepo extends \common\models\Users
 		}
 	}
 
-	public function decreaseBalance($amount, $source, $sourceId, $description)
+	public function decreaseBalance($amount, $source, $sourceId, $description, $type = FinancialTransactions::TYPE_DECREASE)
 	{
 
 		try {
