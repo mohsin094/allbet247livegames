@@ -1,5 +1,24 @@
 <template>
-	<div class="row">
+	<div class="row" v-if="this.isMobile">
+		<div class="btn-group mr-2" role="group" aria-label="First group">
+	    <button type="button" class="btn bg-dark-gradient" id="deposit" @click="getDepositMethods()">
+	    	<span class="text-golden-gradient" id="text-deposit">
+				Deposit
+			</span>
+	    </button>
+	    <button type="button" class="btn bg-dark-gradient" id="transfer" @click="transferMoney()">
+	    	<span class="text-gray" id="text-transfer">
+				Transfer
+			</span>
+	    </button>
+	    <button type="button" class="btn bg-dark-gradient" id="withdraw" @click="getWithdrawalMethods()">
+	    	<span class="text-gray" id="text-withdraw">
+				Withdrawal
+			</span>
+	    </button>
+	  	</div>
+	</div>
+	<div v-else class="row">
 		<!--  <Dialog v-if="this.$environment = 'demo'" v-model:visible="visible" header="Please note!" :style="{ width: '50rem' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }" position="topleft" :modal="true" :draggable="false">
             <p class="m-0">
                This section does not function in the demo version,and it is only provided for demonstration purposes.
@@ -8,176 +27,64 @@
                 <Button label="Ok" icon="pi pi-check" @click="visible = false" autofocus />
             </template>
         </Dialog> -->
-		<div :class="['col px-3',this.isMobile ? 'text-center mb-2' : '']">
-			<button class="btn-thin btn-active bg-dark-gradient" id="deposit" @click="getDepositMethods()">
-				<span class="text-golden-gradient" id="text-deposit">
-					<!-- <img src="@/assets/icons/deposit.svg" style="margin-top:-6px;margin-right:4px"/> -->
-					Deposit
-				</span>
-			</button>
-		</div>
-		<div :class="['col px-3',this.isMobile ? 'text-center' : 'text-end']">
-			<button class="btn-thin bg-dark-gradient" id="withdrawal" @click="getWithdrawalMethods()">
-				<span class="text-gray" id="text-withdraw">
-					<!-- <img src="@/assets/icons/withdrawal.svg" style="margin-top:-6px;margin-right:4px"/> -->
-					Withdrawal
-				</span>
-			</button>
-		</div>
-	</div>
-	<div class="row mt-5">
-		<div class="col-md-3 col-sm-12 mb-2">
-			<div class="credit-card-active position-relative">
-				<div class="credit-card bg-balance">
-					<h2 class="text-center text-golden-gradient" style="padding-top: 90px">$ 3398.2</h2>
-					<h6 class="text-center">8% Growth last week</h6>
-				</div>
-			</div>
-			
-		</div>
-		<div class="col-md-3 col-sm-12 mb-2">
-			<div class="position-relative" >
-				<div class="credit-card">
-					<img src="@/assets/images/paypal.png" width="100%" height="100%">
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-12 mb-2">
-			<div class="position-relative">
-				<div class="credit-card">
-					<img src="@/assets/images/binance.png" width="100%" height="100%">
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-12 mb-2">
-			<div class="position-relative">
-				<div class="credit-card">
-					<img src="@/assets/images/creditcard.png" width="100%" height="100%">
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row mt-3" >
-		<div class="container">
-			<div class="col-md-12 bg-dark-gradient px-3" style="padding-top:20px">
-				<div class="row">
-					<div class="col-md-5">
-						<div :class="!this.isMobile ? 'position-relative' : ''">
-			              <span class="input-icon input-icon-left position-absolute" v-if="!this.isMobile">
-			                <span class=" material-symbols-outlined">attach_money</span>
-			              </span>
-			              <FormKit class="position-absolute"
-			                  type="text"
-			                  name="amount"
-			                  placeholder="Amount"
-			                  validation="required|"
-			                />
-	            		</div>
-					</div>
-					<div class="col-md-5">
-						<div :class="!this.isMobile ? 'position-relative' : ''">
-			              <span class="input-icon input-icon-left position-absolute" v-if="!this.isMobile">
-			                <span class=" material-symbols-outlined">payments</span>
-			              </span>
-							<FormKit
-							  placeholder="Select Method"
-							  type="select"
-							  :options="methods"
-							/>
-						</div>
-					</div>
-					<div class="col-md-2">
-						<button type="button" class="btn btn-golden text-dark login-btn">Continue</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row mt-5">
-		<div class="col px-3">
-			<h4>Transactions History</h4>
-		</div>
-		<div class="col px-3 text-end">
-			<button class="btn-control btn-filter" type="button">
-				<span class="material-symbols-rounded text-golden-gradient"> tune </span>
-			</button>
-		</div>
-	</div>
-	<div class="row mt-5">
-		<div class="col-6 px-3">
-			<div class="dropdown">
-			  <button class="btn btn-dark dropdown-toggle" type="button" id="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-			    10
-			  </button>
-			  <ul class="dropdown-menu" aria-labelledby="draopdown">
-			    <li><a class="dropdown-item" href="#">10</a></li>
-			    <li><a class="dropdown-item" href="#">20</a></li>
-			    <li><a class="dropdown-item" href="#">30</a></li>
-			  </ul>
-			</div>
-		</div>
-		<div class="col-6 px-3 position-relative">
-			<div class="input-group search-game float-end">
-				<input type="text" class="form-control" placeholder="Search..." aria-label="" aria-describedby="button-addon2"><button class="btn btn-outline-secondary" type="button" id="search-addon">
-					<i class="material-symbols-rounded">search</i>
+      <div class="col-md-4">
+      	<div class="bg-dark-gradient py-3 text-center rounded-3">
+	      	<button class="btn-thin btn-active bg-dark-gradient" id="deposit" @click="getDepositMethods()">
+					<span class="text-golden-gradient" id="text-deposit">
+						<!-- <img src="@/assets/icons/deposit.svg" style="margin-top:-6px;margin-right:4px"/> -->
+						Deposit
+					</span>
 				</button>
-			</div>
-		</div>
+      	</div>
+      </div>
+      <div class="col-md-4">
+      	<div class="bg-dark-gradient py-3 text-center rounded-3">
+	      	<button class="btn-thin bg-dark-gradient" id="transfer" @click="transferMoney()">
+					<span class="text-gray" id="text-transfer">
+						<!-- <img src="@/assets/icons/withdrawal.svg" style="margin-top:-6px;margin-right:4px"/> -->
+						Transfer
+					</span>
+				</button>
+      	</div>
+      </div>  
+      <div class="col-md-4">
+      	<div class="bg-dark-gradient py-3 text-center rounded-3">
+	      	<button class="btn-thin bg-dark-gradient" id="withdrawal" @click="getWithdrawalMethods()">
+					<span class="text-gray" id="text-withdraw">
+						<!-- <img src="@/assets/icons/withdrawal.svg" style="margin-top:-6px;margin-right:4px"/> -->
+						Withdrawal
+					</span>
+				</button>
+      	</div>
+      </div>
 	</div>
-	<div class="row mt-3">
-		<div class="table-scrollable mt-3">
-			<table class="table table-responsive dark-tbl text-center">
-				<thead>
-					<th>Payment Method</th>
-					<th>Amount</th>
-					<th>Status</th>
-					<th>Date Time</th>
-					<th>Payment Type</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td>
-							<img src="@/assets/icons/arrow-down.svg"/>
-							Deposit
-						</td>
-						<td>1000</td>
-						<td><button class="btn btn-def btn-danger">Cancle</button></td>
-						<td>15 Des.12 pm</td>
-						<td><img src="@/assets/icons/tether.svg"/></td>
-					</tr>
-					<tr>
-						<td>
-							<img src="@/assets/icons/arrow-up.svg"/>
-							Widthrawal
-						</td>
-						<td>1000</td>
-						<td><button class="btn btn-def btn-info">Waiting</button></td>
-						<td>15 Des.12 pm</td>
-						<td><img src="@/assets/icons/btc.svg"/></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
+	<Deposit id="deposit-block"/>
+	<Transfer id="transfer-block"/>
+	<Withdraw id="Withdraw-block" />
+	<Transactions/>
+
 </template>
 <script>
 	import Dialog from 'primevue/dialog';
 	import Button from 'primevue/button';
-	import 'primeicons/primeicons.css'
+	import 'primeicons/primeicons.css';
+	import Deposit from '@/components/Deposit.vue';
+	import Transactions from '@/components/Transactions.vue';
+	import Transfer from '@/components/Transfer.vue';
+	import Withdraw from '@/components/Withdraw.vue';
 	export default{
 		name:'cashier',
 		components:{
 			Dialog,
-			Button
+			Button,
+			Deposit,
+			Transactions,
+			Transfer,
+			Withdraw
 		},
 		data(){
 			return{
 				payment:'',
-				methods:[
-					{label:'Paypal',value:'paypal'},
-					{label:'Binance',value:'binance'},
-					{label:'Credit card',value:'creditcard'},
-				],
             	visible: false
 			}
 
@@ -190,23 +97,48 @@
 
 			},
 			getWithdrawalMethods(){
+				document.getElementById("text-transfer").setAttribute("class",'text-gray');
+				document.getElementById("text-deposit").setAttribute("class",'text-gray');
+				document.getElementById("text-withdraw").setAttribute("class",'text-golden-gradient');
+
+				document.getElementById("transfer-block").setAttribute("class",'d-none')
+				document.getElementById("deposit-block").setAttribute("class",'d-none')
+				document.getElementById("Withdraw-block").setAttribute("class",'d-block')
+
 				document.getElementById("withdrawal").classList.add("btn-active");
 				document.getElementById("deposit").classList.remove("btn-active");
-				document.getElementById("text-deposit").classList.remove("text-golden-gradient");
-				document.getElementById("text-deposit").classList.add("text-gray");
-				document.getElementById("text-withdraw").classList.add("text-golden-gradient");
-				document.getElementById("text-withdraw").classList.remove("text-gray");
+				document.getElementById("transfer").classList.remove("btn-active");
 				this.payment = 'withdraw'
 			},
 			getDepositMethods(){
-				document.getElementById("deposit").classList.add("btn-active");
+				document.getElementById("text-transfer").setAttribute("class",'text-gray');
+				document.getElementById("text-deposit").setAttribute("class",'text-golden-gradient');
+				document.getElementById("text-withdraw").setAttribute("class",'text-gray');
+
+				document.getElementById("transfer-block").setAttribute("class",'d-none')
+				document.getElementById("deposit-block").setAttribute("class",'d-block')
+				document.getElementById("Withdraw-block").setAttribute("class",'d-none')
+
 				document.getElementById("withdrawal").classList.remove("btn-active");
-				document.getElementById("text-deposit").classList.add("text-golden-gradient");
-				document.getElementById("text-deposit").classList.remove("text-gray");
-				document.getElementById("text-withdraw").classList.remove("text-golden-gradient");
-				document.getElementById("text-withdraw").classList.add("text-gray");
+				document.getElementById("deposit").classList.add("btn-active");
+				document.getElementById("transfer").classList.remove("btn-active");
 				this.payment= 'deposit'
+			},
+			transferMoney(){
+				document.getElementById("text-transfer").setAttribute("class",'text-golden-gradient');
+				document.getElementById("text-deposit").setAttribute("class",'text-gray');
+				document.getElementById("text-withdraw").setAttribute("class",'text-gray');
+
+				document.getElementById("transfer-block").setAttribute("class",'d-block')
+				document.getElementById("deposit-block").setAttribute("class",'d-none')
+				document.getElementById("Withdraw-block").setAttribute("class",'d-none')
+
+				document.getElementById("withdrawal").classList.remove("btn-active");
+				document.getElementById("deposit").classList.remove("btn-active");
+				document.getElementById("transfer").classList.add("btn-active");
+				
 			}
+
 		}
 	}
 </script>

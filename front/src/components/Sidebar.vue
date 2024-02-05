@@ -11,6 +11,12 @@
                 <span class="ms-1  menu-link">Lobby</span>
               </router-link>
             </li>
+            <li class="nav-item">
+              <router-link :to="{name: 'poker'}">
+                <span class="material-symbols-rounded menu-icon">playing_cards</span>
+                <span class="ms-1  menu-link">Play Poker</span>
+              </router-link>
+            </li>
         </ul>
         <div class="sidebar-footer">
           <p>Help & support</p>

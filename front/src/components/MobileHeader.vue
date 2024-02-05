@@ -3,7 +3,7 @@
 	<nav class="navbar navbar-dark bg-dark mb-2 fixed-top p-2">
 		<div class="container-fluid">
 		    <a @click="$router.push({path:'/'}); hideThisCanvas()" class="navbar-brand">
-		      <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="">
+		      <img src="@/assets/logo.png" class="d-inline-block align-top" alt="">
 		    </a>
 		    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
 		      <span class="navbar-toggler-icon"></span>
@@ -11,7 +11,7 @@
 		    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
 			    <div class="offcanvas-header">
 			      	<a @click="$router.push({path:'/'}); hideThisCanvas()" class="navbar-brand">
-				        <img src="@/assets/logo.svg" class="d-inline-block align-top" alt="" data-bs-dismiss="offcanvas">
+				        <img src="@/assets/logo.png" class="d-inline-block align-top" alt="" data-bs-dismiss="offcanvas">
 				    </a>
 			        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 			    </div>

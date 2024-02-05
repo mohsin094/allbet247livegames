@@ -13,7 +13,7 @@
                 <span class=" material-symbols-outlined">mail</span>
               </span>
               <FormKit class="position-absolute"
-                  v-model="username"
+                  v-model="email"
                   type="text"
                   name="email"
                   placeholder="Email"
@@ -240,7 +240,7 @@
         let url = import.meta.env.VITE_BACKEND_BASE_URL+'/user/auth/login'
         let isloginUrl = import.meta.env.VITE_BACKEND_BASE_URL+'/user/auth/is-login'
         this.$axios.post(url,{
-          username: instance.username,
+          username: instance.email,
           password: instance.password
         }).then((response) => {
           console.log(response.data.params)
@@ -252,18 +252,7 @@
             instance.$user.doLogin(response.params)
             let data = JSON.stringify(response.params)
             instance.$storage.setItem("data", data);
-            setInterval(function () {
-            instance.$axios.get(isloginUrl).then(function(res){
-                res = res.data.result
-                if(res){
-                  data = JSON.parse(instance.$storage.getItem("data"));
-                  instance.$user.doLogin(data)
-                   
-                }else{
-                  instance.$user.doLogout()
-                }
-              })
-            }, 30000);
+            
           }else{
             instance.errors = response.error
           }
@@ -275,7 +264,8 @@
           email: this.email,
           password: this.password,
           password_repeat:this.confirmPass,
-          avatar:this.$user.data.avatar
+          avatar:this.$user.data.avatar,
+          public_name: this.username
         }).then((response) =>{
           response = response.data
           if(response.result){

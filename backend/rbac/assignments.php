@@ -31,4 +31,7 @@ return [
     '65af98f99d35ed7a440f9785' => [
         'user',
     ],
+    '65c0a4edac0bf419da638c52' => [
+        'admin',
+    ],
 ];

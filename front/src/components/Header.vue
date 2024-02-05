@@ -13,7 +13,7 @@
 
 	      <!-- Brand -->
 	     <div class="col-md-3 col-xl-2 px-sm-2 px-0 brand">
-	          <img src="@/assets/logo.svg" @click="this.$router.push({path:'/'})" class="d-inline-block align-top logo" alt="">
+	          <img src="@/assets/logo.png" @click="this.$router.push({path:'/'})" class="d-inline-block align-top logo" alt="">
 	       <!--  <router-link to="/" class="navbar-brand">
 	        </router-link> -->
 	     </div>
@@ -49,7 +49,7 @@
 	      </ul>
 	      <ul v-if="!$user.data.isGuest" class="navbar-nav ms-auto d-flex flex-row navbar-header">
 	      	<li class="nav-item" v-if="$user.data.role == 'admin'">
-		      	<div class="header-box" @click="">
+		      	<div class="header-box" @click="redirectAdmin">
 		            <i class="material-symbols-rounded">admin_panel_settings</i>
 		            Admin panel
 		        </div>
@@ -163,6 +163,9 @@
 	   	}
 	   },
 	   methods:{
+	   		redirectAdmin() {
+	   			window.location = import.meta.env.VITE_BASE_URL + "/admin";
+	   		},
 		    getAnnouncements(){
 		      const url = import.meta.env.VITE_BACKEND_BASE_URL+'/announcement/default/list'
 	          let instance = this

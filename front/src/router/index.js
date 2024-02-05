@@ -17,7 +17,15 @@ const router = createRouter({
       component: () => import('../views/CashierView.vue')
     },
     {
-      path: '/ticket',
+      path: '/poker',
+      name: 'poker',
+      component: () => import('../views/Poker.vue'),
+      meta:{
+        layout:'AppLayout'
+      },
+    },
+    {
+      path: '/tickets',
       name: 'ticket',
       component: () => import('../views/Ticket.vue')
     },

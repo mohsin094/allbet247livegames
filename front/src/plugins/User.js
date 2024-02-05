@@ -13,7 +13,8 @@ const user = {
           lvl:"",
           status:"",
           balance:"",
-          sessionId:""
+          sessionId:"",
+          mavensUrl: ""
         
       }),
       
@@ -31,6 +32,17 @@ const user = {
           this.data.lvl = response.lvl
           this.data.balance = new Intl.NumberFormat().format(response.balance)
           this.data.sessionId = response.sessionId
+          this.data.mavensUrl = response.mavensUrl
+        },
+        update: function(response) {
+          this.data.isGuest = false
+          this.data.id = response.id
+          this.data.email = response.email
+          this.data.publicName = response.public_name
+          this.data.avatar = response.avatar
+          this.data.role = response.role
+          this.data.lvl = response.lvl
+          this.data.balance = new Intl.NumberFormat().format(response.balance)
         },
         doLogout:function(response){
           this.data.isGuest = true
