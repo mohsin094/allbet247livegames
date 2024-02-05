@@ -13,7 +13,7 @@ class UsersRepo extends \common\models\Users
 				\Yii::error($this->getErrors());
 				throw new \Exception('saving user balance error');
 			}else {
-				FinancialTransactions::new((string)$this->_id, $amount, FinancialTransactions::TYPE_INCREASE, $source, $sourceId, $description);
+				FinancialTransactions::new((string)$this->_id, $amount, $type, $source, $sourceId, $description);
 			}
 			return $this;
 
@@ -32,7 +32,7 @@ class UsersRepo extends \common\models\Users
 				\Yii::error($this->getErrors());
 				throw new \Exception('saving user balance error');
 			}else {
-				FinancialTransactions::new((string)$this->_id, $amount, FinancialTransactions::TYPE_DECREASE, $source, $sourceId, $description);
+				FinancialTransactions::new((string)$this->_id, $amount, $type, $source, $sourceId, $description);
 			}
 			return $this;
 

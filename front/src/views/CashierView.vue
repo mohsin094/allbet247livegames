@@ -58,9 +58,40 @@
       	</div>
       </div>
 	</div>
-	<Deposit id="deposit-block"/>
-	<Transfer id="transfer-block"/>
-	<Withdraw id="Withdraw-block" />
+	<div class="row mt-5">
+			<div class="col-md-3 col-sm-12 mb-2">
+				<div class="credit-card-active position-relative">
+					<div class="credit-card bg-balance">
+						<h2 class="text-center text-golden-gradient" style="padding-top: 90px">$ {{$user.data.balance.toLocaleString()}}</h2>
+						<h6 class="text-center">Poker Balance: $ {{pokerBalance.toLocaleString()}}</h6>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12 mb-2">
+				<div class="position-relative" >
+					<div class="credit-card">
+						<img src="@/assets/images/paypal.png" width="100%" height="100%">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12 mb-2">
+				<div class="position-relative">
+					<div class="credit-card">
+						<img src="@/assets/images/binance.png" width="100%" height="100%">
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12 mb-2">
+				<div class="position-relative">
+					<div class="credit-card">
+						<img src="@/assets/images/creditcard.png" width="100%" height="100%">
+					</div>
+				</div>
+			</div>
+		</div>
+	<Deposit @update-balance="fetchPokerBalance" id="deposit-block"/>
+	<Transfer @update-balance="fetchPokerBalance" id="transfer-block"/>
+	<Withdraw @update-balance="fetchPokerBalance" id="Withdraw-block" />
 	<Transactions/>
 
 </template>
@@ -85,14 +116,25 @@
 		data(){
 			return{
 				payment:'',
-            	visible: false
+            	visible: false,
+            	pokerBalance: 0,
 			}
 
 		},
 		created(){
             this.visible = true;
 		},
+		mounted() {
+			this.fetchPokerBalance();
+		},
 		methods:{
+			fetchPokerBalance() {
+				const url = import.meta.env.VITE_BACKEND_BASE_URL+'/poker/default/get-balance';
+				this.$axios.get(url).then(res => {
+					res = res.data;
+					this.pokerBalance = res.params.balance;
+				});
+			},
 			getPaymentMethod(name){
 
 			},

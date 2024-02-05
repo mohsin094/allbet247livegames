@@ -1,36 +1,5 @@
 <template>
 	<div class="d-block">
-		<div class="row mt-5">
-			<div class="col-md-3 col-sm-12 mb-2">
-				<div class="credit-card-active position-relative">
-					<div class="credit-card bg-balance">
-						<h2 class="text-center text-golden-gradient" style="padding-top: 90px">$ 3398.2</h2>
-						<h6 class="text-center">8% Growth last week</h6>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-12 mb-2">
-				<div class="position-relative" >
-					<div class="credit-card">
-						<img src="@/assets/images/paypal.png" width="100%" height="100%">
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-12 mb-2">
-				<div class="position-relative">
-					<div class="credit-card">
-						<img src="@/assets/images/binance.png" width="100%" height="100%">
-					</div>
-				</div>
-			</div>
-			<div class="col-md-3 col-sm-12 mb-2">
-				<div class="position-relative">
-					<div class="credit-card">
-						<img src="@/assets/images/creditcard.png" width="100%" height="100%">
-					</div>
-				</div>
-			</div>
-		</div>
 		<div class="row mt-3" >
 			<div class="container">
 				<div class="col-md-12 bg-dark-gradient px-3" style="padding-top:20px">

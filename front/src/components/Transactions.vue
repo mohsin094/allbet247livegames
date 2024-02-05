@@ -34,35 +34,45 @@
 			<div class="table-scrollable mt-3">
 				<table class="table table-responsive dark-tbl text-center">
 					<thead>
-						<th>Payment Method</th>
+						<th>ID</th>
 						<th>Amount</th>
-						<th>Status</th>
-						<th>Date Time</th>
-						<th>Payment Type</th>
+						<th>Type</th>
+						<th>Desc.</th>
+						
 					</thead>
 					<tbody>
-						<tr>
+						<tr v-for="trans in transactions">
 							<td>
-								<img src="@/assets/icons/arrow-down.svg"/>
-								Deposit
+								{{trans._id}}
 							</td>
-							<td>1000</td>
-							<td><button class="btn btn-def btn-danger">Cancle</button></td>
-							<td>15 Des.12 pm</td>
-							<td><img src="@/assets/icons/tether.svg"/></td>
+							<td>{{trans.amount.toLocaleString()}}</td>
+							<td>{{trans.type}}</td>
+							<td>{{trans.description}}</td>
 						</tr>
-						<tr>
-							<td>
-								<img src="@/assets/icons/arrow-up.svg"/>
-								Widthrawal
-							</td>
-							<td>1000</td>
-							<td><button class="btn btn-def btn-info">Waiting</button></td>
-							<td>15 Des.12 pm</td>
-							<td><img src="@/assets/icons/btc.svg"/></td>
-						</tr>
+						
 					</tbody>
 				</table>
 			</div>
 		</div>
 </template>
+<script>
+export default {
+	mounted() {
+		this.fetchTransactions();
+	},
+	data() {
+		return {
+			transactions: []
+		}
+	},
+	methods: {
+		fetchTransactions() {
+			const url = import.meta.env.VITE_BACKEND_BASE_URL+'/financial/default/list';
+			this.$axios.get(url).then(res => {
+				res = res.data;
+				this.transactions = res.params;
+			});
+		}
+	}
+}
+</script>

@@ -8,6 +8,7 @@
 		                <span class=" material-symbols-outlined">attach_money</span>
 		              </span>
 		              <FormKit class="position-absolute"
+		              		v-data="amount"
 		                  type="text"
 		                  name="amount"
 		                  placeholder="Amount"
@@ -21,6 +22,7 @@
 		                <span class=" material-symbols-outlined">send_money</span>
 		              </span>
 						<FormKit
+						v-data="from"
 						  placeholder="Select Option"
 						  type="select"
 						  :options="options"
@@ -28,7 +30,7 @@
 					</div>
 				</div>
 				<div class="col-md-2">
-					<button type="button" class="btn btn-golden text-dark login-btn">Transfer</button>
+					<button @click="transfer" type="button" class="btn btn-golden text-dark login-btn">Transfer</button>
 				</div>
 			</div>
 		</div>
@@ -38,10 +40,24 @@
 	export default{
 		data(){
 			return{
+				amount: '',
+				from: '',
 				options:[
-					{label:'From',value:'from'},
-					{label:'To',value:'to'},
+					{label:'From Main Account To Poker Account',value:'main'},
+					{label:'From Poker Account To Main Account',value:'poker'},
 				],
+			}
+		},
+		methods: {
+			transfer() {
+				console.log(this.from)
+				if(this.from != '' && this.amount != '') {
+					const url = import.meta.env.VITE_BACKEND_BASE_URL+'/financial/default/transfer?from'+$this.from+'&amount='+this.amount;
+					this.$axios.get(url).then(res => {
+						res = res.data;
+						this.$emit('update-balance');
+					});
+				}
 			}
 		}
 	}
