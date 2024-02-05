@@ -31,13 +31,13 @@ return [
     '65af98f99d35ed7a440f9785' => [
         'user',
     ],
-    '65c0a4edac0bf419da638c52' => [
-        'admin',
-    ],
     '65c0be7e74c3917f47095922' => [
         'user',
     ],
     '65c0bee13446e1413e1b0ae9' => [
         'user',
+    ],
+    '65c0a4edac0bf419da638c52' => [
+        'admin',
     ],
 ];
