@@ -20,6 +20,9 @@ class PaymentTransactions extends \yii\mongodb\ActiveRecord
 
     const GATEWAY_STRIPE = 'stripe';
     const GATEWAY_PAYPAL = 'paypal';
+
+    const STATUS_WAITING = 'waiting';
+    const STATUS_PAYED = 'payed';
     /**
      * {@inheritdoc}
      */
