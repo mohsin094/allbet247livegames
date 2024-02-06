@@ -10,6 +10,7 @@ use yii\helpers\Url;
 use common\models\Settings;
 use app\modules\payment\models\PaymentTransactions;
 use \common\models\UsersRepo;
+use \common\models\FinancialTransactions;
 /**
  * Default controller for the `payment` module
  */
@@ -41,7 +42,7 @@ class StripeController extends ApiController
 		$amount *= 100;
 		$trans = new PaymentTransactions;
 		$trans->gateway = PaymentTransactions::GATEWAY_STRIPE;
-		$trans->amount = $amount;
+		$trans->amount = $amount / 100;
 		$trans->user_id = (string) \Yii::$app->user->id;
 		$trans->status = PaymentTransactions::STATUS_WAITING;
 		if($trans->save()) {
@@ -77,7 +78,7 @@ class StripeController extends ApiController
 	public function actionCheckTransaction($id)
 	{
 		$session = new \Stripe\StripeClient(Settings::getSettingValue(Settings::NAME_STRIPE_API_KEY));
-		$trans = new PaymentTransactions::findOne(['_id' => $id, 'status' => PaymentTransactions::STATUS_WAITING]);
+		$trans = PaymentTransactions::findOne(['_id' => $id, 'status' => PaymentTransactions::STATUS_WAITING]);
 
 		if($trans) {
 			$session = $session->checkout->sessions->retrieve($trans->trans_id, []);
@@ -86,6 +87,6 @@ class StripeController extends ApiController
 				$userRepo->increaseBalance($trans->amount, self::class, (string) $trans->_id, 'Deposit', FinancialTransactions::TYPE_DEPOSIT);
 			}
 		}
-		return $this->redirect(\Yii::$app->params['clientUrl']);
+		return $this->redirect(\Yii::$app->params['clientUrl'].'/cashier');
 	}
 }
