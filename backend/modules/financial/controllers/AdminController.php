@@ -18,7 +18,7 @@ class AdminController extends AdminApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['list'],
+                        'actions' => ['list', 'get-income'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -26,6 +26,36 @@ class AdminController extends AdminApiController
             ]
 		]);
 	}
+
+    public function actionGetIncome($period = 'monthly')
+    {
+        switch($period) {
+            case 'monthly':
+                $period = strtotime('first day of');
+            break;
+            case 'daily':
+                $period = strtotime('today');
+            break;
+            case 'weekly':
+                $period = strtotime('monday');
+            break;
+        }
+
+        $models = FinancialTransactions::find()
+        ->where(['type' => FinancialTransactions::TYPE_BANK])
+        ->andWhere(['>', 'cdate', $period])
+        ->all();
+
+        $income = 0;
+        foreach($models as $model) {
+            $income += $model->amount;
+        }
+
+        $this->resp->result = true;
+        $this->resp->params = $income;
+
+        return $this->resp;
+    }
 
     public function actionList($limit=50, $page=1, $query = '')
     {
