@@ -18,6 +18,11 @@ class AdminController extends AdminApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
+                        'actions' => ['deposit-into-account', 'withdrawal-from-account'],
+                        'roles' => ['admin', 'agent'],
+                        'allow' => true
+                    ],
+                    [
                         'actions' => ['list', 'get-income'],
                         'roles' => ['admin'],
                         'allow' => true,
@@ -26,6 +31,30 @@ class AdminController extends AdminApiController
             ]
 		]);
 	}
+
+    public function actionDepositIntoAccount($userId, $amount)
+    {
+        
+
+        $userRepo = UsersRepo::findOne(['_id' => $userId]);
+        $userRepo->increaseBalance($amount, self::class, null, 'Deposit By Agent', FinancialTransactions::TYPE_DEPOSIT, \Yii::$app->user->id);
+
+        $this->resp->result = true;
+
+        return $this->resp;
+    }
+
+    public function actionWithdrawalFromAccount($userId, $amount)
+    {
+        
+
+        $userRepo = UsersRepo::findOne(['_id' => $userId]);
+        $userRepo->decreaseBalance($amount, self::class, null, 'Withdraw By Agent', FinancialTransactions::TYPE_DEPOSIT, \Yii::$app->user->id);
+
+        $this->resp->result = true;
+
+        return $this->resp;
+    }
 
     public function actionGetIncome($period = 'monthly')
     {

@@ -9,6 +9,7 @@ use \common\components\Tools;
 use \common\models\UserRoles;
 use \common\models\Users;
 
+
 class AdminController extends AdminApiController
 {
 	public function behaviors()
@@ -17,8 +18,13 @@ class AdminController extends AdminApiController
 			'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
+                	[
+                		'actions' => ['list', 'get-status-list', 'get-roles-list'],
+                		'roles' => ['admin', 'agent'],
+                		'allow' => true
+                	],
                     [
-                        'actions' => ['list', 'update', 'get-status-list', 'get-roles-list'],
+                        'actions' => ['update'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -26,6 +32,8 @@ class AdminController extends AdminApiController
             ]
 		]);
 	}
+
+
 
 	public function actionUpdate($userId)
 	{

@@ -26,7 +26,7 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
     const TYPE_BANK = 'bank';
 
 
-    public static function new($userId, $amount, $type, $source, $sourceId, $description) {
+    public static function new($userId, $amount, $type, $source, $sourceId, $description, $operatorId = null) {
         $model = new self;
         $model->user_id = $userId;
         $model->amount = (string) $amount;
@@ -34,6 +34,9 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
         $model->source_id = $sourceId;
         $model->type = $type;
         $model->description = $description;
+        if($operatorId) {
+            $model->operator_id = $operator_id;
+        }
         if($model->save()) {
             return $model;
         }else {
@@ -70,6 +73,7 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
             'amount',
             'description',
             'cdate',
+            'operator_id'
         ];
     }
 
@@ -79,7 +83,7 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'source', 'source_id', 'type', 'amount', 'description', 'cdate'], 'safe']
+            [['user_id', 'source', 'source_id', 'type', 'amount', 'description', 'cdate', 'operator_id'], 'safe']
         ];
     }
 
@@ -97,11 +101,17 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
             'amount' => Yii::t('app', 'Amount'),
             'description' => Yii::t('app', 'Description'),
             'cdate' => Yii::t('app', 'Cdate'),
+            'operator_id' => Yii::t('app', 'Operator ID'),
         ];
     }
 
     public function getUser()
     {
         return $this->hasOne(Users::class, ['_id' => 'user_id']);
+    }
+
+    public function getOperator()
+    {
+        return $this->hasOne(Users::class, ['_id' => 'operator_id']);
     }
 }
