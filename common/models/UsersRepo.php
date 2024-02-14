@@ -5,7 +5,7 @@ use \common\components\Tools;
 use \common\models\FinancialTransactions;
 class UsersRepo extends \common\models\Users
 {
-	public function increaseBalance($amount, $source, $sourceId, $description, $type = FinancialTransactions::TYPE_INCREASE)
+	public function increaseBalance($amount, $source, $sourceId, $description, $type = FinancialTransactions::TYPE_INCREASE, $operatorId = null)
 	{
 		try {
 			$this->balance += (string)$amount;
@@ -13,7 +13,8 @@ class UsersRepo extends \common\models\Users
 				\Yii::error($this->getErrors());
 				throw new \Exception('saving user balance error');
 			}else {
-				FinancialTransactions::new((string)$this->_id, $amount, $type, $source, $sourceId, $description);
+
+				FinancialTransactions::new((string)$this->_id, $amount, $type, $source, $sourceId, $description, $operatorId);
 			}
 			return $this;
 
@@ -23,7 +24,7 @@ class UsersRepo extends \common\models\Users
 		}
 	}
 
-	public function decreaseBalance($amount, $source, $sourceId, $description, $type = FinancialTransactions::TYPE_DECREASE)
+	public function decreaseBalance($amount, $source, $sourceId, $description, $type = FinancialTransactions::TYPE_DECREASE, $operatorId = null)
 	{
 
 		try {
@@ -32,7 +33,7 @@ class UsersRepo extends \common\models\Users
 				\Yii::error($this->getErrors());
 				throw new \Exception('saving user balance error');
 			}else {
-				FinancialTransactions::new((string)$this->_id, $amount, $type, $source, $sourceId, $description);
+				FinancialTransactions::new((string)$this->_id, $amount, $type, $source, $sourceId, $description, $operatorId);
 			}
 			return $this;
 

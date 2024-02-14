@@ -22,6 +22,7 @@
       <ul class="menu-inner py-1">
       	<!-- dashboard -->
 	        <router-link
+	        v-if="$user.data.role == 'admin'"
 	        	:to="{name: 'dashboard'}"
 			    v-bind="$props"
 			    custom
@@ -50,6 +51,7 @@
 		  </router-link>
 		  <!-- game -->
 		  <router-link
+		  v-if="$user.data.role == 'admin'"
 	        	:to="{name: 'games'}"
 			    v-bind="$props"
 			    custom
@@ -63,6 +65,7 @@
 	        </li>
 		  </router-link>
 		  <router-link
+		  v-if="$user.data.role == 'admin'"
 	        	:to="{name: 'gameStakes'}"
 			    v-bind="$props"
 			    custom
@@ -78,6 +81,7 @@
 
 		  <!-- financial -->
 		  <router-link
+		  v-if="$user.data.role == 'admin'"
 	        	:to="{name: 'financial'}"
 			    v-bind="$props"
 			    custom
@@ -90,8 +94,23 @@
 	          </a>
 	        </li>
 		  </router-link>
+		  <router-link
+		  v-if="$user.data.role == 'admin'"
+	        	:to="{name: 'agentActivityReport'}"
+			    v-bind="$props"
+			    custom
+			    v-slot="{ isActive, href, navigate }"
+			  >
+		    <li class="menu-item" :class="{active: isActive}">
+	          <a v-bind="$attrs" :href="href" @click="navigate" class="menu-link">
+	            <i class="menu-icon tf-icons ti-app-window"></i>
+	            <div>Agents Activities Report</div>
+	          </a>
+	        </li>
+		  </router-link>
 		  <!-- announcement -->
 		  <router-link
+		  v-if="$user.data.role == 'admin'"
 	        	:to="{name: 'announcements'}"
 			    v-bind="$props"
 			    custom
@@ -106,6 +125,7 @@
 		  </router-link>
 		  <!-- settings -->
 		  <router-link
+		  v-if="$user.data.role == 'admin'"
 	        	:to="{name: 'settings'}"
 			    v-bind="$props"
 			    custom

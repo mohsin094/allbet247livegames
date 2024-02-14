@@ -14,10 +14,10 @@
               <input v-model="user.public_name" type="text" class="form-control" />
             </div>
 
-            <div class="col-12">
+            <!-- <div class="col-12">
               <label class="form-label">Balance</label>
               <input v-model="user.balance" type="text" class="form-control" />
-            </div>
+            </div> -->
 
             <div class="col-12">
               <label class="form-label">LVL</label>

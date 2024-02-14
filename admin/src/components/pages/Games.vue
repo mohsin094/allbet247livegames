@@ -28,7 +28,7 @@
                         </div>
 						<span class="fw-medium">{{match.homeUser.public_name}}</span>
 					</td>
-					<td>
+					<td v-if="match.awayUser != null || match.awayUser != undefined">
 						<div class="avatar avatar-md me-2">
                           <img v-if="match.awayUser.avatar != undefined" :src="baseUrl + '/assets/images/avatars/'+match.awayUser.avatar+'.png'" alt="Avatar" class="rounded-circle">
                         </div>

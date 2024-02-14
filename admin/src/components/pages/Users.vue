@@ -40,7 +40,8 @@
 									<i class="ti ti-dots-vertical"></i>
 								</button>
 								<div class="dropdown-menu">
-									<a @click.prevent="editUser(user)" class="dropdown-item"><i class="ti ti-pencil me-1"></i> Edit</a>
+									<a v-if="$user.data.role == 'admin'" @click.prevent="editUser(user)" class="dropdown-item"><i class="ti ti-pencil me-1"></i> Edit</a>
+									<a @click.prevent="depositWithdrawal(user)" class="dropdown-item"><i class="ti ti-pencil me-1"></i> Deposit/Withdrawal</a>
 								</div>
 							</div>
 						</td>
@@ -50,12 +51,15 @@
 		</div>
 	</div>
 	<edit-modal @updated="fetchUsers()" :user="userForEdit" :status-list="statusList" :role-list="roleList" />
+	<deposit-withdrawal-modal @updated="fetchUsers()" :user="userForDepositWithdrawal" />
 </template>
 <script>
 import EditModal from './../users/_editModal.vue';
+import DepositWithdrawalModal from './../users/_depositWithdrawalModal.vue';
 export default {
 	components: {
 		EditModal,
+		DepositWithdrawalModal
 	},
 	data() {
 		return {
@@ -64,7 +68,8 @@ export default {
 			baseUrl: import.meta.env.VITE_FRONT_BASE_URL,
 			roleList: [],
 			statusList: [],
-			userForEdit: {}
+			userForEdit: {},
+			userForDepositWithdrawal: {}
 		}
 	},
 	mounted() {
@@ -73,6 +78,14 @@ export default {
 	},
 
 	methods: {
+		depositWithdrawal(user)
+		{
+			// open modal
+			const modal = new bootstrap.Modal('#depositWithdrawalUserModal')
+			modal.show();
+
+			this.userForDepositWithdrawal = user;
+		},
 		editUser(user)
 		{
 			// open modal

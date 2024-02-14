@@ -49,7 +49,7 @@
 				    </form>
 				    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
 				    	<li class="nav-item">
-				        	<a @click="$router.push({path:'/'})"  aria-controls="offcanvasExample">
+				        	<a @click="redirectAdmin"  aria-controls="offcanvasExample">
 					          <span class="material-symbols-rounded menu-icon">admin_panel_settings</span>
 					          <span class="ms-1  menu-link">Admin panel</span>
 				          	</a>
@@ -160,7 +160,10 @@
 			// console.log(this.announcements)
 		},
 		methods:{
-			 beforeRouteLeave(to, from) {
+			redirectAdmin() {
+	   			window.location = import.meta.env.VITE_ADMIN_BASE_URL;
+	   		},
+			beforeRouteLeave(to, from) {
     			this.hideThisCanvas()
   			},
 			hideThisCanvas(){
