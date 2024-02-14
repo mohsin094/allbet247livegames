@@ -25,10 +25,10 @@
 				
 				<div class="col-md-2 col-xl-2 txt-icon">
 					<span class="material-symbols-outlined text-golden-gradient float-start">workspace_premium</span>
-					<p class="float-start ms-2">Prize:1400</p>
+					<p class="float-start ms-2">Prize: {{match.prize}}</p>
 				</div>
 				<div class="col-md-2 col-xl-2 txt-icon">
-					<p class="float-end ms-2"> Stake:{{match.stake}}</p>
+					<p class="float-end ms-2"> Stake: {{match.stake}}</p>
 					<span class="material-symbols-outlined text-golden-gradient float-end ms-2">currency_exchange</span>
 				</div>
 				<div v-if="playerBlack != undefined" class="col-md-2 col-xl-2 txt-icon">
