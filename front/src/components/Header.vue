@@ -48,7 +48,7 @@
 	        </li>
 	      </ul>
 	      <ul v-if="!$user.data.isGuest" class="navbar-nav ms-auto d-flex flex-row navbar-header">
-	      	<li class="nav-item" v-if="$user.data.role == 'admin'">
+	      	<li class="nav-item" v-if="$user.data.role == 'admin' || $user.data.role == 'agent'">
 		      	<div class="header-box" @click="redirectAdmin">
 		            <i class="material-symbols-rounded">admin_panel_settings</i>
 		            Admin panel
