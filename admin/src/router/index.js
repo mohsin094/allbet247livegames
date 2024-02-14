@@ -29,6 +29,11 @@ const router = createRouter({
       component: () => import('./../components/pages/Financial.vue')
     },
     {
+      path: '/agents-activities-report',
+      name: 'agentActivityReport',
+      component: () => import('./../components/pages/AgentActivityReport.vue')
+    },
+    {
       path: '/announcements',
       name: 'announcements',
       component: () => import('./../components/pages/Announcements.vue')

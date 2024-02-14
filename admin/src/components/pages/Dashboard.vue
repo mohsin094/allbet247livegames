@@ -1,6 +1,6 @@
 <template>
 <h4>Dashboard</h4>
-<div class="row">
+<div class="row" v-if="$user.data.role == 'admin'">
 <div class="col-sm-6 col-md-4 col-xl-2">
 	<div class="card text-center">
 		<!---->

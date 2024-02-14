@@ -13,6 +13,7 @@ class UsersRepo extends \common\models\Users
 				\Yii::error($this->getErrors());
 				throw new \Exception('saving user balance error');
 			}else {
+
 				FinancialTransactions::new((string)$this->_id, $amount, $type, $source, $sourceId, $description, $operatorId);
 			}
 			return $this;

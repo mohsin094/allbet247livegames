@@ -34,9 +34,11 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
         $model->source_id = $sourceId;
         $model->type = $type;
         $model->description = $description;
+        $model->cdate = (string) time();
         if($operatorId) {
-            $model->operator_id = $operator_id;
+            $model->operator_id = $operatorId;
         }
+            
         if($model->save()) {
             return $model;
         }else {

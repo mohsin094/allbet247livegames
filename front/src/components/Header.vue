@@ -164,7 +164,7 @@
 	   },
 	   methods:{
 	   		redirectAdmin() {
-	   			window.location = import.meta.env.VITE_BASE_URL + "/admin";
+	   			window.location = import.meta.env.VITE_ADMIN_BASE_URL;
 	   		},
 		    getAnnouncements(){
 		      const url = import.meta.env.VITE_BACKEND_BASE_URL+'/announcement/default/list'

@@ -6,6 +6,7 @@ use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use \common\components\Tools;
 use MongoDB\BSON\ObjectId;
+use common\models\UsersRepo;
 
 use \common\models\FinancialTransactions;
 class AdminController extends AdminApiController
@@ -23,7 +24,7 @@ class AdminController extends AdminApiController
                         'allow' => true
                     ],
                     [
-                        'actions' => ['list', 'get-income'],
+                        'actions' => ['list', 'get-income', 'get-agent-activity-amount'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -32,10 +33,69 @@ class AdminController extends AdminApiController
 		]);
 	}
 
+    public function actionGetAgentActivityAmount()
+    {
+        $monthly = FinancialTransactions::find()
+        ->with(['operator'])
+        ->where(['!=', 'operator_id', null])
+        ->andWhere(['>', 'cdate', (string) strtotime('first day of ' . date( 'F Y'))])
+        ->all();
+
+        $weekly = FinancialTransactions::find()
+        ->where(['!=', 'operator_id', null])
+        ->andWhere(['>', 'cdate', (string) strtotime('this week')])
+        ->all();
+
+        $result = [
+            'monthly' => [],
+            'weekly' => []
+        ];
+
+        foreach($monthly as $m) {
+            if(!in_array((string) $m->operator_id, array_keys($result['monthly']))) {
+                $result['monthly'][(string) $m->operator_id] = [
+                    'deposit' => 0,
+                    'withdrawal' => 0,
+                    'operator' => $m->operator
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_DEPOSIT) {
+                $result['monthly'][(string) $m->operator_id]['deposit'] += $m->amount;
+            }
+
+            if($m->type == FinancialTransactions::TYPE_WITHDRAWAL) {
+                $result['monthly'][(string) $m->operator_id]['withdrawal'] += $m->amount;
+            }
+        }
+
+        foreach($weekly as $m) {
+            if(!in_array((string) $m->operator_id, array_keys($result['weekly']))) {
+                $result['weekly'][(string) $m->operator_id] = [
+                    'deposit' => 0,
+                    'withdrawal' => 0,
+                    'operator' => $m->operator
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_DEPOSIT) {
+                $result['weekly'][(string) $m->operator_id]['deposit'] += $m->amount;
+            }
+
+            if($m->type == FinancialTransactions::TYPE_WITHDRAWAL) {
+                $result['weekly'][(string) $m->operator_id]['withdrawal'] += $m->amount;
+            }
+        }
+
+        $this->resp->result = true;
+        $this->resp->params = $result;
+
+        return $this->resp;
+    }
+
     public function actionDepositIntoAccount($userId, $amount)
     {
         
-
         $userRepo = UsersRepo::findOne(['_id' => $userId]);
         $userRepo->increaseBalance($amount, self::class, null, 'Deposit By Agent', FinancialTransactions::TYPE_DEPOSIT, \Yii::$app->user->id);
 
@@ -49,7 +109,7 @@ class AdminController extends AdminApiController
         
 
         $userRepo = UsersRepo::findOne(['_id' => $userId]);
-        $userRepo->decreaseBalance($amount, self::class, null, 'Withdraw By Agent', FinancialTransactions::TYPE_DEPOSIT, \Yii::$app->user->id);
+        $userRepo->decreaseBalance($amount, self::class, null, 'Withdraw By Agent', FinancialTransactions::TYPE_WITHDRAWAL, \Yii::$app->user->id);
 
         $this->resp->result = true;
 
