@@ -37,6 +37,7 @@ class StripeController extends ApiController
 
 	public function actionNewTransaction($amount)
 	{
+$amount *= 100;
 		$trans = new PaymentTransactions;
 		$trans->gateway = PaymentTransactions::GATEWAY_STRIPE;
 		$trans->amount = $amount;
@@ -58,8 +59,8 @@ class StripeController extends ApiController
 	            'quantity' => 1
 	          ]],
 	          'mode' => 'payment',
-	          'success_url' => Url::to(['payment/stripe/check-transaction', 'id' => (string) $trans->_id], true),
-	          'cancel_url' => Url::to(['payment/stripe/check-transaction', 'id' => (string) $trans->_id], true),
+	          'success_url' => Url::to(['/payment/stripe/check-transaction', 'id' => (string) $trans->_id], true),
+	          'cancel_url' => Url::to(['/payment/stripe/check-transaction', 'id' => (string) $trans->_id], true),
 	        ]);
 
 	        $this->resp->result = true;

@@ -12,6 +12,7 @@ export default {
     init: function() {
 
         conf.debug = process.env.DEBUG;
+console.log(process.env.ENV);
         switch(process.env.ENV) {
             case this.env_prod:
                 conf.load(path.join(path.basePath, 'src', 'configs')+ '/configs.json');

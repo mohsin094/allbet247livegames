@@ -10,7 +10,7 @@ export default {
 		let url = undefined;
 	
 		if(credentials.user != "") {
-			url = `mongodb://${credentials.user}:${credentials.password}@${credentials.host}:${credentials.port}/?serverSelectionTimeoutMS=2000`;
+			url = `mongodb://${credentials.user}:${credentials.password}@${credentials.host}:${credentials.port}/?serverSelectionTimeoutMS=2000&directConnection=true`;
 
 		}else {
 			url = `mongodb://${credentials.host}:${credentials.port}/?serverSelectionTimeoutMS=2000`;

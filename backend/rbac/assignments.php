@@ -40,4 +40,22 @@ return [
     '65c0bee13446e1413e1b0ae9' => [
         'user',
     ],
+    '65c151a5a2763ae4230cc732' => [
+        'user',
+    ],
+    '65c151af5bcc15f6a00bffd2' => [
+        'user',
+    ],
+    '65c16d669bef5eff8809f954' => [
+        'user',
+    ],
+    '65c1573b5bcc15f6a00bffd4' => [
+        'agent',
+    ],
+    '65c152185ad0e75cb7033054' => [
+        'admin',
+    ],
+    '65c15a86e1e07c417c035003' => [
+        'user',
+    ],
 ];

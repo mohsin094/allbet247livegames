@@ -8,5 +8,5 @@ return [
     'user.passwordMinLength' => 8,
     'mongodbDbName' => 'allbet-backgammon',
     'clientOrigin' => '*',
-    'clientUrl' => 'http://localhost:3000'
+    'clientUrl' => 'http://backgammon.all-bet-247.com'
 ];
