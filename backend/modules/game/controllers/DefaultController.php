@@ -14,6 +14,7 @@ use \backend\modules\game\models\Matches;
 use \backend\modules\game\models\MatchEvents;
 use \common\models\Users;
 use \common\components\ApiAction;
+use common\models\Settings;
 /**
  * Default controller for the `game` module
  */
@@ -208,11 +209,14 @@ class DefaultController extends ApiController
 
             if(($event->status == MatchEvents::STATUS_PLAYING || $event->status == MatchEvents::STATUS_WAITING)) {
 
+                $stake = $match->stake->stake;
                 $this->resp->result = true;
                 $this->resp->params = [
                     'away_id' => ($match->away_id != null) ? $match->away_id : null,
                     'home_id' => $match->home_id,
                     'id' => $id,
+                    'prize' => ($stake * 2) - ((Settings::getSettingValue(Settings::NAME_SHARE_PERCENT) * ($stake * 2)) / 100),
+                    'stake' => $stake
                 ];
             }
         }
