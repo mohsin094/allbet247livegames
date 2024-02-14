@@ -48,7 +48,7 @@
 				        </div>
 				    </form>
 				    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-				    	<li class="nav-item">
+				    	<li v-if="$user.data.role == 'admin' || $user.data.role == 'agent'" class="nav-item">
 				        	<a @click="redirectAdmin"  aria-controls="offcanvasExample">
 					          <span class="material-symbols-rounded menu-icon">admin_panel_settings</span>
 					          <span class="ms-1  menu-link">Admin panel</span>
