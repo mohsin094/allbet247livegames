@@ -149,7 +149,7 @@ class AdminController extends AdminApiController
     public function actionList($limit=50, $page=1, $query = '')
     {
         $models = FinancialTransactions::find()
-        ->with(['user'])
+        ->with(['user', 'operator'])
         ->orderBy('cdate DESC')
         ->limit($limit)
         ->offset(($page-1) * $limit);

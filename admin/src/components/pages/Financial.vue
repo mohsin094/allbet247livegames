@@ -35,6 +35,10 @@
 					</td>
 					<td>
 						{{fin.description}}
+						<div v-if="fin.operator != null" class="avatar avatar-md me-2">
+                          <img :src="baseUrl + '/assets/images/avatars/'+fin.operator.avatar+'.png'" alt="Avatar" class="rounded-circle">
+                        </div>
+						<span v-if="fin.operator != null" class="fw-medium">{{fin.operator.public_name}}</span>
 					</td>
 					<td>
 						{{(fin.source == 'backend\\modules\\game\\models\\MatchesRepo') ? fin.source_id : ''}}
