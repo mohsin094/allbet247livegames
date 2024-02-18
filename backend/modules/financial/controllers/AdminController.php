@@ -51,9 +51,12 @@ class AdminController extends AdminApiController
         ->andWhere(['>', 'cdate', (string) strtotime('today')])
         ->all();
 
+
+
         $result = [
+            'daily' => [],
             'monthly' => [],
-            'weekly' => []
+            'weekly' => [],
         ];
 
         foreach($monthly as $m) {
@@ -111,7 +114,7 @@ class AdminController extends AdminApiController
         }
 
         $this->resp->result = true;
-        $this->resp->params = $result;
+        $this->resp->params = $daily;
 
         return $this->resp;
     }
@@ -149,7 +152,7 @@ class AdminController extends AdminApiController
                 $period = strtotime('today');
             break;
             case 'weekly':
-                $period = strtotime('monday');
+                $period = strtotime('this week');
             break;
         }
 
@@ -191,9 +194,9 @@ class AdminController extends AdminApiController
         if(!empty($query)) {
             $models = array_values(array_filter($models, function($value) use($query) {
                 return ((str_contains((string)$value['_id'], $query))
-                    || (str_contains($value['user_id'], $query))
-                    || (str_contains($value['user']['email'], $query))
-                    || (str_contains($value['user']['public_name'], $query)));
+                    || (isset($value['user_id']) && str_contains($value['user_id'], $query))
+                    || (isset($value['user']) && str_contains($value['user']['email'], $query))
+                    || (isset($value['user']) && str_contains($value['user']['public_name'], $query)));
             }));
         }
 

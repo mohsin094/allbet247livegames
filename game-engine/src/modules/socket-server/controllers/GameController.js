@@ -273,7 +273,7 @@ function GameController()
 							});
 
 							const sharePercent = sharePercentSetting.value;
-							const bankAmount = ((stake.stake * 2) * sharePercent) / 100;
+							let bankAmount = ((stake.stake * 2) * sharePercent) / 100;
 							const winAmount = (stake.stake * 2) - bankAmount;
 
 							// get winner user
@@ -294,12 +294,13 @@ function GameController()
 							});
 
 							// check if this player has agent then add revenue share to agent balance
-							const agent = mongo.db.collection(UserSubsetsModel.name)
+							const agent = await mongo.db.collection(UserSubsetsModel.name)
 							.findOne({
 								user_id: (winner > 0) ? match.home_id : match.away_id
 							});
 
 							if(agent) {
+								
 								const agentRevenue = (bankAmount * agentSharePercentSetting.value) / 100;
 								bankAmount = bankAmount - agentRevenue;
 								await mongo.db.collection(FinancialTransactionsModel.name)
