@@ -28,6 +28,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
 
     const STATUS_ACTIVE = 'active';
     const STATUS_WAITING_CONFIRMATION = 'waiting_confirmation';
+    const STATUS_BLOCK = 'block';
 
     public $password_repeat;
 
@@ -37,7 +38,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
     {
         return [
             self::STATUS_ACTIVE => 'active',
-            self::STATUS_WAITING_CONFIRMATION => 'waiting confirmation'
+            self::STATUS_WAITING_CONFIRMATION => 'waiting confirmation',
+            self::STATUS_BLOCK => 'block'
         ];
     }
 
@@ -70,9 +72,15 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             $this->status = self::STATUS_WAITING_CONFIRMATION;
             $this->balance = '0';
             $this->lvl = '1';
+            $this->invitation_id = self::generateInvitationId();
         }
         $this->balance = (string) $this->balance;
         return parent::beforeValidate();
+    }
+
+    public static function generateInvitationId()
+    {
+        return (string) (rand(10000, 99999) + time());
     }
 
     public function beforeSave($params)
@@ -94,7 +102,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'role' => \Yii::$app->user->getIdentity()->role,
             'status' => $this->status,
             'balance' => $this->balance,
-            'lvl' => $this->lvl
+            'lvl' => $this->lvl,
+            'invitation_id' => $this->invitation_id
         ];
     }
 
@@ -113,7 +122,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
         return array_merge(parent::scenarios(), [
             self::SCENARIO_LOGIN => ['email', 'password'],
             self::SCENARIO_REGISTER => ['public_name', 'email', 'password', 'password_repeat', 'avatar'],
-            self::SCENARIO_UPDATE_ADMIN => ['password', 'role', 'status', 'lvl', 'public_name', 'avatar', 'balance'],
+            self::SCENARIO_UPDATE_ADMIN => ['password', 'role', 'status', 'lvl', 'public_name', 'avatar', 'balance', 'invitation_id'],
             self::SCENARIO_UPDATE => ['password', 'avatar']
         ]);
     }
@@ -142,7 +151,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'role',
             'avatar',
             'balance',
-            'lvl'
+            'lvl',
+            'invitation_id'
         ];
     }
 
@@ -166,6 +176,7 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             [['email'], 'email'],
             [['password_repeat'], 'compare', 'compareAttribute' => 'password', 'operator' => '=='],
             // [['email', 'password', 'status', 'cdate', 'lang', 'user_role_id'], 'safe']
+            [['invitation_id'], 'safe']
         ];
     }
 
@@ -183,7 +194,8 @@ class Users extends \yii\mongodb\ActiveRecord implements IdentityInterface
             'lang' => Yii::t('app', 'Lang'),
             'user_role_id' => Yii::t('app', 'Role'),
             'balance' => Yii::t('app', 'Balance'),
-            'lvl' => Yii::t('app', 'Level')
+            'lvl' => Yii::t('app', 'Level'),
+            'invitation_id' => Yii::t('app', 'Invitation ID'),
         ];
     }
 

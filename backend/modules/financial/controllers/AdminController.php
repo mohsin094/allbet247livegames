@@ -46,6 +46,11 @@ class AdminController extends AdminApiController
         ->andWhere(['>', 'cdate', (string) strtotime('this week')])
         ->all();
 
+        $daily = FinancialTransactions::find()
+        ->where(['!=', 'operator_id', null])
+        ->andWhere(['>', 'cdate', (string) strtotime('today')])
+        ->all();
+
         $result = [
             'monthly' => [],
             'weekly' => []
@@ -84,6 +89,24 @@ class AdminController extends AdminApiController
 
             if($m->type == FinancialTransactions::TYPE_WITHDRAWAL) {
                 $result['weekly'][(string) $m->operator_id]['withdrawal'] += $m->amount;
+            }
+        }
+
+        foreach($daily as $m) {
+            if(!in_array((string) $m->operator_id, array_keys($result['daily']))) {
+                $result['daily'][(string) $m->operator_id] = [
+                    'deposit' => 0,
+                    'withdrawal' => 0,
+                    'operator' => $m->operator
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_DEPOSIT) {
+                $result['daily'][(string) $m->operator_id]['deposit'] += $m->amount;
+            }
+
+            if($m->type == FinancialTransactions::TYPE_WITHDRAWAL) {
+                $result['daily'][(string) $m->operator_id]['withdrawal'] += $m->amount;
             }
         }
 

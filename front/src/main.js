@@ -12,6 +12,7 @@ import User from "@/plugins/User.js";
 import PrimeVue from 'primevue/config';
 import  { useLoading } from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
+import Tooltip from 'primevue/tooltip';
 
 const app = createApp(App)
 app.config.globalProperties.isDark = useDark({
@@ -20,7 +21,7 @@ app.config.globalProperties.isDark = useDark({
   valueDark: "dark",
   valueLight: "dark",
 });
-
+app.directive('tooltip', Tooltip);
 
 app
 .use(router)

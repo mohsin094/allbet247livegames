@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 use \common\components\Tools;
 use \common\models\UserRoles;
 use \common\models\Users;
-
+use backend\modules\user\models\UserSubsets;
 
 class AdminController extends AdminApiController
 {
@@ -24,7 +24,7 @@ class AdminController extends AdminApiController
                 		'allow' => true
                 	],
                     [
-                        'actions' => ['update'],
+                        'actions' => ['update', 'get'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -33,7 +33,26 @@ class AdminController extends AdminApiController
 		]);
 	}
 
+	public function actionGet($userId)
+	{
+		$user = Users::findOne(['_id' => $userId]);
+		$agent = UserSubsets::find()
+		->with(['caller'])
+		->where(['user_id' => $userId])
+		->one();
 
+		$result = $user->attributes;
+		
+		if($agent) {
+			$result += [
+				'agent' => $agent->caller
+			];
+		}
+		$this->resp->result = true;
+		$this->resp->params = $result;
+
+		return $this->resp;
+	}
 
 	public function actionUpdate($userId)
 	{

@@ -21,10 +21,12 @@
 				<tbody class="table-border-bottom-0">
 					<tr v-for="user in users">
 						<td>
-							<div class="avatar avatar-md me-2">
-	                          <img :src="baseUrl + '/assets/images/avatars/'+user.avatar+'.png'" alt="Avatar" class="rounded-circle">
-	                        </div>
-							<span class="fw-medium">{{user.public_name}}</span>
+							<router-link :to="{name: 'userProfile', query: {userId: user._id}}">
+								<div class="avatar avatar-md me-2">
+		                          <img :src="baseUrl + '/assets/images/avatars/'+user.avatar+'.png'" alt="Avatar" class="rounded-circle">
+		                        </div>
+								<span class="fw-medium">{{user.public_name}}</span>
+							</router-link>
 						</td>
 						<td>{{user.email}}</td>
 						<td>
@@ -122,6 +124,9 @@ export default {
 			case 'waiting_confirmation':
 				htmlClass = 'warning';
 				break;
+			case 'block':
+				htmlClass = 'danger';
+			break;
 			}
 
 			return htmlClass;

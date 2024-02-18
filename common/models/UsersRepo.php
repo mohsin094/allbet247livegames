@@ -50,4 +50,14 @@ class UsersRepo extends \common\models\Users
 		else
 			return false;
 	}
+
+	public function getInvitationId()
+	{
+		if($this->invitation_id == '') {
+			$this->invitation_id = self::generateInvitationId();
+			$this->save();
+		}
+
+		return $this->invitation_id;
+	}
 }

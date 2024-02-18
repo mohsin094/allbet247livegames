@@ -27,7 +27,7 @@
 						<div class="avatar avatar-md me-2">
                           <img :src="baseUrl + '/assets/images/avatars/'+fin.user.avatar+'.png'" alt="Avatar" class="rounded-circle">
                         </div>
-						<span class="fw-medium">{{fin.user.email}}</span>
+						<span class="fw-medium">{{fin.user.public_name}}</span>
 					</td>
 					<td>{{fin.amount}}</td>
 					<td>
