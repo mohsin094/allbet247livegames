@@ -24,7 +24,7 @@ class AdminController extends AdminApiController
                         'allow' => true
                     ],
                     [
-                        'actions' => ['list', 'get-income', 'get-agent-activity-amount'],
+                        'actions' => ['list', 'get-income', 'get-agent-activity-amount', 'get-agent-transactions'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -32,6 +32,90 @@ class AdminController extends AdminApiController
             ]
 		]);
 	}
+
+    public function actionGetAgentTransactions($agentId)
+    {
+        $monthly = FinancialTransactions::find()
+        ->where(['user_id' => $agentId])
+        ->andWhere(['type' => FinancialTransactions::TYPE_AGENT_REVENUE_SHARE])
+        ->andWhere(['>', 'cdate', strtotime('first day of ' . date( 'F Y'))])
+        ->all();
+
+        $weekly = FinancialTransactions::find()
+        ->where(['user_id' => $agentId])
+        ->andWhere(['type' => FinancialTransactions::TYPE_AGENT_REVENUE_SHARE])
+        ->andWhere(['>', 'cdate', strtotime('this week')])
+        ->all();
+
+        $daily = FinancialTransactions::find()
+        ->where(['user_id' => $agentId])
+        ->andWhere(['type' => FinancialTransactions::TYPE_AGENT_REVENUE_SHARE])
+        ->andWhere(['>', 'cdate', strtotime('today')])
+        ->all();
+
+
+
+        $result = [
+            'daily' => [],
+            'monthly' => [],
+            'weekly' => [],
+        ];
+
+        foreach($monthly as $m) {
+            if(!in_array((string) $m->user_id, array_keys($result['monthly']))) {
+                $result['monthly'][(string) $m->user_id] = [
+                    'totalRevenue' => 0,
+                    'transactions' => [],
+                    
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
+                $result['monthly'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+            }
+
+            array_push($result['monthly'][(string) $m->user_id]['transactions'], $m);
+
+            
+        }
+
+        foreach($weekly as $m) {
+            if(!in_array((string) $m->user_id, array_keys($result['weekly']))) {
+                $result['weekly'][(string) $m->user_id] = [
+                    'totalRevenue' => 0,
+                    'transactions' => [],
+                    
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
+                $result['weekly'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+            }
+
+            array_push($result['weekly'][(string) $m->user_id]['transactions'], $m);
+        }
+
+        foreach($daily as $m) {
+            if(!in_array((string) $m->user_id, array_keys($result['daily']))) {
+                $result['daily'][(string) $m->user_id] = [
+                    'totalRevenue' => 0,
+                    'transactions' => [],
+                    
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
+                $result['daily'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+            }
+
+            array_push($result['daily'][(string) $m->user_id]['transactions'], $m);
+        }
+
+        $this->resp->result = true;
+        $this->resp->parasm = $result;
+
+        return $this->resp;
+    }
 
     public function actionGetAgentActivityAmount()
     {
@@ -42,11 +126,13 @@ class AdminController extends AdminApiController
         ->all();
 
         $weekly = FinancialTransactions::find()
+        ->with(['operator'])
         ->where(['!=', 'operator_id', null])
         ->andWhere(['>', 'cdate', (string) strtotime('this week')])
         ->all();
 
         $daily = FinancialTransactions::find()
+        ->with(['operator'])
         ->where(['!=', 'operator_id', null])
         ->andWhere(['>', 'cdate', (string) strtotime('today')])
         ->all();
@@ -114,7 +200,7 @@ class AdminController extends AdminApiController
         }
 
         $this->resp->result = true;
-        $this->resp->params = $daily;
+        $this->resp->params = $result;
 
         return $this->resp;
     }

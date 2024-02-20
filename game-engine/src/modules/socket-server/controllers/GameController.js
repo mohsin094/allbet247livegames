@@ -18,7 +18,7 @@ import GameTimeframesModel from "#models/GameTimeframes";
 import UsersModel from "#models/Users";
 import FinancialTransactionsModel from "#models/FinancialTransactions";
 import GameStakesModel from "#models/GameStakes";
-import UserSubsetsModel from "#models/GameStakes";
+import UserSubsetsModel from "#models/UserSubsets";
 import SettingsModel from "#models/Settings";
 import GameHolder from "#backgammon/GameHolder";
 import Game from "#backgammon/Backgammon";
@@ -298,7 +298,7 @@ function GameController()
 							.findOne({
 								user_id: (winner > 0) ? match.home_id : match.away_id
 							});
-
+							
 							if(agent) {
 								
 								const agentRevenue = (bankAmount * agentSharePercentSetting.value) / 100;
