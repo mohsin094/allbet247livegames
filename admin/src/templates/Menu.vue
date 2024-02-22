@@ -1,6 +1,6 @@
 <template>
 	<!-- Menu -->
-    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+    <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme collapse">
       <div class="app-brand demo">
         <a href="javascript:void(0)" class="app-brand-link">
           <span class="app-brand-logo demo">
@@ -13,7 +13,7 @@
           </span>
           <span class="app-brand-text demo menu-text fw-bold">Admin Panel</span>
         </a>
-        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+        <a href="javascript:void(0);" data-bs-toggle="collapse" data-bs-target="#layout-menu" aria-controls="layout-menu" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler layout-menu-toggle menu-link text-large ms-auto">
           <i class="ti menu-toggle-icon d-none d-xl-block ti-sm align-middle"></i>
           <i class="ti ti-x d-block d-xl-none ti-sm align-middle"></i>
         </a>
@@ -51,7 +51,7 @@
 		  </router-link>
 		  <!-- game -->
 		  <router-link
-		  v-if="$user.data.role == 'admin'"
+		  
 	        	:to="{name: 'games'}"
 			    v-bind="$props"
 			    custom
@@ -81,7 +81,7 @@
 
 		  <!-- financial -->
 		  <router-link
-		  v-if="$user.data.role == 'admin'"
+		  
 	        	:to="{name: 'financial'}"
 			    v-bind="$props"
 			    custom
@@ -95,7 +95,7 @@
 	        </li>
 		  </router-link>
 		  <router-link
-		  v-if="$user.data.role == 'admin'"
+		  
 	        	:to="{name: 'agentActivityReport'}"
 			    v-bind="$props"
 			    custom
@@ -158,3 +158,9 @@ export default {
 	}
 }
 </script>
+
+<style>
+.layout-menu {
+	transform: initial !important;
+}
+</style>

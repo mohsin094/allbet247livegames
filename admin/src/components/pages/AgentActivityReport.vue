@@ -1,8 +1,9 @@
 <template>
 <h4>Agents Activities Report</h4>
-<div class="card">
+
+<div class="card mb-4">
 	<div class="card-body">
-		<h5 class="card-title">Weekly</h5>
+		<h5 class="card-title">Daily Revenue</h5>
 		<div class="table-responsive text-nowrap">
 			<table class="table">
 				<thead>
@@ -10,6 +11,123 @@
 						
 						<th>User</th>
 						
+						<th>Total Revenue</th>
+						
+					</tr>
+				</thead>
+				<tbody class="table-border-bottom-0">
+					<tr v-for="rep in dailyRevenue">
+						<td>
+							{{rep.user.public_name}}
+						</td>
+						<td>
+							{{rep.totalRevenue}}
+						</td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="card mb-4">
+	<div class="card-body">
+		<h5 class="card-title">Weekly Revenue</h5>
+		<div class="table-responsive text-nowrap">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>User</th>
+						<th>Total Revenue</th>
+					</tr>
+				</thead>
+				<tbody class="table-border-bottom-0">
+					<tr v-for="rep in weeklyRevenue">
+						<td>
+							{{rep.user.public_name}}
+						</td>
+						<td>
+							{{rep.totalRevenue}}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="card mb-4">
+	<div class="card-body">
+		<h5 class="card-title">Monthly Revenue</h5>
+		<div class="table-responsive text-nowrap">
+			<table class="table">
+				<thead>
+					<tr>
+						
+						<th>User</th>
+						
+						<th>Total Revenue</th>
+						
+					</tr>
+				</thead>
+				<tbody class="table-border-bottom-0">
+					<tr v-for="rep in monthlyRevenue">
+						<td>
+							{{rep.user.public_name}}
+						</td>
+						<td>
+							{{rep.totalRevenue}}
+						</td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<div class="card mb-4">
+	<div class="card-body">
+		<h5 class="card-title">Daily Deposit/Withdrawal</h5>
+		<div class="table-responsive text-nowrap">
+			<table class="table">
+				<thead>
+					<tr>
+						
+						<th>User</th>
+						
+						<th>Deposit</th>
+						<th>Withdrawal</th>
+						
+					</tr>
+				</thead>
+				<tbody class="table-border-bottom-0">
+					<tr v-for="rep in daily">
+						<td>
+							{{rep.operator.public_name}}
+						</td>
+						<td>
+							{{rep.deposit}}
+						</td>
+						<td>{{rep.withdrawal}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+<div class="card mb-4">
+	<div class="card-body">
+		<h5 class="card-title">Weekly Deposit/Withdrawal</h5>
+		<div class="table-responsive text-nowrap">
+			<table class="table">
+				<thead>
+					<tr>
+						
+						<th>User</th>
 						<th>Deposit</th>
 						<th>Withdrawal</th>
 						
@@ -33,7 +151,7 @@
 
 <div class="card">
 	<div class="card-body">
-		<h5 class="card-title">Monthly</h5>
+		<h5 class="card-title">Monthly Deposit/Withdrawal</h5>
 		<div class="table-responsive text-nowrap">
 			<table class="table">
 				<thead>
@@ -69,12 +187,17 @@
 		{
 			return {				
 				weekly: [],
-				monthly: []
+				daily: [],
+				monthly: [],
+				dailyRevenue: [],
+				weeklyRevenue: [],
+				monthlyRevenue: []
 			}
 		},
 		mounted()
 		{
 			this.fetchReport();
+			this.fetchRevenue();
 		},
 		methods: {
 			fetchReport()
@@ -84,9 +207,22 @@
 					if(res.result) {
 						this.weekly = res.params.weekly;
 						this.monthly = res.params.monthly;
+						this.daily = res.params.daily;
+					}
+				})
+			},
+			fetchRevenue()
+			{
+				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-activity-revenue").then((res) => {
+					res = res.data;
+					if(res.result) {
+						this.weeklyRevenue = res.params.weekly;
+						this.monthlyRevenue = res.params.monthly;
+						this.dailyRevenue = res.params.daily;
 					}
 				})
 			}
+			
 		}
 	}
 </script>

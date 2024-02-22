@@ -38,7 +38,7 @@ return [
         'user',
     ],
     '65c0bee13446e1413e1b0ae9' => [
-        'user',
+        'agent',
     ],
     '65c151a5a2763ae4230cc732' => [
         'user',

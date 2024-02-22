@@ -16,7 +16,7 @@
 						{{settings[setting].name}}
 					</td>
 					<td>
-						{{settings[setting].value}}
+						<input @focusout="update(setting)" type="text" v-model="settings[setting].value" class="form-control"/>
 					</td>
 					<td>
 						{{settings[setting].description}}
@@ -41,6 +41,20 @@
 			this.fetchSettings();
 		},
 		methods: {
+			update(id)
+			{
+				
+				const data = {
+					value: this.settings[id].value
+				}
+
+				this.$axios.post(import.meta.env.VITE_BACKEND_BASE_URL + "/admin-setting/update?id="+this.settings[id]._id, data).then((res) => {
+					res = res.data;
+					if(res.result) {
+						this.$notif.show('Updated!', 'success');
+					}
+				});
+			},
 			fetchSettings()
 			{
 				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/admin-setting/get").then((res) => {

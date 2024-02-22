@@ -6,6 +6,8 @@ export default {
 		transfer: "transfer",
 		deposit: "deposit",
 		withdrawal: "withdrawal",
-		bank: "bank"
+		bank: "bank",
+		agent_revenue_share: "agent_revenue_share"
+
 	}
 }

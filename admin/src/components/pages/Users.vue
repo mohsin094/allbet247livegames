@@ -1,7 +1,7 @@
 <template>
 	<h4>Users</h4>
 	<div class="card">
-		<div class="card-header header-elements">
+		<div v-if="$user.data.role == 'admin'" class="card-header header-elements">
           <div class="card-header-elements ms-auto">
             <input @keyup.enter="fetchUsers" @focusout="fetchUsers" v-model="search" type="text" class="form-control form-control-sm" placeholder="Search" />
           </div>
@@ -20,7 +20,15 @@
 				</thead>
 				<tbody class="table-border-bottom-0">
 					<tr v-for="user in users">
-						<td>
+						<td v-if="$user.data.role == 'admin'">
+							<router-link :to="{name: 'userProfile', query: {userId: user._id}}">
+								<div class="avatar avatar-md me-2">
+		                          <img :src="baseUrl + '/assets/images/avatars/'+user.avatar+'.png'" alt="Avatar" class="rounded-circle">
+		                        </div>
+								<span class="fw-medium">{{user.public_name}}</span>
+							</router-link>
+						</td>
+						<td v-else>
 							<div class="avatar avatar-md me-2">
 	                          <img :src="baseUrl + '/assets/images/avatars/'+user.avatar+'.png'" alt="Avatar" class="rounded-circle">
 	                        </div>
@@ -122,6 +130,9 @@ export default {
 			case 'waiting_confirmation':
 				htmlClass = 'warning';
 				break;
+			case 'block':
+				htmlClass = 'danger';
+			break;
 			}
 
 			return htmlClass;

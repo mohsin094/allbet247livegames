@@ -8,7 +8,7 @@ use yii\helpers\ArrayHelper;
 use \common\components\Tools;
 use \common\models\UserRoles;
 use \common\models\Users;
-
+use backend\modules\user\models\UserSubsets;
 
 class AdminController extends AdminApiController
 {
@@ -24,7 +24,7 @@ class AdminController extends AdminApiController
                 		'allow' => true
                 	],
                     [
-                        'actions' => ['update'],
+                        'actions' => ['update', 'get'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -33,7 +33,26 @@ class AdminController extends AdminApiController
 		]);
 	}
 
+	public function actionGet($userId)
+	{
+		$user = Users::findOne(['_id' => $userId]);
+		$agent = UserSubsets::find()
+		->with(['caller'])
+		->where(['user_id' => $userId])
+		->one();
 
+		$result = $user->attributes;
+		
+		if($agent) {
+			$result += [
+				'agent' => $agent->caller
+			];
+		}
+		$this->resp->result = true;
+		$this->resp->params = $result;
+
+		return $this->resp;
+	}
 
 	public function actionUpdate($userId)
 	{
@@ -68,10 +87,24 @@ class AdminController extends AdminApiController
 
 	public function actionList($limit=50, $page=1, $query = '')
 	{
+		$subsets = [];
+		if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+			$subsets = UserSubsets::find()
+			->where(['caller_id' => \Yii::$app->user->id])
+			->indexBy('user_id')
+			->asArray()
+			->all();
+			$subsets = array_keys($subsets);
+		}
+
 		$models = Users::find()
 		->orderBy('cdate DESC')
 		->limit($limit)
 		->offset(($page-1) * $limit);
+
+		if(!empty($subsets) && \Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+			$models->where(['in', '_id', $subsets]);
+		}
 
 		if(!empty($query)) {
 			$models = $models->where(['email' => ['$regex' => $query]]);

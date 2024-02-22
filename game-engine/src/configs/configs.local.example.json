@@ -2,7 +2,7 @@
   "params": {
     "httpRequestSizeLimit": "10mb",
     "cookiePrefix": "httpCookie_",
-    "sessionHttpHeader": "X-SESS-ID",
+    "sessionHttpHeader": "token",
     "host": "*",
     "adminWebServiceToken": "0fb52d40-7277-41d6-9c74-ff3a160b6297"
   },
@@ -12,11 +12,16 @@
   },
   "server": {
     "http": {
-      "port": 3002
+      "port": 3002,
+      "https": {
+        "active": false,
+        "cert": "",
+        "key": ""
+      }
     },
     "socket": {
       "port": 3001,
-      "path": "/chat"
+      "path": "/game"
     }
   },
   "db": {
@@ -41,10 +46,11 @@
       ]
     },
     "mongodb": {
-      "host": "localhost",
-      "user": "root",
+      "dbName": "",
+      "host": "127.0.0.1",
+      "user": "",
       "password": "",
-      "port": 6379
+      "port": 27017
     }
   },
   "fs": {

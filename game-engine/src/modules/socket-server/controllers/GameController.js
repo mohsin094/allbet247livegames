@@ -18,6 +18,7 @@ import GameTimeframesModel from "#models/GameTimeframes";
 import UsersModel from "#models/Users";
 import FinancialTransactionsModel from "#models/FinancialTransactions";
 import GameStakesModel from "#models/GameStakes";
+import UserSubsetsModel from "#models/UserSubsets";
 import SettingsModel from "#models/Settings";
 import GameHolder from "#backgammon/GameHolder";
 import Game from "#backgammon/Backgammon";
@@ -228,6 +229,11 @@ function GameController()
 						.findOne({
 							name: SettingsModel._name.share_percent
 						});
+
+						const agentSharePercentSetting = await mongo.db.collection(SettingsModel.name)
+						.findOne({
+							name: SettingsModel._name.agent_share_percent
+						});
 						
 						let winner = 0;
 						let notDone = false;
@@ -267,7 +273,7 @@ function GameController()
 							});
 
 							const sharePercent = sharePercentSetting.value;
-							const bankAmount = ((stake.stake * 2) * sharePercent) / 100;
+							let bankAmount = ((stake.stake * 2) * sharePercent) / 100;
 							const winAmount = (stake.stake * 2) - bankAmount;
 
 							// get winner user
@@ -286,6 +292,46 @@ function GameController()
 								description: "Win a match",
 								cdate: Math.floor(Date.now() / 1000)
 							});
+
+							// check if this player has agent then add revenue share to agent balance
+							const agent = await mongo.db.collection(UserSubsetsModel.name)
+							.findOne({
+								user_id: (winner > 0) ? match.home_id : match.away_id
+							});
+							
+							if(agent) {
+								
+								const agentRevenue = (bankAmount * agentSharePercentSetting.value) / 100;
+								bankAmount = bankAmount - agentRevenue;
+								await mongo.db.collection(FinancialTransactionsModel.name)
+								.insertOne({
+									user_id: agent.caller_id,
+									source: "game-engine-match-end",
+									source_id: match._id.toString(),
+									type: FinancialTransactionsModel.type.agent_revenue_share,
+									amount: agentRevenue,
+									description: "share of revenue",
+									cdate: Math.floor(Date.now() / 1000)
+								});
+
+								const agentUser = await mongo.db.collection(UsersModel.name)
+								.findOne({
+									_id: ObjectId(agent.caller_id)
+								});
+
+								if(agentUser) {
+									await mongo.db.collection(UsersModel.name)
+									.updateOne(
+									{
+										_id: ObjectId(agent.caller_id)
+									},
+									{
+										$set: {
+											balance: parseFloat(agentUser.balance) + parseFloat(agentRevenue)
+										}	
+									});
+								}
+							}
 
 							// add transaction for bank
 							await mongo.db.collection(FinancialTransactionsModel.name)
@@ -309,7 +355,8 @@ function GameController()
 									balance: parseFloat(winnerUser.balance) + parseFloat(winAmount)
 								}	
 							});
-							
+
+
 
 						}
 						if(typeof game.playerWhite.socket === 'object') {

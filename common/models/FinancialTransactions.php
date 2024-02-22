@@ -24,6 +24,7 @@ class FinancialTransactions extends \yii\mongodb\ActiveRecord
     const TYPE_DEPOSIT = 'deposit';
     const TYPE_WITHDRAWAL = 'withdrawal';
     const TYPE_BANK = 'bank';
+    const TYPE_AGENT_REVENUE_SHARE = 'agent_revenue_share';
 
 
     public static function new($userId, $amount, $type, $source, $sourceId, $description, $operatorId = null) {
