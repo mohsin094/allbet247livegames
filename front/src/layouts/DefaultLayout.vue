@@ -24,6 +24,14 @@
       Auth
     },
     mounted() {
+      const callerId = this.$route.query.callerId;
+      if(callerId != undefined) {
+        let data = JSON.stringify({
+          callerId: callerId
+        })
+        this.$storage.setItem("callerId", data);
+      }
+
       let isloginUrl = import.meta.env.VITE_BACKEND_BASE_URL+'/user/auth/is-login'
       const instance = this
       setInterval(function () {

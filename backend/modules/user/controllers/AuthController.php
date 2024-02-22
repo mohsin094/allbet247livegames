@@ -12,6 +12,7 @@ use \common\components\ApiAction;
 use \common\models\Tokens;
 use \common\components\Mail;
 use \common\models\LoginForm;
+use \backend\modules\user\models\UserSubsets;
 
 use yii\helpers\Url;
 
@@ -35,11 +36,23 @@ class AuthController extends ApiController
 
 	public function actionRegister()
 	{
+		
 		$model = new Users;
 		$model->scenario = Users::SCENARIO_REGISTER;
 		if($model->load(\Yii::$app->request->bodyParams) && $model->save()) {
 			$mavensNewAccount = \Yii::$app->mavens->account->addNew($model);
-			if($mavensNewAccount->success){
+			if(!$mavensNewAccount->success){
+
+				if(isset(\Yii::$app->request->bodyParams['caller_id'])) {
+					$agent = Users::findOne(['invitation_id' => \Yii::$app->request->bodyParams['caller_id']]);
+					if($agent) {
+						$subset = new UserSubsets;
+						$subset->user_id = (string) $model->_id;
+						$subset->caller_id = (string) $agent->_id;
+						$subset->save();
+					}
+				}
+
 				$this->resp->result = true;
 				$this->resp->params = [
 					'userId' => (string) $model->_id

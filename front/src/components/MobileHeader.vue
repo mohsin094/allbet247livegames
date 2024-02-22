@@ -66,6 +66,12 @@
 			                <span class="ms-1  menu-link">Play Poker</span>
 			              </router-link>
 			            </li>
+			            <li v-if="!$user.data.isGuest" class="nav-item">
+			              <router-link :to="{name: 'invitation'}">
+			                <span class="material-symbols-rounded menu-icon">share</span>
+			                <span class="ms-1  menu-link">Invite Your Friend!</span>
+			              </router-link>
+			            </li>
 			          	<li class="nav-item">
 			          		<a @click="$router.push({path:'/notifications'}); hideThisCanvas()"  class="position-relative">
 				            	<span class="material-symbols-rounded menu-icon">

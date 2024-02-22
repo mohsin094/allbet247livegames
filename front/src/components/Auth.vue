@@ -243,7 +243,7 @@
           username: instance.email,
           password: instance.password
         }).then((response) => {
-          console.log(response.data.params)
+          
           response = response.data
           if(response.result){
             var modalEl = document.getElementById('login');
@@ -259,13 +259,20 @@
         })
       },
       register:function(){
-        let url = import.meta.env.VITE_BACKEND_BASE_URL+'/user/auth/register'
+        let url = import.meta.env.VITE_BACKEND_BASE_URL+'/user/auth/register';
+        const callerIdJson = this.$storage.getItem("callerId");
+        let callerId = '';
+        if(callerIdJson != undefined) {
+          callerId = JSON.parse(callerIdJson).callerId
+        }
+        
         this.$axios.post(url,{
           email: this.email,
           password: this.password,
           password_repeat:this.confirmPass,
-          avatar:this.$user.data.avatar,
-          public_name: this.username
+          avatar:this.avatar,
+          public_name: this.username,
+          caller_id: callerId
         }).then((response) =>{
           response = response.data
           if(response.result){
@@ -276,6 +283,7 @@
         })
       },
       selectAvatar(n){
+        console.log(n)
         this.$user.data.avatar = n.toString();
         this.avatar = n.toString();
         document.getElementById(n).classList.add("bordered-avatar");
