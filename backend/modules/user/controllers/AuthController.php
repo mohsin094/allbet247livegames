@@ -41,7 +41,7 @@ class AuthController extends ApiController
 		$model->scenario = Users::SCENARIO_REGISTER;
 		if($model->load(\Yii::$app->request->bodyParams) && $model->save()) {
 			$mavensNewAccount = \Yii::$app->mavens->account->addNew($model);
-			if(!$mavensNewAccount->success){
+			if($mavensNewAccount->success){
 
 				if(isset(\Yii::$app->request->bodyParams['caller_id'])) {
 					$agent = Users::findOne(['invitation_id' => \Yii::$app->request->bodyParams['caller_id']]);
