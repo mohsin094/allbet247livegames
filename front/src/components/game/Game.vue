@@ -96,6 +96,12 @@
 					</div>
         		</div>
         		<Chat :chats="chats"/>
+        		<div id="chatbox-footer" class="px-2 py-1">
+        			<div class="message-box">
+        				<input v-model="chatbox" id="input-msg" />
+        				<button id="send-msg" class="float-end" @click="sendChat"><img :src="baseUrl+'/assets/icons/send.svg'" /></button>
+        			</div>
+        		</div>
             </div>
         </div>
         <div class="sidebar-box right-sidebar-footer">

@@ -37,6 +37,12 @@ return [
     '65c0bee13446e1413e1b0ae9' => [
         'agent',
     ],
+    '65d7958492915e1c7773ca12' => [
+        'user',
+    ],
+    '65d795ba92915e1c7773ca13' => [
+        'user',
+    ],
     '65c0a4edac0bf419da638c52' => [
         'admin',
     ],
