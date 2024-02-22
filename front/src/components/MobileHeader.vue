@@ -61,6 +61,12 @@
 				          </a>
 			          	</li>
 			          	<li class="nav-item">
+			              <router-link :to="{name: 'poker'}">
+			                <span class="material-symbols-rounded menu-icon">playing_cards</span>
+			                <span class="ms-1  menu-link">Play Poker</span>
+			              </router-link>
+			            </li>
+			          	<li class="nav-item">
 			          		<a @click="$router.push({path:'/notifications'}); hideThisCanvas()"  class="position-relative">
 				            	<span class="material-symbols-rounded menu-icon">
 				              		notifications

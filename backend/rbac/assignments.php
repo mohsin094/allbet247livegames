@@ -38,6 +38,6 @@ return [
         'agent',
     ],
     '65c0a4edac0bf419da638c52' => [
-        'agent',
+        'admin',
     ],
 ];
