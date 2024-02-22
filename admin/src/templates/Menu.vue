@@ -51,7 +51,7 @@
 		  </router-link>
 		  <!-- game -->
 		  <router-link
-		  v-if="$user.data.role == 'admin'"
+		  
 	        	:to="{name: 'games'}"
 			    v-bind="$props"
 			    custom
@@ -81,7 +81,7 @@
 
 		  <!-- financial -->
 		  <router-link
-		  v-if="$user.data.role == 'admin'"
+		  
 	        	:to="{name: 'financial'}"
 			    v-bind="$props"
 			    custom
@@ -95,7 +95,7 @@
 	        </li>
 		  </router-link>
 		  <router-link
-		  v-if="$user.data.role == 'admin'"
+		  
 	        	:to="{name: 'agentActivityReport'}"
 			    v-bind="$props"
 			    custom

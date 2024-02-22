@@ -33,11 +33,105 @@
 	</div>
 	<div class="col-xl-8 col-lg-7 col-md-7 order-0 order-md-1">
 		<!-- Project table -->
-		<div class="card mb-4">
-			<h5 class="card-header">Last 50 Transactions</h5>
-			
-		</div><!-- /Project table -->
-		<!-- Project table -->
+		<div v-if="user != undefined && (user.role == 'agent' || user.role == 'admin') && agentTransactions != undefined" class="card mb-4">
+			<h5 class="card-header">Daily Revenue Share</h5>
+			<div class="table-responsive text-nowrap">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Amount</th>
+							<th>Match ID</th>
+						</tr>
+					</thead>
+					<tbody class="table-border-bottom-0">
+						<tr v-for="fin in agentTransactions.daily.transactions">
+							<td>
+								{{fin._id}}
+							</td>
+							<td>{{fin.amount}}</td>
+							<td>
+								{{(fin.source == 'game-engine-match-end') ? fin.source_id : ''}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table">
+					<tbody class="table-border-bottom-0">
+						<tr class="bg-success">
+							<td>Total Revenue Share</td>
+							<td>{{agentTransactions.daily.totalRevenue}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div v-if="user != undefined && (user.role == 'agent' || user.role == 'admin') && agentTransactions != undefined" class="card mb-4">
+			<h5 class="card-header">Weekly Revenue Share</h5>
+			<div class="table-responsive text-nowrap">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Amount</th>
+							<th>Match ID</th>
+						</tr>
+					</thead>
+					<tbody class="table-border-bottom-0">
+						<tr v-for="fin in agentTransactions.weekly.transactions">
+							<td>
+								{{fin._id}}
+							</td>
+							<td>{{fin.amount}}</td>
+							<td>
+								{{(fin.source == 'game-engine-match-end') ? fin.source_id : ''}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table">
+					<tbody class="table-border-bottom-0">
+						<tr class="bg-success">
+							<td>Total Revenue Share</td>
+							<td>{{agentTransactions.weekly.totalRevenue}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div v-if="user != undefined && (user.role == 'agent' || user.role == 'admin') && agentTransactions != undefined" class="card mb-4">
+			<h5 class="card-header">Monthly Revenue Share</h5>
+			<div class="table-responsive text-nowrap">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>Amount</th>
+							<th>Match ID</th>
+						</tr>
+					</thead>
+					<tbody class="table-border-bottom-0">
+						<tr v-for="fin in agentTransactions.monthly.transactions">
+							<td>
+								{{fin._id}}
+							</td>
+							<td>{{fin.amount}}</td>
+							<td>
+								{{(fin.source == 'game-engine-match-end') ? fin.source_id : ''}}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table class="table">
+					<tbody class="table-border-bottom-0">
+						<tr class="bg-success">
+							<td>Total Revenue Share</td>
+							<td>{{agentTransactions.monthly.totalRevenue}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 		<div v-if="user != undefined && user.role != 'agent'" class="card mb-4">
 			<h5 class="card-header">Last 50 Transactions</h5>
 			<div class="table-responsive text-nowrap">
@@ -94,6 +188,7 @@ export default {
 			userId: '',
 			baseUrl: import.meta.env.VITE_FRONT_BASE_URL,
 			transactions: undefined,
+			agentTransactions: undefined
 		}
 	},
 	mounted()
@@ -101,6 +196,7 @@ export default {
 		this.userId = this.$route.query.userId;
 		this.fetchUser();
 		this.fetchTransactions();
+		this.fetchAgentTransactions();
 	},
 	methods: {
 		fetchTransactions()
@@ -109,6 +205,15 @@ export default {
 				res = res.data;
 				if(res.result) {
 					this.transactions = res.params;
+				}
+			})
+		},
+		fetchAgentTransactions()
+		{
+			this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-transactions?agentId=" + this.userId).then((res) => {
+				res = res.data;
+				if(res.result) {
+					this.agentTransactions = res.params;
 				}
 			})
 		},

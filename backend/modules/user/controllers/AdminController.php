@@ -87,10 +87,24 @@ class AdminController extends AdminApiController
 
 	public function actionList($limit=50, $page=1, $query = '')
 	{
+		$subsets = [];
+		if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+			$subsets = UserSubsets::find()
+			->where(['caller_id' => \Yii::$app->user->id])
+			->indexBy('user_id')
+			->asArray()
+			->all();
+			$subsets = array_keys($subsets);
+		}
+
 		$models = Users::find()
 		->orderBy('cdate DESC')
 		->limit($limit)
 		->offset(($page-1) * $limit);
+
+		if(!empty($subsets) && \Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+			$models->where(['in', '_id', $subsets]);
+		}
 
 		if(!empty($query)) {
 			$models = $models->where(['email' => ['$regex' => $query]]);

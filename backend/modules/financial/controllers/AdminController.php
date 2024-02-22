@@ -7,8 +7,10 @@ use yii\helpers\ArrayHelper;
 use \common\components\Tools;
 use MongoDB\BSON\ObjectId;
 use common\models\UsersRepo;
-
+use backend\modules\user\models\UserSubsets;
+use \common\models\UserRoles;
 use \common\models\FinancialTransactions;
+
 class AdminController extends AdminApiController
 {
 
@@ -19,12 +21,12 @@ class AdminController extends AdminApiController
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['deposit-into-account', 'withdrawal-from-account'],
+                        'actions' => ['list', 'deposit-into-account', 'withdrawal-from-account','get-agent-activity-revenue', 'get-agent-activity-amount'],
                         'roles' => ['admin', 'agent'],
                         'allow' => true
                     ],
                     [
-                        'actions' => ['list', 'get-income', 'get-agent-activity-amount', 'get-agent-transactions'],
+                        'actions' => ['get-income', 'get-agent-transactions'],
                         'roles' => ['admin'],
                         'allow' => true,
                     ],
@@ -32,6 +34,95 @@ class AdminController extends AdminApiController
             ]
 		]);
 	}
+
+    public function actionGetAgentActivityRevenue()
+    {
+        $monthly = FinancialTransactions::find()
+        ->with(['user'])
+        ->where(['type' => FinancialTransactions::TYPE_AGENT_REVENUE_SHARE])
+        ->andWhere(['>', 'cdate', strtotime('first day of ' . date( 'F Y'))]);
+        
+        if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+            $monthly->andWhere(['user_id' => \Yii::$app->user->id]);
+        }
+        $monthly = $monthly->all();
+
+        $weekly = FinancialTransactions::find()
+        ->with(['user'])
+        ->where(['type' => FinancialTransactions::TYPE_AGENT_REVENUE_SHARE])
+        ->andWhere(['>', 'cdate', strtotime('this week')]);
+        
+        if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+            $weekly->andWhere(['user_id' => \Yii::$app->user->id]);
+        }
+        $weekly = $weekly->all();
+
+        $daily = FinancialTransactions::find()
+        ->with(['user'])
+        ->where(['type' => FinancialTransactions::TYPE_AGENT_REVENUE_SHARE])
+        ->andWhere(['>', 'cdate', strtotime('today')]);
+
+        if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+            $daily->andWhere(['user_id' => \Yii::$app->user->id]);
+        }
+        $daily = $daily->all();
+
+
+
+        $result = [
+            'daily' => [],
+            'monthly' => [],
+            'weekly' => [],
+        ];
+
+        foreach($monthly as $m) {
+            if(!in_array((string) $m->user_id, array_keys($result['monthly']))) {
+                $result['monthly'][(string) $m->user_id] = [
+                    'totalRevenue' => 0,
+                    'user' => $m->user
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
+                $result['monthly'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+            }
+            
+        }
+
+        foreach($weekly as $m) {
+            if(!in_array((string) $m->user_id, array_keys($result['weekly']))) {
+                $result['weekly'][(string) $m->user_id] = [
+                    'totalRevenue' => 0,
+                    'user' => $m->user
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
+                $result['weekly'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+            }
+
+        }
+
+        foreach($daily as $m) {
+            if(!in_array((string) $m->user_id, array_keys($result['daily']))) {
+                $result['daily'][(string) $m->user_id] = [
+                    'totalRevenue' => 0,
+                    'user' => $m->user
+                ];
+            }
+
+            if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
+                $result['daily'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+            }
+
+         
+        }
+
+        $this->resp->result = true;
+        $this->resp->params = $result;
+
+        return $this->resp;
+    }
 
     public function actionGetAgentTransactions($agentId)
     {
@@ -56,63 +147,56 @@ class AdminController extends AdminApiController
 
 
         $result = [
-            'daily' => [],
-            'monthly' => [],
-            'weekly' => [],
-        ];
-
-        foreach($monthly as $m) {
-            if(!in_array((string) $m->user_id, array_keys($result['monthly']))) {
-                $result['monthly'][(string) $m->user_id] = [
+            'daily' => [
                     'totalRevenue' => 0,
                     'transactions' => [],
                     
-                ];
-            }
+                ],
+            'monthly' => [
+                    'totalRevenue' => 0,
+                    'transactions' => [],
+                    
+                ],
+            'weekly' => [
+                    'totalRevenue' => 0,
+                    'transactions' => [],
+                    
+                ],
+        ];
+
+        foreach($monthly as $m) {
+
 
             if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
-                $result['monthly'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+                $result['monthly']['totalRevenue'] += $m->amount;
             }
 
-            array_push($result['monthly'][(string) $m->user_id]['transactions'], $m);
+            array_push($result['monthly']['transactions'], $m);
 
             
         }
 
         foreach($weekly as $m) {
-            if(!in_array((string) $m->user_id, array_keys($result['weekly']))) {
-                $result['weekly'][(string) $m->user_id] = [
-                    'totalRevenue' => 0,
-                    'transactions' => [],
-                    
-                ];
-            }
 
             if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
-                $result['weekly'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+                $result['weekly']['totalRevenue'] += $m->amount;
             }
 
-            array_push($result['weekly'][(string) $m->user_id]['transactions'], $m);
+            array_push($result['weekly']['transactions'], $m);
         }
 
         foreach($daily as $m) {
-            if(!in_array((string) $m->user_id, array_keys($result['daily']))) {
-                $result['daily'][(string) $m->user_id] = [
-                    'totalRevenue' => 0,
-                    'transactions' => [],
-                    
-                ];
-            }
+
 
             if($m->type == FinancialTransactions::TYPE_AGENT_REVENUE_SHARE) {
-                $result['daily'][(string) $m->user_id]['totalRevenue'] += $m->amount;
+                $result['daily']['totalRevenue'] += $m->amount;
             }
 
-            array_push($result['daily'][(string) $m->user_id]['transactions'], $m);
+            array_push($result['daily']['transactions'], $m);
         }
 
         $this->resp->result = true;
-        $this->resp->parasm = $result;
+        $this->resp->params = $result;
 
         return $this->resp;
     }
@@ -122,20 +206,32 @@ class AdminController extends AdminApiController
         $monthly = FinancialTransactions::find()
         ->with(['operator'])
         ->where(['!=', 'operator_id', null])
-        ->andWhere(['>', 'cdate', (string) strtotime('first day of ' . date( 'F Y'))])
-        ->all();
+        ->andWhere(['>', 'cdate', (string) strtotime('first day of ' . date( 'F Y'))]);
+         
+        if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+            $monthly->andWhere(['operator_id' => \Yii::$app->user->id]);
+        }    
+        $monthly = $monthly->all();
 
         $weekly = FinancialTransactions::find()
         ->with(['operator'])
         ->where(['!=', 'operator_id', null])
-        ->andWhere(['>', 'cdate', (string) strtotime('this week')])
-        ->all();
+        ->andWhere(['>', 'cdate', (string) strtotime('this week')]);
+        
+        if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+            $weekly->andWhere(['operator_id' => \Yii::$app->user->id]);
+        } 
+        $weekly = $weekly->all();
 
         $daily = FinancialTransactions::find()
         ->with(['operator'])
         ->where(['!=', 'operator_id', null])
-        ->andWhere(['>', 'cdate', (string) strtotime('today')])
-        ->all();
+        ->andWhere(['>', 'cdate', (string) strtotime('today')]);
+
+        if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
+            $daily->andWhere(['operator_id' => \Yii::$app->user->id]);
+        } 
+        $daily = $daily->all();
 
 
 
@@ -265,6 +361,18 @@ class AdminController extends AdminApiController
         ->orderBy('cdate DESC')
         ->limit($limit)
         ->offset(($page-1) * $limit);
+
+        if(\Yii::$app->user->getIdentity()->role == 'agent') {
+            $subsets = UserSubsets::find()
+            ->where(['caller_id' => \Yii::$app->user->id])
+            ->indexBy('user_id')
+            ->asArray()
+            ->all();
+            $subsets = array_keys($subsets);
+
+            $models->where(['in', 'user_id', $subsets])
+            ->orWhere(['operator_id' => \Yii::$app->user->id]);
+        }
 
         if(!empty($query)) {
             // $models = $models->where(['_id' => $query]);
