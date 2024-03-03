@@ -4,6 +4,10 @@
 <div class="card mb-4">
 	<div class="card-body">
 		<h5 class="card-title">Daily Revenue</h5>
+		<div class="col-md-6 col-12 mb-4">
+	        <label class="form-label">Pick a Date</label>
+	        <input  @focusout="fetchDailyRevenue" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+	      </div>
 		<div class="table-responsive text-nowrap">
 			<table class="table">
 				<thead>
@@ -91,6 +95,11 @@
 <div class="card mb-4">
 	<div class="card-body">
 		<h5 class="card-title">Daily Deposit/Withdrawal</h5>
+		<div class="col-md-6 col-12 mb-4">
+	        <label class="form-label">Pick a Date</label>
+	        <input @focusout="fetchDailyReport" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+	      </div>
+
 		<div class="table-responsive text-nowrap">
 			<table class="table">
 				<thead>
@@ -191,15 +200,48 @@
 				monthly: [],
 				dailyRevenue: [],
 				weeklyRevenue: [],
-				monthlyRevenue: []
+				monthlyRevenue: [],
+				depositWithdrawalDate: ''
 			}
 		},
 		mounted()
 		{
 			this.fetchReport();
 			this.fetchRevenue();
+
+			$('.datepicker').datepicker();
 		},
 		methods: {
+			fetchDailyReport(event)
+			{
+				if(event.target.value != '') {
+					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-activity-amount-by-date?date="+event.target.value).then((res) => {
+						res = res.data;
+						if(res.result) {
+							this.daily = res.params;
+						}
+					});
+				}else {
+					this.fetchReport();
+				}
+				
+				
+			},
+			fetchDailyRevenue(event)
+			{
+				if(event.target.value != '') {
+					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-activity-revenue-by-date?date="+event.target.value).then((res) => {
+						res = res.data;
+						if(res.result) {
+							this.dailyRevenue = res.params;
+						}
+					});
+				}else {
+					this.fetchRevenue();
+				}
+				
+				
+			},
 			fetchReport()
 			{
 				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-activity-amount").then((res) => {
@@ -209,7 +251,7 @@
 						this.monthly = res.params.monthly;
 						this.daily = res.params.daily;
 					}
-				})
+				});
 			},
 			fetchRevenue()
 			{

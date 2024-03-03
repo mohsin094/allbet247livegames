@@ -35,6 +35,10 @@
 		<!-- Project table -->
 		<div v-if="user != undefined && (user.role == 'agent' || user.role == 'admin') && agentTransactions != undefined" class="card mb-4">
 			<h5 class="card-header">Daily Revenue Share</h5>
+				<div class="col-md-6 col-12 mb-4">
+		        <label class="form-label">Pick a Date</label>
+		        <input @focusout="fetchAgentTransactionsByDate" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+		      </div>
 			<div class="table-responsive text-nowrap">
 				<table class="table">
 					<thead>
@@ -134,6 +138,10 @@
 		</div>
 		<div v-if="user != undefined && user.role != 'agent'" class="card mb-4">
 			<h5 class="card-header">Last 50 Transactions</h5>
+			<div class="col-md-6 col-12 mb-4">
+		        <label class="form-label">Pick a Date</label>
+		        <input @focusout="fetchTransactionsByDate" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+		      </div>
 			<div class="table-responsive text-nowrap">
 				<table class="table">
 					<thead>
@@ -197,14 +205,37 @@ export default {
 		this.fetchUser();
 		this.fetchTransactions();
 		this.fetchAgentTransactions();
+
+		$('.datepicker').datepicker();
 	},
 	methods: {
+		fetchTransactionsByDate(event)
+		{
+			if(event.target.value != '') {
+				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/list?query="+ this.userId + "&date=" + event.target.value).then((res) => {
+					res = res.data;
+					if(res.result) {
+						this.transactions = res.params;
+						setTimeout(() => {
+								$('.datepicker').datepicker();
+							},
+							100);
+					}
+				});
+			}else {
+				this.fetchTransactions();
+			}
+		},
 		fetchTransactions()
 		{
 			this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/list?query="+ this.userId).then((res) => {
 				res = res.data;
 				if(res.result) {
 					this.transactions = res.params;
+					setTimeout(() => {
+							$('.datepicker').datepicker();
+						},
+						100);
 				}
 			})
 		},
@@ -214,8 +245,27 @@ export default {
 				res = res.data;
 				if(res.result) {
 					this.agentTransactions = res.params;
+					setTimeout(() => {
+							$('.datepicker').datepicker();
+						},
+						100);
+						
+					
 				}
 			})
+		},
+		fetchAgentTransactionsByDate(event)
+		{
+			if(event.target.value != '') {
+				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-transactions-by-date?agentId=" + this.userId + "&date=" + event.target.value).then((res) => {
+					res = res.data;
+					if(res.result) {
+						this.agentTransactions.daily = res.params;
+					}
+				})
+			}else {
+				this.fetchAgentTransactions();
+			}
 		},
 		fetchUser()
 		{

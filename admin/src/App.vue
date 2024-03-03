@@ -43,6 +43,7 @@ import "./assets/vendor/fonts/tabler-icons.css";
 import "./assets/vendor/css/rtl/core.css";
 import "./assets/vendor/css/rtl/theme-default.css";
 import "./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
+import "./assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css";
 import "./assets/css/demo.css";
 import "./assets/vendor/js/helpers.js";
 import "./assets/css/custom.css";
@@ -52,9 +53,9 @@ import "./assets/vendor/libs/jquery/jquery.js";
 import "./assets/vendor/libs/popper/popper.js";
 import "./assets/vendor/js/bootstrap.js";
 import "./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js";
+import "./assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js";
 import "./assets/vendor/libs/hammer/hammer.js";
 import "./assets/vendor/js/menu.js";
-// import "./assets/js/main.js";
 
 import
 {
