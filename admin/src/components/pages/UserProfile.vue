@@ -38,7 +38,8 @@
 			<div class="col-md-6 col-12 mb-4">
 				<label class="form-label">Date Range</label>
 				<div class="input-group input-daterange">
-					<input @blur="fetchAgentTransactionsByDate" class="form-control custom-date-picker" id="date-from-revenue" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-revenue" @blur="fetchAgentTransactionsByDate" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+					<input class="form-control custom-date-picker" id="date-from-revenue" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-revenue" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+					<button class="btn btn-outline-primary waves-effect" @click="fetchAgentTransactionsByDate" type="button" id="button-addon2">Apply</button>
 				</div>
 			</div>
 			<div class="table-responsive text-nowrap">
@@ -143,7 +144,8 @@
 			<div class="col-md-6 col-12 mb-4">
 				<label class="form-label">Date Range</label>
 				<div class="input-group input-daterange">
-					<input @blur="fetchTransactionsByDate" class="form-control custom-date-picker" id="date-from-trans" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-trans" @blur="fetchTransactionsByDate" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+					<input class="form-control custom-date-picker" id="date-from-trans" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-trans" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+					<button class="btn btn-outline-primary waves-effect" @click="fetchTransactionsByDate" type="button" id="button-addon2">Apply</button>
 				</div>
 			</div>
 			<div class="table-responsive text-nowrap">
