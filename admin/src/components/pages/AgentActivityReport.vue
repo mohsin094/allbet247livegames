@@ -7,7 +7,8 @@
 		<div class="col-md-6 col-12 mb-4">
 			<label class="form-label">Date Range</label>
 			<div class="input-group input-daterange">
-				<input @blur="fetchDailyRevenue" class="form-control custom-date-picker" id="date-from-revenue" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-revenue" @blur="fetchDailyRevenue" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+				<input class="form-control custom-date-picker" id="date-from-revenue" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-revenue" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+				<button class="btn btn-outline-primary waves-effect" @click="fetchDailyRevenue" type="button" id="button-addon2">Apply</button>
 			</div>
 		</div>
 		<div class="table-responsive text-nowrap">
@@ -100,7 +101,8 @@
 		<div class="col-md-6 col-12 mb-4">
 			<label class="form-label">Date Range</label>
 			<div class="input-group input-daterange">
-				<input @blur="fetchDailyReport" class="form-control custom-date-picker" id="date-from-report" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-report" @blur="fetchDailyReport" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+				<input class="form-control custom-date-picker" id="date-from-report" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-report" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+				<button class="btn btn-outline-primary waves-effect" @click="fetchDailyReport" type="button" id="button-addon2">Apply</button>
 			</div>
 		</div>
 
