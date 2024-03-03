@@ -1,9 +1,11 @@
 <template>
 <h4>Financial</h4>
 <div class="col-md-6 col-12 mb-4">
-	        <label class="form-label">Pick a Date</label>
-	        <input @focusout="fetchFinancialByDate" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
-	      </div>
+	<label class="form-label">Date Range</label>
+	<div class="input-group input-daterange">
+		<input @blur="fetchFinancialByDate" class="form-control custom-date-picker" id="date-from" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to" @blur="fetchFinancialByDate" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+	</div>
+</div>
 <div class="card">
 	<div class="card-header header-elements">
       <div class="card-header-elements ms-auto">
@@ -70,14 +72,17 @@
 			$('.custom-date-picker').datepicker();
 		},
 		methods: {
-			fetchFinancialByDate(event)
+			fetchFinancialByDate()
 			{
-				if(event.target.value != '') {
+				const from = $("#date-from").val();
+				const to = $("#date-to").val();
+				
+				if(from != '' && to != '') {
 					let query = "";
 					if(this.search != "") {
-						query = "?query=" + this.search + "&date=" + event.target.value;
+						query = "?query=" + this.search + "&date=" + from + "&toDate=" + to;
 					}else {
-						query = "?date=" + event.target.value;
+						query = "?date=" + from + "&toDate=" + to;
 					}
 
 					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/list"+query).then((res) => {

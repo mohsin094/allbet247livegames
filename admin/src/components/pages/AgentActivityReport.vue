@@ -5,9 +5,11 @@
 	<div class="card-body">
 		<h5 class="card-title">Daily Revenue</h5>
 		<div class="col-md-6 col-12 mb-4">
-	        <label class="form-label">Pick a Date</label>
-	        <input  @focusout="fetchDailyRevenue" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
-	      </div>
+			<label class="form-label">Date Range</label>
+			<div class="input-group input-daterange">
+				<input @blur="fetchDailyRevenue" class="form-control custom-date-picker" id="date-from-revenue" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-revenue" @blur="fetchDailyRevenue" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+			</div>
+		</div>
 		<div class="table-responsive text-nowrap">
 			<table class="table">
 				<thead>
@@ -96,9 +98,11 @@
 	<div class="card-body">
 		<h5 class="card-title">Daily Deposit/Withdrawal</h5>
 		<div class="col-md-6 col-12 mb-4">
-	        <label class="form-label">Pick a Date</label>
-	        <input @focusout="fetchDailyReport" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
-	      </div>
+			<label class="form-label">Date Range</label>
+			<div class="input-group input-daterange">
+				<input @blur="fetchDailyReport" class="form-control custom-date-picker" id="date-from-report" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-report" @blur="fetchDailyReport" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+			</div>
+		</div>
 
 		<div class="table-responsive text-nowrap">
 			<table class="table">
@@ -212,10 +216,12 @@
 			$('.custom-date-picker').datepicker();
 		},
 		methods: {
-			fetchDailyReport(event)
+			fetchDailyReport()
 			{
-				if(event.target.value != '') {
-					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-activity-amount-by-date?date="+event.target.value).then((res) => {
+				const from = $("#date-from-report").val();
+				const to = $("#date-to-report").val();
+				if(from != '' && to != '') {
+					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-activity-amount-by-date?date="+from+"&toDate="+to).then((res) => {
 						res = res.data;
 						if(res.result) {
 							this.daily = res.params;
@@ -227,10 +233,12 @@
 				
 				
 			},
-			fetchDailyRevenue(event)
+			fetchDailyRevenue()
 			{
-				if(event.target.value != '') {
-					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-activity-revenue-by-date?date="+event.target.value).then((res) => {
+				const from = $("#date-from-revenue").val();
+				const to = $("#date-to-revenue").val();
+				if(from != '' && to != '') {
+					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-activity-revenue-by-date?date="+from+"&toDate="+to).then((res) => {
 						res = res.data;
 						if(res.result) {
 							this.dailyRevenue = res.params;
