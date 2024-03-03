@@ -35,10 +35,12 @@
 		<!-- Project table -->
 		<div v-if="user != undefined && (user.role == 'agent' || user.role == 'admin') && agentTransactions != undefined" class="card mb-4">
 			<h5 class="card-header">Daily Revenue Share</h5>
-				<div class="col-md-6 col-12 mb-4">
-		        <label class="form-label">Pick a Date</label>
-		        <input @focusout="fetchAgentTransactionsByDate" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
-		      </div>
+			<div class="col-md-6 col-12 mb-4">
+				<label class="form-label">Date Range</label>
+				<div class="input-group input-daterange">
+					<input @blur="fetchAgentTransactionsByDate" class="form-control custom-date-picker" id="date-from-revenue" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-revenue" @blur="fetchAgentTransactionsByDate" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+				</div>
+			</div>
 			<div class="table-responsive text-nowrap">
 				<table class="table">
 					<thead>
@@ -139,9 +141,11 @@
 		<div v-if="user != undefined && user.role != 'agent'" class="card mb-4">
 			<h5 class="card-header">Last 50 Transactions</h5>
 			<div class="col-md-6 col-12 mb-4">
-		        <label class="form-label">Pick a Date</label>
-		        <input @focusout="fetchTransactionsByDate" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
-		      </div>
+				<label class="form-label">Date Range</label>
+				<div class="input-group input-daterange">
+					<input @blur="fetchTransactionsByDate" class="form-control custom-date-picker" id="date-from-trans" placeholder="MM/DD/YYYY" type="text"> <span class="input-group-text">to</span> <input id="date-to-trans" @blur="fetchTransactionsByDate" class="form-control custom-date-picker" placeholder="MM/DD/YYYY" type="text">
+				</div>
+			</div>
 			<div class="table-responsive text-nowrap">
 				<table class="table">
 					<thead>
@@ -211,8 +215,11 @@ export default {
 	methods: {
 		fetchTransactionsByDate(event)
 		{
-			if(event.target.value != '') {
-				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/list?query="+ this.userId + "&date=" + event.target.value).then((res) => {
+			const from = $("#date-from-trans").val();
+			const to = $("#date-to-trans").val();
+			
+			if(from != '' && to != '') {
+				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/list?query="+ this.userId + "&date=" + from + "&toDate=" + to).then((res) => {
 					res = res.data;
 					if(res.result) {
 						this.transactions = res.params;
@@ -254,10 +261,14 @@ export default {
 				}
 			})
 		},
-		fetchAgentTransactionsByDate(event)
+		fetchAgentTransactionsByDate()
 		{
-			if(event.target.value != '') {
-				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-transactions-by-date?agentId=" + this.userId + "&date=" + event.target.value).then((res) => {
+
+			const from = $("#date-from-revenue").val();
+			const to = $("#date-to-revenue").val();
+			
+			if(from != '' && to != '') {
+				this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/get-agent-transactions-by-date?agentId=" + this.userId + "&date=" + from + "&toDate=" + to).then((res) => {
 					res = res.data;
 					if(res.result) {
 						this.agentTransactions.daily = res.params;

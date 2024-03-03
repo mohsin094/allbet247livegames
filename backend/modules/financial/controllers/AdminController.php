@@ -124,13 +124,13 @@ class AdminController extends AdminApiController
         return $this->resp;
     }
 
-    public function actionGetAgentActivityRevenueByDate($date)
+    public function actionGetAgentActivityRevenueByDate($date, $toDate)
     {
         $daily = FinancialTransactions::find()
         ->with(['user'])
         ->where(['type' => FinancialTransactions::TYPE_AGENT_REVENUE_SHARE])
         ->andWhere(['>', 'cdate', strtotime($date)])
-        ->andWhere(['<', 'cdate', (string) (strtotime($date) + 24 * 60 * 60)]);
+        ->andWhere(['<', 'cdate', (string) (strtotime($toDate))]);
 
         if(\Yii::$app->user->getIdentity()->role == UserRoles::ROLE_AGENT) {
             $daily->andWhere(['user_id' => \Yii::$app->user->id]);
@@ -165,14 +165,14 @@ class AdminController extends AdminApiController
         return $this->resp;
     }
 
-    public function actionGetAgentTransactionsByDate($agentId, $date)
+    public function actionGetAgentTransactionsByDate($agentId, $date, $toDate)
     {
 
         $daily = FinancialTransactions::find()
         ->where(['user_id' => $agentId])
         ->andWhere(['type' => FinancialTransactions::TYPE_AGENT_REVENUE_SHARE])
         ->andWhere(['>', 'cdate', strtotime($date)])
-        ->andWhere(['<', 'cdate', (string) (strtotime($date) + 24 * 60 * 60)])
+        ->andWhere(['<', 'cdate', (string) (strtotime($toDate))])
         ->all();
 
 
@@ -276,13 +276,13 @@ class AdminController extends AdminApiController
         return $this->resp;
     }
 
-    public function actionGetAgentActivityAmountByDate($date)
+    public function actionGetAgentActivityAmountByDate($date, $toDate)
     {
 
         $daily = FinancialTransactions::find()
         ->with(['operator'])
         ->where(['!=', 'operator_id', null])
-        ->andWhere(['<', 'cdate', (string) (strtotime($date) + 24 * 60 * 60)])
+        ->andWhere(['<', 'cdate', (string) (strtotime($toDate))])
         ->andWhere(['>', 'cdate', (string) strtotime($date)]);
 
 
@@ -474,7 +474,7 @@ class AdminController extends AdminApiController
         return $this->resp;
     }
 
-    public function actionList($limit=50, $page=1, $query = '', $date = '')
+    public function actionList($limit=50, $page=1, $query = '', $date = '', $toDate = '')
     {
         $models = FinancialTransactions::find()
         ->with(['user', 'operator'])
@@ -482,9 +482,9 @@ class AdminController extends AdminApiController
         ->limit($limit)
         ->offset(($page-1) * $limit);
 
-        if(!empty($date)) {
+        if(!empty($date) && !empty($toDate)) {
             $models->andWhere(['>', 'cdate', (string) strtotime($date)]);
-            $models->andWhere(['<', 'cdate', (string) (strtotime($date) + 24 * 60 * 60)]);
+            $models->andWhere(['<', 'cdate', (string) (strtotime($toDate))]);
         }
 
         if(\Yii::$app->user->getIdentity()->role == 'agent') {
