@@ -1,5 +1,9 @@
 <template>
 <h4>Financial</h4>
+<div class="col-md-6 col-12 mb-4">
+	        <label class="form-label">Pick a Date</label>
+	        <input @focusout="fetchFinancialByDate" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
+	      </div>
 <div class="card">
 	<div class="card-header header-elements">
       <div class="card-header-elements ms-auto">
@@ -62,8 +66,30 @@
 		mounted()
 		{
 			this.fetchFinancial();
+
+			$('.custom-date-picker').datepicker();
 		},
 		methods: {
+			fetchFinancialByDate(event)
+			{
+				if(event.target.value != '') {
+					let query = "";
+					if(this.search != "") {
+						query = "?query=" + this.search + "&date=" + event.target.value;
+					}else {
+						query = "?date=" + event.target.value;
+					}
+
+					this.$axios.get(import.meta.env.VITE_BACKEND_BASE_URL + "/financial/admin/list"+query).then((res) => {
+						res = res.data;
+						if(res.result) {
+							this.financialList = res.params;
+						}
+					})
+				}else {
+					this.fetchFinancial();
+				}
+			},
 			fetchFinancial()
 			{
 				let query = "";

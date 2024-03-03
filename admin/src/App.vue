@@ -2,7 +2,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-  <div class="light-style layout-navbar-fixed layout-menu-fixed layout-compact">
+  <div class="layout-navbar-fixed layout-menu-fixed layout-compact">
 
     <!-- notification section -->
     <div v-show="$notif.data.show" style="z-index: 10000;" :class="$notif.data.class" class="alert alert-dismissible" role="alert">
@@ -43,6 +43,7 @@ import "./assets/vendor/fonts/tabler-icons.css";
 import "./assets/vendor/css/rtl/core.css";
 import "./assets/vendor/css/rtl/theme-default.css";
 import "./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css";
+import "./assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.css";
 import "./assets/css/demo.css";
 import "./assets/vendor/js/helpers.js";
 import "./assets/css/custom.css";
@@ -52,9 +53,9 @@ import "./assets/vendor/libs/jquery/jquery.js";
 import "./assets/vendor/libs/popper/popper.js";
 import "./assets/vendor/js/bootstrap.js";
 import "./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js";
+import "./assets/vendor/libs/bootstrap-datepicker/bootstrap-datepicker.js";
 import "./assets/vendor/libs/hammer/hammer.js";
 import "./assets/vendor/js/menu.js";
-// import "./assets/js/main.js";
 
 import
 {
