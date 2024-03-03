@@ -2,7 +2,7 @@
 <h4>Financial</h4>
 <div class="col-md-6 col-12 mb-4">
 	        <label class="form-label">Pick a Date</label>
-	        <input @focusout="fetchFinancialByDate" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+	        <input @focusout="fetchFinancialByDate" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
 	      </div>
 <div class="card">
 	<div class="card-header header-elements">
@@ -67,7 +67,7 @@
 		{
 			this.fetchFinancial();
 
-			$('.datepicker').datepicker();
+			$('.custom-date-picker').datepicker();
 		},
 		methods: {
 			fetchFinancialByDate(event)

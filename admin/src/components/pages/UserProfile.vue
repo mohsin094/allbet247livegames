@@ -37,7 +37,7 @@
 			<h5 class="card-header">Daily Revenue Share</h5>
 				<div class="col-md-6 col-12 mb-4">
 		        <label class="form-label">Pick a Date</label>
-		        <input @focusout="fetchAgentTransactionsByDate" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+		        <input @focusout="fetchAgentTransactionsByDate" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
 		      </div>
 			<div class="table-responsive text-nowrap">
 				<table class="table">
@@ -140,7 +140,7 @@
 			<h5 class="card-header">Last 50 Transactions</h5>
 			<div class="col-md-6 col-12 mb-4">
 		        <label class="form-label">Pick a Date</label>
-		        <input @focusout="fetchTransactionsByDate" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+		        <input @focusout="fetchTransactionsByDate" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
 		      </div>
 			<div class="table-responsive text-nowrap">
 				<table class="table">
@@ -206,7 +206,7 @@ export default {
 		this.fetchTransactions();
 		this.fetchAgentTransactions();
 
-		$('.datepicker').datepicker();
+		$('.custom-date-picker').datepicker();
 	},
 	methods: {
 		fetchTransactionsByDate(event)
@@ -217,7 +217,7 @@ export default {
 					if(res.result) {
 						this.transactions = res.params;
 						setTimeout(() => {
-								$('.datepicker').datepicker();
+								$('.custom-date-picker').datepicker();
 							},
 							100);
 					}
@@ -233,7 +233,7 @@ export default {
 				if(res.result) {
 					this.transactions = res.params;
 					setTimeout(() => {
-							$('.datepicker').datepicker();
+							$('.custom-date-picker').datepicker();
 						},
 						100);
 				}
@@ -246,7 +246,7 @@ export default {
 				if(res.result) {
 					this.agentTransactions = res.params;
 					setTimeout(() => {
-							$('.datepicker').datepicker();
+							$('.custom-date-picker').datepicker();
 						},
 						100);
 						

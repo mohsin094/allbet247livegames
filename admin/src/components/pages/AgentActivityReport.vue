@@ -6,7 +6,7 @@
 		<h5 class="card-title">Daily Revenue</h5>
 		<div class="col-md-6 col-12 mb-4">
 	        <label class="form-label">Pick a Date</label>
-	        <input  @focusout="fetchDailyRevenue" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+	        <input  @focusout="fetchDailyRevenue" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
 	      </div>
 		<div class="table-responsive text-nowrap">
 			<table class="table">
@@ -97,7 +97,7 @@
 		<h5 class="card-title">Daily Deposit/Withdrawal</h5>
 		<div class="col-md-6 col-12 mb-4">
 	        <label class="form-label">Pick a Date</label>
-	        <input @focusout="fetchDailyReport" type="text" placeholder="MM/DD/YYYY" class="form-control datepicker" />
+	        <input @focusout="fetchDailyReport" type="text" placeholder="MM/DD/YYYY" class="form-control custom-date-picker" />
 	      </div>
 
 		<div class="table-responsive text-nowrap">
@@ -209,7 +209,7 @@
 			this.fetchReport();
 			this.fetchRevenue();
 
-			$('.datepicker').datepicker();
+			$('.custom-date-picker').datepicker();
 		},
 		methods: {
 			fetchDailyReport(event)

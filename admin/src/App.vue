@@ -2,7 +2,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
-  <div class="light-style layout-navbar-fixed layout-menu-fixed layout-compact">
+  <div class="layout-navbar-fixed layout-menu-fixed layout-compact">
 
     <!-- notification section -->
     <div v-show="$notif.data.show" style="z-index: 10000;" :class="$notif.data.class" class="alert alert-dismissible" role="alert">
