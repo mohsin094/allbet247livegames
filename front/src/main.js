@@ -6,11 +6,11 @@ import '@/assets/scss/main.scss';
 
 import { useDark, useToggle } from '@vueuse/core'
 import { plugin, defaultConfig } from '@formkit/vue'
-import { isMobile,isTablet } from 'mobile-device-detect';
+import { isMobile, isTablet } from 'mobile-device-detect';
 import axios from 'axios'
 import User from "@/plugins/User.js";
 import PrimeVue from 'primevue/config';
-import  { useLoading } from 'vue3-loading-overlay';
+import { useLoading } from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 import Tooltip from 'primevue/tooltip';
 
@@ -24,15 +24,15 @@ app.config.globalProperties.isDark = useDark({
 app.directive('tooltip', Tooltip);
 
 app
-.use(router)
-.use(plugin, defaultConfig)
-.use(User)
-.use(PrimeVue)
-.use(useLoading)
+  .use(router)
+  .use(plugin, defaultConfig)
+  .use(User)
+  .use(PrimeVue)
+  .use(useLoading)
 
 axios.interceptors.request.use((config) => {
-	config.headers['x-sid-token'] = app.config.globalProperties.$user.data.sessionId;
-	return config;
+  config.headers['x-sid-token'] = app.config.globalProperties.$user.data.sessionId;
+  return config;
 });
 //The dark mode is always on, remove this line to toggle it
 app.config.globalProperties.isDark = true;
@@ -42,6 +42,6 @@ app.config.globalProperties.isMobile = isMobile;
 app.config.globalProperties.isTablet = isTablet;
 app.config.globalProperties.$axios = axios
 app.config.globalProperties.$storage = window.localStorage
-app.config.globalProperties.$loader = useLoading({color:'#53FFAC',backgroundColor:'#5D6879'});
+app.config.globalProperties.$loader = useLoading({ color: '#53FFAC', backgroundColor: '#5D6879' });
 app.config.globalProperties.$environment = 'demo';
 app.mount('#app')

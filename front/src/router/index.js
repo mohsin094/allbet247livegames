@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import DashboardView from '../views/DashboardView.vue'
 import HomeView from '../views/HomeView.vue'
-import AppLayout from '../layouts/AppLayout.vue'
-import DefaultLayout from '../layouts/DefaultLayout.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,6 +10,14 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: {
+        layout: 'HomeLayout'
+      },
+    },
+    {
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: DashboardView,
     },
     {
       path: '/cashier',
@@ -20,8 +28,8 @@ const router = createRouter({
       path: '/poker',
       name: 'poker',
       component: () => import('../views/Poker.vue'),
-      meta:{
-        layout:'AppLayout'
+      meta: {
+        layout: 'AppLayout'
       },
     },
     {
@@ -60,16 +68,16 @@ const router = createRouter({
     {
       path: '/backgammon/:matchId',
       name: 'backgammon',
-      meta:{
-        layout:'AppLayout'
+      meta: {
+        layout: 'AppLayout'
       },
       component: () => import('../views/BackgammonView.vue')
     },
     {
       path: '/next-match/:matchId',
       name: 'nextMatch',
-      meta:{
-        layout:'AppLayout'
+      meta: {
+        layout: 'AppLayout'
       },
       component: () => import('../components/NextMatch.vue')
     }

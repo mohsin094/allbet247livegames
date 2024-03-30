@@ -1,18 +1,22 @@
-<template>
-  <main>
-  	<MyGames v-if="!$user.data.isGuest"/>
-  	<Tabs/>
-  </main>
-</template>
-<script>
-	import MyGames from '@/components/MyGames.vue';
-	import Tabs from '@/components/Tabs.vue';
-	import Sidebar from '@/components/Sidebar.vue';
-	export default {
-		components: {
-		    MyGames,
-		    Tabs,
-		    Sidebar
-	  	},
-	};
+<script setup>
+import Testimonial from "../components/home/Testimonial.vue";
+import Gallery from "../components/home/Gallery.vue";
+import Events from "../components/home/Events.vue";
+import Club from "../components/home/Club.vue";
+import TournmentTable from "../components/home/TournmentTable.vue";
+import OtherGame from "../components/home/OtherGame.vue";
+import TaxasHoldem from "../components/home/TaxasHoldem.vue";
+import Slider from "../components/home/Slider.vue";
 </script>
+<template>
+  <div>
+    <Slider />
+    <TaxasHoldem />
+    <OtherGame />
+    <TournmentTable />
+    <Club />
+    <Events />
+    <Gallery />
+    <Testimonial />
+  </div>
+</template>
