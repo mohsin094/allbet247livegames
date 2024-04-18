@@ -15,9 +15,9 @@ let year =
                   <img src="../../assets/logo.png" alt="log" />
                   <p>
                     <b>Rake:</b> Refers to the scaled commission taken by a
-                    casino in poker tournaments.<br />
-                    <b>Poker:</b> A skill-based card game where players compete
-                    to win based on their knowledge and strategy.<br />
+                    casino in Allbet247 tournaments.<br />
+                    <b>Allbet247:</b> A skill-based card game where players
+                    compete to win based on their knowledge and strategy.<br />
                     <b>Backgammon:</b> An ancient game dating back nearly 5,000
                     years, played with dice and checkers.
                   </p>
@@ -29,8 +29,8 @@ let year =
                 <div class="one_fifth">
                   <h3>Useful Links</h3>
                   <ul class="footer_post">
-                    <li>About Poker Club</li>
-                    <li>How to shop on Poker</li>
+                    <li>About Allbet247</li>
+                    <li>How to shop on Allbet247</li>
                     <li>FAQ</li>
                     <li>Contact us</li>
                     <li>Help</li>
@@ -50,7 +50,7 @@ let year =
                 <div class="one_fourth">
                   <h3 class="footer-tags">Popular Tags</h3>
                   <ul class="tags-widget">
-                    <li><a href="#">poker</a></li>
+                    <li><a href="#">Allbet247</a></li>
                     <li><a href="#">blackjack</a></li>
                     <li><a href="#">money</a></li>
                     <li><a href="#">roulette</a></li>

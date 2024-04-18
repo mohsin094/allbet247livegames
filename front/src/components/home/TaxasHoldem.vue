@@ -5,9 +5,9 @@ const router = useRouter();
 </script>
 <template>
   <div id="section-holdem" class="programinfo">
-    <!-- <div class="container">
+    <div class="container">
       <div id="texas" class="two_third_contact lastcolumn">
-        <div id="blockTitle1" class="block_title uk-animation-scale-down">
+        <!-- <div id="blockTitle1" class="block_title uk-animation-scale-down">
           <h2>Texas <span class="secondtxt">Hold 'em</span></h2>
           <div class="g-hr type_short">
             <span class="g-hr-h"><i class="fa fa-dot-circle-o"></i></span>
@@ -32,11 +32,11 @@ const router = useRouter();
           page editors now use Lorem Ipsum as their default model text, and a
           search for 'lorem ipsum' will uncover many web sites still in their
           infancy.
-        </p>
+        </p> -->
       </div>
-    </div> -->
+    </div>
     <div class="container texas-space">
-      <div class="grid_item content-item fadeInUp">
+      <div class="grid_item content-item fadeInUp my-5">
         <img
           style="max-width: 50%"
           class="img_holdem"
@@ -259,7 +259,7 @@ const router = useRouter();
       </div> -->
     </div>
   </div>
-  <section id="top_banner" class="paralax1">
+  <!-- <section id="top_banner" class="paralax1">
     <div class="background-black"></div>
     <div class="quote-icon">
       <img src="../../assets/home/images/icon_logo2.png" alt="" />
@@ -302,7 +302,7 @@ const router = useRouter();
       </div>
     </article>
     <div class="parallax"></div>
-  </section>
+  </section> -->
 </template>
 
 <style scoped>
