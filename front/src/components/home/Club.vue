@@ -3,27 +3,23 @@
     <div class="container gallery">
       <section>
         <article id="blockTitle4" class="block_title">
-          <h2>About <span class="secondtxt">Poker Club</span></h2>
+          <h2>About <span class="secondtxt">Allbet247</span></h2>
           <div class="g-hr type_short">
             <span class="g-hr-h"><i class="fa fa-bookmark-o"></i></span>
           </div>
           <p>
-            The Poker Club has quickly established itself as a definite must for
-            locals and tourists alike. The concept behind The Casino is to make
-            patrons feel at home, while providing them with an exciting
-            experience in a luxurious environment.
+            <strong>Allbet247</strong> was founded in 2009. We have since
+            expanded with over 60 locations throughout Canada and The Bahamas.
+            Maintaining top position as the country’s leading gaming
+            establishment. We revolutionize the gaming industry in Canada and
+            The Bahamas by introducing multiple digital game experiences.
           </p>
           <p>
-            The atmosphere in the casino is always vibrant, especially during
-            the evening, where patrons may enjoy an exquisite dinner in the
-            brasserie or simply a refreshing drink in our newly refurbished
-            lounge area.
+            <strong>Allbet247</strong> vision is to continuously think outside
+            of the box and develop new products and services while enhancing its
+            customers’ experience.
           </p>
-          <p>
-            There are ample parking spaces for visitors to the area therefore
-            finding a car space close to the casino is only a press of a button
-            away.
-          </p>
+          <p>Join us today and unleash your full potential!</p>
           <div class="clear"></div>
         </article>
       </section>
