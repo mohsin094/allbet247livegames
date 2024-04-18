@@ -19,7 +19,7 @@ Thumbs.db
 
 # composer vendor dir
 /vendor
-
+/front/node_modules
 # composer itself is not needed
 composer.phar
 composer.lock
