@@ -15,6 +15,14 @@ const router = createRouter({
       },
     },
     {
+      path: '/details/:title',
+      name: 'Details',
+      component: () => import('../views/Details.vue'),
+      meta: {
+        layout: 'HomeLayout'
+      },
+    },
+    {
       path: '/dashboard',
       name: 'Dashboard',
       component: DashboardView,
@@ -81,7 +89,7 @@ const router = createRouter({
       },
       component: () => import('../components/NextMatch.vue')
     }
-  ]
+  ],
 })
 
 export default router

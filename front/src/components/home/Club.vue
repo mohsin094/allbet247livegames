@@ -28,7 +28,7 @@
         </article>
       </section>
       <br />
-      <article class="grid_3_banner clubbox">
+      <!-- <article class="grid_3_banner clubbox">
         <div
           class="pricing-table pricing-table-inverse animated fadeInRight"
           data-animate="fadeInRight"
@@ -135,7 +135,7 @@
             </div>
           </div>
         </div>
-      </article>
+      </article> -->
     </div>
   </div>
 </template>

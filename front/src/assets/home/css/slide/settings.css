@@ -890,7 +890,7 @@
 }
 
 .tp-simpleresponsive > ul li {
-  list-stye: none;
+  /* list-stye: none; */
   position: absolute;
   visibility: hidden;
 }

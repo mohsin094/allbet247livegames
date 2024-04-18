@@ -14,6 +14,7 @@ import { useLoading } from 'vue3-loading-overlay';
 import 'vue3-loading-overlay/dist/vue3-loading-overlay.css';
 import Tooltip from 'primevue/tooltip';
 
+
 const app = createApp(App)
 app.config.globalProperties.isDark = useDark({
   selector: "body",

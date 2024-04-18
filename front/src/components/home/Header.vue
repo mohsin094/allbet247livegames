@@ -1,39 +1,46 @@
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+import Loader from "./Loader.vue";
 
 const email = ref("");
 const password = ref("");
+const loader = ref(false);
 const errors = ref([]);
-const baseUrl = import.meta.env.VITE_BASE_URL;
+const router = useRouter();
+// const baseUrl = import.meta.env.VITE_BASE_URL;
 
 function doLogin() {
+  loader.value = true;
   let url = import.meta.env.VITE_BACKEND_BASE_URL + "/user/auth/login";
-  let isloginUrl =
-    import.meta.env.VITE_BACKEND_BASE_URL + "/user/auth/is-login";
   axios
     .post(url, {
       username: email.value,
       password: password.value,
     })
     .then((response) => {
-      response = response.data;
-      if (response.result) {
-        let data = JSON.stringify(response.params);
+      loader.value = false;
+      const res = response.data;
+      if (res.result) {
+        let data = JSON.stringify(res.params);
         localStorage.setItem("data", data);
-        location.href = "/dashboard";
+        // location.href = "/dashboard";
+        router.push("/dashboard");
       } else {
-        errors.value = response.error;
+        loader.value = false;
+        errors.value = res.error;
       }
     });
 }
 </script>
 
 <template>
+  <Loader v-if="loader" />
   <div class="container-menu">
     <div class="container content-menu">
-      <div class="logo">
-        <img src="../../assets/home/images/logo2.jpg" alt="log" />
+      <div @click="router.push('/')" class="logo">
+        <img src="../../assets/logo.png" alt="log" />
       </div>
       <!-- mega menu -->
       <ul
@@ -41,19 +48,19 @@ function doLogin() {
         class="poker-mega-menu poker-mega-menu-anim-scale poker-mega-menu-response-to-icons"
       >
         <li class="menu-first-li">
-          <a class="link_onepage" href="#toplineright"
+          <a class="link_onepage" href="#section-1"
             ><i class="fa fa-single fa-home"></i
           ></a>
-          <div class="grid-container2">
+          <!-- <div class="grid-container2">
             <ul>
               <li>
                 <a href=""><i class="fa fa-globe"></i>Home Page 1</a>
               </li>
             </ul>
-          </div>
+          </div> -->
         </li>
         <li>
-          <a href="#"><i class="fa fa-eye"></i>Game</a>
+          <a href="#texas"><i class="fa fa-eye"></i>Game</a>
           <div class="grid-container3">
             <ul>
               <li>
@@ -78,19 +85,7 @@ function doLogin() {
           <a class="link_onepage" href="#section-3"
             ><i class="fa fa-star"></i>About us</a
           >
-          <div class="grid-container4">
-            <ul>
-              <li>
-                <a href=""><i class="fa fa-check"></i>Details Page</a>
-              </li>
-              <li>
-                <a href=""><i class="fa fa-check"></i>Blog</a>
-              </li>
-              <li>
-                <a href=""><i class="fa fa-check"></i>Blog Right Column</a>
-              </li>
-            </ul>
-          </div>
+          <!-- <div cs -->
         </li>
         <li>
           <a class="link_onepage" href="#section-4"
@@ -188,4 +183,7 @@ function doLogin() {
 @import url(../../assets/home/css/menu.css);
 @import url(../../assets/home/css/layout2_style.css);
 @import url(../../assets/home/css/font-awesome-4.0.1/css/font-awesome.min.css);
+::placeholder {
+  color: black !important;
+}
 </style>

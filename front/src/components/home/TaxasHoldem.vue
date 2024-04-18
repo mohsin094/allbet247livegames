@@ -1,6 +1,11 @@
+<script setup>
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+</script>
 <template>
   <div id="section-holdem" class="programinfo">
-    <div class="container">
+    <!-- <div class="container">
       <div id="texas" class="two_third_contact lastcolumn">
         <div id="blockTitle1" class="block_title uk-animation-scale-down">
           <h2>Texas <span class="secondtxt">Hold 'em</span></h2>
@@ -29,12 +34,13 @@
           infancy.
         </p>
       </div>
-    </div>
+    </div> -->
     <div class="container texas-space">
-      <div class="grid_item content-item hidden fadeInUp">
+      <div class="grid_item content-item fadeInUp">
         <img
+          style="max-width: 50%"
           class="img_holdem"
-          src="../../assets/home/images/design_multitouch.jpg"
+          src="/assets/images/2.jpg"
           alt=""
         />
       </div>
@@ -42,29 +48,42 @@
       <!-- tabs -->
       <div class="more">
         <ul class="ca-menu">
-          <li>
+          <li
+            @click="
+              router.push({ name: 'Details', params: { title: 'pokerRake' } })
+            "
+          >
             <div class="box-content">
               <div class="box-info">
                 <div class="img-content">
                   <img
                     class="ca-icon"
-                    src="../../assets/home/images/2.jpg"
+                    src="/public/assets/images/rake1.jpg"
                     alt=""
                   />
                 </div>
 
                 <div class="ca-content">
-                  <h2 class="ca-main">House Rules</h2>
+                  <h2 class="ca-main">What is Rake?</h2>
                   <p>
-                    Once you’ve made your deposit, you need to earn VIP Player
-                    Points (VPPs) by playing real money games on PokerClub.
+                    Rake refers to the scaled commission taken by a casino to
+                    pay for its operating costs. Rake is collected in
+                    tournaments
                   </p>
-                  <h3 class="ca-sub">Personalized to your needs</h3>
+                  <h3 class="ca-sub">See More</h3>
                 </div>
               </div>
             </div>
           </li>
-          <li class="select">
+          <li
+            @click="
+              router.push({
+                name: 'Details',
+                params: { title: 'howToPlayPoker' },
+              })
+            "
+            class="select"
+          >
             <div class="box-content">
               <div class="box-info">
                 <div class="img-content">
@@ -76,17 +95,110 @@
                 </div>
 
                 <div class="ca-content">
-                  <h2 class="ca-main">Cash Games</h2>
+                  <h2 class="ca-main">How to Play Poker?</h2>
                   <p>
-                    Once you’ve made your deposit, you need to earn VIP Player
-                    Points (VPPs) by playing real money games on PokerClub.
+                    Learning poker is easy. But have you ever wondered why not
+                    everyone wins at poker? The reason is that poker is a
+                    skill-based card game.
                   </p>
-                  <h3 class="ca-sub">Advanced use of technology</h3>
+                  <h3 class="ca-sub">See More</h3>
                 </div>
               </div>
             </div>
           </li>
-          <li>
+          <li
+            @click="
+              router.push({
+                name: 'Details',
+                params: { title: 'howToPlayBackgammon' },
+              })
+            "
+          >
+            <div class="box-content">
+              <div class="box-info">
+                <div class="img-content">
+                  <img
+                    class="ca-icon"
+                    src="../../assets/home/images/howToPlayBackgammon.jpg"
+                    alt=""
+                  />
+                </div>
+
+                <div class="ca-content">
+                  <h2 class="ca-main">How to Play Backgammon</h2>
+                  <p>
+                    Players take turn rolling the dice. A player may move his
+                    checkers based on the number rolled by the dice.
+                  </p>
+                  <h3 class="ca-sub">See More</h3>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li
+            @click="
+              router.push({
+                name: 'Details',
+                params: { title: 'pokerVsBackgammon' },
+              })
+            "
+          >
+            <div class="box-content">
+              <div class="box-info">
+                <div class="img-content">
+                  <img
+                    class="ca-icon"
+                    src="../../assets/home/images/pokerVsBackgammon.jpg"
+                    alt=""
+                  />
+                </div>
+                <div class="ca-content">
+                  <h2 class="ca-main">Backgammon vs Poker</h2>
+                  <p>
+                    Is there a Big Difference? Backgammon and poker have often
+                    been shown as games of a similar nature.
+                  </p>
+                  <h3 class="ca-sub">See More</h3>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li
+            @click="
+              router.push({
+                name: 'Details',
+                params: { title: 'pokerHistory' },
+              })
+            "
+          >
+            <div class="box-content">
+              <div class="box-info">
+                <div class="img-content">
+                  <img
+                    class="ca-icon"
+                    src="../../assets/home/images/pokerHistory.jpg"
+                    alt=""
+                  />
+                </div>
+                <div class="ca-content">
+                  <h2 class="ca-main">Poker History</h2>
+                  <p>
+                    The game we know as poker is believed to have ancient roots
+                    that go back nearly 1,000 years,
+                  </p>
+                  <h3 class="ca-sub">See More</h3>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li
+            @click="
+              router.push({
+                name: 'Details',
+                params: { title: 'BackGammonHistory' },
+              })
+            "
+          >
             <div class="box-content">
               <div class="box-info">
                 <div class="img-content">
@@ -96,35 +208,13 @@
                     alt=""
                   />
                 </div>
-
                 <div class="ca-content">
-                  <h2 class="ca-main">Shedule</h2>
+                  <h2 class="ca-main">Backgammon History</h2>
                   <p>
-                    Once you’ve made your deposit, you need to earn VIP Player
-                    Points (VPPs) by playing real money games on PokerClub.
+                    Backgammon has been played for almost 5,000 years, which is
+                    proof enough that it is a lot of fun.
                   </p>
-                  <h3 class="ca-sub">Understanding visually</h3>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="box-content">
-              <div class="box-info">
-                <div class="img-content">
-                  <img
-                    class="ca-icon"
-                    src="../../assets/home/images/4.jpg"
-                    alt=""
-                  />
-                </div>
-                <div class="ca-content">
-                  <h2 class="ca-main">Poker Parties</h2>
-                  <p>
-                    Once you’ve made your deposit, you need to earn VIP Player
-                    Points (VPPs) by playing real money games on PokerClub.
-                  </p>
-                  <h3 class="ca-sub">Professionals in action</h3>
+                  <h3 class="ca-sub">See More</h3>
                 </div>
               </div>
             </div>
@@ -132,7 +222,7 @@
         </ul>
       </div>
 
-      <div class="content-counter">
+      <!-- <div class="content-counter">
         <h2 class="section_title_white">
           SOME <span class="secondtxt">FUN FACTS</span>
         </h2>
@@ -166,7 +256,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <section id="top_banner" class="paralax1">

@@ -1,7 +1,7 @@
 <template>
   <div id="game" class="programroulette">
     <div class="container">
-      <div class="two_third_contact">
+      <!-- <div class="two_third_contact">
         <div id="blockTitle2" class="block_title">
           <h2>Other <span class="secondtxt">Games</span></h2>
           <div class="g-hr type_short">
@@ -86,14 +86,15 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <style scoped>
+/* @import url(../../assets/home/css/jquery.bxslider_index.css); */
 @import url(../../assets/home/css/layout1_style.css);
-@import url(../../assets/home/css/base_style.css);
+/* @import url(../../assets/home/css/base_style.css);
 @import url(../../assets/home/css/share_style.css);
-@import url(../../assets/home/css/font-awesome-4.0.1/css/font-awesome.min.css);
+@import url(../../assets/home/css/font-awesome-4.0.1/css/font-awesome.min.css); */
 </style>

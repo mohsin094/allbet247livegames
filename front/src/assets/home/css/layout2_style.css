@@ -47,7 +47,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #fff;
+  background-color: #ffffffa1;
   z-index: 100000000;
   height: auto;
   overflow: hidden;
@@ -2192,9 +2192,9 @@ section#tournaments article {
 }
 .btn-primary {
   font-family: "BebasNeuewebfont", sans-serif;
-  color: #fff;
+  color: #fff !important;
   border: solid 1px #b60c18;
-  background: #d4202b;
+  background: #d4202b !important;
 }
 .pricing-table .pricing-table-footer {
   padding: 0px;
@@ -2937,7 +2937,7 @@ section#timetable article {
 #calendartable h3 {
   text-align: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  color: #fff;
+  color: #fff !important;
   padding: 5px;
   margin-bottom: 20px;
   font-size: 18px;
