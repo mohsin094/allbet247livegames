@@ -538,8 +538,8 @@ hr.separatorspace {
   width: 30%;
 }
 .g-hr-h {
-  border-top: 1px solid #e8e8e8;
-  border-bottom: 1px solid #e8e8e8;
+  border-top: 1px solid #1b1a1a;
+  border-bottom: 1px solid #1b1a1a;
   height: 0;
   left: 0;
   position: absolute;
@@ -548,8 +548,8 @@ hr.separatorspace {
   padding-top: 3px;
 }
 .g-hr-h i {
-  background-color: #ffffff;
-  color: #d0cfcf;
+  background-color: #ffd580;
+  color: #1b1a1a;
   font-size: 16px;
   height: 16px;
   left: 50%;
@@ -1288,7 +1288,7 @@ ul.ca-menu {
 }
 
 .programinfo {
-  background: #fff;
+  background: #ffd580;
   padding: 40px 0 100px 0;
 }
 
@@ -2268,7 +2268,7 @@ section#tournaments article {
   border-radius: 3px;
 }
 .club {
-  background: #fff url(../images/rausch.png) repeat;
+  background: #ffd580 url(../images/rausch.png) repeat;
   padding: 100px 0 80px 0;
 }
 .club h4 {

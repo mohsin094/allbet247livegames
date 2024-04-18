@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="programroulette">
+  <div style="background: #ffd580" class="programroulette">
     <div class="container">
       <div v-html="data[route.params.title]"></div>
     </div>

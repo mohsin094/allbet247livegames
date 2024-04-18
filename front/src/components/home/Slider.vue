@@ -1,7 +1,7 @@
 <template>
-  <div id="section-1">
+  <div id="section-1 relative">
     <div
-      class="slidePoint"
+      class="slidePoint pt-3"
       id="slide0"
       data-slide="1"
       data-stellar-background-ratio="0.5"

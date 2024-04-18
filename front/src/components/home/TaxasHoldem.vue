@@ -5,7 +5,7 @@ const router = useRouter();
 </script>
 <template>
   <div id="section-holdem" class="programinfo">
-    <!-- <div class="container">
+    <div class="container">
       <div id="texas" class="two_third_contact lastcolumn">
         <div id="blockTitle1" class="block_title uk-animation-scale-down">
           <h2>Texas <span class="secondtxt">Hold 'em</span></h2>
@@ -13,32 +13,21 @@ const router = useRouter();
             <span class="g-hr-h"><i class="fa fa-dot-circle-o"></i></span>
           </div>
           <h3 class="subtitle_poker">
-            Proin gravida nibh vel velit auctor aliqued
+            Texas Hold’em is the most popular of all poker variations.
           </h3>
         </div>
 
         <p>
-          Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using 'Content here, content here', making it
-          look like readable English. Many desktop publishing packages and web
-          page editors now use Lorem Ipsum as their default model text, and a
-          search for 'lorem ipsum' will uncover many web sites still in their
-          infancy.
-        </p>
-        <p>
-          Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using 'Content here, content here', making it
-          look like readable English. Many desktop publishing packages and web
-          page editors now use Lorem Ipsum as their default model text, and a
-          search for 'lorem ipsum' will uncover many web sites still in their
-          infancy.
+          Texas Hold’em is the most popular of all poker variations. Whether
+          you’re a seasoned player or a beginner, understanding the basic rules
+          of Texas Hold’em is essential. Let’s dive into the details.
         </p>
       </div>
-    </div> -->
+    </div>
     <div class="container texas-space">
-      <div class="grid_item content-item fadeInUp">
+      <div class="grid_item content-item fadeInUp my-5">
         <img
-          style="max-width: 50%"
+          style="max-width: 40%"
           class="img_holdem"
           src="/assets/images/2.jpg"
           alt=""
@@ -259,7 +248,7 @@ const router = useRouter();
       </div> -->
     </div>
   </div>
-  <section id="top_banner" class="paralax1">
+  <!-- <section id="top_banner" class="paralax1">
     <div class="background-black"></div>
     <div class="quote-icon">
       <img src="../../assets/home/images/icon_logo2.png" alt="" />
@@ -302,7 +291,7 @@ const router = useRouter();
       </div>
     </article>
     <div class="parallax"></div>
-  </section>
+  </section> -->
 </template>
 
 <style scoped>

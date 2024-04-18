@@ -3,7 +3,7 @@
   max-width: 100%;
   position: fixed;
   z-index: 999999;
-  background: rgba(255, 255, 255, 1);
+  background: #ffd580;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 .content-menu {
@@ -31,7 +31,7 @@
 .poker-mega-menu {
   position: relative;
   z-index: 99999;
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffd580;
   box-shadow: 0 0 0px rgba(0, 0, 0, 0.3);
   font-size: 0;
   line-height: 0;

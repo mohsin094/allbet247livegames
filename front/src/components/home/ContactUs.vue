@@ -6,9 +6,9 @@
           <div class="two_third_contact lastcolumn">
             <div id="blockTitle7" class="block_title">
               <h2>Contact <span class="secondtxt">us</span></h2>
-              <h3 class="subtitle_poker">
+              <!-- <h3 class="subtitle_poker">
                 Proin gravida nibh vel velit auctor aliqued
-              </h3>
+              </h3> -->
             </div>
             <div id="contact_Form">
               <form method="post" id="contact_form">
@@ -16,13 +16,17 @@
                   <div class="info_maps">
                     <section class="first">
                       <ul class="contactsidebar">
-                        <li>
+                        <!-- <li>
                           <i class="fa fa-home"></i><span>Address: </span>2A4 UD
                           Street Name, Punta Cana
-                        </li>
-                        <li>
+                        </li> -->
+                        <!-- <li>
                           <i class="fa fa-phone"></i><span>Phone: </span>(+44)
                           66-997-12341
+                        </li> -->
+                        <li>
+                          <i class="fa fa-envelope"></i
+                          ><span>Email: </span>allbet247.com@gmail.com
                         </li>
                       </ul>
                     </section>
