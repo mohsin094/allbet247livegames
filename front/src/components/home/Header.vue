@@ -87,17 +87,17 @@ function doLogin() {
           >
           <!-- <div cs -->
         </li>
-        <li>
+        <!-- <li>
           <a class="link_onepage" href="#section-4"
             ><i class="fa fa-bullhorn"></i>Events</a
           >
-        </li>
+        </li> -->
         <li>
           <a class="link_onepage" href="#section-6"
             ><i class="fa fa-single fa-envelope"></i
           ></a>
         </li>
-        <li aria-haspopup="true" class="right">
+        <li aria-haspopup="true" class="right ps-5">
           <a href="#"><i class="fa fa-lock"></i>Register</a>
           <div class="grid-container5">
             <form action="#">

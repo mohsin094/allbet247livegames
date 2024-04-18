@@ -81,4 +81,7 @@ let year =
 @import url(../../assets/home/css/layout2_style.css);
 @import url(../../assets/home/css/blog.css);
 @import url(../../assets/home/css/font-awesome-4.0.1/css/font-awesome.min.css);
+h3 {
+  color: #ffd580 !important;
+}
 </style>
