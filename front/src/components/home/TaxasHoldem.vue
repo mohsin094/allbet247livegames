@@ -41,6 +41,7 @@ const router = useRouter();
             @click="
               router.push({ name: 'Details', params: { title: 'pokerRake' } })
             "
+            class="select"
           >
             <div class="box-content">
               <div class="box-info">
@@ -102,6 +103,7 @@ const router = useRouter();
                 params: { title: 'howToPlayBackgammon' },
               })
             "
+            class="select"
           >
             <div class="box-content">
               <div class="box-info">
@@ -131,6 +133,7 @@ const router = useRouter();
                 params: { title: 'pokerVsBackgammon' },
               })
             "
+            class="select"
           >
             <div class="box-content">
               <div class="box-info">
@@ -159,6 +162,7 @@ const router = useRouter();
                 params: { title: 'pokerHistory' },
               })
             "
+            class="select"
           >
             <div class="box-content">
               <div class="box-info">
@@ -187,6 +191,7 @@ const router = useRouter();
                 params: { title: 'BackGammonHistory' },
               })
             "
+            class="select"
           >
             <div class="box-content">
               <div class="box-info">
