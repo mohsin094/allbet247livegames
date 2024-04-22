@@ -49,7 +49,7 @@
         </form>
 
         <!-- Right links -->
-        <ul
+        <!-- <ul
           v-if="$user.data.isGuest"
           class="navbar-nav ms-auto d-flex flex-row navbar-header"
         >
@@ -78,11 +78,8 @@
               Register
             </button>
           </li>
-        </ul>
-        <ul
-          v-if="!$user.data.isGuest"
-          class="navbar-nav ms-auto d-flex flex-row navbar-header"
-        >
+        </ul> -->
+        <ul class="navbar-nav ms-auto d-flex flex-row navbar-header">
           <li
             class="nav-item"
             v-if="$user.data.role == 'admin' || $user.data.role == 'agent'"
@@ -226,6 +223,7 @@
     <!-- Navbar -->
   </header>
 </template>
+
 <script>
 import MobileHeader from "@/components/MobileHeader.vue";
 export default {

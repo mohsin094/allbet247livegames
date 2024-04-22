@@ -25,8 +25,8 @@ function doLogin() {
       if (res.result) {
         let data = JSON.stringify(res.params);
         localStorage.setItem("data", data);
-        // location.href = "/dashboard";
-        router.push("/dashboard");
+        location.href = "/dashboard";
+        // router.push("/dashboard");
       } else {
         loader.value = false;
         errors.value = res.error;
