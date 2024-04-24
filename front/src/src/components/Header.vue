@@ -260,8 +260,7 @@ export default {
     doLogout: function () {
       this.$user.doLogout();
       this.$storage.removeItem("data");
-      // location.href = "/";
-      this.$router.push("/");
+      location.href = "/";
     },
     openNotifies: function () {
       var element = document.getElementById("notif-wrapper");

@@ -62,10 +62,10 @@ let year =
                 </div>
               </div>
             </div>
-
+            <!-- {{ new Date().getFullYear() }} -->
             <p class="copyright">
-              &copy; {{ new Date().getFullYear() }} by
-              <a href="#">Corsaro Design</a>. All Rights Reserved
+              &copy; power by
+              <a href="#">allbert247</a>. All Rights Reserved
             </p>
           </div>
         </div>
