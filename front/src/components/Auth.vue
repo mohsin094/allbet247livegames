@@ -129,7 +129,7 @@
           ></button>
         </div>
         <div class="modal-body">
-          <h1 class="modal-title fs-5" id="loginLabel">Sign up</h1>
+          <h1 class="modal-title fs-5" id="loginLabel">Sign up {{ loader }}</h1>
           <ul>
             <li v-for="error in registerErrors">
               <span class="text-danger">{{ error[0] }}</span>
@@ -238,7 +238,7 @@
           <button
             type="button"
             class="btn btn-golden text-dark login-btn mt-5"
-            @click="register()"
+            @click="register(), (loader = true)"
           >
             Sign up
           </button>
@@ -269,7 +269,13 @@
           </div> -->
           <div class="text-center mb-5">
             <p class="text-gray">Already have an account?</p>
-            <a data-bs-toggle="modal" data-bs-target="#login" href="#">Login</a>
+            <a
+              data-bs-toggle="modal"
+              ref="loginRef"
+              data-bs-target="#login"
+              href="#"
+              >Login</a
+            >
           </div>
         </div>
       </div>
@@ -374,7 +380,6 @@ export default {
             this.$router.push("/dashboard");
           } else {
             instance.errors = response.error;
-            console.log("instance.errors", instance.errors);
           }
           instance.loader = false;
         });
@@ -382,6 +387,7 @@ export default {
     register: function () {
       let instance = this;
       instance.registerErrors = [];
+      console.log("instance.loader", instance.loader);
       let url = import.meta.env.VITE_BACKEND_BASE_URL + "/user/auth/register";
       const callerIdJson = this.$storage.getItem("callerId");
       let callerId = "";
@@ -400,19 +406,17 @@ export default {
         })
         .then((response) => {
           response = response.data;
+          instance.loader = false;
           if (response.result) {
             var modalEl = document.getElementById("signup");
             var modal = Modal.getInstance(modalEl);
             modal.hide();
+            this.$refs.loginRef.click();
           } else {
             instance.registerErrors = response.error;
-            console.log(
-              "instance.registerErrors",
-              instance.registerErrors,
-              response
-            );
           }
         });
+      instance.loader = false;
     },
     selectAvatar(n) {
       console.log(n);
